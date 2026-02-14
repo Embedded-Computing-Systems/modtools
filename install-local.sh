@@ -35,11 +35,11 @@ fi
 
 echo ""
 echo "2. Installing GUI..."
-GUI_APP="packages/desktop/src-tauri/target/release/bundle/macos/MOD Dev.app"
+GUI_APP="packages/desktop/src-tauri/target/release/bundle/macos/MOD GUI.app"
 if [ -d "$GUI_APP" ]; then
-    rm -rf "$APP_DIR/MOD Dev.app"
+    rm -rf "$APP_DIR/MOD GUI.app"
     cp -R "$GUI_APP" "$APP_DIR/"
-    echo "   ✓ GUI installed: $APP_DIR/MOD Dev.app"
+    echo "   ✓ GUI installed: $APP_DIR/MOD GUI.app"
 else
     echo "   ✗ GUI build not found. Run: bun run --cwd packages/desktop tauri build"
     exit 1
@@ -75,7 +75,7 @@ echo "============================================================="
 echo "Installation complete!"
 echo ""
 echo "CLI version: $(mod --version)"
-echo "GUI: /Applications/MOD Dev.app"
+echo "GUI: /Applications/MOD GUI.app"
 echo ""
 echo "Usage:"
 echo "  mod --help     # CLI help"

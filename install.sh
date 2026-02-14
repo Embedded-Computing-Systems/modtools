@@ -69,21 +69,21 @@ echo "   Downloading MOD Desktop..."
 DMG_URL="${REPO_URL}/releases/latest/download/MOD_Dev_$(echo $DESKTOP_TARGET | tr '_' '-')"
 if [ "$OS" = "darwin" ]; then
     DMG_URL="${DMG_URL}.dmg"
-    if curl -fsSL "$DMG_URL" -o "/tmp/MOD Dev.dmg" 2>/dev/null; then
+    if curl -fsSL "$DMG_URL" -o "/tmp/MOD GUI.dmg" 2>/dev/null; then
         echo "   Mounting DMG..."
-        hdiutil attach "/tmp/MOD Dev.dmg" -nobrowse -quiet
+        hdiutil attach "/tmp/MOD GUI.dmg" -nobrowse -quiet
         echo "   Copying to Applications..."
-        cp -R "/Volumes/MOD Dev/MOD Dev.app" "$APP_DIR/"
-        hdiutil detach "/Volumes/MOD Dev" -quiet
-        rm "/tmp/MOD Dev.dmg"
-        echo "   ✓ GUI installed to $APP_DIR/MOD Dev.app"
+        cp -R "/Volumes/MOD GUI/MOD GUI.app" "$APP_DIR/"
+        hdiutil detach "/Volumes/MOD GUI" -quiet
+        rm "/tmp/MOD GUI.dmg"
+        echo "   ✓ GUI installed to $APP_DIR/MOD GUI.app"
     else
         echo "   ! Could not download DMG. Building from source..."
         if command -v cargo &> /dev/null && command -v bun &> /dev/null; then
             echo "   Building with Rust + Bun..."
             bun install
             bun run --cwd packages/desktop tauri build
-            cp -R "packages/desktop/src-tauri/target/release/bundle/macos/MOD Dev.app" "$APP_DIR/"
+            cp -R "packages/desktop/src-tauri/target/release/bundle/macos/MOD GUI.app" "$APP_DIR/"
             echo "   ✓ GUI built and installed"
         else
             echo "   ✗ Rust or Bun not found. Skipping GUI installation."
@@ -144,8 +144,8 @@ else
     echo "! CLI not found in PATH. Please restart your terminal."
 fi
 
-if [ -d "/Applications/MOD Dev.app" ]; then
-    echo "GUI: /Applications/MOD Dev.app ✓"
+if [ -d "/Applications/MOD GUI.app" ]; then
+    echo "GUI: /Applications/MOD GUI.app ✓"
 else
     echo "! GUI not installed"
 fi

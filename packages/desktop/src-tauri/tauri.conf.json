@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "MOD Dev",
+  "productName": "MOD GUI",
   "identifier": "tools.mod.desktop.dev",
   "mainBinaryName": "MOD",
   "version": "../package.json",
