@@ -1,3 +1,13 @@
 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M13 14H3V2H13V14ZM10.5 4.4H5.5V11.6H10.5V4.4Z" fill="#C4CAD4"/>
+  <rect x="5" y="5" width="6" height="6" fill="#C4CAD4"/>
+  <path d="M8 2V5M8 11V14M2 8H5M11 8H14" stroke="#C4CAD4" stroke-width="1.5"/>
+  <circle cx="8" cy="2" r="1" fill="#C4CAD4"/>
+  <circle cx="8" cy="14" r="1" fill="#C4CAD4"/>
+  <circle cx="2" cy="8" r="1" fill="#C4CAD4"/>
+  <circle cx="14" cy="8" r="1" fill="#C4CAD4"/>
+  <path d="M4 4L5 5M11 11L12 12M12 4L11 5M5 11L4 12" stroke="#C4CAD4" stroke-width="1"/>
+  <circle cx="4" cy="4" r="0.8" fill="#C4CAD4"/>
+  <circle cx="12" cy="12" r="0.8" fill="#C4CAD4"/>
+  <circle cx="12" cy="4" r="0.8" fill="#C4CAD4"/>
+  <circle cx="4" cy="12" r="0.8" fill="#C4CAD4"/>
 </svg>
