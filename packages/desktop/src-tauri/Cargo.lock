@@ -2572,6 +2572,51 @@ dependencies = [
 ]
 
 [[package]]
+name = "mod-desktop"
+version = "0.0.0"
+dependencies = [
+ "chrono",
+ "comrak",
+ "dirs",
+ "futures",
+ "gtk",
+ "listeners",
+ "objc2 0.6.3",
+ "objc2-web-kit",
+ "reqwest 0.12.24",
+ "semver",
+ "serde",
+ "serde_json",
+ "specta",
+ "specta-typescript",
+ "tauri",
+ "tauri-build 2.5.2",
+ "tauri-plugin-clipboard-manager",
+ "tauri-plugin-decorum",
+ "tauri-plugin-deep-link",
+ "tauri-plugin-dialog",
+ "tauri-plugin-http",
+ "tauri-plugin-notification",
+ "tauri-plugin-opener",
+ "tauri-plugin-os",
+ "tauri-plugin-process",
+ "tauri-plugin-shell",
+ "tauri-plugin-single-instance",
+ "tauri-plugin-store",
+ "tauri-plugin-updater",
+ "tauri-plugin-window-state",
+ "tauri-specta",
+ "tokio",
+ "tokio-stream",
+ "tracing",
+ "tracing-appender",
+ "tracing-subscriber",
+ "uuid",
+ "webkit2gtk",
+ "windows 0.61.3",
+]
+
+[[package]]
 name = "moxcms"
 version = "0.7.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3079,51 +3124,6 @@ dependencies = [
  "is-wsl",
  "libc",
  "pathdiff",
-]
-
-[[package]]
-name = "opencode-desktop"
-version = "0.0.0"
-dependencies = [
- "chrono",
- "comrak",
- "dirs",
- "futures",
- "gtk",
- "listeners",
- "objc2 0.6.3",
- "objc2-web-kit",
- "reqwest 0.12.24",
- "semver",
- "serde",
- "serde_json",
- "specta",
- "specta-typescript",
- "tauri",
- "tauri-build 2.5.2",
- "tauri-plugin-clipboard-manager",
- "tauri-plugin-decorum",
- "tauri-plugin-deep-link",
- "tauri-plugin-dialog",
- "tauri-plugin-http",
- "tauri-plugin-notification",
- "tauri-plugin-opener",
- "tauri-plugin-os",
- "tauri-plugin-process",
- "tauri-plugin-shell",
- "tauri-plugin-single-instance",
- "tauri-plugin-store",
- "tauri-plugin-updater",
- "tauri-plugin-window-state",
- "tauri-specta",
- "tokio",
- "tokio-stream",
- "tracing",
- "tracing-appender",
- "tracing-subscriber",
- "uuid",
- "webkit2gtk",
- "windows 0.61.3",
 ]
 
 [[package]]
