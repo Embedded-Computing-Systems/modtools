@@ -45,13 +45,13 @@ export namespace Config {
       case "darwin":
         return "/Library/Application Support/opencode"
       case "win32":
-        return path.join(process.env.ProgramData || "C:\\ProgramData", "opencode")
+        return path.join(process.env.ProgramData || "C:\\ProgramData", "mod")
       default:
         return "/etc/opencode"
     }
   }
 
-  const managedConfigDir = process.env.OPENCODE_TEST_MANAGED_CONFIG_DIR || getManagedConfigDir()
+  const managedConfigDir = process.env.MOD_TEST_MANAGED_CONFIG_DIR || getManagedConfigDir()
 
   // Custom merge function that concatenates array fields instead of replacing them
   function merge(target: Info, source: Info): Info {
@@ -68,13 +68,13 @@ export namespace Config {
   export const state = Instance.state(async () => {
     const auth = await Auth.all()
 
-    // Config loading order (low -> high precedence): https://opencode.ai/docs/config#precedence-order
+    // Config loading order (low -> high precedence): https://mod.tools/docs/config#precedence-order
     // 1) Remote .well-known/opencode (org defaults)
-    // 2) Global config (~/.config/opencode/opencode.json{,c})
-    // 3) Custom config (OPENCODE_CONFIG)
-    // 4) Project config (opencode.json{,c})
-    // 5) .opencode directories (.opencode/agents/, .opencode/commands/, .opencode/plugins/, .opencode/opencode.json{,c})
-    // 6) Inline config (OPENCODE_CONFIG_CONTENT)
+    // 2) Global config (~/.config/opencode/mod.json{,c})
+    // 3) Custom config (MOD_CONFIG)
+    // 4) Project config (mod.json{,c})
+    // 5) .opencode directories (.opencode/agents/, .opencode/commands/, .opencode/plugins/, .opencode/mod.json{,c})
+    // 6) Inline config (MOD_CONFIG_CONTENT)
     // Managed config directory is enterprise-only and always overrides everything above.
     let result: Info = {}
     for (const [key, value] of Object.entries(auth)) {
@@ -88,7 +88,7 @@ export namespace Config {
         const wellknown = (await response.json()) as any
         const remoteConfig = wellknown.config ?? {}
         // Add $schema to prevent load() from trying to write back to a non-existent file
-        if (!remoteConfig.$schema) remoteConfig.$schema = "https://opencode.ai/config.json"
+        if (!remoteConfig.$schema) remoteConfig.$schema = "https://mod.tools/config.json"
         result = merge(result, await load(JSON.stringify(remoteConfig), `${key}/.well-known/opencode`))
         log.debug("loaded remote config from well-known", { url: key })
       }
@@ -102,14 +102,14 @@ export namespace Config {
     result = merge(result, await global())
 
     // Custom config path overrides global config.
-    if (Flag.OPENCODE_CONFIG) {
-      result = merge(result, await loadFile(Flag.OPENCODE_CONFIG))
-      log.debug("loaded custom config", { path: Flag.OPENCODE_CONFIG })
+    if (Flag.MOD_CONFIG) {
+      result = merge(result, await loadFile(Flag.MOD_CONFIG))
+      log.debug("loaded custom config", { path: Flag.MOD_CONFIG })
     }
 
     // Project config overrides global and remote config.
-    if (!Flag.OPENCODE_DISABLE_PROJECT_CONFIG) {
-      for (const file of ["opencode.jsonc", "opencode.json"]) {
+    if (!Flag.MOD_DISABLE_PROJECT_CONFIG) {
+      for (const file of ["mod.jsonc", "mod.json"]) {
         const found = await Filesystem.findUp(file, Instance.directory, Instance.worktree)
         for (const resolved of found.toReversed()) {
           result = merge(result, await loadFile(resolved))
@@ -124,10 +124,10 @@ export namespace Config {
     const directories = [
       Global.Path.config,
       // Only scan project .opencode/ directories when project discovery is enabled
-      ...(!Flag.OPENCODE_DISABLE_PROJECT_CONFIG
+      ...(!Flag.MOD_DISABLE_PROJECT_CONFIG
         ? await Array.fromAsync(
             Filesystem.up({
-              targets: [".opencode"],
+              targets: [".mod"],
               start: Instance.directory,
               stop: Instance.worktree,
             }),
@@ -136,7 +136,7 @@ export namespace Config {
       // Always scan ~/.opencode/ (user home directory)
       ...(await Array.fromAsync(
         Filesystem.up({
-          targets: [".opencode"],
+          targets: [".mod"],
           start: Global.Path.home,
           stop: Global.Path.home,
         }),
@@ -144,16 +144,16 @@ export namespace Config {
     ]
 
     // .opencode directory config overrides (project and global) config sources.
-    if (Flag.OPENCODE_CONFIG_DIR) {
-      directories.push(Flag.OPENCODE_CONFIG_DIR)
-      log.debug("loading config from OPENCODE_CONFIG_DIR", { path: Flag.OPENCODE_CONFIG_DIR })
+    if (Flag.MOD_CONFIG_DIR) {
+      directories.push(Flag.MOD_CONFIG_DIR)
+      log.debug("loading config from MOD_CONFIG_DIR", { path: Flag.MOD_CONFIG_DIR })
     }
 
     const deps = []
 
     for (const dir of unique(directories)) {
-      if (dir.endsWith(".opencode") || dir === Flag.OPENCODE_CONFIG_DIR) {
-        for (const file of ["opencode.jsonc", "opencode.json"]) {
+      if (dir.endsWith(".mod") || dir === Flag.MOD_CONFIG_DIR) {
+        for (const file of ["mod.jsonc", "mod.json"]) {
           log.debug(`loading config from ${path.join(dir, file)}`)
           result = merge(result, await loadFile(path.join(dir, file)))
           // to satisfy the type checker
@@ -177,9 +177,9 @@ export namespace Config {
     }
 
     // Inline config content overrides all non-managed config sources.
-    if (Flag.OPENCODE_CONFIG_CONTENT) {
-      result = merge(result, JSON.parse(Flag.OPENCODE_CONFIG_CONTENT))
-      log.debug("loaded custom config from OPENCODE_CONFIG_CONTENT")
+    if (Flag.MOD_CONFIG_CONTENT) {
+      result = merge(result, JSON.parse(Flag.MOD_CONFIG_CONTENT))
+      log.debug("loaded custom config from MOD_CONFIG_CONTENT")
     }
 
     // Load managed config files last (highest priority) - enterprise admin-controlled
@@ -187,7 +187,7 @@ export namespace Config {
     // which would fail on system directories requiring elevated permissions
     // This way it only loads config file and not skills/plugins/commands
     if (existsSync(managedConfigDir)) {
-      for (const file of ["opencode.jsonc", "opencode.json"]) {
+      for (const file of ["mod.jsonc", "mod.json"]) {
         result = merge(result, await loadFile(path.join(managedConfigDir, file)))
       }
     }
@@ -202,8 +202,8 @@ export namespace Config {
       })
     }
 
-    if (Flag.OPENCODE_PERMISSION) {
-      result.permission = mergeDeep(result.permission ?? {}, JSON.parse(Flag.OPENCODE_PERMISSION))
+    if (Flag.MOD_PERMISSION) {
+      result.permission = mergeDeep(result.permission ?? {}, JSON.parse(Flag.MOD_PERMISSION))
     }
 
     // Backwards compatibility: legacy top-level `tools` config
@@ -230,10 +230,10 @@ export namespace Config {
     if (!result.keybinds) result.keybinds = Info.shape.keybinds.parse({})
 
     // Apply flag overrides for compaction settings
-    if (Flag.OPENCODE_DISABLE_AUTOCOMPACT) {
+    if (Flag.MOD_DISABLE_AUTOCOMPACT) {
       result.compaction = { ...result.compaction, auto: false }
     }
-    if (Flag.OPENCODE_DISABLE_PRUNE) {
+    if (Flag.MOD_DISABLE_PRUNE) {
       result.compaction = { ...result.compaction, prune: false }
     }
 
@@ -495,9 +495,9 @@ export namespace Config {
    * Deduplicates plugins by name, with later entries (higher priority) winning.
    * Priority order (highest to lowest):
    * 1. Local plugin/ directory
-   * 2. Local opencode.json
+   * 2. Local mod.json
    * 3. Global plugin/ directory
-   * 4. Global opencode.json
+   * 4. Global mod.json
    *
    * Since plugins are added in low-to-high priority order,
    * we reverse, deduplicate (keeping first occurrence), then restore order.
@@ -1014,7 +1014,7 @@ export namespace Config {
       command: z
         .record(z.string(), Command)
         .optional()
-        .describe("Command configuration, see https://opencode.ai/docs/commands"),
+        .describe("Command configuration, see https://mod.tools/docs/commands"),
       skills: Skills.optional().describe("Additional skill folder paths"),
       watcher: z
         .object({
@@ -1081,7 +1081,7 @@ export namespace Config {
         })
         .catchall(Agent)
         .optional()
-        .describe("Agent configuration, see https://opencode.ai/docs/agents"),
+        .describe("Agent configuration, see https://mod.tools/docs/agents"),
       provider: z
         .record(z.string(), Provider)
         .optional()
@@ -1204,9 +1204,24 @@ export namespace Config {
     let result: Info = pipe(
       {},
       mergeDeep(await loadFile(path.join(Global.Path.config, "config.json"))),
-      mergeDeep(await loadFile(path.join(Global.Path.config, "opencode.json"))),
-      mergeDeep(await loadFile(path.join(Global.Path.config, "opencode.jsonc"))),
+      mergeDeep(await loadFile(path.join(Global.Path.config, "mod.json"))),
+      mergeDeep(await loadFile(path.join(Global.Path.config, "mod.jsonc"))),
     )
+
+    // Fallback to old opencode config location for backward compatibility
+    const opencodeConfigDir = path.join(os.homedir(), ".config", "opencode")
+    if (!result.model || Object.keys(result).length <= 1) {
+      const opencodeFallback = pipe(
+        {},
+        mergeDeep(await loadFile(path.join(opencodeConfigDir, "config.json"))),
+        mergeDeep(await loadFile(path.join(opencodeConfigDir, "opencode.json"))),
+        mergeDeep(await loadFile(path.join(opencodeConfigDir, "opencode.jsonc"))),
+      )
+      result = mergeDeep(result, opencodeFallback)
+      if (Object.keys(opencodeFallback).length > 0) {
+        log.debug("loaded config from opencode fallback location", { path: opencodeConfigDir })
+      }
+    }
 
     const legacy = path.join(Global.Path.config, "config")
     if (existsSync(legacy)) {
@@ -1218,12 +1233,28 @@ export namespace Config {
         .then(async (mod) => {
           const { provider, model, ...rest } = mod.default
           if (provider && model) result.model = `${provider}/${model}`
-          result["$schema"] = "https://opencode.ai/config.json"
+          result["$schema"] = "https://mod.tools/config.json"
           result = mergeDeep(result, rest)
           await Bun.write(path.join(Global.Path.config, "config.json"), JSON.stringify(result, null, 2))
           await fs.unlink(legacy)
         })
         .catch(() => {})
+    }
+
+    // Set default ZEN free API configuration if no providers configured
+    if (!result.provider) {
+      result.provider = {
+        zenmux: {
+          options: {
+            baseURL: "https://api.mod.tools/zen/v1",
+            headers: {
+              "HTTP-Referer": "https://mod.tools/",
+              "X-Title": "mod",
+            },
+          },
+        },
+      }
+      log.debug("configured default ZEN free API provider")
     }
 
     return result
@@ -1311,9 +1342,9 @@ export namespace Config {
     const parsed = Info.safeParse(data)
     if (parsed.success) {
       if (!parsed.data.$schema) {
-        parsed.data.$schema = "https://opencode.ai/config.json"
+        parsed.data.$schema = "https://mod.tools/config.json"
         // Write the $schema to the original text to preserve variables like {env:VAR}
-        const updated = original.replace(/^\s*\{/, '{\n  "$schema": "https://opencode.ai/config.json",')
+        const updated = original.replace(/^\s*\{/, '{\n  "$schema": "https://mod.tools/config.json",')
         await Bun.write(configFilepath, updated).catch(() => {})
       }
       const data = parsed.data
@@ -1375,9 +1406,7 @@ export namespace Config {
   }
 
   function globalConfigFile() {
-    const candidates = ["opencode.jsonc", "opencode.json", "config.json"].map((file) =>
-      path.join(Global.Path.config, file),
-    )
+    const candidates = ["mod.jsonc", "mod.json", "config.json"].map((file) => path.join(Global.Path.config, file))
     for (const file of candidates) {
       if (existsSync(file)) return file
     }

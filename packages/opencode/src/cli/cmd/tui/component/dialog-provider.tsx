@@ -214,13 +214,13 @@ function ApiMethod(props: ApiMethodProps) {
       title={props.title}
       placeholder="API key"
       description={
-        props.providerID === "opencode" ? (
+        props.providerID === "mod" ? (
           <box gap={1}>
             <text fg={theme.textMuted}>
-              OpenCode Zen gives you access to all the best coding models at the cheapest prices with a single API key.
+              MOD Zen gives you access to all the best coding models at the cheapest prices with a single API key.
             </text>
             <text fg={theme.text}>
-              Go to <span style={{ fg: theme.primary }}>https://opencode.ai/zen</span> to get a key
+              Go to <span style={{ fg: theme.primary }}>https://mod.tools/zen</span> to get a key
             </text>
           </box>
         ) : undefined

@@ -11,8 +11,8 @@ use tracing::Instrument;
 
 use crate::constants::{SETTINGS_STORE, WSL_ENABLED_KEY};
 
-const CLI_INSTALL_DIR: &str = ".opencode/bin";
-const CLI_BINARY_NAME: &str = "opencode";
+const CLI_INSTALL_DIR: &str = ".mod/bin";
+const CLI_BINARY_NAME: &str = "mod";
 
 #[derive(serde::Deserialize, Debug)]
 pub struct ServerConfig {
@@ -57,7 +57,7 @@ pub fn get_sidecar_path(app: &tauri::AppHandle) -> std::path::PathBuf {
         .expect("Failed to get current binary")
         .parent()
         .expect("Failed to get parent dir")
-        .join("opencode-cli")
+        .join("mod-cli")
 }
 
 fn is_cli_installed() -> bool {
@@ -80,7 +80,7 @@ pub fn install_cli(app: tauri::AppHandle) -> Result<String, String> {
         return Err("Sidecar binary not found".to_string());
     }
 
-    let temp_script = std::env::temp_dir().join("opencode-install.sh");
+    let temp_script = std::env::temp_dir().join("mod-install.sh");
     std::fs::write(&temp_script, INSTALL_SCRIPT)
         .map_err(|e| format!("Failed to write install script: {}", e))?;
 
@@ -223,10 +223,10 @@ pub fn spawn_command(
             let version = app.package_info().version.to_string();
             let mut script = vec![
                 "set -e".to_string(),
-                "BIN=\"$HOME/.opencode/bin/opencode\"".to_string(),
+                "BIN=\"$HOME/.mod/bin/mod\"".to_string(),
                 "if [ ! -x \"$BIN\" ]; then".to_string(),
                 format!(
-                    "  curl -fsSL https://opencode.ai/install | bash -s -- --version {} --no-modify-path",
+                    "  curl -fsSL https://mod.ai/install | bash -s -- --version {} --no-modify-path",
                     shell_escape(&version)
                 ),
                 "fi".to_string(),
@@ -255,7 +255,7 @@ pub fn spawn_command(
         } else {
             let mut cmd = app
                 .shell()
-                .sidecar("opencode-cli")
+                .sidecar("mod-cli")
                 .unwrap()
                 .args(args.split_whitespace());
 
@@ -302,7 +302,7 @@ pub fn serve(
     tracing::info!(port, "Spawning sidecar");
 
     let envs = [
-        ("OPENCODE_SERVER_USERNAME", "opencode".to_string()),
+        ("OPENCODE_SERVER_USERNAME", "mod".to_string()),
         ("OPENCODE_SERVER_PASSWORD", password.to_string()),
     ];
 
@@ -311,7 +311,7 @@ pub fn serve(
         format!("--print-logs --log-level WARN serve --hostname {hostname} --port {port}").as_str(),
         &envs,
     )
-    .expect("Failed to spawn opencode");
+    .expect("Failed to spawn mod");
 
     let mut exit_tx = Some(exit_tx);
     tokio::spawn(

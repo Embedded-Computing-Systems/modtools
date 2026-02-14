@@ -1,4 +1,16 @@
 // @refresh reload
+
+declare global {
+  interface Window {
+    __MOD__?: {
+      deepLinks?: string[]
+      wsl?: boolean
+      updaterEnabled?: boolean
+      serverPassword?: string
+    }
+  }
+}
+
 import { webviewZoom } from "./webview-zoom"
 import { render } from "solid-js/web"
 import {
@@ -42,13 +54,13 @@ void initI18n()
 
 let update: Update | null = null
 
-const deepLinkEvent = "opencode:deep-link"
+const deepLinkEvent = "mod:deep-link"
 
 const emitDeepLinks = (urls: string[]) => {
   if (urls.length === 0) return
-  window.__OPENCODE__ ??= {}
-  const pending = window.__OPENCODE__.deepLinks ?? []
-  window.__OPENCODE__.deepLinks = [...pending, ...urls]
+  window.__MOD__ ??= {}
+  const pending = window.__MOD__.deepLinks ?? []
+  window.__MOD__.deepLinks = [...pending, ...urls]
   window.dispatchEvent(new CustomEvent(deepLinkEvent, { detail: { urls } }))
 }
 
@@ -66,12 +78,12 @@ const createPlatform = (password: Accessor<string | null>): Platform => {
   })()
 
   const wslHome = async () => {
-    if (os !== "windows" || !window.__OPENCODE__?.wsl) return undefined
+    if (os !== "windows" || !window.__MOD__?.wsl) return undefined
     return commands.wslPath("~", "windows").catch(() => undefined)
   }
 
   const handleWslPicker = async <T extends string | string[]>(result: T | null): Promise<T | null> => {
-    if (!result || !window.__OPENCODE__?.wsl) return result
+    if (!result || !window.__MOD__?.wsl) return result
     if (Array.isArray(result)) {
       return Promise.all(result.map((path) => commands.wslPath(path, "linux").catch(() => path))) as any
     }
@@ -119,7 +131,7 @@ const createPlatform = (password: Accessor<string | null>): Platform => {
       if (os === "windows") {
         const resolvedApp = (app && (await commands.resolveAppPath(app))) || app
         const resolvedPath = await (async () => {
-          if (window.__OPENCODE__?.wsl) {
+          if (window.__MOD__?.wsl) {
             const converted = await commands.wslPath(path, "windows").catch(() => null)
             if (converted) return converted
           }
@@ -329,7 +341,7 @@ const createPlatform = (password: Accessor<string | null>): Platform => {
         .then(() => {
           const notification = new Notification(title, {
             body: description ?? "",
-            icon: "https://opencode.ai/favicon-96x96-v3.png",
+            icon: "https://mod.ai/favicon-96x96-v3.png",
           })
           notification.onclick = () => {
             const win = getCurrentWindow()
@@ -347,7 +359,7 @@ const createPlatform = (password: Accessor<string | null>): Platform => {
       const pw = password()
 
       const addHeader = (headers: Headers, password: string) => {
-        headers.append("Authorization", `Basic ${btoa(`opencode:${password}`)}`)
+        headers.append("Authorization", `Basic ${btoa(`mod:${password}`)}`)
       }
 
       if (input instanceof Request) {
@@ -366,7 +378,7 @@ const createPlatform = (password: Accessor<string | null>): Platform => {
     getWslEnabled: async () => {
       const next = await commands.getWslConfig().catch(() => null)
       if (next) return next.enabled
-      return window.__OPENCODE__!.wsl ?? false
+      return window.__MOD__!.wsl ?? false
     },
 
     setWslEnabled: async (enabled) => {
@@ -456,8 +468,8 @@ render(() => {
         <ServerGate>
           {(data) => {
             setServerPassword(data().password)
-            window.__OPENCODE__ ??= {}
-            window.__OPENCODE__.serverPassword = data().password ?? undefined
+            window.__MOD__ ??= {}
+            window.__MOD__.serverPassword = data().password ?? undefined
 
             function Inner() {
               const cmd = useCommand()

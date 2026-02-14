@@ -34,7 +34,7 @@ impl MainWindow {
             WebviewWindowBuilder::new(app, Self::LABEL, WebviewUrl::App("/".into())),
             app,
         )
-        .title("OpenCode")
+        .title("MOD")
         .decorations(true)
         .disable_drag_drop_handler()
         .zoom_hotkeys_enabled(false)
