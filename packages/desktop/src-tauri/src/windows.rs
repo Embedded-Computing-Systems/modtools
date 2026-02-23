@@ -42,9 +42,9 @@ impl MainWindow {
         .maximized(true)
         .initialization_script(format!(
             r#"
-            window.__OPENCODE__ ??= {{}};
-            window.__OPENCODE__.updaterEnabled = {UPDATER_ENABLED};
-            window.__OPENCODE__.wsl = {wsl_enabled};
+            window.__MOD__ ??= {{}};
+            window.__MOD__.updaterEnabled = {UPDATER_ENABLED};
+            window.__MOD__.wsl = {wsl_enabled};
           "#
         ));
 

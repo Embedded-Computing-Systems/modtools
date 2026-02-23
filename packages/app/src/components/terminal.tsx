@@ -428,9 +428,9 @@ export const Terminal = (props: TerminalProps) => {
       url.searchParams.set("directory", sdk.directory)
       url.searchParams.set("cursor", String(start !== undefined ? start : local.pty.buffer ? -1 : 0))
       url.protocol = url.protocol === "https:" ? "wss:" : "ws:"
-      if (window.__OPENCODE__?.serverPassword) {
-        url.username = "opencode"
-        url.password = window.__OPENCODE__?.serverPassword
+      if (window.__MOD__?.serverPassword) {
+        url.username = "mod"
+        url.password = window.__MOD__?.serverPassword
       }
       const socket = new WebSocket(url)
       socket.binaryType = "arraybuffer"

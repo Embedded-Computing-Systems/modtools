@@ -1,7 +1,7 @@
-export const deepLinkEvent = "opencode:deep-link"
+export const deepLinkEvent = "mod:deep-link"
 
 export const parseDeepLink = (input: string) => {
-  if (!input.startsWith("opencode://")) return
+  if (!input.startsWith("mod://") && !input.startsWith("opencode://")) return
   if (typeof URL.canParse === "function" && !URL.canParse(input)) return
   const url = (() => {
     try {
@@ -20,15 +20,15 @@ export const parseDeepLink = (input: string) => {
 export const collectOpenProjectDeepLinks = (urls: string[]) =>
   urls.map(parseDeepLink).filter((directory): directory is string => !!directory)
 
-type OpenCodeWindow = Window & {
-  __OPENCODE__?: {
+type ModWindow = Window & {
+  __MOD__?: {
     deepLinks?: string[]
   }
 }
 
-export const drainPendingDeepLinks = (target: OpenCodeWindow) => {
-  const pending = target.__OPENCODE__?.deepLinks ?? []
+export const drainPendingDeepLinks = (target: ModWindow) => {
+  const pending = target.__MOD__?.deepLinks ?? []
   if (pending.length === 0) return []
-  if (target.__OPENCODE__) target.__OPENCODE__.deepLinks = []
+  if (target.__MOD__) target.__MOD__.deepLinks = []
   return pending
 }

@@ -4,7 +4,7 @@ import {
   type Project,
   type ProviderAuthResponse,
   type ProviderListResponse,
-  createOpencodeClient,
+  createModClient,
 } from "@opencode-ai/sdk/v2/client"
 import { createStore, produce, reconcile } from "solid-js/store"
 import { useGlobalSDK } from "./global-sdk"
@@ -73,7 +73,7 @@ function createGlobalSync() {
     loadSessionsFallback: 0,
   }
 
-  const sdkCache = new Map<string, ReturnType<typeof createOpencodeClient>>()
+  const sdkCache = new Map<string, ReturnType<typeof createModClient>>()
   const booting = new Map<string, Promise<void>>()
   const sessionLoads = new Map<string, Promise<void>>()
   const sessionMeta = new Map<string, { limit: number }>()
@@ -100,6 +100,14 @@ function createGlobalSync() {
       evictions: stats.evictions,
       loadSessionsFullFetchFallback: stats.loadSessionsFallback,
     })
+  }
+
+  function setDevStats(value: {
+    activeDirectoryStores: number
+    evictions: number
+    loadSessionsFullFetchFallback: number
+  }) {
+    ;(globalThis as { __MOD_GLOBAL_SYNC_STATS?: typeof value }).__MOD_GLOBAL_SYNC_STATS = value
   }
 
   const paused = () => untrack(() => globalStore.reload) !== undefined
@@ -132,7 +140,7 @@ function createGlobalSync() {
   const sdkFor = (directory: string) => {
     const cached = sdkCache.get(directory)
     if (cached) return cached
-    const sdk = createOpencodeClient({
+    const sdk = createModClient({
       baseUrl: globalSDK.url,
       fetch: platform.fetch,
       directory,

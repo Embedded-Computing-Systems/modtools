@@ -1,6 +1,6 @@
 import { Accessor } from "solid-js"
 import { useNavigate, useParams } from "@solidjs/router"
-import { createOpencodeClient, type Message } from "@opencode-ai/sdk/v2/client"
+import { createModClient, type Message } from "@opencode-ai/sdk/v2/client"
 import { showToast } from "@opencode-ai/ui/toast"
 import { base64Encode } from "@opencode-ai/util/encode"
 import { useLocal } from "@/context/local"
@@ -171,7 +171,7 @@ export function createPromptSubmit(input: PromptSubmitInput) {
       }
 
       if (sessionDirectory !== projectDirectory) {
-        client = createOpencodeClient({
+        client = createModClient({
           baseUrl: sdk.url,
           fetch: platform.fetch,
           directory: sessionDirectory,

@@ -194,7 +194,7 @@ export namespace Server {
         )
         .use(async (c, next) => {
           if (c.req.path === "/log") return next()
-          const raw = c.req.query("directory") || c.req.header("x-opencode-directory") || process.cwd()
+          const raw = c.req.query("directory") || c.req.header("x-mod-directory") || process.cwd()
           const directory = (() => {
             try {
               return decodeURIComponent(raw)
@@ -217,7 +217,7 @@ export namespace Server {
               info: {
                 title: "mod",
                 version: "0.0.3",
-                description: "opencode api",
+                description: "mod api",
               },
               openapi: "3.1.1",
             },
@@ -563,7 +563,7 @@ export namespace Server {
         info: {
           title: "mod",
           version: "1.0.0",
-          description: "opencode api",
+          description: "mod api",
         },
         openapi: "3.1.1",
       },
