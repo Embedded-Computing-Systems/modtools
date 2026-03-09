@@ -3,7 +3,7 @@ export function deactivate() {}
 
 import * as vscode from "vscode"
 
-const TERMINAL_NAME = "modtools"
+const TERMINAL_NAME = "mod"
 
 export function activate(context: vscode.ExtensionContext) {
   let openNewTerminalDisposable = vscode.commands.registerCommand("modtools.openNewTerminal", async () => {
@@ -62,7 +62,7 @@ export function activate(context: vscode.ExtensionContext) {
     })
 
     terminal.show()
-    terminal.sendText(`modtools --port ${port}`)
+    terminal.sendText(`mod --port ${port}`)
 
     const fileRef = getActiveFile()
     if (!fileRef) {

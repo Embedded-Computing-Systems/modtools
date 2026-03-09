@@ -26,7 +26,7 @@
     "commands": [
       {
         "command": "modtools.openTerminal",
-        "title": "Open modtools",
+        "title": "Open mod",
         "icon": {
           "light": "images/button-dark.svg",
           "dark": "images/button-light.svg"
@@ -34,7 +34,7 @@
       },
       {
         "command": "modtools.openNewTerminal",
-        "title": "Open modtools in new tab",
+        "title": "Open mod in new tab",
         "icon": {
           "light": "images/button-dark.svg",
           "dark": "images/button-light.svg"
@@ -56,7 +56,7 @@
     "keybindings": [
       {
         "command": "modtools.openTerminal",
-        "title": "Run modtools",
+        "title": "Run mod",
         "key": "cmd+escape",
         "mac": "cmd+escape",
         "win": "ctrl+escape",
@@ -64,7 +64,7 @@
       },
       {
         "command": "modtools.openNewTerminal",
-        "title": "Run modtools",
+        "title": "Run mod",
         "key": "cmd+shift+escape",
         "mac": "cmd+shift+escape",
         "win": "ctrl+shift+escape",
@@ -72,7 +72,7 @@
       },
       {
         "command": "modtools.addFilepathToTerminal",
-        "title": "modtools: Insert At-Mentioned",
+        "title": "mod: Insert At-Mentioned",
         "key": "cmd+alt+k",
         "mac": "cmd+alt+k",
         "win": "ctrl+alt+K",
