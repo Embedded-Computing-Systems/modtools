@@ -45,7 +45,7 @@ export namespace Plugin {
   export class Service extends ServiceMap.Service<Service, Interface>()("@modtools/Plugin") {}
 
   // Built-in plugins that are directly imported (not installed from npm)
-  const INTERNAL_PLUGINS: PluginInstance[] = [CodexAuthPlugin, CopilotAuthPlugin, GitlabAuthPlugin]
+  const INTERNAL_PLUGINS: PluginInstance[] = [CodexAuthPlugin, CopilotAuthPlugin, GitlabAuthPlugin as any]
 
   function isServerPlugin(value: unknown): value is PluginInstance {
     return typeof value === "function"
