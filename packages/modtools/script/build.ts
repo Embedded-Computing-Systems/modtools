@@ -209,7 +209,6 @@ for (const item of targets) {
     conditions: ["browser"],
     tsconfig: "./tsconfig.json",
     plugins: [plugin],
-    external: ["undici"],
     compile: {
       autoloadBunfig: false,
       autoloadDotenv: false,
