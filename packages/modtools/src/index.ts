@@ -1,4 +1,9 @@
 import yargs from "yargs"
+// @ts-ignore
+if (typeof undici === "undefined" && typeof globalThis.undici !== "undefined") {
+  // @ts-ignore
+  var undici = globalThis.undici
+}
 import { hideBin } from "yargs/helpers"
 import { RunCommand } from "./cli/cmd/run"
 import { GenerateCommand } from "./cli/cmd/generate"
