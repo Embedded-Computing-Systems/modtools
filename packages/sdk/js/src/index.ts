@@ -1,16 +1,16 @@
 export * from "./client.js"
 export * from "./server.js"
 
-import { createOpencodeClient } from "./client.js"
-import { createOpencodeServer } from "./server.js"
+import { createModtoolsClient } from "./client.js"
+import { createModtoolsServer } from "./server.js"
 import type { ServerOptions } from "./server.js"
 
-export async function createOpencode(options?: ServerOptions) {
-  const server = await createOpencodeServer({
+export async function createModtools(options?: ServerOptions) {
+  const server = await createModtoolsServer({
     ...options,
   })
 
-  const client = createOpencodeClient({
+  const client = createModtoolsClient({
     baseUrl: server.url,
   })
 

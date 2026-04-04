@@ -24,14 +24,14 @@ jobs:
         id: setup-git-committer
         uses: ./.github/actions/setup-git-committer
         with:
-          opencode-app-id: ${{ vars.OPENCODE_APP_ID }}
-          opencode-app-secret: ${{ secrets.OPENCODE_APP_SECRET }}
+          modtools-app-id: ${{ vars.MOD_APP_ID }}
+          modtools-app-secret: ${{ secrets.MOD_APP_SECRET }}
 
-      - name: Install OpenCode
-        run: bun i -g opencode-ai
+      - name: Install Model-of-Design Tools
+        run: bun i -g modtools-ai
 
       - name: Sync beta branch
         env:
           GH_TOKEN: ${{ steps.setup-git-committer.outputs.token }}
-          OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
+          MOD_API_KEY: ${{ secrets.MOD_API_KEY }}
         run: bun script/beta.ts

@@ -1,5 +1,5 @@
 {
-  "name": "@opencode-ai/desktop",
+  "name": "@modtools-ai/desktop",
   "private": true,
   "version": "1.3.13",
   "type": "module",
@@ -8,13 +8,13 @@
     "typecheck": "tsgo -b",
     "predev": "bun ./scripts/predev.ts",
     "dev": "vite",
-    "build": "bun run typecheck && vite build",
+    "build": "bun ./scripts/predev.ts && bun run typecheck && vite build",
     "preview": "vite preview",
     "tauri": "tauri"
   },
   "dependencies": {
-    "@opencode-ai/app": "workspace:*",
-    "@opencode-ai/ui": "workspace:*",
+    "@modtools-ai/app": "workspace:*",
+    "@modtools-ai/ui": "workspace:*",
     "@solid-primitives/i18n": "2.2.1",
     "@solid-primitives/storage": "catalog:",
     "@tauri-apps/api": "^2",

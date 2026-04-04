@@ -20,10 +20,10 @@ body:
       required: false
 
   - type: input
-    id: opencode-version
+    id: modtools-version
     attributes:
-      label: OpenCode version
-      description: What version of OpenCode are you using?
+      label: Model-of-Design Tools version
+      description: What version of Model-of-Design Tools are you using?
     validations:
       required: false
 

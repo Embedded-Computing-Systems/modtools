@@ -1,6 +1,6 @@
-import { FileDiff, Message, Model, Part, Session } from "@opencode-ai/sdk/v2"
-import { fn } from "@opencode-ai/util/fn"
-import { iife } from "@opencode-ai/util/iife"
+import { FileDiff, Message, Model, Part, Session } from "@modtools-ai/sdk/v2"
+import { fn } from "@modtools-ai/util/fn"
+import { iife } from "@modtools-ai/util/iife"
 import z from "zod"
 import { Storage } from "./storage"
 

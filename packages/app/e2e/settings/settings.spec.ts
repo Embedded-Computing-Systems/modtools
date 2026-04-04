@@ -30,7 +30,7 @@ test("smoke settings dialog opens, switches tabs, closes", async ({ page, gotoSe
 
 test("changing language updates settings labels", async ({ page, gotoSession }) => {
   await page.addInitScript(() => {
-    localStorage.setItem("opencode.global.dat:language", JSON.stringify({ locale: "en" }))
+    localStorage.setItem("modtools.global.dat:language", JSON.stringify({ locale: "en" }))
   })
 
   await gotoSession()
@@ -115,7 +115,7 @@ test("changing theme persists in localStorage", async ({ page, gotoSession }) =>
   await page.keyboard.press("Escape")
 
   const storedThemeId = await page.evaluate(() => {
-    return localStorage.getItem("opencode-theme-id")
+    return localStorage.getItem("modtools-theme-id")
   })
 
   expect(storedThemeId).not.toBeNull()
@@ -127,29 +127,29 @@ test("changing theme persists in localStorage", async ({ page, gotoSession }) =>
   expect(dataTheme).toBe(storedThemeId)
 })
 
-test("legacy oc-1 theme migrates to oc-2", async ({ page, gotoSession }) => {
+test("legacy oc-1 theme migrates to mod-2", async ({ page, gotoSession }) => {
   await page.addInitScript(() => {
-    localStorage.setItem("opencode-theme-id", "oc-1")
-    localStorage.setItem("opencode-theme-css-light", "--background-base:#fff;")
-    localStorage.setItem("opencode-theme-css-dark", "--background-base:#000;")
+    localStorage.setItem("modtools-theme-id", "oc-1")
+    localStorage.setItem("modtools-theme-css-light", "--background-base:#fff;")
+    localStorage.setItem("modtools-theme-css-dark", "--background-base:#000;")
   })
 
   await gotoSession()
 
-  await expect(page.locator("html")).toHaveAttribute("data-theme", "oc-2")
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "mod-2")
 
   await expect
     .poll(async () => {
       return await page.evaluate(() => {
-        return localStorage.getItem("opencode-theme-id")
+        return localStorage.getItem("modtools-theme-id")
       })
     })
-    .toBe("oc-2")
+    .toBe("mod-2")
 
   await expect
     .poll(async () => {
       return await page.evaluate(() => {
-        return localStorage.getItem("opencode-theme-css-light")
+        return localStorage.getItem("modtools-theme-css-light")
       })
     })
     .toBeNull()
@@ -157,7 +157,7 @@ test("legacy oc-1 theme migrates to oc-2", async ({ page, gotoSession }) => {
   await expect
     .poll(async () => {
       return await page.evaluate(() => {
-        return localStorage.getItem("opencode-theme-css-dark")
+        return localStorage.getItem("modtools-theme-css-dark")
       })
     })
     .toBeNull()

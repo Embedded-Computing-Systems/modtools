@@ -1,6 +1,6 @@
 ## project
 
-The goal is to let a single instance of OpenCode run sessions for multiple projects and different worktrees per project.
+The goal is to let a single instance of Model-of-Design Tools run sessions for multiple projects and different worktrees per project.
 
 ### api
 

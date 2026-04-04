@@ -41,8 +41,8 @@ export const Basic = {
   render: () => (
     <div style={{ display: "grid", gap: "8px" }}>
       <mod.Font />
-      <div style={{ "font-family": "var(--font-family-sans)" }}>OpenCode Sans Sample</div>
-      <div style={{ "font-family": "var(--font-family-mono)" }}>OpenCode Mono Sample</div>
+      <div style={{ "font-family": "var(--font-family-sans)" }}>Model-of-Design Tools Sans Sample</div>
+      <div style={{ "font-family": "var(--font-family-mono)" }}>Model-of-Design Tools Mono Sample</div>
     </div>
   ),
 }

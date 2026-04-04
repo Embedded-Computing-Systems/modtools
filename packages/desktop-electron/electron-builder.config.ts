@@ -21,13 +21,13 @@ async function signWindows(configuration: { path: string }) {
 }
 
 const channel = (() => {
-  const raw = process.env.OPENCODE_CHANNEL
+  const raw = process.env.MOD_CHANNEL
   if (raw === "dev" || raw === "beta" || raw === "prod") return raw
   return "dev"
 })()
 
 const getBase = (): Configuration => ({
-  artifactName: "opencode-electron-${os}-${arch}.${ext}",
+  artifactName: "modtools-electron-${os}-${arch}.${ext}",
   directories: {
     output: "dist",
     buildResources: "resources",
@@ -37,7 +37,7 @@ const getBase = (): Configuration => ({
     {
       from: "resources/",
       to: "",
-      filter: ["opencode-cli*"],
+      filter: ["modtools-cli*"],
     },
     {
       from: "native/",
@@ -59,8 +59,8 @@ const getBase = (): Configuration => ({
     sign: true,
   },
   protocols: {
-    name: "OpenCode",
-    schemes: ["opencode"],
+    name: "Model-of-Design Tools",
+    schemes: ["modtools"],
   },
   win: {
     icon: `resources/icons/icon.ico`,
@@ -89,29 +89,29 @@ function getConfig() {
     case "dev": {
       return {
         ...base,
-        appId: "ai.opencode.desktop.dev",
-        productName: "OpenCode Dev",
-        rpm: { packageName: "opencode-dev" },
+        appId: "ai.modtools.desktop.dev",
+        productName: "Model-of-Design Tools Dev",
+        rpm: { packageName: "modtools-dev" },
       }
     }
     case "beta": {
       return {
         ...base,
-        appId: "ai.opencode.desktop.beta",
-        productName: "OpenCode Beta",
-        protocols: { name: "OpenCode Beta", schemes: ["opencode"] },
-        publish: { provider: "github", owner: "anomalyco", repo: "opencode-beta", channel: "latest" },
-        rpm: { packageName: "opencode-beta" },
+        appId: "ai.modtools.desktop.beta",
+        productName: "Model-of-Design Tools Beta",
+        protocols: { name: "Model-of-Design Tools Beta", schemes: ["modtools"] },
+        publish: { provider: "github", owner: "Embedded-Computing-Systems", repo: "modtools-beta", channel: "latest" },
+        rpm: { packageName: "modtools-beta" },
       }
     }
     case "prod": {
       return {
         ...base,
-        appId: "ai.opencode.desktop",
-        productName: "OpenCode",
-        protocols: { name: "OpenCode", schemes: ["opencode"] },
-        publish: { provider: "github", owner: "anomalyco", repo: "opencode", channel: "latest" },
-        rpm: { packageName: "opencode" },
+        appId: "ai.modtools.desktop",
+        productName: "Model-of-Design Tools",
+        protocols: { name: "Model-of-Design Tools", schemes: ["modtools"] },
+        publish: { provider: "github", owner: "Embedded-Computing-Systems", repo: "modtools", channel: "latest" },
+        rpm: { packageName: "modtools" },
       }
     }
   }

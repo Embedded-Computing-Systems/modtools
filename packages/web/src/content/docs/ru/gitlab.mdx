@@ -1,68 +1,68 @@
 ---
 title: GitLab
-description: Используйте opencode в задачах GitLab и мерж-реквестах.
+description: Используйте modtools в задачах GitLab и мерж-реквестах.
 ---
 
-opencode интегрируется с вашим рабочим процессом GitLab через конвейер GitLab CI/CD или с GitLab Duo.
+modtools интегрируется с вашим рабочим процессом GitLab через конвейер GitLab CI/CD или с GitLab Duo.
 
-В обоих случаях opencode будет работать на ваших программах GitLab.
+В обоих случаях modtools будет работать на ваших программах GitLab.
 
 ---
 
 ## GitLab
 
-opencode работает в обычном конвейере GitLab. Вы можете встроить его в конвейер как [CI-компонент](https://docs.gitlab.com/ee/ci/components/)
+modtools работает в обычном конвейере GitLab. Вы можете встроить его в конвейер как [CI-компонент](https://docs.gitlab.com/ee/ci/components/)
 
-Здесь мы используем созданный сообществом компонент CI/CD для opencode — [nagyv/gitlab-opencode](https://gitlab.com/nagyv/gitlab-opencode).
+Здесь мы используем созданный сообществом компонент CI/CD для modtools — [nagyv/gitlab-modtools](https://gitlab.com/nagyv/gitlab-modtools).
 
 ---
 
 ### Функции
 
-- **Использовать пользовательскую конфигурацию для каждого задания**. Настройте opencode с помощью пользовательского каталога конфигурации, например `./config/#custom-directory`, чтобы включать или отключать функциональность для каждого вызова opencode.
-- **Минимальная настройка**: компонент CI настраивает opencode в фоновом режиме, вам нужно только создать конфигурацию opencode и начальное приглашение.
+- **Использовать пользовательскую конфигурацию для каждого задания**. Настройте modtools с помощью пользовательского каталога конфигурации, например `./config/#custom-directory`, чтобы включать или отключать функциональность для каждого вызова modtools.
+- **Минимальная настройка**: компонент CI настраивает modtools в фоновом режиме, вам нужно только создать конфигурацию modtools и начальное приглашение.
 - **Гибкость**: компонент CI поддерживает несколько входных данных для настройки его поведения.
 
 ---
 
 ### Настройка
 
-1. Сохраните JSON аутентификации opencode как переменные среды CI типа файла в разделе **Настройки** > **CI/CD** > **Переменные**. Обязательно пометьте их как «Замаскированные и скрытые».
+1. Сохраните JSON аутентификации modtools как переменные среды CI типа файла в разделе **Настройки** > **CI/CD** > **Переменные**. Обязательно пометьте их как «Замаскированные и скрытые».
 2. Добавьте следующее в файл `.gitlab-ci.yml`.
 
    ```yaml title=".gitlab-ci.yml"
    include:
-     - component: $CI_SERVER_FQDN/nagyv/gitlab-opencode/opencode@2
+     - component: $CI_SERVER_FQDN/nagyv/gitlab-modtools/modtools@2
        inputs:
-         config_dir: ${CI_PROJECT_DIR}/opencode-config
-         auth_json: $OPENCODE_AUTH_JSON # The variable name for your OpenCode authentication JSON
+         config_dir: ${CI_PROJECT_DIR}/modtools-config
+         auth_json: $MOD_AUTH_JSON # The variable name for your Model-of-Design Tools authentication JSON
          command: optional-custom-command
          message: "Your prompt here"
    ```
 
-Дополнительные сведения и варианты использования см. в документации ](https://gitlab.com/explore/catalog/nagyv/gitlab-opencode) для этого компонента.
+Дополнительные сведения и варианты использования см. в документации ](https://gitlab.com/explore/catalog/nagyv/gitlab-modtools) для этого компонента.
 
 ---
 
 ## GitLab Duo
 
-opencode интегрируется с вашим рабочим процессом GitLab.
-Упомяните `@opencode` в комментарии, и opencode выполнит задачи в вашем конвейере GitLab CI.
+modtools интегрируется с вашим рабочим процессом GitLab.
+Упомяните `@modtools` в комментарии, и modtools выполнит задачи в вашем конвейере GitLab CI.
 
 ---
 
 ### Функции
 
-- **Триаж задач (Issue Triage)**. Попросите opencode разобраться в проблеме и объяснить ее вам.
-- **Исправление и реализация**. Попросите opencode исправить проблему или реализовать функцию.
+- **Триаж задач (Issue Triage)**. Попросите modtools разобраться в проблеме и объяснить ее вам.
+- **Исправление и реализация**. Попросите modtools исправить проблему или реализовать функцию.
   Он создаст новую ветку и создаст мерж-реквест с изменениями.
-- **Безопасность**: opencode работает на ваших программах GitLab.
+- **Безопасность**: modtools работает на ваших программах GitLab.
 
 ---
 
 ### Настройка
 
-opencode работает в вашем конвейере GitLab CI/CD. Вот что вам понадобится для его настройки:
+modtools работает в вашем конвейере GitLab CI/CD. Вот что вам понадобится для его настройки:
 
 :::tip
 Ознакомьтесь с [**документацией GitLab**](https://docs.gitlab.com/user/duo_agent_platform/agent_assistant/) для получения актуальных инструкций.
@@ -82,19 +82,19 @@ opencode работает в вашем конвейере GitLab CI/CD. Вот 
     ```yaml
     image: node:22-slim
     commands:
-      - echo "Installing opencode"
-      - npm install --global opencode-ai
+      - echo "Installing modtools"
+      - npm install --global modtools-ai
       - echo "Installing glab"
-      - export GITLAB_TOKEN=$GITLAB_TOKEN_OPENCODE
+      - export GITLAB_TOKEN=$GITLAB_TOKEN_MOD
       - apt-get update --quiet && apt-get install --yes curl wget gpg git && rm --recursive --force /var/lib/apt/lists/*
       - curl --silent --show-error --location "https://raw.githubusercontent.com/upciti/wakemeops/main/assets/install_repository" | bash
       - apt-get install --yes glab
       - echo "Configuring glab"
       - echo $GITLAB_HOST
-      - echo "Creating OpenCode auth configuration"
-      - mkdir --parents ~/.local/share/opencode
+      - echo "Creating Model-of-Design Tools auth configuration"
+      - mkdir --parents ~/.local/share/modtools
       - |
-        cat > ~/.local/share/opencode/auth.json << EOF
+        cat > ~/.local/share/modtools/auth.json << EOF
         {
           "anthropic": {
             "type": "api",
@@ -103,13 +103,13 @@ opencode работает в вашем конвейере GitLab CI/CD. Вот 
         }
         EOF
       - echo "Configuring git"
-      - git config --global user.email "opencode@gitlab.com"
-      - git config --global user.name "OpenCode"
+      - git config --global user.email "modtools@gitlab.com"
+      - git config --global user.name "Model-of-Design Tools"
       - echo "Testing glab"
       - glab issue list
-      - echo "Running OpenCode"
+      - echo "Running Model-of-Design Tools"
       - |
-        opencode run "
+        modtools run "
         You are an AI assistant helping with GitLab operations.
 
         Context: $AI_FLOW_CONTEXT
@@ -146,7 +146,7 @@ opencode работает в вашем конвейере GitLab CI/CD. Вот 
         fi
     variables:
       - ANTHROPIC_API_KEY
-      - GITLAB_TOKEN_OPENCODE
+      - GITLAB_TOKEN_MOD
       - GITLAB_HOST
     ```
 
@@ -158,10 +158,10 @@ opencode работает в вашем конвейере GitLab CI/CD. Вот 
 
 ### Примеры
 
-Вот несколько примеров того, как вы можете использовать opencode в GitLab.
+Вот несколько примеров того, как вы можете использовать modtools в GitLab.
 
 :::tip
-Вы можете настроить использование триггерной фразы, отличной от `@opencode`.
+Вы можете настроить использование триггерной фразы, отличной от `@modtools`.
 :::
 
 - **Объяснение проблемы**
@@ -169,27 +169,27 @@ opencode работает в вашем конвейере GitLab CI/CD. Вот 
   Добавьте этот комментарий в issue GitLab.
 
   ```
-  @opencode explain this issue
+  @modtools explain this issue
   ```
 
-  opencode прочитает проблему и ответит с четким объяснением.
+  modtools прочитает проблему и ответит с четким объяснением.
 
 - **Исправление проблемы**
 
   В issue GitLab напишите:
 
   ```
-  @opencode fix this
+  @modtools fix this
   ```
 
-  opencode создаст новую ветку, внедрит изменения и откроет мерж-реквест с изменениями.
+  modtools создаст новую ветку, внедрит изменения и откроет мерж-реквест с изменениями.
 
 - **Проверка Merge Request**
 
   Оставьте следующий комментарий к мерж-реквесту GitLab.
 
   ```
-  @opencode review this merge request
+  @modtools review this merge request
   ```
 
-  opencode рассмотрит мерж-реквест и предоставит отзыв.
+  modtools рассмотрит мерж-реквест и предоставит отзыв.

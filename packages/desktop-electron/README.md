@@ -1,6 +1,6 @@
-# OpenCode Desktop
+# Model-of-Design Tools Desktop
 
-Native OpenCode desktop app, built with Tauri v2.
+Native Model-of-Design Tools desktop app, built with Tauri v2.
 
 ## Development
 

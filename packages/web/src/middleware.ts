@@ -20,7 +20,7 @@ function docsAlias(pathname: string) {
 
 function cookie(locale: string) {
   const value = locale === "root" ? "en" : locale
-  return `oc_locale=${encodeURIComponent(value)}; Path=/; Max-Age=31536000; SameSite=Lax`
+  return `mod_locale=${encodeURIComponent(value)}; Path=/; Max-Age=31536000; SameSite=Lax`
 }
 
 function redirect(url: URL, path: string, locale?: string) {
@@ -41,8 +41,8 @@ function localeFromCookie(header: string | null) {
   const raw = header
     .split(";")
     .map((x) => x.trim())
-    .find((x) => x.startsWith("oc_locale="))
-    ?.slice("oc_locale=".length)
+    .find((x) => x.startsWith("mod_locale="))
+    ?.slice("mod_locale=".length)
   if (!raw) return null
   return matchLocale(raw)
 }

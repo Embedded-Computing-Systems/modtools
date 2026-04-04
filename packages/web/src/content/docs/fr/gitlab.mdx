@@ -1,68 +1,68 @@
 ---
 title: GitLab
-description: Utilisez OpenCode dans les issues GitLab et les merge requests.
+description: Utilisez Model-of-Design Tools dans les issues GitLab et les merge requests.
 ---
 
-OpenCode s'intègre à votre flux de travail GitLab via votre pipeline CI/CD GitLab ou avec GitLab Duo.
+Model-of-Design Tools s'intègre à votre flux de travail GitLab via votre pipeline CI/CD GitLab ou avec GitLab Duo.
 
-Dans les deux cas, OpenCode fonctionnera sur vos runners GitLab.
+Dans les deux cas, Model-of-Design Tools fonctionnera sur vos runners GitLab.
 
 ---
 
 ## GitLab CI
 
-OpenCode fonctionne dans un pipeline GitLab régulier. Vous pouvez l'intégrer dans un pipeline en tant que [composant CI](https://docs.gitlab.com/ee/ci/components/)
+Model-of-Design Tools fonctionne dans un pipeline GitLab régulier. Vous pouvez l'intégrer dans un pipeline en tant que [composant CI](https://docs.gitlab.com/ee/ci/components/)
 
-Ici, nous utilisons un composant CI/CD créé par la communauté pour OpenCode — [nagyv/gitlab-opencode](https://gitlab.com/nagyv/gitlab-opencode).
+Ici, nous utilisons un composant CI/CD créé par la communauté pour Model-of-Design Tools — [nagyv/gitlab-modtools](https://gitlab.com/nagyv/gitlab-modtools).
 
 ---
 
 ### Fonctionnalités
 
-- **Utiliser une configuration personnalisée par tâche** : configurez OpenCode avec un répertoire de configuration personnalisé, par exemple `./config/#custom-directory` pour activer ou désactiver la fonctionnalité pour chaque appel d'OpenCode.
-- **Configuration minimale** : le composant CI configure OpenCode en arrière-plan, il vous suffit de créer la configuration OpenCode et le prompt initial.
+- **Utiliser une configuration personnalisée par tâche** : configurez Model-of-Design Tools avec un répertoire de configuration personnalisé, par exemple `./config/#custom-directory` pour activer ou désactiver la fonctionnalité pour chaque appel d'Model-of-Design Tools.
+- **Configuration minimale** : le composant CI configure Model-of-Design Tools en arrière-plan, il vous suffit de créer la configuration Model-of-Design Tools et le prompt initial.
 - **Flexible** : le composant CI prend en charge plusieurs entrées pour personnaliser son comportement
 
 ---
 
 ### Installation
 
-1. Stockez votre authentification OpenCode JSON en tant que variables d'environnement CI de type fichier sous **Paramètres** > **CI/CD** > **Variables**. Assurez-vous de les marquer comme « Masquées et protégées ».
+1. Stockez votre authentification Model-of-Design Tools JSON en tant que variables d'environnement CI de type fichier sous **Paramètres** > **CI/CD** > **Variables**. Assurez-vous de les marquer comme « Masquées et protégées ».
 2. Ajoutez ce qui suit à votre fichier `.gitlab-ci.yml`.
 
    ```yaml title=".gitlab-ci.yml"
    include:
-     - component: $CI_SERVER_FQDN/nagyv/gitlab-opencode/opencode@2
+     - component: $CI_SERVER_FQDN/nagyv/gitlab-modtools/modtools@2
        inputs:
-         config_dir: ${CI_PROJECT_DIR}/opencode-config
-         auth_json: $OPENCODE_AUTH_JSON # The variable name for your OpenCode authentication JSON
+         config_dir: ${CI_PROJECT_DIR}/modtools-config
+         auth_json: $MOD_AUTH_JSON # The variable name for your Model-of-Design Tools authentication JSON
          command: optional-custom-command
          message: "Your prompt here"
    ```
 
-Pour plus d'entrées et de cas d'utilisation [consultez la doc](https://gitlab.com/explore/catalog/nagyv/gitlab-opencode) pour ce composant.
+Pour plus d'entrées et de cas d'utilisation [consultez la doc](https://gitlab.com/explore/catalog/nagyv/gitlab-modtools) pour ce composant.
 
 ---
 
 ## GitLab Duo
 
-OpenCode s'intègre à votre flux de travail GitLab.
-Mentionnez `@opencode` dans un commentaire et OpenCode exécutera les tâches au sein de votre pipeline CI GitLab.
+Model-of-Design Tools s'intègre à votre flux de travail GitLab.
+Mentionnez `@modtools` dans un commentaire et Model-of-Design Tools exécutera les tâches au sein de votre pipeline CI GitLab.
 
 ---
 
 ### Fonctionnalités
 
-- **Triage d'issues** : demandez à OpenCode d'examiner une issue et de vous l'expliquer.
-- **Correction et implémentation** : demandez à OpenCode de résoudre une issue ou d'implémenter une fonctionnalité.
+- **Triage d'issues** : demandez à Model-of-Design Tools d'examiner une issue et de vous l'expliquer.
+- **Correction et implémentation** : demandez à Model-of-Design Tools de résoudre une issue ou d'implémenter une fonctionnalité.
   Cela créera une nouvelle branche et déclenchera une merge request avec les modifications.
-- **Sécurisé** : OpenCode fonctionne sur vos runners GitLab.
+- **Sécurisé** : Model-of-Design Tools fonctionne sur vos runners GitLab.
 
 ---
 
 ### Installation
 
-OpenCode s'exécute dans votre pipeline CI/CD GitLab. Voici ce dont vous aurez besoin pour le configurer :
+Model-of-Design Tools s'exécute dans votre pipeline CI/CD GitLab. Voici ce dont vous aurez besoin pour le configurer :
 
 :::tip
 Consultez la [**documentation GitLab**](https://docs.gitlab.com/user/duo_agent_platform/agent_assistant/) pour obtenir des instructions à jour.
@@ -82,19 +82,19 @@ Consultez la [**documentation GitLab**](https://docs.gitlab.com/user/duo_agent_p
     ```yaml
     image: node:22-slim
     commands:
-      - echo "Installing opencode"
-      - npm install --global opencode-ai
+      - echo "Installing modtools"
+      - npm install --global modtools-ai
       - echo "Installing glab"
-      - export GITLAB_TOKEN=$GITLAB_TOKEN_OPENCODE
+      - export GITLAB_TOKEN=$GITLAB_TOKEN_MOD
       - apt-get update --quiet && apt-get install --yes curl wget gpg git && rm --recursive --force /var/lib/apt/lists/*
       - curl --silent --show-error --location "https://raw.githubusercontent.com/upciti/wakemeops/main/assets/install_repository" | bash
       - apt-get install --yes glab
       - echo "Configuring glab"
       - echo $GITLAB_HOST
-      - echo "Creating OpenCode auth configuration"
-      - mkdir --parents ~/.local/share/opencode
+      - echo "Creating Model-of-Design Tools auth configuration"
+      - mkdir --parents ~/.local/share/modtools
       - |
-        cat > ~/.local/share/opencode/auth.json << EOF
+        cat > ~/.local/share/modtools/auth.json << EOF
         {
           "anthropic": {
             "type": "api",
@@ -103,13 +103,13 @@ Consultez la [**documentation GitLab**](https://docs.gitlab.com/user/duo_agent_p
         }
         EOF
       - echo "Configuring git"
-      - git config --global user.email "opencode@gitlab.com"
-      - git config --global user.name "OpenCode"
+      - git config --global user.email "modtools@gitlab.com"
+      - git config --global user.name "Model-of-Design Tools"
       - echo "Testing glab"
       - glab issue list
-      - echo "Running OpenCode"
+      - echo "Running Model-of-Design Tools"
       - |
-        opencode run "
+        modtools run "
         You are an AI assistant helping with GitLab operations.
 
         Context: $AI_FLOW_CONTEXT
@@ -146,7 +146,7 @@ Consultez la [**documentation GitLab**](https://docs.gitlab.com/user/duo_agent_p
         fi
     variables:
       - ANTHROPIC_API_KEY
-      - GITLAB_TOKEN_OPENCODE
+      - GITLAB_TOKEN_MOD
       - GITLAB_HOST
     ```
 
@@ -158,10 +158,10 @@ Vous pouvez vous référer aux [GitLab CLI agents docs](https://docs.gitlab.com/
 
 ### Exemples
 
-Voici quelques exemples de la façon dont vous pouvez utiliser OpenCode dans GitLab.
+Voici quelques exemples de la façon dont vous pouvez utiliser Model-of-Design Tools dans GitLab.
 
 :::tip
-Vous pouvez configurer pour utiliser une phrase de déclenchement différente de `@opencode`.
+Vous pouvez configurer pour utiliser une phrase de déclenchement différente de `@modtools`.
 :::
 
 - **Expliquer une issue**
@@ -169,27 +169,27 @@ Vous pouvez configurer pour utiliser une phrase de déclenchement différente de
 Ajoutez ce commentaire dans une issue GitLab.
 
 ```
-  @opencode explain this issue
+  @modtools explain this issue
 ```
 
-OpenCode lira l'issue et répondra avec une explication claire.
+Model-of-Design Tools lira l'issue et répondra avec une explication claire.
 
 - **Résoudre une issue**
 
 Dans une issue GitLab, dites :
 
 ```
-  @opencode fix this
+  @modtools fix this
 ```
 
-OpenCode créera une nouvelle branche, mettra en œuvre les modifications et ouvrira une merge request avec les modifications.
+Model-of-Design Tools créera une nouvelle branche, mettra en œuvre les modifications et ouvrira une merge request avec les modifications.
 
 - **Revue de merge request**
 
 Laissez le commentaire suivant sur une merge request GitLab.
 
 ```
-  @opencode review this merge request
+  @modtools review this merge request
 ```
 
-OpenCode examinera la merge request et fournira des commentaires.
+Model-of-Design Tools examinera la merge request et fournira des commentaires.

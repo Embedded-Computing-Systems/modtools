@@ -1,13 +1,13 @@
-import { AppIcon } from "@opencode-ai/ui/app-icon"
-import { Button } from "@opencode-ai/ui/button"
-import { DropdownMenu } from "@opencode-ai/ui/dropdown-menu"
-import { Icon } from "@opencode-ai/ui/icon"
-import { IconButton } from "@opencode-ai/ui/icon-button"
-import { Keybind } from "@opencode-ai/ui/keybind"
-import { Spinner } from "@opencode-ai/ui/spinner"
-import { showToast } from "@opencode-ai/ui/toast"
-import { Tooltip, TooltipKeybind } from "@opencode-ai/ui/tooltip"
-import { getFilename } from "@opencode-ai/util/path"
+import { AppIcon } from "@modtools-ai/ui/app-icon"
+import { Button } from "@modtools-ai/ui/button"
+import { DropdownMenu } from "@modtools-ai/ui/dropdown-menu"
+import { Icon } from "@modtools-ai/ui/icon"
+import { IconButton } from "@modtools-ai/ui/icon-button"
+import { Keybind } from "@modtools-ai/ui/keybind"
+import { Spinner } from "@modtools-ai/ui/spinner"
+import { showToast } from "@modtools-ai/ui/toast"
+import { Tooltip, TooltipKeybind } from "@modtools-ai/ui/tooltip"
+import { getFilename } from "@modtools-ai/util/path"
 import { createEffect, createMemo, For, onCleanup, Show } from "solid-js"
 import { createStore } from "solid-js/store"
 import { Portal } from "solid-js/web"
@@ -262,8 +262,8 @@ export function SessionHeader() {
       .catch((err: unknown) => showRequestError(language, err))
   }
 
-  const centerMount = createMemo(() => document.getElementById("opencode-titlebar-center"))
-  const rightMount = createMemo(() => document.getElementById("opencode-titlebar-right"))
+  const centerMount = createMemo(() => document.getElementById("modtools-titlebar-center"))
+  const rightMount = createMemo(() => document.getElementById("modtools-titlebar-right"))
 
   return (
     <>
