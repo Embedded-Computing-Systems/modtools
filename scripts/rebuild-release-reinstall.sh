@@ -234,10 +234,10 @@ cd packages/modtools
 # Set build flags
 if [ "$BUILD_ALL_PLATFORMS" = true ]; then
   echo -e "  ${BLUE}Building for all platforms...${NC}"
-  bun run script/build.ts --skip-install
+  bun run script/build.ts
 else
   echo -e "  ${BLUE}Building for current platform ($PLATFORM-$ARCH)...${NC}"
-  bun run script/build.ts --single
+  bun run script/build.ts --single --skip-install
 fi
 
 cd "$PROJECT_ROOT"
