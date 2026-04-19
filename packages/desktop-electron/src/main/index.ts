@@ -16,7 +16,7 @@ try {
   process.chdir(homedir())
 } catch {}
 
-process.env.OPENCODE_DISABLE_EMBEDDED_WEB_UI = "true"
+process.env.MODTOOLS_DISABLE_EMBEDDED_WEB_UI = "true"
 
 const APP_NAMES: Record<string, string> = {
   dev: "OpenCode Dev",
@@ -24,12 +24,12 @@ const APP_NAMES: Record<string, string> = {
   prod: "OpenCode",
 }
 const APP_IDS: Record<string, string> = {
-  dev: "ai.opencode.desktop.dev",
-  beta: "ai.opencode.desktop.beta",
-  prod: "ai.opencode.desktop",
+  dev: "ai.modtools.desktop.dev",
+  beta: "ai.modtools.desktop.beta",
+  prod: "ai.modtools.desktop",
 }
 app.setName(app.isPackaged ? APP_NAMES[CHANNEL] : "OpenCode Dev")
-app.setPath("userData", join(app.getPath("appData"), app.isPackaged ? APP_IDS[CHANNEL] : "ai.opencode.desktop.dev"))
+app.setPath("userData", join(app.getPath("appData"), app.isPackaged ? APP_IDS[CHANNEL] : "ai.modtools.desktop.dev"))
 const { autoUpdater } = pkg
 
 import type { InitStep, ServerReadyData, SqliteMigrationProgress, WslConfig } from "../preload/types"
@@ -273,7 +273,7 @@ function ensureLoopbackNoProxy() {
 }
 
 async function getSidecarPort() {
-  const fromEnv = process.env.OPENCODE_PORT
+  const fromEnv = process.env.MODTOOLS_PORT
   if (fromEnv) {
     const parsed = Number.parseInt(fromEnv, 10)
     if (!Number.isNaN(parsed)) return parsed

@@ -1,8 +1,8 @@
-import { Button } from "@opencode-ai/ui/button"
-import { useDialog } from "@opencode-ai/ui/context/dialog"
-import { ProviderIcon } from "@opencode-ai/ui/provider-icon"
-import { Tag } from "@opencode-ai/ui/tag"
-import { showToast } from "@opencode-ai/ui/toast"
+import { Button } from "@modtools-ai/ui/button"
+import { useDialog } from "@modtools-ai/ui/context/dialog"
+import { ProviderIcon } from "@modtools-ai/ui/provider-icon"
+import { Tag } from "@modtools-ai/ui/tag"
+import { showToast } from "@modtools-ai/ui/toast"
 import { popularProviders, useProviders } from "@/hooks/use-providers"
 import { createMemo, type Component, For, Show } from "solid-js"
 import { useLanguage } from "@/context/language"
@@ -17,8 +17,8 @@ type ProviderSource = "env" | "api" | "config" | "custom"
 type ProviderItem = ReturnType<ReturnType<typeof useProviders>["connected"]>[number]
 
 const PROVIDER_NOTES = [
-  { match: (id: string) => id === "opencode", key: "dialog.provider.opencode.note" },
-  { match: (id: string) => id === "opencode-go", key: "dialog.provider.opencodeGo.tagline" },
+  { match: (id: string) => id === "opencode", key: "dialog.provider.modtools.note" },
+  { match: (id: string) => id === "opencode-go", key: "dialog.provider.modtoolsGo.tagline" },
   { match: (id: string) => id === "anthropic", key: "dialog.provider.anthropic.note" },
   { match: (id: string) => id.startsWith("github-copilot"), key: "dialog.provider.copilot.note" },
   { match: (id: string) => id === "openai", key: "dialog.provider.openai.note" },

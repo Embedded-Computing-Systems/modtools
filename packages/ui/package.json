@@ -1,5 +1,5 @@
 {
-  "name": "@opencode-ai/ui",
+  "name": "@modtools-ai/ui",
   "version": "1.4.14",
   "type": "module",
   "license": "MIT",
@@ -43,8 +43,8 @@
   },
   "dependencies": {
     "@kobalte/core": "catalog:",
-    "@opencode-ai/sdk": "workspace:*",
-    "@opencode-ai/shared": "workspace:*",
+    "@modtools-ai/sdk": "workspace:*",
+    "@modtools-ai/shared": "workspace:*",
     "@pierre/diffs": "catalog:",
     "@shikijs/transformers": "3.9.2",
     "@solid-primitives/bounds": "0.1.3",

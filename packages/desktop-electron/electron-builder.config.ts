@@ -21,7 +21,7 @@ async function signWindows(configuration: { path: string }) {
 }
 
 const channel = (() => {
-  const raw = process.env.OPENCODE_CHANNEL
+  const raw = process.env.MODTOOLS_CHANNEL
   if (raw === "dev" || raw === "beta" || raw === "prod") return raw
   return "dev"
 })()
@@ -84,7 +84,7 @@ function getConfig() {
     case "dev": {
       return {
         ...base,
-        appId: "ai.opencode.desktop.dev",
+        appId: "ai.modtools.desktop.dev",
         productName: "OpenCode Dev",
         rpm: { packageName: "opencode-dev" },
       }
@@ -92,7 +92,7 @@ function getConfig() {
     case "beta": {
       return {
         ...base,
-        appId: "ai.opencode.desktop.beta",
+        appId: "ai.modtools.desktop.beta",
         productName: "OpenCode Beta",
         protocols: { name: "OpenCode Beta", schemes: ["opencode"] },
         publish: { provider: "github", owner: "anomalyco", repo: "opencode-beta", channel: "latest" },
@@ -102,7 +102,7 @@ function getConfig() {
     case "prod": {
       return {
         ...base,
-        appId: "ai.opencode.desktop",
+        appId: "ai.modtools.desktop",
         productName: "OpenCode",
         protocols: { name: "OpenCode", schemes: ["opencode"] },
         publish: { provider: "github", owner: "anomalyco", repo: "opencode", channel: "latest" },

@@ -2,7 +2,7 @@ import { createEffect, onMount } from "solid-js"
 import { createStore } from "solid-js/store"
 import { makeEventListener } from "@solid-primitives/event-listener"
 import { createSimpleContext } from "../context/helper"
-import oc2ThemeJson from "./themes/oc-2.json"
+import mod2ThemeJson from "./themes/oc-2.json"
 import { resolveThemeVariant, themeToCss } from "./resolve"
 import type { DesktopTheme } from "./types"
 
@@ -79,7 +79,7 @@ const names: Record<string, string> = {
   vesper: "Vesper",
   zenburn: "Zenburn",
 }
-const oc2Theme = oc2ThemeJson as DesktopTheme
+const mod2Theme = mod2ThemeJson as DesktopTheme
 
 function normalize(id: string | null | undefined) {
   return id === "oc-1" ? "oc-2" : id
@@ -168,7 +168,7 @@ export const { use: useTheme, provider: ThemeProvider } = createSimpleContext({
     const mode = colorScheme === "system" ? getSystemMode() : colorScheme
     const [store, setStore] = createStore({
       themes: {
-        "oc-2": oc2Theme,
+        "oc-2": mod2Theme,
       } as Record<string, DesktopTheme>,
       themeId,
       colorScheme,
