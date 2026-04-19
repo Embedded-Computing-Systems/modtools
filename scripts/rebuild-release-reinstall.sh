@@ -149,6 +149,38 @@ echo ""
 # ============================================
 echo -e "${YELLOW}Step 2: Installing dependencies...${NC}"
 bun install
+
+# Apply undici shim patch (replaces undici import with globalThis shim for Bun compile mode)
+UNDICI_SHIM='/**
+ * @since 1.0.0
+ * Shim: replaced undici with globalThis equivalents for Bun compile mode.
+ */
+export const fetch = globalThis.fetch
+export const Request = globalThis.Request
+export const Response = globalThis.Response
+export const Headers = globalThis.Headers
+export const FormData = globalThis.FormData
+export const File = globalThis.File
+export const Agent = class {}
+export const getGlobalDispatcher = () => ({})
+export const setGlobalDispatcher = () => {}
+export default {
+  fetch: globalThis.fetch,
+  Request: globalThis.Request,
+  Response: globalThis.Response,
+  Headers: globalThis.Headers,
+  FormData: globalThis.FormData,
+  File: globalThis.File,
+  Agent,
+  getGlobalDispatcher,
+  setGlobalDispatcher,
+}'
+
+for f in $(find node_modules -name 'Undici.js' -path '*@effect*platform-node*dist*' 2>/dev/null); do
+  echo "$UNDICI_SHIM" > "$f"
+  echo -e "  ${BLUE}Patched undici shim: $f${NC}"
+done
+
 echo -e "  ${GREEN}Dependencies installed${NC}"
 echo ""
 

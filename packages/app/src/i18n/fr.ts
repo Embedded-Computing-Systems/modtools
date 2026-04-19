@@ -125,7 +125,7 @@ export const dict = {
   "provider.connect.modtoolsZen.line2":
     "Avec une seule clé API, vous aurez accès à des modèles tels que Claude, GPT, Gemini, GLM et plus encore.",
   "provider.connect.modtoolsZen.visit.prefix": "Visitez ",
-  "provider.connect.modtoolsZen.visit.link": "opencode.ai/zen",
+  "provider.connect.modtoolsZen.visit.link": "modtools.ai/zen",
   "provider.connect.modtoolsZen.visit.suffix": " pour récupérer votre clé API.",
   "provider.connect.oauth.code.visit.prefix": "Visitez ",
   "provider.connect.oauth.code.visit.link": "ce lien",

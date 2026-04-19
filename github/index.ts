@@ -363,7 +363,7 @@ function useIssueId() {
 }
 
 function useShareUrl() {
-  return isMock() ? "https://dev.modtools.ai" : "https://opencode.ai"
+  return isMock() ? "https://dev.modtools.ai" : "https://modtools.ai"
 }
 
 async function getAccessToken() {

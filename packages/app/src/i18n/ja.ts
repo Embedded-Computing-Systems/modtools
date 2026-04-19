@@ -124,7 +124,7 @@ export const dict = {
     "OpenCode Zenは、コーディングエージェント向けに最適化された信頼性の高いモデルへのアクセスを提供します。",
   "provider.connect.modtoolsZen.line2": "1つのAPIキーで、Claude、GPT、Gemini、GLMなどのモデルにアクセスできます。",
   "provider.connect.modtoolsZen.visit.prefix": " ",
-  "provider.connect.modtoolsZen.visit.link": "opencode.ai/zen",
+  "provider.connect.modtoolsZen.visit.link": "modtools.ai/zen",
   "provider.connect.modtoolsZen.visit.suffix": " にアクセスしてAPIキーを取得してください。",
   "provider.connect.oauth.code.visit.prefix": " ",
   "provider.connect.oauth.code.visit.link": "このリンク",

@@ -3,7 +3,7 @@ import appPlugin from "@modtools-ai/app/vite"
 import * as fs from "node:fs/promises"
 
 const channel = (() => {
-  const raw = process.env.OPENCODE_CHANNEL
+  const raw = process.env.MODTOOLS_CHANNEL
   if (raw === "dev" || raw === "beta" || raw === "prod") return raw
   return "dev"
 })()
@@ -15,7 +15,7 @@ const nodePtyPkg = `@lydell/node-pty-${process.platform}-${process.arch}`
 export default defineConfig({
   main: {
     define: {
-      "import.meta.env.OPENCODE_CHANNEL": JSON.stringify(channel),
+      "import.meta.env.MODTOOLS_CHANNEL": JSON.stringify(channel),
     },
     build: {
       rollupOptions: {
@@ -61,7 +61,7 @@ export default defineConfig({
     publicDir: "../../../app/public",
     root: "src/renderer",
     define: {
-      "import.meta.env.VITE_OPENCODE_CHANNEL": JSON.stringify(channel),
+      "import.meta.env.VITE_MODTOOLS_CHANNEL": JSON.stringify(channel),
     },
     build: {
       rollupOptions: {

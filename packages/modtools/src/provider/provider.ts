@@ -149,7 +149,7 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
           },
         },
       }),
-    opencode: Effect.fnUntraced(function* (input: Info) {
+    modtools: Effect.fnUntraced(function* (input: Info) {
       const env = yield* dep.env()
       const hasKey = iife(() => {
         if (input.env.some((item) => env[item])) return true
@@ -158,7 +158,7 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
       const ok =
         hasKey ||
         Boolean(yield* dep.auth(input.id)) ||
-        Boolean((yield* dep.config()).provider?.["opencode"]?.options?.apiKey)
+        Boolean((yield* dep.config()).provider?.["modtools"]?.options?.apiKey)
 
       if (!ok) {
         for (const [key, value] of Object.entries(input.models)) {
@@ -311,7 +311,7 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
           }
 
           // Region resolution precedence (highest to lowest):
-          // 1. options.region from opencode.json provider config
+          // 1. options.region from modtools.json provider config
           // 2. defaultRegion from AWS_REGION environment variable
           // 3. Default "us-east-1" (baked into defaultRegion)
           const region = options?.region ?? defaultRegion
@@ -394,7 +394,7 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
         autoload: false,
         options: {
           headers: {
-            "HTTP-Referer": "https://opencode.ai/",
+            "HTTP-Referer": "https://modtools.ai/",
             "X-Title": "MOD",
             "X-Source": "MOD",
           },
@@ -405,7 +405,7 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
         autoload: false,
         options: {
           headers: {
-            "HTTP-Referer": "https://opencode.ai/",
+            "HTTP-Referer": "https://modtools.ai/",
             "X-Title": "MOD",
           },
         },
@@ -415,7 +415,7 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
         autoload: false,
         options: {
           headers: {
-            "http-referer": "https://opencode.ai/",
+            "http-referer": "https://modtools.ai/",
             "x-title": "MOD",
           },
         },
@@ -513,7 +513,7 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
         autoload: false,
         options: {
           headers: {
-            "HTTP-Referer": "https://opencode.ai/",
+            "HTTP-Referer": "https://modtools.ai/",
             "X-Title": "MOD",
           },
         },
@@ -539,7 +539,7 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
       const directory = yield* InstanceState.directory
 
       const aiGatewayHeaders = {
-        "User-Agent": `opencode/${InstallationVersion} gitlab-ai-provider/${GITLAB_PROVIDER_VERSION} (${os.platform()} ${os.release()}; ${os.arch()})`,
+        "User-Agent": `modtools/${InstallationVersion} gitlab-ai-provider/${GITLAB_PROVIDER_VERSION} (${os.platform()} ${os.release()}; ${os.arch()})`,
         "anthropic-beta": "context-1m-2025-08-07",
         ...providerConfig?.options?.aiGatewayHeaders,
       }
@@ -692,7 +692,7 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
         options: {
           apiKey,
           headers: {
-            "User-Agent": `opencode/${InstallationVersion} cloudflare-workers-ai (${os.platform()} ${os.release()}; ${os.arch()})`,
+            "User-Agent": `modtools/${InstallationVersion} cloudflare-workers-ai (${os.platform()} ${os.release()}; ${os.arch()})`,
           },
         },
         async getModel(sdk: any, modelID: string) {
@@ -740,7 +740,7 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
       if (!apiToken) {
         throw new Error(
           "CLOUDFLARE_API_TOKEN (or CF_AIG_TOKEN) is required for Cloudflare AI Gateway. " +
-            "Set it via environment variable or run `opencode auth cloudflare-ai-gateway`.",
+            "Set it via environment variable or run `modtools auth cloudflare-ai-gateway`.",
         )
       }
 
@@ -763,7 +763,7 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
         skipCache: input.options?.skipCache,
         collectLog: input.options?.collectLog,
         headers: {
-          "User-Agent": `opencode/${InstallationVersion} cloudflare-ai-gateway (${os.platform()} ${os.release()}; ${os.arch()})`,
+          "User-Agent": `modtools/${InstallationVersion} cloudflare-ai-gateway (${os.platform()} ${os.release()}; ${os.arch()})`,
         },
       }
 
@@ -798,7 +798,7 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
         autoload: false,
         options: {
           headers: {
-            "HTTP-Referer": "https://opencode.ai/",
+            "HTTP-Referer": "https://modtools.ai/",
             "X-Title": "MOD",
           },
         },
@@ -933,7 +933,7 @@ interface State {
   varsLoaders: Record<string, CustomVarsLoader>
 }
 
-export class Service extends Context.Service<Service, Interface>()("@opencode/Provider") {}
+export class Service extends Context.Service<Service, Interface>()("@modtools/Provider") {}
 
 function cost(c: ModelsDev.Model["cost"]): Model["cost"] {
   const result: Model["cost"] = {

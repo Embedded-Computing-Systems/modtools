@@ -272,7 +272,7 @@ describe("session.prompt regression", () => {
           await Bun.write(
             path.join(dir, "opencode.json"),
             JSON.stringify({
-              $schema: "https://opencode.ai/config.json",
+              $schema: "https://modtools.ai/config.json",
               enabled_providers: ["alibaba"],
               provider: {
                 alibaba: {
@@ -346,7 +346,7 @@ describe("session.prompt regression", () => {
           await Bun.write(
             path.join(dir, "opencode.json"),
             JSON.stringify({
-              $schema: "https://opencode.ai/config.json",
+              $schema: "https://modtools.ai/config.json",
               enabled_providers: ["alibaba"],
               provider: {
                 alibaba: {

@@ -281,10 +281,10 @@ export interface Interface {
   readonly waitForDependencies: () => Effect.Effect<void>
 }
 
-export class Service extends Context.Service<Service, Interface>()("@opencode/Config") {}
+export class Service extends Context.Service<Service, Interface>()("@modtools/Config") {}
 
 function globalConfigFile() {
-  const candidates = ["modtools.jsonc", "opencode.json", "config.json"].map((file) =>
+  const candidates = ["modtools.jsonc", "modtools.json", "config.json"].map((file) =>
     path.join(Global.Path.config, file),
   )
   for (const file of candidates) {
@@ -377,7 +377,7 @@ export const layer = Layer.effect(
       let result: Info = pipe(
         {},
         mergeDeep(yield* loadFile(path.join(Global.Path.config, "config.json"))),
-        mergeDeep(yield* loadFile(path.join(Global.Path.config, "opencode.json"))),
+        mergeDeep(yield* loadFile(path.join(Global.Path.config, "modtools.json"))),
         mergeDeep(yield* loadFile(path.join(Global.Path.config, "modtools.jsonc"))),
       )
 
@@ -477,15 +477,15 @@ export const layer = Layer.effect(
           if (value.type === "wellknown") {
             const url = key.replace(/\/+$/, "")
             process.env[value.key] = value.token
-            log.debug("fetching remote config", { url: `${url}/.well-known/opencode` })
-            const response = yield* Effect.promise(() => fetch(`${url}/.well-known/opencode`))
+            log.debug("fetching remote config", { url: `${url}/.well-known/modtools` })
+            const response = yield* Effect.promise(() => fetch(`${url}/.well-known/modtools`))
             if (!response.ok) {
               throw new Error(`failed to fetch remote config from ${url}: ${response.status}`)
             }
             const wellknown = (yield* Effect.promise(() => response.json())) as { config?: Record<string, unknown> }
             const remoteConfig = wellknown.config ?? {}
             if (!remoteConfig.$schema) remoteConfig.$schema = "https://modtools.ai/config.json"
-            const source = `${url}/.well-known/opencode`
+            const source = `${url}/.well-known/modtools`
             const next = yield* loadConfig(JSON.stringify(remoteConfig), {
               dir: path.dirname(source),
               source,
@@ -504,7 +504,7 @@ export const layer = Layer.effect(
         }
 
         if (!Flag.MODTOOLS_DISABLE_PROJECT_CONFIG) {
-          for (const file of yield* ConfigPaths.files("opencode", ctx.directory, ctx.worktree).pipe(Effect.orDie)) {
+          for (const file of yield* ConfigPaths.files("modtools", ctx.directory, ctx.worktree).pipe(Effect.orDie)) {
             yield* merge(file, yield* loadFile(file), "local")
           }
         }

@@ -13,7 +13,7 @@
   node_modules ? callPackage ./node-modules.nix { },
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
-  pname = "opencode";
+  pname = "modtools";
   inherit (node_modules) version src;
   inherit node_modules;
 
@@ -37,14 +37,14 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   '';
 
   env.MODELS_DEV_API_JSON = "${models-dev}/dist/_api.json";
-  env.OPENCODE_DISABLE_MODELS_FETCH = true;
-  env.OPENCODE_VERSION = finalAttrs.version;
-  env.OPENCODE_CHANNEL = "local";
+  env.MODTOOLS_DISABLE_MODELS_FETCH = true;
+  env.MODTOOLS_VERSION = finalAttrs.version;
+  env.MODTOOLS_CHANNEL = "local";
 
   buildPhase = ''
     runHook preBuild
 
-    cd ./packages/opencode
+    cd ./packages/modtools
     bun --bun ./script/build.ts --single --skip-install
     bun --bun ./script/schema.ts schema.json
 
@@ -55,12 +55,12 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     ''
       runHook preInstall
 
-      install -Dm755 dist/opencode-*/bin/opencode $out/bin/opencode
-      install -Dm644 schema.json $out/share/opencode/schema.json
+      install -Dm755 dist/modtools-*/bin/modtools $out/bin/modtools
+      install -Dm644 schema.json $out/share/modtools/schema.json
     ''
     # bun runs sysctl to detect if dunning on rosetta2
     + lib.optionalString stdenvNoCC.hostPlatform.isDarwin ''
-      wrapProgram $out/bin/opencode \
+      wrapProgram $out/bin/modtools \
         --prefix PATH : ${
           lib.makeBinPath [
             sysctl
@@ -73,9 +73,9 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
   postInstall = lib.optionalString (stdenvNoCC.buildPlatform.canExecute stdenvNoCC.hostPlatform) ''
     # trick yargs into also generating zsh completions
-    installShellCompletion --cmd opencode \
-      --bash <($out/bin/opencode completion) \
-      --zsh <(SHELL=/bin/zsh $out/bin/opencode completion)
+    installShellCompletion --cmd modtools \
+      --bash <($out/bin/modtools completion) \
+      --zsh <(SHELL=/bin/zsh $out/bin/modtools completion)
   '';
 
   nativeInstallCheckInputs = [
@@ -83,18 +83,18 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     writableTmpDirAsHomeHook
   ];
   doInstallCheck = true;
-  versionCheckKeepEnvironment = [ "HOME" "OPENCODE_DISABLE_MODELS_FETCH" ];
+  versionCheckKeepEnvironment = [ "HOME" "MODTOOLS_DISABLE_MODELS_FETCH" ];
   versionCheckProgramArg = "--version";
 
   passthru = {
-    jsonschema = "${placeholder "out"}/share/opencode/schema.json";
+    jsonschema = "${placeholder "out"}/share/modtools/schema.json";
   };
 
   meta = {
-    description = "The open source coding agent";
-    homepage = "https://opencode.ai/";
+    description = "MOD Tools - AI-powered development tool";
+    homepage = "https://modtools.ai/";
     license = lib.licenses.mit;
-    mainProgram = "opencode";
+    mainProgram = "modtools";
     inherit (node_modules.meta) platforms;
   };
 })

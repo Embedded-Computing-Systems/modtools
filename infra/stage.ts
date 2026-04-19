@@ -1,5 +1,5 @@
 export const domain = (() => {
-  if ($app.stage === "production") return "opencode.ai"
+  if ($app.stage === "production") return "modtools.ai"
   if ($app.stage === "dev") return "dev.modtools.ai"
   return `${$app.stage}.dev.modtools.ai`
 })()

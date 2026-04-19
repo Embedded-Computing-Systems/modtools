@@ -137,7 +137,7 @@ export const dict = {
   "provider.connect.modtoolsZen.line2":
     "Sa jednim API ključem dobijaš pristup modelima kao što su Claude, GPT, Gemini, GLM i drugi.",
   "provider.connect.modtoolsZen.visit.prefix": "Posjeti ",
-  "provider.connect.modtoolsZen.visit.link": "opencode.ai/zen",
+  "provider.connect.modtoolsZen.visit.link": "modtools.ai/zen",
   "provider.connect.modtoolsZen.visit.suffix": " da preuzmeš svoj API ključ.",
   "provider.connect.oauth.code.visit.prefix": "Posjeti ",
   "provider.connect.oauth.code.visit.link": "ovaj link",

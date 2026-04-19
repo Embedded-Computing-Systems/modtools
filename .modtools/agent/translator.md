@@ -815,11 +815,11 @@ http://localhost:4096
 http://localhost:4096/doc
 https://app.example.com
 https://AZURE_COGNITIVE_SERVICES_RESOURCE_NAME.cognitiveservices.azure.com/
-https://opencode.ai/zen/v1/chat/completions
-https://opencode.ai/zen/v1/messages
-https://opencode.ai/zen/v1/models/gemini-3-flash
-https://opencode.ai/zen/v1/models/gemini-3-pro
-https://opencode.ai/zen/v1/responses
+https://modtools.ai/zen/v1/chat/completions
+https://modtools.ai/zen/v1/messages
+https://modtools.ai/zen/v1/models/gemini-3-flash
+https://modtools.ai/zen/v1/models/gemini-3-pro
+https://modtools.ai/zen/v1/responses
 https://RESOURCE_NAME.openai.azure.com/
 laravel/pint
 log/
@@ -827,7 +827,7 @@ model: "anthropic/claude-sonnet-4-5"
 modes/
 node_modules/
 openai/gpt-4.1
-opencode.ai/config.json
+modtools.ai/config.json
 opencode/<model-id>
 opencode/gpt-5.1-codex
 opencode/gpt-5.2-codex

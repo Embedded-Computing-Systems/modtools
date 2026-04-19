@@ -115,7 +115,7 @@ export function createMenu(deps: Deps) {
     {
       label: "Help",
       submenu: [
-        { label: "OpenCode Documentation", click: () => shell.openExternal("https://opencode.ai/docs") },
+        { label: "OpenCode Documentation", click: () => shell.openExternal("https://modtools.ai/docs") },
         { label: "Support Forum", click: () => shell.openExternal("https://discord.com/invite/opencode") },
         { type: "separator" },
         { type: "separator" },

@@ -10,7 +10,7 @@ import * as ConfigPaths from "@/config/paths"
 
 const log = Log.create({ service: "tui.migrate" })
 
-const TUI_SCHEMA_URL = "https://opencode.ai/tui.json"
+const TUI_SCHEMA_URL = "https://modtools.ai/tui.json"
 
 const LegacyTheme = TuiInfo.shape.theme.optional()
 const LegacyRecord = z.record(z.string(), z.unknown()).optional()
@@ -34,8 +34,8 @@ interface MigrateInput {
  * skips only locations where a tui.json already exists.
  */
 export async function migrateTuiConfig(input: MigrateInput) {
-  const opencode = await opencodeFiles(input)
-  for (const file of opencode) {
+  const modtools = await modtoolsFiles(input)
+  for (const file of modtools) {
     const source = await Filesystem.readText(file).catch((error) => {
       log.warn("failed to read config for tui migration", { path: file, error })
       return undefined
@@ -131,13 +131,13 @@ async function backupAndStripLegacy(file: string, source: string) {
     })
 }
 
-async function opencodeFiles(input: { directories: string[]; cwd: string }) {
+async function modtoolsFiles(input: { directories: string[]; cwd: string }) {
   const files = [
-    ...ConfigPaths.fileInDirectory(Global.Path.config, "opencode"),
-    ...(await Filesystem.findUp(["opencode.json", "opencode.jsonc"], input.cwd, undefined, { rootFirst: true })),
+    ...ConfigPaths.fileInDirectory(Global.Path.config, "modtools"),
+    ...(await Filesystem.findUp(["modtools.json", "modtools.jsonc"], input.cwd, undefined, { rootFirst: true })),
   ]
   for (const dir of unique(input.directories)) {
-    files.push(...ConfigPaths.fileInDirectory(dir, "opencode"))
+    files.push(...ConfigPaths.fileInDirectory(dir, "modtools"))
   }
   if (Flag.MODTOOLS_CONFIG) files.push(Flag.MODTOOLS_CONFIG)
 

@@ -140,7 +140,7 @@ export const dict = {
   "provider.connect.modtoolsZen.line2":
     "Med én enkelt API-nøkkel får du tilgang til modeller som Claude, GPT, Gemini, GLM og flere.",
   "provider.connect.modtoolsZen.visit.prefix": "Besøk ",
-  "provider.connect.modtoolsZen.visit.link": "opencode.ai/zen",
+  "provider.connect.modtoolsZen.visit.link": "modtools.ai/zen",
   "provider.connect.modtoolsZen.visit.suffix": " for å hente API-nøkkelen din.",
   "provider.connect.oauth.code.visit.prefix": "Besøk ",
   "provider.connect.oauth.code.visit.link": "denne lenken",

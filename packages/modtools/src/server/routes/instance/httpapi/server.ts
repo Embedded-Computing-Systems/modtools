@@ -24,7 +24,7 @@ const Query = Schema.Struct({
 
 const Headers = Schema.Struct({
   authorization: Schema.optional(Schema.String),
-  "x-opencode-directory": Schema.optional(Schema.String),
+  "x-modtools-directory": Schema.optional(Schema.String),
 })
 
 function decode(input: string) {
@@ -41,7 +41,7 @@ class Unauthorized extends Schema.TaggedErrorClass<Unauthorized>()(
   { httpApiStatus: 401 },
 ) {}
 
-class Authorization extends HttpApiMiddleware.Service<Authorization>()("@opencode/ExperimentalHttpApiAuthorization", {
+class Authorization extends HttpApiMiddleware.Service<Authorization>()("@modtools/ExperimentalHttpApiAuthorization", {
   error: Unauthorized,
   security: {
     basic: HttpApiSecurity.basic,
@@ -73,7 +73,7 @@ const auth = Layer.succeed(
       Effect.gen(function* () {
         if (!Flag.MODTOOLS_SERVER_PASSWORD) return yield* effect
 
-        const user = Flag.MODTOOLS_SERVER_USERNAME ?? "opencode"
+        const user = Flag.MODTOOLS_SERVER_USERNAME ?? "modtools"
         if (credential.username !== user) {
           return yield* new Unauthorized({ message: "Unauthorized" })
         }
@@ -91,7 +91,7 @@ const instance = HttpRouter.middleware()(
       Effect.gen(function* () {
         const query = yield* HttpServerRequest.schemaSearchParams(Query)
         const headers = yield* HttpServerRequest.schemaHeaders(Headers)
-        const raw = query.directory || headers["x-opencode-directory"] || process.cwd()
+        const raw = query.directory || headers["x-modtools-directory"] || process.cwd()
         const workspace = query.workspace || undefined
         const ctx = yield* Effect.promise(() =>
           Instance.provide({
