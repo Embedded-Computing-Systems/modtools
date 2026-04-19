@@ -54,7 +54,7 @@ export const Info = z
   })
 export type Info = z.infer<typeof Info>
 
-export const USER_AGENT = `opencode/${InstallationChannel}/${InstallationVersion}/${Flag.MODTOOLS_CLIENT}`
+export const USER_AGENT = `modtools/${InstallationChannel}/${InstallationVersion}/${Flag.MODTOOLS_CLIENT}`
 
 export function isPreview() {
   return InstallationChannel !== "latest"
@@ -87,7 +87,7 @@ export interface Interface {
   readonly upgrade: (method: Method, target: string) => Effect.Effect<void, UpgradeFailedError>
 }
 
-export class Service extends Context.Service<Service, Interface>()("@opencode/Installation") {}
+export class Service extends Context.Service<Service, Interface>()("@modtools/Installation") {}
 
 export const layer: Layer.Layer<Service, never, HttpClient.HttpClient | ChildProcessSpawner.ChildProcessSpawner> =
   Layer.effect(
@@ -133,11 +133,11 @@ export const layer: Layer.Layer<Service, never, HttpClient.HttpClient | ChildPro
       )
 
       const getBrewFormula = Effect.fnUntraced(function* () {
-        const tapFormula = yield* text(["brew", "list", "--formula", "anomalyco/tap/opencode"])
-        if (tapFormula.includes("opencode")) return "anomalyco/tap/opencode"
-        const coreFormula = yield* text(["brew", "list", "--formula", "opencode"])
-        if (coreFormula.includes("opencode")) return "opencode"
-        return "opencode"
+        const tapFormula = yield* text(["brew", "list", "--formula", "anomalyco/tap/modtools"])
+        if (tapFormula.includes("modtools")) return "anomalyco/tap/modtools"
+        const coreFormula = yield* text(["brew", "list", "--formula", "modtools"])
+        if (coreFormula.includes("modtools")) return "modtools"
+        return "modtools"
       })
 
       const upgradeCurl = Effect.fnUntraced(
@@ -172,9 +172,9 @@ export const layer: Layer.Layer<Service, never, HttpClient.HttpClient | ChildPro
           { name: "yarn", command: () => text(["yarn", "global", "list"]) },
           { name: "pnpm", command: () => text(["pnpm", "list", "-g", "--depth=0"]) },
           { name: "bun", command: () => text(["bun", "pm", "ls", "-g"]) },
-          { name: "brew", command: () => text(["brew", "list", "--formula", "opencode"]) },
-          { name: "scoop", command: () => text(["scoop", "list", "opencode"]) },
-          { name: "choco", command: () => text(["choco", "list", "--limit-output", "opencode"]) },
+          { name: "brew", command: () => text(["brew", "list", "--formula", "modtools"]) },
+          { name: "scoop", command: () => text(["scoop", "list", "modtools"]) },
+          { name: "choco", command: () => text(["choco", "list", "--limit-output", "modtools"]) },
         ]
 
         checks.sort((a, b) => {
@@ -188,7 +188,7 @@ export const layer: Layer.Layer<Service, never, HttpClient.HttpClient | ChildPro
         for (const check of checks) {
           const output = yield* check.command()
           const installedName =
-            check.name === "brew" || check.name === "choco" || check.name === "scoop" ? "opencode" : "opencode-ai"
+            check.name === "brew" || check.name === "choco" || check.name === "scoop" ? "modtools" : "modtools-ai"
           if (output.includes(installedName)) {
             return check.name
           }
@@ -208,7 +208,7 @@ export const layer: Layer.Layer<Service, never, HttpClient.HttpClient | ChildPro
             return info.formulae[0].versions.stable
           }
           const response = yield* httpOk.execute(
-            HttpClientRequest.get("https://formulae.brew.sh/api/formula/opencode.json").pipe(
+            HttpClientRequest.get("https://formulae.brew.sh/api/formula/modtools.json").pipe(
               HttpClientRequest.acceptJson,
             ),
           )
@@ -222,7 +222,7 @@ export const layer: Layer.Layer<Service, never, HttpClient.HttpClient | ChildPro
           const registry = reg.endsWith("/") ? reg.slice(0, -1) : reg
           const channel = InstallationChannel
           const response = yield* httpOk.execute(
-            HttpClientRequest.get(`${registry}/opencode-ai/${channel}`).pipe(HttpClientRequest.acceptJson),
+            HttpClientRequest.get(`${registry}/modtools-ai/${channel}`).pipe(HttpClientRequest.acceptJson),
           )
           const data = yield* HttpClientResponse.schemaBodyJson(NpmPackage)(response)
           return data.version
@@ -231,7 +231,7 @@ export const layer: Layer.Layer<Service, never, HttpClient.HttpClient | ChildPro
         if (detectedMethod === "choco") {
           const response = yield* httpOk.execute(
             HttpClientRequest.get(
-              "https://community.chocolatey.org/api/v2/Packages?$filter=Id%20eq%20%27opencode%27%20and%20IsLatestVersion&$select=Version",
+              "https://community.chocolatey.org/api/v2/Packages?$filter=Id%20eq%20%27modtools%27%20and%20IsLatestVersion&$select=Version",
             ).pipe(HttpClientRequest.setHeaders({ Accept: "application/json;odata=verbose" })),
           )
           const data = yield* HttpClientResponse.schemaBodyJson(ChocoPackage)(response)
@@ -241,7 +241,7 @@ export const layer: Layer.Layer<Service, never, HttpClient.HttpClient | ChildPro
         if (detectedMethod === "scoop") {
           const response = yield* httpOk.execute(
             HttpClientRequest.get(
-              "https://raw.githubusercontent.com/ScoopInstaller/Main/master/bucket/opencode.json",
+              "https://raw.githubusercontent.com/ScoopInstaller/Main/master/bucket/modtools.json",
             ).pipe(HttpClientRequest.setHeaders({ Accept: "application/json" })),
           )
           const data = yield* HttpClientResponse.schemaBodyJson(ScoopManifest)(response)
@@ -249,7 +249,7 @@ export const layer: Layer.Layer<Service, never, HttpClient.HttpClient | ChildPro
         }
 
         const response = yield* httpOk.execute(
-          HttpClientRequest.get("https://api.github.com/repos/anomalyco/opencode/releases/latest").pipe(
+          HttpClientRequest.get("https://api.github.com/repos/anomalyco/modtools/releases/latest").pipe(
             HttpClientRequest.acceptJson,
           ),
         )
@@ -264,13 +264,13 @@ export const layer: Layer.Layer<Service, never, HttpClient.HttpClient | ChildPro
             result = yield* upgradeCurl(target)
             break
           case "npm":
-            result = yield* run(["npm", "install", "-g", `opencode-ai@${target}`])
+            result = yield* run(["npm", "install", "-g", `modtools-ai@${target}`])
             break
           case "pnpm":
-            result = yield* run(["pnpm", "install", "-g", `opencode-ai@${target}`])
+            result = yield* run(["pnpm", "install", "-g", `modtools-ai@${target}`])
             break
           case "bun":
-            result = yield* run(["bun", "install", "-g", `opencode-ai@${target}`])
+            result = yield* run(["bun", "install", "-g", `modtools-ai@${target}`])
             break
           case "brew": {
             const formula = yield* getBrewFormula()
@@ -295,10 +295,10 @@ export const layer: Layer.Layer<Service, never, HttpClient.HttpClient | ChildPro
             break
           }
           case "choco":
-            result = yield* run(["choco", "upgrade", "opencode", `--version=${target}`, "-y"])
+            result = yield* run(["choco", "upgrade", "modtools", `--version=${target}`, "-y"])
             break
           case "scoop":
-            result = yield* run(["scoop", "install", `opencode@${target}`])
+            result = yield* run(["scoop", "install", `modtools@${target}`])
             break
           default:
             return yield* new UpgradeFailedError({ stderr: `Unknown method: ${m}` })
