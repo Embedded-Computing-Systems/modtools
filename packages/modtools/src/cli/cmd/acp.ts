@@ -1,10 +1,10 @@
-import { Log } from "@/util/log"
+import { Log } from "@/util"
 import { bootstrap } from "../bootstrap"
 import { cmd } from "./cmd"
 import { AgentSideConnection, ndJsonStream } from "@agentclientprotocol/sdk"
 import { ACP } from "@/acp/agent"
 import { Server } from "@/server/server"
-import { createModClient } from "@opencode-ai/sdk/v2"
+import { createModClient } from "@modtools-ai/sdk/v2"
 import { withNetworkOptions, resolveNetworkOptions } from "../network"
 
 const log = Log.create({ service: "acp-command" })
@@ -20,10 +20,10 @@ export const AcpCommand = cmd({
     })
   },
   handler: async (args) => {
-    process.env.MOD_CLIENT = "acp"
+    process.env.MODTOOLS_CLIENT = "acp"
     await bootstrap(process.cwd(), async () => {
       const opts = await resolveNetworkOptions(args)
-      const server = Server.listen(opts)
+      const server = await Server.listen(opts)
 
       const sdk = createModClient({
         baseUrl: `http://${server.hostname}:${server.port}`,

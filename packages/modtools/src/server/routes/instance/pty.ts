@@ -16,7 +16,7 @@ export function PtyRoutes(upgradeWebSocket: UpgradeWebSocket) {
       "/",
       describeRoute({
         summary: "List PTY sessions",
-        description: "Get a list of all active pseudo-terminal (PTY) sessions managed by MOD.",
+        description: "Get a list of all active pseudo-terminal (PTY) sessions managed by OpenCode.",
         operationId: "pty.list",
         responses: {
           200: {

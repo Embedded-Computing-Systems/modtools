@@ -1,6 +1,5 @@
 import { Binary } from "@modtools-ai/shared/util/binary"
 import { produce, reconcile, type SetStoreFunction, type Store } from "solid-js/store"
-import { Worktree as WorktreeState } from "@/utils/worktree"
 import type {
   Message,
   Part,
@@ -355,15 +354,6 @@ export function applyDirectoryEvent(input: {
     }
     case "lsp.updated": {
       input.loadLsp()
-      break
-    }
-    case "worktree.ready": {
-      WorktreeState.ready(input.directory)
-      break
-    }
-    case "worktree.failed": {
-      const props = event.properties as { message: string }
-      WorktreeState.failed(input.directory, props.message)
       break
     }
   }

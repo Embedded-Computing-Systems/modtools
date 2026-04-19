@@ -5,6 +5,8 @@ import { createModClient } from "./client.js"
 import { createModServer } from "./server.js"
 import type { ServerOptions } from "./server.js"
 
+export * as data from "./data.js"
+
 export async function createMod(options?: ServerOptions) {
   const server = await createModServer({
     ...options,

@@ -1,4 +1,4 @@
-import { createOpencodeClient } from "@modtools-ai/sdk/v2"
+import { createModClient } from "@modtools-ai/sdk/v2"
 import { useDialog } from "@tui/ui/dialog"
 import { DialogSelect } from "@tui/ui/dialog-select"
 import { useRoute } from "@tui/context/route"
@@ -20,7 +20,7 @@ type Adaptor = {
 const log = Log.Default.clone().tag("service", "tui-workspace")
 
 function scoped(sdk: ReturnType<typeof useSDK>, sync: ReturnType<typeof useSync>, workspaceID: string) {
-  return createOpencodeClient({
+  return createModClient({
     baseUrl: sdk.url,
     fetch: sdk.fetch,
     directory: sync.path.directory || sdk.directory,

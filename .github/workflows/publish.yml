@@ -88,7 +88,7 @@ jobs:
       - name: Build
         id: build
         run: |
-          ./packages/opencode/script/build.ts
+          ./packages/modtools/script/build.ts
         env:
           OPENCODE_VERSION: ${{ needs.version.outputs.version }}
           OPENCODE_RELEASE: ${{ needs.version.outputs.release }}
@@ -99,13 +99,13 @@ jobs:
         with:
           name: opencode-cli
           path: |
-            packages/opencode/dist/opencode-darwin*
-            packages/opencode/dist/opencode-linux*
+            packages/modtools/dist/opencode-darwin*
+            packages/modtools/dist/opencode-linux*
 
       - uses: actions/upload-artifact@v4
         with:
           name: opencode-cli-windows
-          path: packages/opencode/dist/opencode-windows*
+          path: packages/modtools/dist/opencode-windows*
     outputs:
       version: ${{ needs.version.outputs.version }}
 
@@ -128,7 +128,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: opencode-cli-windows
-          path: packages/opencode/dist
+          path: packages/modtools/dist
 
       - name: Setup git committer
         id: committer
@@ -181,7 +181,7 @@ jobs:
           }
 
       - name: Repack Windows CLI archives
-        working-directory: packages/opencode/dist
+        working-directory: packages/modtools/dist
         shell: pwsh
         run: |
           Compress-Archive -Path "opencode-windows-arm64\bin\*" -DestinationPath "opencode-windows-arm64.zip" -Force
@@ -205,9 +205,9 @@ jobs:
         with:
           name: opencode-cli-signed-windows
           path: |
-            packages/opencode/dist/opencode-windows-arm64
-            packages/opencode/dist/opencode-windows-x64
-            packages/opencode/dist/opencode-windows-x64-baseline
+            packages/modtools/dist/opencode-windows-arm64
+            packages/modtools/dist/opencode-windows-x64
+            packages/modtools/dist/opencode-windows-x64-baseline
 
   build-tauri:
     needs:
@@ -582,17 +582,17 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: opencode-cli
-          path: packages/opencode/dist
+          path: packages/modtools/dist
 
       - uses: actions/download-artifact@v4
         with:
           name: opencode-cli-windows
-          path: packages/opencode/dist
+          path: packages/modtools/dist
 
       - uses: actions/download-artifact@v4
         with:
           name: opencode-cli-signed-windows
-          path: packages/opencode/dist
+          path: packages/modtools/dist
 
       - uses: actions/download-artifact@v4
         if: needs.version.outputs.release

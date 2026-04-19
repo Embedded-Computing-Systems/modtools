@@ -83,3 +83,8 @@ export function Logo() {
     </box>
   )
 }
+
+export function GoLogo() {
+  const { theme } = useTheme()
+  return <Logo />
+}

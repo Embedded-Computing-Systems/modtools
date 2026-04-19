@@ -7,7 +7,7 @@ import { ripgrep } from "ripgrep"
 
 import { Filesystem } from "@/util"
 import { Log } from "@/util"
-import { sanitizedProcessEnv } from "@/util/opencode-process"
+import { sanitizedProcessEnv } from "@/util/modtools-process"
 
 const log = Log.create({ service: "ripgrep" })
 

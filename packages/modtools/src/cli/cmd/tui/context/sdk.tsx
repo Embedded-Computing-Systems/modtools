@@ -1,4 +1,4 @@
-import { createOpencodeClient } from "@modtools-ai/sdk/v2"
+import { createModClient } from "@modtools-ai/sdk/v2"
 import type { GlobalEvent } from "@modtools-ai/sdk/v2"
 import { createSimpleContext } from "./helper"
 import { createGlobalEmitter } from "@solid-primitives/event-bus"
@@ -22,7 +22,7 @@ export const { use: useSDK, provider: SDKProvider } = createSimpleContext({
     let sse: AbortController | undefined
 
     function createSDK() {
-      return createOpencodeClient({
+      return createModClient({
         baseUrl: props.url,
         signal: abort.signal,
         directory: props.directory,

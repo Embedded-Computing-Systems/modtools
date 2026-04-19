@@ -15,7 +15,7 @@ import type { EventSource } from "./context/sdk"
 import { win32DisableProcessedInput, win32InstallCtrlCGuard } from "./win32"
 import { writeHeapSnapshot } from "v8"
 import { TuiConfig } from "./config/tui"
-import { MODTOOLS_PROCESS_ROLE, MODTOOLS_RUN_ID, ensureRunID, sanitizedProcessEnv } from "@/util/opencode-process"
+import { MODTOOLS_PROCESS_ROLE, MODTOOLS_RUN_ID, ensureRunID, sanitizedProcessEnv } from "@/util/modtools-process"
 
 declare global {
   const MODTOOLS_WORKER_PATH: string

@@ -1,6 +1,6 @@
 # HttpApi migration
 
-Practical notes for an eventual migration of `packages/opencode` server routes from the current Hono handlers to Effect `HttpApi`, either as a full replacement or as a parallel surface.
+Practical notes for an eventual migration of `packages/modtools` server routes from the current Hono handlers to Effect `HttpApi`, either as a full replacement or as a parallel surface.
 
 ## Goal
 

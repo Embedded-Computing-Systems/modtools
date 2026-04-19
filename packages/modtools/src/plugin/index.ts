@@ -8,7 +8,7 @@ import type {
 import { Config } from "../config"
 import { Bus } from "../bus"
 import { Log } from "../util"
-import { createOpencodeClient } from "@modtools-ai/sdk"
+import { createModClient } from "@modtools-ai/sdk"
 import { Flag } from "../flag/flag"
 import { CodexAuthPlugin } from "./codex"
 import { Session } from "../session"
@@ -119,7 +119,7 @@ export const layer = Layer.effect(
 
         const { Server } = yield* Effect.promise(() => import("../server/server"))
 
-        const client = createOpencodeClient({
+        const client = createModClient({
           baseUrl: "http://localhost:4096",
           directory: ctx.directory,
           headers: Flag.MODTOOLS_SERVER_PASSWORD
