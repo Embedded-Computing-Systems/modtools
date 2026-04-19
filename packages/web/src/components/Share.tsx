@@ -303,8 +303,8 @@ export default function Share(props: {
             <h1 data-component="header-title">{store.info?.title}</h1>
             <div data-component="header-details">
               <ul data-component="header-stats">
-                <li title={props.messages.opencode_version} data-slot="item">
-                  <div data-slot="icon" title={props.messages.opencode_name}>
+                <li title={props.messages.modtools_version} data-slot="item">
+                  <div data-slot="icon" title={props.messages.modtools_name}>
                     <IconOpencode width={16} height={16} />
                   </div>
                   <Show when={store.info?.version} fallback="v0.0.1">
@@ -355,7 +355,6 @@ export default function Share(props: {
                           if (x.type === "patch") return false
                           if (x.type === "step-finish") return false
                           if (x.type === "text" && x.synthetic === true) return false
-                          if (x.type === "tool" && x.tool === "todoread") return false
                           if (x.type === "text" && !x.text) return false
                           if (x.type === "tool" && (x.state.status === "pending" || x.state.status === "running"))
                             return false
@@ -367,21 +366,13 @@ export default function Share(props: {
                         <Suspense>
                           <For each={filteredParts()}>
                             {(part, partIndex) => {
-                              const last = createMemo(
-                                () =>
-                                  data().messages.length === msgIndex() + 1 &&
-                                  filteredParts().length === partIndex() + 1,
-                              )
+                              const last = () =>
+                                data().messages.length === msgIndex() + 1 && filteredParts().length === partIndex() + 1
 
                               onMount(() => {
                                 const hash = window.location.hash.slice(1)
                                 // Wait till all parts are loaded
-                                if (
-                                  hash !== "" &&
-                                  !hasScrolledToAnchor &&
-                                  filteredParts().length === partIndex() + 1 &&
-                                  data().messages.length === msgIndex() + 1
-                                ) {
+                                if (hash !== "" && !hasScrolledToAnchor && last()) {
                                   hasScrolledToAnchor = true
                                   scrollToAnchor(hash)
                                 }

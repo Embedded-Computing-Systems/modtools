@@ -1,11 +1,11 @@
 import type { APIEvent } from "@solidjs/start/server"
-import { and, Database, eq, isNull } from "@opencode-ai/console-core/drizzle/index.js"
-import { KeyTable } from "@opencode-ai/console-core/schema/key.sql.js"
-import { WorkspaceTable } from "@opencode-ai/console-core/schema/workspace.sql.js"
-import { ModelTable } from "@opencode-ai/console-core/schema/model.sql.js"
-import { ZenData } from "@opencode-ai/console-core/model.js"
+import { and, Database, eq, isNull } from "@modtools-ai/console-core/drizzle/index.js"
+import { KeyTable } from "@modtools-ai/console-core/schema/key.sql.js"
+import { WorkspaceTable } from "@modtools-ai/console-core/schema/workspace.sql.js"
+import { ModelTable } from "@modtools-ai/console-core/schema/model.sql.js"
+import { ZenData } from "@modtools-ai/console-core/model.js"
 
-export async function OPTIONS(input: APIEvent) {
+export async function OPTIONS(_input: APIEvent) {
   return new Response(null, {
     status: 200,
     headers: {
@@ -17,7 +17,7 @@ export async function OPTIONS(input: APIEvent) {
 }
 
 export async function GET(input: APIEvent) {
-  const zenData = ZenData.list()
+  const zenData = ZenData.list("full")
   const disabledModels = await authenticate()
 
   return new Response(
@@ -25,6 +25,7 @@ export async function GET(input: APIEvent) {
       object: "list",
       data: Object.entries(zenData.models)
         .filter(([id]) => !disabledModels.includes(id))
+        .filter(([id]) => !id.startsWith("alpha-"))
         .map(([id, _model]) => ({
           id,
           object: "model",

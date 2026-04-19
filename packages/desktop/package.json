@@ -1,7 +1,7 @@
 {
-  "name": "@opencode-ai/desktop",
+  "name": "@modtools-ai/desktop",
   "private": true,
-  "version": "1.2.1",
+  "version": "1.4.14",
   "type": "module",
   "license": "MIT",
   "scripts": {
@@ -13,8 +13,8 @@
     "tauri": "tauri"
   },
   "dependencies": {
-    "@opencode-ai/app": "workspace:*",
-    "@opencode-ai/ui": "workspace:*",
+    "@modtools-ai/app": "workspace:*",
+    "@modtools-ai/ui": "workspace:*",
     "@solid-primitives/i18n": "2.2.1",
     "@solid-primitives/storage": "catalog:",
     "@tauri-apps/api": "^2",

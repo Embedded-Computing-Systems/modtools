@@ -1,20 +1,31 @@
 {
-  "$schema": "https://turborepo.com/schema.json",
-  "globalEnv": ["CI", "OPENCODE_DISABLE_SHARE"],
-  "globalPassThroughEnv": ["CI", "OPENCODE_DISABLE_SHARE"],
+  "$schema": "https://v2-8-13.turborepo.dev/schema.json",
+  "globalEnv": ["CI", "MODTOOLS_DISABLE_SHARE"],
+  "globalPassThroughEnv": ["CI", "MODTOOLS_DISABLE_SHARE"],
   "tasks": {
     "typecheck": {},
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": [],
       "outputs": ["dist/**"]
     },
-    "opencode#test": {
+    "modtools#test": {
+      "dependsOn": ["^build"],
+      "outputs": [],
+      "passThroughEnv": ["*"]
+    },
+    "modtools#test:ci": {
+      "dependsOn": ["^build"],
+      "outputs": [".artifacts/unit/junit.xml"],
+      "passThroughEnv": ["*"]
+    },
+    "@modtools-ai/app#test": {
       "dependsOn": ["^build"],
       "outputs": []
     },
-    "@opencode-ai/app#test": {
+    "@modtools-ai/app#test:ci": {
       "dependsOn": ["^build"],
-      "outputs": []
+      "outputs": [".artifacts/unit/junit.xml"],
+      "passThroughEnv": ["*"]
     }
   }
 }

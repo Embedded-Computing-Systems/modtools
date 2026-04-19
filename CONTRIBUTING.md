@@ -24,6 +24,11 @@ If you are unsure if a PR would be accepted, feel free to ask a maintainer or lo
 
 Want to take on an issue? Leave a comment and a maintainer may assign it to you unless it is something we are already working on.
 
+## Adding New Providers
+
+New providers shouldn't require many if ANY code changes, but if you want to add support for a new provider first make a PR to:
+https://github.com/anomalyco/models.dev
+
 ## Developing OpenCode
 
 - Requirements: Bun 1.3+
@@ -69,7 +74,7 @@ Replace `<platform>` with your platform (e.g., `darwin-arm64`, `linux-x64`).
   - `packages/opencode/src/cli/cmd/tui/`: The TUI code, written in SolidJS with [opentui](https://github.com/sst/opentui)
   - `packages/app`: The shared web UI components, written in SolidJS
   - `packages/desktop`: The native desktop app, built with Tauri (wraps `packages/app`)
-  - `packages/plugin`: Source for `@opencode-ai/plugin`
+  - `packages/plugin`: Source for `@modtools-ai/plugin`
 
 ### Understanding bun dev vs opencode
 

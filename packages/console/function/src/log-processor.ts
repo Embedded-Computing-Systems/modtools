@@ -1,4 +1,4 @@
-import { Resource } from "@opencode-ai/console-resource"
+import { Resource } from "@modtools-ai/console-resource"
 import type { TraceItem } from "@cloudflare/workers-types"
 
 export default {
@@ -13,7 +13,11 @@ export default {
         url.pathname !== "/zen/v1/chat/completions" &&
         url.pathname !== "/zen/v1/messages" &&
         url.pathname !== "/zen/v1/responses" &&
-        !url.pathname.startsWith("/zen/v1/models/")
+        !url.pathname.startsWith("/zen/v1/models/") &&
+        url.pathname !== "/zen/go/v1/chat/completions" &&
+        url.pathname !== "/zen/go/v1/messages" &&
+        url.pathname !== "/zen/go/v1/responses" &&
+        !url.pathname.startsWith("/zen/go/v1/models/")
       )
         return
 

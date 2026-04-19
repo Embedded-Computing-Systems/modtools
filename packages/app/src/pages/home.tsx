@@ -1,13 +1,13 @@
 import { createMemo, For, Match, Switch } from "solid-js"
-import { Button } from "@opencode-ai/ui/button"
-import { Logo } from "@opencode-ai/ui/logo"
+import { Button } from "@modtools-ai/ui/button"
+import { Logo } from "@modtools-ai/ui/logo"
 import { useLayout } from "@/context/layout"
 import { useNavigate } from "@solidjs/router"
-import { base64Encode } from "@opencode-ai/util/encode"
-import { Icon } from "@opencode-ai/ui/icon"
+import { base64Encode } from "@modtools-ai/shared/util/encode"
+import { Icon } from "@modtools-ai/ui/icon"
 import { usePlatform } from "@/context/platform"
 import { DateTime } from "luxon"
-import { useDialog } from "@opencode-ai/ui/context/dialog"
+import { useDialog } from "@modtools-ai/ui/context/dialog"
 import { DialogSelectDirectory } from "@/components/dialog-select-directory"
 import { DialogSelectServer } from "@/components/dialog-select-server"
 import { useServer } from "@/context/server"
@@ -111,6 +111,14 @@ export default function Home() {
                 )}
               </For>
             </ul>
+          </div>
+        </Match>
+        <Match when={!sync.ready}>
+          <div class="mt-30 mx-auto flex flex-col items-center gap-3">
+            <div class="text-12-regular text-text-weak">{language.t("common.loading")}</div>
+            <Button class="px-3" onClick={chooseProject}>
+              {language.t("command.project.open")}
+            </Button>
           </div>
         </Match>
         <Match when={true}>
