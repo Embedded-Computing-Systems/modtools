@@ -47,6 +47,7 @@ const VERSION = await (async () => {
       return "1.0.0"
     })
   const [major, minor, patch] = version.split(".").map((x: string) => Number(x) || 0)
+  if (major === 1 && minor === 4) return "1.14.18"
   const t = env.MOD_BUMP?.toLowerCase()
   if (t === "major") return `${major + 1}.0.0`
   if (t === "minor") return `${major}.${minor + 1}.0`

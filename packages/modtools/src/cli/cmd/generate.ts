@@ -14,7 +14,7 @@ export const GenerateCommand = {
           {
             lang: "js",
             source: [
-              `import { createModClient } from "@modtools-ai/sdk`,
+              `import { createModClient } from "@modtools-ai/sdk"`,
               ``,
               `const client = createModClient()`,
               `await client.${operation.operationId}({`,

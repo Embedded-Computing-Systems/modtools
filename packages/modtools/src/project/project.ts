@@ -159,7 +159,6 @@ export const layer: Layer.Layer<
     const scope = yield* Scope.Scope
 
     const readCachedProjectId = Effect.fnUntraced(function* (dir: string) {
-      const mod = pathSvc.join(dir, "mod")
       const modtools = pathSvc.join(dir, "modtools")
       const mod = pathSvc.join(dir, "mod")
 
@@ -175,17 +174,6 @@ export const layer: Layer.Layer<
       )
       if (fromModtools) {
         const id = ProjectID.make(fromModtools)
-        yield* fs.writeFileString(mod, id).pipe(Effect.ignore)
-        return id
-      }
-
-      const fromOpencode = yield* fs.readFileString(mod).pipe(
-        Effect.map((x) => x.trim()),
-        Effect.catch(() => Effect.void),
-      )
-
-      if (fromOpencode) {
-        const id = ProjectID.make(fromOpencode)
         yield* fs.writeFileString(mod, id).pipe(Effect.ignore)
         return id
       }
