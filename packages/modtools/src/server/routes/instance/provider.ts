@@ -36,11 +36,18 @@ export const ProviderRoutes = lazy(() =>
           const svc = yield* Provider.Service
           const cfg = yield* Config.Service
           const config = yield* cfg.get()
-          const all = yield* Effect.promise(() => ModelsDev.get())
+          const modelsDevRaw = yield* Effect.promise(() => ModelsDev.get())
+          const modelsDev = { ...modelsDevRaw }
+          if (modelsDev["opencode"] && !modelsDev["mod"]) {
+            modelsDev["mod"] = { ...modelsDev["opencode"], id: "mod", name: "MOD" }
+          }
+          if (modelsDev["mod"] && !modelsDev["modtools"]) {
+            modelsDev["modtools"] = { ...modelsDev["mod"], id: "modtools", name: "MOD" }
+          }
           const disabled = new Set(config.disabled_providers ?? [])
           const enabled = config.enabled_providers ? new Set(config.enabled_providers) : undefined
-          const filtered: Record<string, (typeof all)[string]> = {}
-          for (const [key, value] of Object.entries(all)) {
+          const filtered: Record<string, (typeof modelsDev)[string]> = {}
+          for (const [key, value] of Object.entries(modelsDev)) {
             if ((enabled ? enabled.has(key) : true) && !disabled.has(key)) {
               filtered[key] = value
             }

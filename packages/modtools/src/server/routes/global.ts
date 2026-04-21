@@ -93,6 +93,14 @@ export const GlobalRoutes = lazy(() =>
         return c.json({ healthy: true, version: InstallationVersion })
       },
     )
+    .get("/debug-providers", async (c) => {
+      const models = await ModelsDev.get()
+      return c.json({
+        count: Object.keys(models).length,
+        keys: Object.keys(models),
+        first: Object.values(models)[0],
+      })
+    })
     .get(
       "/event",
       describeRoute({

@@ -153,7 +153,7 @@ export function SessionHeader() {
   })
   const hotkey = createMemo(() => command.keybind("file.open"))
   const os = createMemo(() => detectOS(platform))
-  const isDesktopBeta = platform.platform === "desktop" && import.meta.env.VITE_MODTOOLS_CHANNEL === "beta"
+  const isDesktopBeta = platform.platform === "desktop" && (import.meta.env.VITE_MOD_CHANNEL === "beta" || import.meta.env.VITE_MODTOOLS_CHANNEL === "beta")
   const search = createMemo(() => !isDesktopBeta || settings.general.showSearch())
   const tree = createMemo(() => !isDesktopBeta || settings.general.showFileTree())
   const term = createMemo(() => !isDesktopBeta || settings.general.showTerminal())
@@ -272,8 +272,8 @@ export function SessionHeader() {
   const [centerMount, setCenterMount] = createSignal<HTMLElement | null>(null)
   const [rightMount, setRightMount] = createSignal<HTMLElement | null>(null)
   onMount(() => {
-    setCenterMount(document.getElementById("modtools-titlebar-center"))
-    setRightMount(document.getElementById("modtools-titlebar-right"))
+    setCenterMount(document.getElementById("mod-titlebar-center"))
+    setRightMount(document.getElementById("mod-titlebar-right"))
   })
 
   return (

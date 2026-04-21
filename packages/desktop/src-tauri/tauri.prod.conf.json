@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "MOD Tools",
+  "productName": "MOD",
   "identifier": "systems.embedded-computing.desktop",
   "bundle": {
     "createUpdaterArtifacts": true,

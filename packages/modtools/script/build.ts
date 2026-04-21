@@ -47,7 +47,7 @@ const migrations = await Promise.all(
           Number(match[6]),
         )
       : 0
-    return { sql, timestamp }
+    return { sql, timestamp, name }
   }),
 )
 console.log(`Loaded ${migrations.length} migrations`)
@@ -215,7 +215,11 @@ if (Script.release) {
       await $`zip -r ../../${key}.zip *`.cwd(`dist/${key}/bin`)
     }
   }
-  await $`gh release upload v${Script.version} ./dist/*.zip ./dist/*.tar.gz --clobber`
+  if ((await $`which gh`.nothrow()).exitCode === 0) {
+    await $`gh release upload v${Script.version} ./dist/*.zip ./dist/*.tar.gz --clobber`
+  } else {
+    console.warn("gh CLI not found, skipping release upload")
+  }
 }
 
 export { binaries }

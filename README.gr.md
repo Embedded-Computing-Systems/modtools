@@ -1,17 +1,17 @@
 <p align="center">
-  <a href="https://modtools.ai">
+  <a href="https://mod.ai">
     <picture>
       <source srcset="packages/console/app/src/asset/logo-ornate-dark.svg" media="(prefers-color-scheme: dark)">
       <source srcset="packages/console/app/src/asset/logo-ornate-light.svg" media="(prefers-color-scheme: light)">
-      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="OpenCode logo">
+      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="MOD logo">
     </picture>
   </a>
 </p>
 <p align="center">Ο πράκτορας τεχνητής νοημοσύνης ανοικτού κώδικα για προγραμματισμό.</p>
 <p align="center">
-  <a href="https://modtools.ai/discord"><img alt="Discord" src="https://img.shields.io/discord/1391832426048651334?style=flat-square&label=discord" /></a>
-  <a href="https://www.npmjs.com/package/opencode-ai"><img alt="npm" src="https://img.shields.io/npm/v/opencode-ai?style=flat-square" /></a>
-  <a href="https://github.com/anomalyco/opencode/actions/workflows/publish.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/anomalyco/opencode/publish.yml?style=flat-square&branch=dev" /></a>
+  <a href="https://mod.ai/discord"><img alt="Discord" src="https://img.shields.io/discord/1391832426048651334?style=flat-square&label=discord" /></a>
+  <a href="https://www.npmjs.com/package/mod-ai"><img alt="npm" src="https://img.shields.io/npm/v/mod-ai?style=flat-square" /></a>
+  <a href="https://github.com/anomalyco/mod/actions/workflows/publish.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/anomalyco/mod/publish.yml?style=flat-square&branch=dev" /></a>
 </p>
 
 <p align="center">
@@ -39,7 +39,7 @@
   <a href="README.vi.md">Tiếng Việt</a>
 </p>
 
-[![OpenCode Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://modtools.ai)
+[![MOD Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://mod.ai)
 
 ---
 
@@ -47,18 +47,18 @@
 
 ```bash
 # YOLO
-curl -fsSL https://modtools.ai/install | bash
+curl -fsSL https://mod.ai/install | bash
 
 # Διαχειριστές πακέτων
-npm i -g opencode-ai@latest        # ή bun/pnpm/yarn
-scoop install opencode             # Windows
-choco install opencode             # Windows
-brew install anomalyco/tap/opencode # macOS και Linux (προτείνεται, πάντα ενημερωμένο)
-brew install opencode              # macOS και Linux (επίσημος τύπος brew, λιγότερο συχνές ενημερώσεις)
-sudo pacman -S opencode            # Arch Linux (Σταθερό)
-paru -S opencode-bin               # Arch Linux (Τελευταία έκδοση από AUR)
-mise use -g opencode               # Οποιοδήποτε λειτουργικό σύστημα
-nix run nixpkgs#opencode           # ή github:anomalyco/opencode με βάση την πιο πρόσφατη αλλαγή από το dev branch
+npm i -g mod-ai@latest        # ή bun/pnpm/yarn
+scoop install mod             # Windows
+choco install mod             # Windows
+brew install anomalyco/tap/mod # macOS και Linux (προτείνεται, πάντα ενημερωμένο)
+brew install mod              # macOS και Linux (επίσημος τύπος brew, λιγότερο συχνές ενημερώσεις)
+sudo pacman -S mod            # Arch Linux (Σταθερό)
+paru -S mod-bin               # Arch Linux (Τελευταία έκδοση από AUR)
+mise use -g mod               # Οποιοδήποτε λειτουργικό σύστημα
+nix run nixpkgs#mod           # ή github:anomalyco/mod με βάση την πιο πρόσφατη αλλαγή από το dev branch
 ```
 
 > [!TIP]
@@ -66,20 +66,20 @@ nix run nixpkgs#opencode           # ή github:anomalyco/opencode με βάση 
 
 ### Εφαρμογή Desktop (BETA)
 
-Το OpenCode είναι επίσης διαθέσιμο ως εφαρμογή. Κατέβασε το απευθείας από τη [σελίδα εκδόσεων](https://github.com/anomalyco/opencode/releases) ή το [modtools.ai/download](https://modtools.ai/download).
+Το MOD είναι επίσης διαθέσιμο ως εφαρμογή. Κατέβασε το απευθείας από τη [σελίδα εκδόσεων](https://github.com/anomalyco/mod/releases) ή το [mod.ai/download](https://mod.ai/download).
 
 | Πλατφόρμα             | Λήψη                                  |
 | --------------------- | ------------------------------------- |
-| macOS (Apple Silicon) | `opencode-desktop-darwin-aarch64.dmg` |
-| macOS (Intel)         | `opencode-desktop-darwin-x64.dmg`     |
-| Windows               | `opencode-desktop-windows-x64.exe`    |
+| macOS (Apple Silicon) | `mod-desktop-darwin-aarch64.dmg` |
+| macOS (Intel)         | `mod-desktop-darwin-x64.dmg`     |
+| Windows               | `mod-desktop-windows-x64.exe`    |
 | Linux                 | `.deb`, `.rpm`, ή AppImage            |
 
 ```bash
 # macOS (Homebrew)
-brew install --cask opencode-desktop
+brew install --cask mod-desktop
 # Windows (Scoop)
-scoop bucket add extras; scoop install extras/opencode-desktop
+scoop bucket add extras; scoop install extras/mod-desktop
 ```
 
 #### Κατάλογος Εγκατάστασης
@@ -89,17 +89,17 @@ scoop bucket add extras; scoop install extras/opencode-desktop
 1. `$OPENCODE_INSTALL_DIR` - Προσαρμοσμένος κατάλογος εγκατάστασης
 2. `$XDG_BIN_DIR` - Διαδρομή συμβατή με τις προδιαγραφές XDG Base Directory
 3. `$HOME/bin` - Τυπικός κατάλογος εκτελέσιμων αρχείων χρήστη (εάν υπάρχει ή μπορεί να δημιουργηθεί)
-4. `$HOME/.opencode/bin` - Προεπιλεγμένη εφεδρική διαδρομή
+4. `$HOME/.mod/bin` - Προεπιλεγμένη εφεδρική διαδρομή
 
 ```bash
 # Παραδείγματα
-OPENCODE_INSTALL_DIR=/usr/local/bin curl -fsSL https://modtools.ai/install | bash
-XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://modtools.ai/install | bash
+OPENCODE_INSTALL_DIR=/usr/local/bin curl -fsSL https://mod.ai/install | bash
+XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://mod.ai/install | bash
 ```
 
 ### Πράκτορες
 
-Το OpenCode περιλαμβάνει δύο ενσωματωμένους πράκτορες μεταξύ των οποίων μπορείτε να εναλλάσσεστε με το πλήκτρο `Tab`.
+Το MOD περιλαμβάνει δύο ενσωματωμένους πράκτορες μεταξύ των οποίων μπορείτε να εναλλάσσεστε με το πλήκτρο `Tab`.
 
 - **build** - Προεπιλεγμένος πράκτορας με πλήρη πρόσβαση για εργασία πάνω σε κώδικα
 - **plan** - Πράκτορας μόνο ανάγνωσης για ανάλυση και εξερεύνηση κώδικα
@@ -110,19 +110,19 @@ XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://modtools.ai/install | bash
 Περιλαμβάνεται επίσης ένας **general** υποπράκτορας για σύνθετες αναζητήσεις και πολυβηματικές διεργασίες.
 Χρησιμοποιείται εσωτερικά και μπορεί να κληθεί χρησιμοποιώντας `@general` στα μηνύματα.
 
-Μάθετε περισσότερα για τους [πράκτορες](https://modtools.ai/docs/agents).
+Μάθετε περισσότερα για τους [πράκτορες](https://mod.ai/docs/agents).
 
 ### Οδηγός Χρήσης
 
-Για περισσότερες πληροφορίες σχετικά με τη ρύθμιση του OpenCode, [**πλοηγήσου στον οδηγό χρήσης μας**](https://modtools.ai/docs).
+Για περισσότερες πληροφορίες σχετικά με τη ρύθμιση του MOD, [**πλοηγήσου στον οδηγό χρήσης μας**](https://mod.ai/docs).
 
 ### Συνεισφορά
 
-Εάν ενδιαφέρεσαι να συνεισφέρεις στο OpenCode, διαβάστε τα [οδηγό χρήσης συνεισφοράς](./CONTRIBUTING.md) πριν υποβάλεις ένα pull request.
+Εάν ενδιαφέρεσαι να συνεισφέρεις στο MOD, διαβάστε τα [οδηγό χρήσης συνεισφοράς](./CONTRIBUTING.md) πριν υποβάλεις ένα pull request.
 
-### Δημιουργία πάνω στο OpenCode
+### Δημιουργία πάνω στο MOD
 
-Εάν εργάζεσαι σε ένα έργο σχετικό με το OpenCode και χρησιμοποιείτε το "opencode" ως μέρος του ονόματός του, για παράδειγμα "opencode-dashboard" ή "opencode-mobile", πρόσθεσε μια σημείωση στο README σας για να διευκρινίσεις ότι δεν είναι κατασκευασμένο από την ομάδα του OpenCode και δεν έχει καμία σχέση με εμάς.
+Εάν εργάζεσαι σε ένα έργο σχετικό με το MOD και χρησιμοποιείτε το "mod" ως μέρος του ονόματός του, για παράδειγμα "mod-dashboard" ή "mod-mobile", πρόσθεσε μια σημείωση στο README σας για να διευκρινίσεις ότι δεν είναι κατασκευασμένο από την ομάδα του MOD και δεν έχει καμία σχέση με εμάς.
 
 ### Συχνές Ερωτήσεις
 
@@ -131,11 +131,11 @@ XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://modtools.ai/install | bash
 Είναι πολύ παρόμοιο με το Claude Code ως προς τις δυνατότητες. Ακολουθούν οι βασικές διαφορές:
 
 - 100% ανοιχτού κώδικα
-- Δεν είναι συνδεδεμένο με κανέναν πάροχο. Αν και συνιστούμε τα μοντέλα που παρέχουμε μέσω του [OpenCode Zen](https://modtools.ai/zen), το OpenCode μπορεί να χρησιμοποιηθεί με Claude, OpenAI, Google, ή ακόμα και τοπικά μοντέλα. Καθώς τα μοντέλα εξελίσσονται, τα κενά μεταξύ τους θα κλείσουν και οι τιμές θα μειωθούν, οπότε είναι σημαντικό να είσαι ανεξάρτητος από τον πάροχο.
+- Δεν είναι συνδεδεμένο με κανέναν πάροχο. Αν και συνιστούμε τα μοντέλα που παρέχουμε μέσω του [MOD Zen](https://mod.ai/zen), το MOD μπορεί να χρησιμοποιηθεί με Claude, OpenAI, Google, ή ακόμα και τοπικά μοντέλα. Καθώς τα μοντέλα εξελίσσονται, τα κενά μεταξύ τους θα κλείσουν και οι τιμές θα μειωθούν, οπότε είναι σημαντικό να είσαι ανεξάρτητος από τον πάροχο.
 - Out-of-the-box υποστήριξη LSP
-- Εστίαση στο TUI. Το OpenCode είναι κατασκευασμένο από χρήστες που χρησιμοποιούν neovim και τους δημιουργούς του [terminal.shop](https://terminal.shop)· θα εξαντλήσουμε τα όρια του τι είναι δυνατό στο terminal.
-- Αρχιτεκτονική client/server. Αυτό, για παράδειγμα, μπορεί να επιτρέψει στο OpenCode να τρέχει στον υπολογιστή σου ενώ το χειρίζεσαι εξ αποστάσεως από μια εφαρμογή κινητού, που σημαίνει ότι το TUI frontend είναι μόνο ένας από τους πιθανούς clients.
+- Εστίαση στο TUI. Το MOD είναι κατασκευασμένο από χρήστες που χρησιμοποιούν neovim και τους δημιουργούς του [terminal.shop](https://terminal.shop)· θα εξαντλήσουμε τα όρια του τι είναι δυνατό στο terminal.
+- Αρχιτεκτονική client/server. Αυτό, για παράδειγμα, μπορεί να επιτρέψει στο MOD να τρέχει στον υπολογιστή σου ενώ το χειρίζεσαι εξ αποστάσεως από μια εφαρμογή κινητού, που σημαίνει ότι το TUI frontend είναι μόνο ένας από τους πιθανούς clients.
 
 ---
 
-**Γίνε μέλος της κοινότητάς μας** [Discord](https://discord.gg/opencode) | [X.com](https://x.com/opencode)
+**Γίνε μέλος της κοινότητάς μας** [Discord](https://discord.gg/mod) | [X.com](https://x.com/mod)

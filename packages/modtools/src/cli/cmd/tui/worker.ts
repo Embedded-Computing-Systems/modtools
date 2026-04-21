@@ -11,7 +11,7 @@ import { Flag } from "@/flag/flag"
 import { writeHeapSnapshot } from "node:v8"
 import { Heap } from "@/cli/heap"
 import { AppRuntime } from "@/effect/app-runtime"
-import { ensureProcessMetadata } from "@/util/modtools-process"
+import { ensureProcessMetadata } from "@/util/mod-process"
 
 ensureProcessMetadata("worker")
 
@@ -99,6 +99,6 @@ Rpc.listen(rpc)
 function getAuthorizationHeader(): string | undefined {
   const password = Flag.MODTOOLS_SERVER_PASSWORD
   if (!password) return undefined
-  const username = Flag.MODTOOLS_SERVER_USERNAME ?? "opencode"
+  const username = Flag.MODTOOLS_SERVER_USERNAME ?? "mod"
   return `Basic ${btoa(`${username}:${password}`)}`
 }

@@ -1,6 +1,6 @@
-# OpenCode Desktop
+# MOD Desktop
 
-Native OpenCode desktop app, built with Tauri v2.
+Native MOD desktop app, built with Tauri v2.
 
 ## Development
 

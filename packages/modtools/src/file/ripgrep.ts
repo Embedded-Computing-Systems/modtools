@@ -7,7 +7,7 @@ import { ripgrep } from "ripgrep"
 
 import { Filesystem } from "@/util"
 import { Log } from "@/util"
-import { sanitizedProcessEnv } from "@/util/modtools-process"
+import { sanitizedProcessEnv } from "@/util/mod-process"
 
 const log = Log.create({ service: "ripgrep" })
 
@@ -126,7 +126,7 @@ export interface Interface {
   readonly search: (input: SearchInput) => Effect.Effect<SearchResult, Error>
 }
 
-export class Service extends Context.Service<Service, Interface>()("@opencode/Ripgrep") {}
+export class Service extends Context.Service<Service, Interface>()("@mod/Ripgrep") {}
 
 type Run = { kind: "files" | "search"; cwd: string; args: string[] }
 
@@ -525,7 +525,7 @@ export const layer = Layer.effect(
 
       const root: Node = { name: "", children: new Map() }
       for (const file of list) {
-        if (file.includes(".modtools")) continue
+        if (file.includes(".mod") || file.includes(".modtools")) continue
         const parts = file.split(path.sep)
         if (parts.length < 2) continue
         let node = root

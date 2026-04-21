@@ -50,9 +50,9 @@ const deepLinkEvent = "modtools:deep-link"
 
 const emitDeepLinks = (urls: string[]) => {
   if (urls.length === 0) return
-  window.__MODTOOLS__ ??= {}
-  const pending = window.__MODTOOLS__.deepLinks ?? []
-  window.__MODTOOLS__.deepLinks = [...pending, ...urls]
+  window.__MOD__ ??= {}
+  const pending = window.__MOD__.deepLinks ?? []
+  window.__MOD__.deepLinks = [...pending, ...urls]
   window.dispatchEvent(new CustomEvent(deepLinkEvent, { detail: { urls } }))
 }
 
@@ -70,12 +70,12 @@ const createPlatform = (): Platform => {
   })()
 
   const wslHome = async () => {
-    if (os !== "windows" || !window.__MODTOOLS__?.wsl) return undefined
+    if (os !== "windows" || !window.__MOD__?.wsl) return undefined
     return commands.wslPath("~", "windows").catch(() => undefined)
   }
 
   const handleWslPicker = async <T extends string | string[]>(result: T | null): Promise<T | null> => {
-    if (!result || !window.__MODTOOLS__?.wsl) return result
+    if (!result || !window.__MOD__?.wsl) return result
     if (Array.isArray(result)) {
       return Promise.all(result.map((path) => commands.wslPath(path, "linux").catch(() => path))) as any
     }

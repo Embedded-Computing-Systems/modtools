@@ -8,7 +8,7 @@ function View(props: { api: TuiPluginApi }) {
   const theme = () => props.api.theme.current
   const has = createMemo(() =>
     props.api.state.provider.some(
-      (item) => item.id !== "opencode" || Object.values(item.models).some((model) => model.cost?.input !== 0),
+      (item) => (item.id !== "mod" && item.id !== "opencode") || Object.values(item.models).some((model) => model.cost?.input !== 0),
     ),
   )
   const done = createMemo(() => props.api.kv.get("dismissed_getting_started", false))
@@ -64,9 +64,9 @@ function View(props: { api: TuiPluginApi }) {
         <span style={{ fg: theme().text }}>{path().name}</span>
       </text>
       <text fg={theme().textMuted}>
-        <span style={{ fg: theme().success }}>•</span> <b>Open</b>
+        <span style={{ fg: theme().success }}>•</span>
         <span style={{ fg: theme().text }}>
-          <b>Code</b>
+          <b>MOD</b>
         </span>{" "}
         <span>{props.api.app.version}</span>
       </text>

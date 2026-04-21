@@ -20,8 +20,8 @@ describe("tool.registry", () => {
   it.live("loads tools from .modtools/tool (singular)", () =>
     provideTmpdirInstance((dir) =>
       Effect.gen(function* () {
-        const opencode = path.join(dir, ".modtools")
-        const tool = path.join(opencode, "tool")
+        const modtools = path.join(dir, ".modtools")
+        const tool = path.join(modtools, "tool")
         yield* Effect.promise(() => fs.mkdir(tool, { recursive: true }))
         yield* Effect.promise(() =>
           Bun.write(
@@ -48,8 +48,8 @@ describe("tool.registry", () => {
   it.live("loads tools from .modtools/tools (plural)", () =>
     provideTmpdirInstance((dir) =>
       Effect.gen(function* () {
-        const opencode = path.join(dir, ".modtools")
-        const tools = path.join(opencode, "tools")
+        const modtools = path.join(dir, ".modtools")
+        const tools = path.join(modtools, "tools")
         yield* Effect.promise(() => fs.mkdir(tools, { recursive: true }))
         yield* Effect.promise(() =>
           Bun.write(
@@ -76,12 +76,12 @@ describe("tool.registry", () => {
   it.live("loads tools with external dependencies without crashing", () =>
     provideTmpdirInstance((dir) =>
       Effect.gen(function* () {
-        const opencode = path.join(dir, ".modtools")
-        const tools = path.join(opencode, "tools")
+        const modtools = path.join(dir, ".modtools")
+        const tools = path.join(modtools, "tools")
         yield* Effect.promise(() => fs.mkdir(tools, { recursive: true }))
         yield* Effect.promise(() =>
           Bun.write(
-            path.join(opencode, "package.json"),
+            path.join(modtools, "package.json"),
             JSON.stringify({
               name: "custom-tools",
               dependencies: {
@@ -93,7 +93,7 @@ describe("tool.registry", () => {
         )
         yield* Effect.promise(() =>
           Bun.write(
-            path.join(opencode, "package-lock.json"),
+            path.join(modtools, "package-lock.json"),
             JSON.stringify({
               name: "custom-tools",
               lockfileVersion: 3,
@@ -109,7 +109,7 @@ describe("tool.registry", () => {
           ),
         )
 
-        const cowsay = path.join(opencode, "node_modules", "cowsay")
+        const cowsay = path.join(modtools, "node_modules", "cowsay")
         yield* Effect.promise(() => fs.mkdir(cowsay, { recursive: true }))
         yield* Effect.promise(() =>
           Bun.write(

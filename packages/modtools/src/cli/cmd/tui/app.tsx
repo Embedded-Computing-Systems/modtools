@@ -319,12 +319,12 @@ function App(props: { onSnapshot?: () => Promise<string[]> }) {
       }
 
       const title = session.title.length > 40 ? session.title.slice(0, 37) + "..." : session.title
-      renderer.setTerminalTitle(`OC | ${title}`)
+      renderer.setTerminalTitle(`MOD | ${title}`)
       return
     }
 
     if (route.data.type === "plugin") {
-      renderer.setTerminalTitle(`OC | ${route.data.id}`)
+      renderer.setTerminalTitle(`MOD | ${route.data.id}`)
     }
   })
 
@@ -584,7 +584,7 @@ function App(props: { onSnapshot?: () => Promise<string[]> }) {
     {
       title: "View status",
       keybind: "status_view",
-      value: "opencode.status",
+      value: "mod.status",
       slash: {
         name: "status",
       },

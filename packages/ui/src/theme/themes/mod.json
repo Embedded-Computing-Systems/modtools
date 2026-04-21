@@ -1,7 +1,7 @@
 {
   "$schema": "https://modtools.ai/desktop-theme.json",
-  "name": "OpenCode",
-  "id": "opencode",
+  "name": "MOD",
+  "id": "mod",
   "light": {
     "palette": {
       "neutral": "#ffffff",

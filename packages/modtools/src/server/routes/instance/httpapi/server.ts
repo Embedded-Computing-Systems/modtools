@@ -73,7 +73,7 @@ const auth = Layer.succeed(
       Effect.gen(function* () {
         if (!Flag.MODTOOLS_SERVER_PASSWORD) return yield* effect
 
-        const user = Flag.MODTOOLS_SERVER_USERNAME ?? "modtools"
+        const user = Flag.MODTOOLS_SERVER_USERNAME ?? "mod"
         if (credential.username !== user) {
           return yield* new Unauthorized({ message: "Unauthorized" })
         }

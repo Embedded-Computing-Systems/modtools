@@ -54,7 +54,7 @@ export const Info = z
   })
 export type Info = z.infer<typeof Info>
 
-export const USER_AGENT = `modtools/${InstallationChannel}/${InstallationVersion}/${Flag.MODTOOLS_CLIENT}`
+export const USER_AGENT = `mod/${InstallationChannel}/${InstallationVersion}/${Flag.MODTOOLS_CLIENT}`
 
 export function isPreview() {
   return InstallationChannel !== "latest"

@@ -29,30 +29,29 @@ interface MigrateInput {
 }
 
 /**
- * Migrates tui-specific keys (theme, keybinds, tui) from opencode.json files
+ * Migrates tui-specific keys (theme, keybinds, tui) from mod.json/modtools.json files
  * into dedicated tui.json files. Migration is performed per-directory and
  * skips only locations where a tui.json already exists.
  */
 export async function migrateTuiConfig(input: MigrateInput) {
   const modtools = await modtoolsFiles(input)
   for (const file of modtools) {
-    const source = await Filesystem.readText(file).catch((error) => {
-      log.warn("failed to read config for tui migration", { path: file, error })
-      return undefined
-    })
+    const source = await ConfigPaths.readFile(file)
     if (!source) continue
-    const errors: JsoncParseError[] = []
-    const data = parseJsonc(source, errors, { allowTrailingComma: true })
-    if (errors.length || !data || typeof data !== "object" || Array.isArray(data)) continue
 
-    const theme = LegacyTheme.safeParse("theme" in data ? data.theme : undefined)
-    const keybinds = LegacyRecord.safeParse("keybinds" in data ? data.keybinds : undefined)
-    const legacyTui = LegacyRecord.safeParse("tui" in data ? data.tui : undefined)
-    const extracted = {
-      theme: theme.success ? theme.data : undefined,
-      keybinds: keybinds.success ? keybinds.data : undefined,
-      tui: legacyTui.success ? legacyTui.data : undefined,
-    }
+    const errors: JsoncParseError[] = []
+    const data = parseJsonc(source, errors)
+    if (errors.length > 0 || !data || typeof data !== "object") continue
+
+    const extracted = z
+      .object({
+        theme: LegacyTheme,
+        keybinds: LegacyRecord,
+        tui: LegacyRecord,
+      })
+      .partial()
+      .parse(data)
+
     const tui = extracted.tui ? normalizeTui(extracted.tui) : undefined
     if (extracted.theme === undefined && extracted.keybinds === undefined && !tui) continue
 
@@ -114,6 +113,7 @@ async function backupAndStripLegacy(file: string, source: string) {
       formattingOptions: {
         insertSpaces: true,
         tabSize: 2,
+        eol: "\n",
       },
     })
     if (!edits.length) return acc
@@ -133,10 +133,14 @@ async function backupAndStripLegacy(file: string, source: string) {
 
 async function modtoolsFiles(input: { directories: string[]; cwd: string }) {
   const files = [
+    ...ConfigPaths.fileInDirectory(Global.Path.config, "mod"),
     ...ConfigPaths.fileInDirectory(Global.Path.config, "modtools"),
-    ...(await Filesystem.findUp(["modtools.json", "modtools.jsonc"], input.cwd, undefined, { rootFirst: true })),
+    ...(await Filesystem.findUp(["mod.json", "mod.jsonc", "modtools.json", "modtools.jsonc"], input.cwd, undefined, {
+      rootFirst: true,
+    })),
   ]
   for (const dir of unique(input.directories)) {
+    files.push(...ConfigPaths.fileInDirectory(dir, "mod"))
     files.push(...ConfigPaths.fileInDirectory(dir, "modtools"))
   }
   if (Flag.MODTOOLS_CONFIG) files.push(Flag.MODTOOLS_CONFIG)

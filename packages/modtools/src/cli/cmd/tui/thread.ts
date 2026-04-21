@@ -15,7 +15,7 @@ import type { EventSource } from "./context/sdk"
 import { win32DisableProcessedInput, win32InstallCtrlCGuard } from "./win32"
 import { writeHeapSnapshot } from "v8"
 import { TuiConfig } from "./config/tui"
-import { MODTOOLS_PROCESS_ROLE, MODTOOLS_RUN_ID, ensureRunID, sanitizedProcessEnv } from "@/util/modtools-process"
+import { MOD_PROCESS_ROLE, MOD_RUN_ID, ensureRunID, sanitizedProcessEnv } from "@/util/mod-process"
 
 declare global {
   const MODTOOLS_WORKER_PATH: string
@@ -67,12 +67,12 @@ async function input(value?: string) {
 
 export const TuiThreadCommand = cmd({
   command: "$0 [project]",
-  describe: "start opencode tui",
+  describe: "start MOD tui",
   builder: (yargs) =>
     withNetworkOptions(yargs)
       .positional("project", {
         type: "string",
-        describe: "path to start opencode in",
+        describe: "path to start MOD in",
       })
       .option("model", {
         type: "string",
@@ -131,8 +131,8 @@ export const TuiThreadCommand = cmd({
       }
       const cwd = Filesystem.resolve(process.cwd())
       const env = sanitizedProcessEnv({
-        [MODTOOLS_PROCESS_ROLE]: "worker",
-        [MODTOOLS_RUN_ID]: ensureRunID(),
+        [MOD_PROCESS_ROLE]: "worker",
+        [MOD_RUN_ID]: ensureRunID(),
       })
 
       const worker = new Worker(file, {
@@ -197,7 +197,7 @@ export const TuiThreadCommand = cmd({
             events: undefined,
           }
         : {
-            url: "http://opencode.internal",
+            url: "http://mod.internal",
             fetch: createWorkerFetch(client),
             events: createEventSource(client),
           }
@@ -236,4 +236,3 @@ export const TuiThreadCommand = cmd({
     process.exit(0)
   },
 })
-// scratch

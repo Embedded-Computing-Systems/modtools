@@ -54,7 +54,7 @@ export interface Interface {
   }) => Effect.Effect<void>
 }
 
-export class Service extends Context.Service<Service, Interface>()("@opencode/SessionCompaction") {}
+export class Service extends Context.Service<Service, Interface>()("@modtools/SessionCompaction") {}
 
 export const layer: Layer.Layer<
   Service,

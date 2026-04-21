@@ -1,8 +1,9 @@
 #!/bin/bash
-# MOD Tools Rebuild, Release, and Reinstall Script
+# MOD Rebuild, Release, and Reinstall Script
 # Usage: ./scripts/rebuild-release-reinstall.sh [options]
 #
 # Options:
+#   --all-platforms  Build for all platforms
 #   --no-cli        Skip CLI installation
 #   --no-tui        Skip TUI installation (same as CLI)
 #   --no-gui        Skip GUI build and installation
@@ -26,6 +27,9 @@ INSTALL_TUI=true
 INSTALL_GUI=true
 BUILD_ALL_PLATFORMS=true
 SKIP_PREREQ_CHECK=false
+RELEASE=true
+RELEASE_VERSION=""
+DEV_MODE=false
 
 # Parse arguments
 while [[ "$#" -gt 0 ]]; do
@@ -47,6 +51,24 @@ while [[ "$#" -gt 0 ]]; do
       SKIP_PREREQ_CHECK=true
       shift
       ;;
+    --release)
+      RELEASE=true
+      shift
+      ;;
+    --dev)
+      DEV_MODE=true
+      RELEASE=false
+      shift
+      ;;
+    --version)
+      if [[ -n "$2" && "$2" != --* ]]; then
+        RELEASE_VERSION="$2"
+        shift 2
+      else
+        echo "Error: --version requires a version argument (e.g., --version 1.2.3)"
+        exit 1
+      fi
+      ;;
     --gui)
       # Legacy flag - now default behavior
       shift
@@ -56,23 +78,29 @@ while [[ "$#" -gt 0 ]]; do
       shift
       ;;
     --help|-h)
-      echo "MOD Tools Rebuild, Release, and Reinstall Script"
+      echo "MOD Rebuild, Release, and Reinstall Script"
       echo ""
       echo "Usage: $0 [options]"
       echo ""
       echo "Options:"
+      echo "  --all-platforms       Build for all platforms (default)"
       echo "  --no-cli              Skip CLI/TUI installation"
       echo "  --no-gui              Skip GUI build and installation"
       echo "  --no-all-platforms    Build only for current platform"
       echo "  --skip-prereq-check   Skip GUI prerequisite checks"
+      echo "  --dev                 Build dev version (0.0.0-dev) instead of release"
+      echo "  --version <ver>       Set specific version (overrides git tag)"
       echo "  --help                Show this help message"
       echo ""
-      echo "By default, builds for all platforms and installs CLI/TUI and GUI."
+      echo "By default, builds RELEASE version from latest git tag for all platforms."
       echo ""
       echo "Examples:"
-      echo "  $0                      # Full build and install"
-      echo "  $0 --no-gui             # CLI/TUI only"
-      echo "  $0 --no-all-platforms   # Current platform only"
+      echo "  $0                      # Release build from git tag (default)"
+      echo "  $0 --dev                # Dev build (0.0.0-dev-*)"
+      echo "  $0 --version 1.2.3      # Release build with specific version"
+      echo "  $0 --no-gui             # Release build, CLI/TUI only"
+      echo "  $0 --no-cli             # Release build, GUI only"
+      echo "  $0 --no-all-platforms   # Release build, current platform only"
       exit 0
       ;;
     *)
@@ -84,7 +112,7 @@ while [[ "$#" -gt 0 ]]; do
 done
 
 echo -e "${BLUE}========================================${NC}"
-echo -e "${BLUE}  MOD Tools Rebuild & Reinstall${NC}"
+echo -e "${BLUE}  MOD Rebuild & Reinstall${NC}"
 echo -e "${BLUE}========================================${NC}"
 echo ""
 echo "Build configuration:"
@@ -93,9 +121,11 @@ echo "  Install CLI/TUI: $INSTALL_CLI"
 echo "  Install GUI: $INSTALL_GUI"
 echo ""
 
-# Get project root
-PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# Get project root (script is in .packages/scripts/, so need to go up 2 levels)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 cd "$PROJECT_ROOT"
+echo -e "${BLUE}Project root: $PROJECT_ROOT${NC}"
 
 # Detect platform
 PLATFORM=$(uname -s | tr '[:upper:]' '[:lower:]')
@@ -264,6 +294,27 @@ echo -e "${YELLOW}Step 5: Building CLI/TUI...${NC}"
 cd packages/modtools
 
 # Set build flags
+if [ "$RELEASE" = true ]; then
+  echo -e "  ${BLUE}Building RELEASE version...${NC}"
+  export MOD_RELEASE=true
+  export MOD_CHANNEL="latest"
+  if [ -n "$RELEASE_VERSION" ]; then
+    export MOD_VERSION="$RELEASE_VERSION"
+    echo -e "  ${BLUE}Channel: latest | Version: $RELEASE_VERSION${NC}"
+  else
+    # Get version from latest git tag, fallback to 1.0.0
+    GIT_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+    if [ -n "$GIT_TAG" ]; then
+      # Remove 'v' prefix if present
+      TAG_VERSION="${GIT_TAG#v}"
+      export MOD_VERSION="$TAG_VERSION"
+      echo -e "  ${BLUE}Channel: latest | Version: $TAG_VERSION (from git tag $GIT_TAG)${NC}"
+    else
+      echo -e "  ${YELLOW}No git tag found, using auto-detected version${NC}"
+    fi
+  fi
+fi
+
 if [ "$BUILD_ALL_PLATFORMS" = true ]; then
   echo -e "  ${BLUE}Building for all platforms...${NC}"
   bun run script/build.ts
@@ -273,15 +324,63 @@ else
 fi
 
 cd "$PROJECT_ROOT"
-echo -e "  ${GREEN}CLI/TUI built${NC}"
-echo ""
+  echo -e "  ${GREEN}CLI/TUI built${NC}"
 
-# ============================================
-# STEP 5: Build Desktop GUI
-# ============================================
-if [ "$INSTALL_GUI" = true ]; then
-  echo -e "${YELLOW}Step 5: Building Desktop GUI...${NC}"
-  cd packages/desktop
+  # Copy built CLI to desktop sidecars for bundling
+  if [ "$INSTALL_GUI" = true ]; then
+    echo -e "  ${BLUE}Updating desktop sidecar...${NC}"
+    LOCAL_BIN="packages/modtools/dist/mod-${PLATFORM}-${ARCH}/bin/mod"
+    if [ -f "$LOCAL_BIN" ]; then
+      cp "$LOCAL_BIN" "packages/desktop/src-tauri/sidecars/mod-cli"
+      
+      # Determine target triple for sidecar bundling
+      if [ "$PLATFORM" = "darwin" ]; then
+        if [ "$ARCH" = "arm64" ]; then
+          TRIPLE="aarch64-apple-darwin"
+        else
+          TRIPLE="x86_64-apple-darwin"
+        fi
+      elif [ "$PLATFORM" = "linux" ]; then
+        if [ "$ARCH" = "arm64" ]; then
+          TRIPLE="aarch64-unknown-linux-gnu"
+        else
+          TRIPLE="x86_64-unknown-linux-gnu"
+        fi
+      else
+        TRIPLE="x86_64-pc-windows-msvc"
+      fi
+
+      TRIPLED_BIN="packages/desktop/src-tauri/sidecars/mod-cli-$TRIPLE"
+      if [ "$PLATFORM" = "windows" ]; then
+        TRIPLED_BIN="$TRIPLED_BIN.exe"
+      fi
+
+      cp "$LOCAL_BIN" "$TRIPLED_BIN"
+      echo -e "  ${BLUE}Updated sidecar: $TRIPLED_BIN${NC}"
+
+      # Sign the sidecar for macOS
+      if [ "$PLATFORM" = "darwin" ]; then
+        for b in "packages/desktop/src-tauri/sidecars/mod-cli" "$TRIPLED_BIN"; do
+          if [ -f "$b" ]; then
+            codesign --remove-signature "$b" 2>/dev/null || true
+            codesign --force --sign - --deep "$b" 2>/dev/null || true
+          fi
+        done
+      fi
+      echo -e "  ${GREEN}Sidecars updated and signed${NC}"
+    else
+      echo -e "  ${YELLOW}Warning: Could not find built binary at $LOCAL_BIN${NC}"
+    fi
+  fi
+
+  echo ""
+
+  # ============================================
+  # STEP 5: Build Desktop GUI
+  # ============================================
+  if [ "$INSTALL_GUI" = true ]; then
+    echo -e "${YELLOW}Step 5: Building Desktop GUI...${NC}"
+    cd packages/desktop
 
   # Run typecheck and build frontend
   bun run typecheck
@@ -360,7 +459,7 @@ if [ "$INSTALL_CLI" = true ] || [ "$INSTALL_TUI" = true ]; then
     fi
   fi
 
-  PACKAGE_NAME="modtools-${PLATFORM_SUFFIX}"
+  PACKAGE_NAME="mod-${PLATFORM_SUFFIX}"
   BINARY_PATH="${DIST_DIR}/${PACKAGE_NAME}/bin/${BINARY_NAME}"
 
   if [ ! -f "$BINARY_PATH" ]; then
@@ -371,6 +470,16 @@ if [ "$INSTALL_CLI" = true ] || [ "$INSTALL_TUI" = true ]; then
   fi
 
   echo -e "  ${GREEN}Found binary: $BINARY_PATH${NC}"
+
+  # Sign binary on macOS (required for Bun-compiled binaries)
+  if [ "$PLATFORM" = "darwin" ]; then
+    echo -e "  ${BLUE}Signing binary for macOS...${NC}"
+    # Remove any existing signatures and extended attributes
+    codesign --remove-signature "$BINARY_PATH" 2>/dev/null || true
+    xattr -cr "$BINARY_PATH" 2>/dev/null || true
+    # Ad-hoc sign the binary with deep signing
+    codesign --force --sign - --deep "$BINARY_PATH" 2>/dev/null || true
+  fi
 
   # Get absolute path to binary
   MOD_BIN_PATH="$(cd "$(dirname "$BINARY_PATH")" && pwd)/$(basename "$BINARY_PATH")"
@@ -392,7 +501,7 @@ if [ "$INSTALL_CLI" = true ] || [ "$INSTALL_TUI" = true ]; then
 
   WRAPPER_TARGET="$GLOBAL_BIN_DIR/mod"
 
-  # Create a direct wrapper script
+  # Create wrapper script using native binary
   cat > "$WRAPPER_TARGET" << EOF
 #!/bin/bash
 # MOD CLI Wrapper - Auto-generated by rebuild script
@@ -400,7 +509,7 @@ if [ "$INSTALL_CLI" = true ] || [ "$INSTALL_TUI" = true ]; then
 
 if [ ! -f "$MOD_BIN_PATH" ]; then
   echo "Error: MOD binary not found at $MOD_BIN_PATH"
-  echo "Please run: ./scripts/rebuild-release-reinstall.sh"
+  echo "Please run: bash .packages/scripts/rebuild-release-reinstall.sh"
   exit 1
 fi
 
@@ -459,6 +568,15 @@ if [ "$INSTALL_GUI" = true ]; then
 
       # Copy new app
       cp -R "$APP_BUNDLE" /Applications/
+      
+      # Final sign of the installed app (ensures sidecars are signed and work on macOS)
+      if [ "$PLATFORM" = "darwin" ]; then
+        echo -e "  ${BLUE}Performing final code signing of MOD.app...${NC}"
+        # Force sign all binaries in the bundle
+        find "/Applications/MOD.app" -type f \( -perm -u=x -o -name "*.dylib" -o -name "*.so" \) -exec codesign --force --sign - --deep "{}" 2>/dev/null \;
+        codesign --force --sign - --deep "/Applications/MOD.app" 2>/dev/null || true
+      fi
+
       echo -e "  ${GREEN}MOD.app installed to /Applications${NC}"
 
       # Also show DMG location if available

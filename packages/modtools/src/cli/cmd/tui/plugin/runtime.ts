@@ -157,9 +157,11 @@ function createThemeInstaller(
     const name = path.basename(src, path.extname(src))
     const source_dir = path.dirname(meta.source)
     const local_dir =
-      path.basename(source_dir) === ".modtools"
+      path.basename(source_dir) === ".mod" || path.basename(source_dir) === ".modtools"
         ? path.join(source_dir, "themes")
-        : path.join(source_dir, ".modtools", "themes")
+        : (await Filesystem.exists(path.join(source_dir, ".mod")))
+          ? path.join(source_dir, ".mod", "themes")
+          : path.join(source_dir, ".modtools", "themes")
     const dest_dir = meta.scope === "local" ? local_dir : path.join(Global.Path.config, "themes")
     const dest = path.join(dest_dir, `${name}.json`)
     const stat = await Filesystem.statAsync(src)

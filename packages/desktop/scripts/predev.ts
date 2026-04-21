@@ -6,7 +6,7 @@ const RUST_TARGET = Bun.env.TAURI_ENV_TARGET_TRIPLE
 
 const sidecarConfig = getCurrentSidecar(RUST_TARGET)
 
-const binaryPath = windowsify(`../modtools/dist/${sidecarConfig.ocBinary}/bin/modtools`)
+const binaryPath = windowsify(`../modtools/dist/${sidecarConfig.ocBinary}/bin/mod`)
 
 await (sidecarConfig.ocBinary.includes("-baseline")
   ? $`cd ../modtools && bun run build --single --baseline`

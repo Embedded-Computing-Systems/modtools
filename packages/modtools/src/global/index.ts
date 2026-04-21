@@ -5,7 +5,7 @@ import os from "os"
 import { Filesystem } from "../util"
 import { Flock } from "@modtools-ai/shared/util/flock"
 
-const app = "modtools"
+const app = "mod"
 
 const data = path.join(xdgData!, app)
 const cache = path.join(xdgCache!, app)

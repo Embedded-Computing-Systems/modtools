@@ -132,7 +132,7 @@ export async function load(dir: string) {
     })
     if (!md) continue
 
-    const patterns = ["/.modtools/agent/", "/.modtools/agents/", "/agent/", "/agents/"]
+    const patterns = ["/.mod/agent/", "/.mod/agents/", "/.modtools/agent/", "/.modtools/agents/", "/agent/", "/agents/"]
     const name = configEntryNameFromPath(item, patterns)
 
     const config = {

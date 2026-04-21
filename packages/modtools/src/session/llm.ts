@@ -54,7 +54,7 @@ export interface Interface {
   readonly stream: (input: StreamInput) => Stream.Stream<Event, unknown>
 }
 
-export class Service extends Context.Service<Service, Interface>()("@opencode/LLM") {}
+export class Service extends Context.Service<Service, Interface>()("@mod/LLM") {}
 
 const live: Layer.Layer<
   Service,
@@ -367,8 +367,12 @@ const live: Layer.Layer<
         maxOutputTokens: params.maxOutputTokens,
         abortSignal: input.abort,
         headers: {
-          ...(input.model.providerID.startsWith("opencode")
+          ...(input.model.providerID.startsWith("mod") || input.model.providerID.startsWith("opencode")
             ? {
+                "x-mod-project": Instance.project.id,
+                "x-mod-session": input.sessionID,
+                "x-mod-request": input.user.id,
+                "x-mod-client": Flag.MODTOOLS_CLIENT,
                 "x-opencode-project": Instance.project.id,
                 "x-opencode-session": input.sessionID,
                 "x-opencode-request": input.user.id,
@@ -377,7 +381,7 @@ const live: Layer.Layer<
             : {
                 "x-session-affinity": input.sessionID,
                 ...(input.parentSessionID ? { "x-parent-session-id": input.parentSessionID } : {}),
-                "User-Agent": `opencode/${InstallationVersion}`,
+                "User-Agent": `mod/${InstallationVersion}`,
               }),
           ...input.model.headers,
           ...headers,

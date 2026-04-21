@@ -534,16 +534,16 @@ export class Agent implements ACPAgent {
     log.info("initialize", { protocolVersion: params.protocolVersion })
 
     const authMethod: AuthMethod = {
-      description: "Run `opencode auth login` in the terminal",
-      name: "Login with opencode",
-      id: "opencode-login",
+      description: "Run `mod auth login` in the terminal",
+      name: "Login with MOD",
+      id: "mod-login",
     }
 
     // If client supports terminal-auth capability, use that instead.
     if (params.clientCapabilities?._meta?.["terminal-auth"] === true) {
       authMethod._meta = {
         "terminal-auth": {
-          command: "opencode",
+          command: "mod",
           args: ["auth", "login"],
           label: "OpenCode Login",
         },
@@ -1624,12 +1624,12 @@ async function defaultModel(config: ACPConfig, cwd?: string): Promise<{ provider
 
   if (specified && !providers.length) return specified
 
-  const opencodeProvider = providers.find((p) => p.id === "opencode")
-  if (opencodeProvider) {
-    if (opencodeProvider.models["big-pickle"]) {
-      return { providerID: ProviderID.opencode, modelID: ModelID.make("big-pickle") }
+  const modProvider = providers.find((p) => p.id === "mod" || p.id === "opencode")
+  if (modProvider) {
+    if (modProvider.models["big-pickle"]) {
+      return { providerID: ProviderID.make("mod"), modelID: ModelID.make("big-pickle") }
     }
-    const [best] = Provider.sort(Object.values(opencodeProvider.models))
+    const [best] = Provider.sort(Object.values(modProvider.models))
     if (best) {
       return {
         providerID: ProviderID.make(best.providerID),
@@ -1649,7 +1649,7 @@ async function defaultModel(config: ACPConfig, cwd?: string): Promise<{ provider
 
   if (specified) return specified
 
-  return { providerID: ProviderID.opencode, modelID: ModelID.make("big-pickle") }
+  return { providerID: ProviderID.make("mod"), modelID: ModelID.make("big-pickle") }
 }
 
 function parseUri(

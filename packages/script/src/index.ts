@@ -18,30 +18,36 @@ if (!semver.satisfies(process.versions.bun, expectedBunVersionRange)) {
 }
 
 const env = {
-  MODTOOLS_CHANNEL: process.env["MODTOOLS_CHANNEL"],
-  MODTOOLS_BUMP: process.env["MODTOOLS_BUMP"],
-  MODTOOLS_VERSION: process.env["MODTOOLS_VERSION"],
-  MODTOOLS_RELEASE: process.env["MODTOOLS_RELEASE"],
+  MOD_CHANNEL: process.env["MOD_CHANNEL"] ?? process.env["MODTOOLS_CHANNEL"],
+  MOD_BUMP: process.env["MOD_BUMP"] ?? process.env["MODTOOLS_BUMP"],
+  MOD_VERSION: process.env["MOD_VERSION"] ?? process.env["MODTOOLS_VERSION"],
+  MOD_RELEASE: process.env["MOD_RELEASE"] ?? process.env["MODTOOLS_RELEASE"],
 }
 const CHANNEL = await (async () => {
-  if (env.MODTOOLS_CHANNEL) return env.MODTOOLS_CHANNEL
-  if (env.MODTOOLS_BUMP) return "latest"
-  if (env.MODTOOLS_VERSION && !env.MODTOOLS_VERSION.startsWith("0.0.0-")) return "latest"
+  if (env.MOD_CHANNEL) return env.MOD_CHANNEL
+  if (env.MOD_BUMP) return "latest"
+  if (env.MOD_VERSION && !env.MOD_VERSION.startsWith("0.0.0-")) return "latest"
   return await $`git branch --show-current`.text().then((x) => x.trim())
 })()
 const IS_PREVIEW = CHANNEL !== "latest"
 
 const VERSION = await (async () => {
-  if (env.MODTOOLS_VERSION) return env.MODTOOLS_VERSION
+  if (env.MOD_VERSION) return env.MOD_VERSION
   if (IS_PREVIEW) return `0.0.0-${CHANNEL}-${new Date().toISOString().slice(0, 16).replace(/[-:T]/g, "")}`
+  // Release mode - fetch latest version from npm and bump
   const version = await fetch("https://registry.npmjs.org/@modtools-ai/mod/latest")
     .then((res) => {
       if (!res.ok) throw new Error(res.statusText)
       return res.json()
     })
     .then((data: any) => data.version)
+    .catch(() => {
+      // If npm fetch fails, use a default starting version
+      console.warn("Warning: Could not fetch version from npm, using default 1.0.0")
+      return "1.0.0"
+    })
   const [major, minor, patch] = version.split(".").map((x: string) => Number(x) || 0)
-  const t = env.MODTOOLS_BUMP?.toLowerCase()
+  const t = env.MOD_BUMP?.toLowerCase()
   if (t === "major") return `${major + 1}.0.0`
   if (t === "minor") return `${major}.${minor + 1}.0`
   return `${major}.${minor}.${patch + 1}`
@@ -68,7 +74,7 @@ export const Script = {
     return IS_PREVIEW
   },
   get release(): boolean {
-    return !!env.MODTOOLS_RELEASE
+    return !!env.MOD_RELEASE
   },
   get team() {
     return team

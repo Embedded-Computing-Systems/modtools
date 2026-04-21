@@ -4,7 +4,7 @@ import { OtlpLogger, OtlpSerialization } from "effect/unstable/observability"
 import * as EffectLogger from "./logger"
 import { Flag } from "@/flag/flag"
 import { InstallationChannel, InstallationVersion } from "@/installation/version"
-import { ensureProcessMetadata } from "@/util/modtools-process"
+import { ensureProcessMetadata } from "@/util/mod-process"
 
 const base = Flag.OTEL_EXPORTER_OTLP_ENDPOINT
 export const enabled = !!base
@@ -40,14 +40,14 @@ export function resource(): { serviceName: string; serviceVersion: string; attri
   })()
 
   return {
-    serviceName: "opencode",
+    serviceName: "mod",
     serviceVersion: InstallationVersion,
     attributes: {
       ...attributes,
       "deployment.environment.name": InstallationChannel,
-      "opencode.client": Flag.MODTOOLS_CLIENT,
-      "opencode.process_role": processMetadata.processRole,
-      "opencode.run_id": processMetadata.runID,
+      "mod.client": Flag.MODTOOLS_CLIENT,
+      "mod.process_role": processMetadata.processRole,
+      "mod.run_id": processMetadata.runID,
       "service.instance.id": processID,
     },
   }

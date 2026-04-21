@@ -89,7 +89,7 @@ import { ProjectDragOverlay, SortableProject, type ProjectSidebarContext } from 
 import { SidebarContent } from "./layout/sidebar-shell"
 
 export default function Layout(props: ParentProps) {
-  const [store, setStore, , ready] = persisted(
+  const [store, setStore, pageInit, ready] = persisted(
     Persist.global("layout.page", ["layout.page.v1"]),
     createStore({
       lastProjectSession: {} as { [directory: string]: { directory: string; id: string; at: number } },
@@ -578,23 +578,25 @@ export default function Layout(props: ParentProps) {
     return projects.find((p) => p.worktree === root)
   })
 
-  const [autoselecting] = createResource(async () => {
-    await ready.promise
-    await layout.ready.promise
-    if (!untrack(() => state.autoselect)) return
+  const [autoselecting] = createResource(
+    () => ({ pageReady: pageReady(), layoutReady: layoutReady() }),
+    async ({ pageReady, layoutReady }) => {
+      if (!pageReady || !layoutReady) return
+      if (!untrack(() => state.autoselect)) return
 
-    const list = layout.projects.list()
-    const last = server.projects.last()
+      const list = layout.projects.list()
+      const last = server.projects.last()
 
-    if (list.length === 0) {
-      if (!last) return
-      await openProject(last, true)
-    } else {
-      const next = list.find((project) => project.worktree === last) ?? list[0]
-      if (!next) return
-      await openProject(next.worktree, true)
-    }
-  })
+      if (list.length === 0) {
+        if (!last) return
+        await openProject(last, true)
+      } else {
+        const next = list.find((project) => project.worktree === last) ?? list[0]
+        if (!next) return
+        await openProject(next.worktree, true)
+      }
+    },
+  )
 
   const workspaceName = (directory: string, projectId?: string, branch?: string) => {
     const key = workspaceKey(directory)

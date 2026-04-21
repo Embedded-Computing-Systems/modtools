@@ -43,7 +43,7 @@ export interface Interface {
   readonly waitForDependencies: () => Effect.Effect<void>
 }
 
-export class Service extends Context.Service<Service, Interface>()("@opencode/TuiConfig") {}
+export class Service extends Context.Service<Service, Interface>()("@modtools/TuiConfig") {}
 
 function pluginScope(file: string, ctx: { directory: string }): ConfigPlugin.Scope {
   if (Filesystem.contains(ctx.directory, file)) return "local"
@@ -118,13 +118,15 @@ const loadState = Effect.fn("TuiConfig.loadState")(function* (ctx: { directory: 
     yield* Effect.promise(() => mergeFile(acc, file, ctx)).pipe(Effect.orDie)
   }
 
-  // 4. `.modtools` directories (and MODTOOLS_CONFIG_DIR) discovered while
+  // 4. `.mod` or `.modtools` directories (and MODTOOLS_CONFIG_DIR) discovered while
   // walking up the tree. Also returned below so callers can install plugin
   // dependencies from each location.
-  const dirs = unique(directories).filter((dir) => dir.endsWith(".modtools") || dir === Flag.MODTOOLS_CONFIG_DIR)
+  const dirs = unique(directories).filter(
+    (dir) => dir.endsWith(".mod") || dir.endsWith(".modtools") || dir === Flag.MODTOOLS_CONFIG_DIR,
+  )
 
   for (const dir of dirs) {
-    if (!dir.endsWith(".modtools") && dir !== Flag.MODTOOLS_CONFIG_DIR) continue
+    if (!dir.endsWith(".mod") && !dir.endsWith(".modtools") && dir !== Flag.MODTOOLS_CONFIG_DIR) continue
     for (const file of ConfigPaths.fileInDirectory(dir, "tui")) {
       yield* Effect.promise(() => mergeFile(acc, file, ctx)).pipe(Effect.orDie)
     }
@@ -208,7 +210,7 @@ async function load(text: string, configFilepath: string): Promise<Info> {
       if (!isRecord(data)) return {}
 
       // Flatten a nested "tui" key so users who wrote `{ "tui": { ... } }` inside tui.json
-      // (mirroring the old opencode.json shape) still get their settings applied.
+      // (mirroring the old modtools.json shape) still get their settings applied.
       return ConfigParse.schema(Info, normalize(data), configFilepath)
     })
     .then((data) => resolvePlugins(data, configFilepath))

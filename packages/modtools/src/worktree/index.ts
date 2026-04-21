@@ -160,7 +160,7 @@ export interface Interface {
   readonly reset: (input: ResetInput) => Effect.Effect<boolean>
 }
 
-export class Service extends Context.Service<Service, Interface>()("@opencode/Worktree") {}
+export class Service extends Context.Service<Service, Interface>()("@mod/Worktree") {}
 
 type GitResult = { code: number; text: string; stderr: string }
 
@@ -201,7 +201,7 @@ export const layer: Layer.Layer<
       const ctx = yield* InstanceState.context
       for (const attempt of Array.from({ length: MAX_NAME_ATTEMPTS }, (_, i) => i)) {
         const name = base ? (attempt === 0 ? base : `${base}-${Slug.create()}`) : Slug.create()
-        const branch = `opencode/${name}`
+        const branch = `mod/${name}`
         const directory = pathSvc.join(root, name)
 
         if (yield* fs.exists(directory).pipe(Effect.orDie)) continue

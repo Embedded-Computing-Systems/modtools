@@ -12,7 +12,7 @@ export interface Interface {
   readonly unshare: (sessionID: SessionID) => Effect.Effect<void, unknown>
 }
 
-export class Service extends Context.Service<Service, Interface>()("@opencode/SessionShare") {}
+export class Service extends Context.Service<Service, Interface>()("@mod/SessionShare") {}
 
 export const layer = Layer.effect(
   Service,
@@ -55,3 +55,6 @@ export const defaultLayer = layer.pipe(
   Layer.provide(Session.defaultLayer),
   Layer.provide(Config.defaultLayer),
 )
+
+export * as SessionShare from "./session"
+

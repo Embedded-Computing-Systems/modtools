@@ -1,17 +1,17 @@
 <p align="center">
-  <a href="https://modtools.ai">
+  <a href="https://mod.ai">
     <picture>
       <source srcset="packages/console/app/src/asset/logo-ornate-dark.svg" media="(prefers-color-scheme: dark)">
       <source srcset="packages/console/app/src/asset/logo-ornate-light.svg" media="(prefers-color-scheme: light)">
-      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="OpenCode logo">
+      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="MOD logo">
     </picture>
   </a>
 </p>
 <p align="center">Открытый AI-агент для программирования.</p>
 <p align="center">
-  <a href="https://modtools.ai/discord"><img alt="Discord" src="https://img.shields.io/discord/1391832426048651334?style=flat-square&label=discord" /></a>
-  <a href="https://www.npmjs.com/package/opencode-ai"><img alt="npm" src="https://img.shields.io/npm/v/opencode-ai?style=flat-square" /></a>
-  <a href="https://github.com/anomalyco/opencode/actions/workflows/publish.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/anomalyco/opencode/publish.yml?style=flat-square&branch=dev" /></a>
+  <a href="https://mod.ai/discord"><img alt="Discord" src="https://img.shields.io/discord/1391832426048651334?style=flat-square&label=discord" /></a>
+  <a href="https://www.npmjs.com/package/mod-ai"><img alt="npm" src="https://img.shields.io/npm/v/mod-ai?style=flat-square" /></a>
+  <a href="https://github.com/anomalyco/mod/actions/workflows/publish.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/anomalyco/mod/publish.yml?style=flat-square&branch=dev" /></a>
 </p>
 
 <p align="center">
@@ -39,7 +39,7 @@
   <a href="README.vi.md">Tiếng Việt</a>
 </p>
 
-[![OpenCode Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://modtools.ai)
+[![MOD Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://mod.ai)
 
 ---
 
@@ -47,18 +47,18 @@
 
 ```bash
 # YOLO
-curl -fsSL https://modtools.ai/install | bash
+curl -fsSL https://mod.ai/install | bash
 
 # Менеджеры пакетов
-npm i -g opencode-ai@latest        # или bun/pnpm/yarn
-scoop install opencode             # Windows
-choco install opencode             # Windows
-brew install anomalyco/tap/opencode # macOS и Linux (рекомендуем, всегда актуально)
-brew install opencode              # macOS и Linux (официальная формула brew, обновляется реже)
-sudo pacman -S opencode            # Arch Linux (Stable)
-paru -S opencode-bin               # Arch Linux (Latest from AUR)
-mise use -g opencode               # любая ОС
-nix run nixpkgs#opencode           # или github:anomalyco/opencode для самой свежей ветки dev
+npm i -g mod-ai@latest        # или bun/pnpm/yarn
+scoop install mod             # Windows
+choco install mod             # Windows
+brew install anomalyco/tap/mod # macOS и Linux (рекомендуем, всегда актуально)
+brew install mod              # macOS и Linux (официальная формула brew, обновляется реже)
+sudo pacman -S mod            # Arch Linux (Stable)
+paru -S mod-bin               # Arch Linux (Latest from AUR)
+mise use -g mod               # любая ОС
+nix run nixpkgs#mod           # или github:anomalyco/mod для самой свежей ветки dev
 ```
 
 > [!TIP]
@@ -66,20 +66,20 @@ nix run nixpkgs#opencode           # или github:anomalyco/opencode для с�
 
 ### Десктопное приложение (BETA)
 
-OpenCode также доступен как десктопное приложение. Скачайте его со [страницы релизов](https://github.com/anomalyco/opencode/releases) или с [modtools.ai/download](https://modtools.ai/download).
+MOD также доступен как десктопное приложение. Скачайте его со [страницы релизов](https://github.com/anomalyco/mod/releases) или с [mod.ai/download](https://mod.ai/download).
 
 | Платформа             | Загрузка                              |
 | --------------------- | ------------------------------------- |
-| macOS (Apple Silicon) | `opencode-desktop-darwin-aarch64.dmg` |
-| macOS (Intel)         | `opencode-desktop-darwin-x64.dmg`     |
-| Windows               | `opencode-desktop-windows-x64.exe`    |
+| macOS (Apple Silicon) | `mod-desktop-darwin-aarch64.dmg` |
+| macOS (Intel)         | `mod-desktop-darwin-x64.dmg`     |
+| Windows               | `mod-desktop-windows-x64.exe`    |
 | Linux                 | `.deb`, `.rpm` или AppImage           |
 
 ```bash
 # macOS (Homebrew)
-brew install --cask opencode-desktop
+brew install --cask mod-desktop
 # Windows (Scoop)
-scoop bucket add extras; scoop install extras/opencode-desktop
+scoop bucket add extras; scoop install extras/mod-desktop
 ```
 
 #### Каталог установки
@@ -89,17 +89,17 @@ scoop bucket add extras; scoop install extras/opencode-desktop
 1. `$OPENCODE_INSTALL_DIR` - Пользовательский каталог установки
 2. `$XDG_BIN_DIR` - Путь, совместимый со спецификацией XDG Base Directory
 3. `$HOME/bin` - Стандартный каталог пользовательских бинарников (если существует или можно создать)
-4. `$HOME/.opencode/bin` - Fallback по умолчанию
+4. `$HOME/.mod/bin` - Fallback по умолчанию
 
 ```bash
 # Примеры
-OPENCODE_INSTALL_DIR=/usr/local/bin curl -fsSL https://modtools.ai/install | bash
-XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://modtools.ai/install | bash
+OPENCODE_INSTALL_DIR=/usr/local/bin curl -fsSL https://mod.ai/install | bash
+XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://mod.ai/install | bash
 ```
 
 ### Agents
 
-В OpenCode есть два встроенных агента, между которыми можно переключаться клавишей `Tab`.
+В MOD есть два встроенных агента, между которыми можно переключаться клавишей `Tab`.
 
 - **build** - По умолчанию, агент с полным доступом для разработки
 - **plan** - Агент только для чтения для анализа и изучения кода
@@ -110,19 +110,19 @@ XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://modtools.ai/install | bash
 Также включен сабагент **general** для сложных поисков и многошаговых задач.
 Он используется внутренне и может быть вызван в сообщениях через `@general`.
 
-Подробнее об [agents](https://modtools.ai/docs/agents).
+Подробнее об [agents](https://mod.ai/docs/agents).
 
 ### Документация
 
-Больше информации о том, как настроить OpenCode: [**наши docs**](https://modtools.ai/docs).
+Больше информации о том, как настроить MOD: [**наши docs**](https://mod.ai/docs).
 
 ### Вклад
 
-Если вы хотите внести вклад в OpenCode, прочитайте [contributing docs](./CONTRIBUTING.md) перед тем, как отправлять pull request.
+Если вы хотите внести вклад в MOD, прочитайте [contributing docs](./CONTRIBUTING.md) перед тем, как отправлять pull request.
 
-### Разработка на базе OpenCode
+### Разработка на базе MOD
 
-Если вы делаете проект, связанный с OpenCode, и используете "opencode" как часть имени (например, "opencode-dashboard" или "opencode-mobile"), добавьте примечание в README, чтобы уточнить, что проект не создан командой OpenCode и не аффилирован с нами.
+Если вы делаете проект, связанный с MOD, и используете "mod" как часть имени (например, "mod-dashboard" или "mod-mobile"), добавьте примечание в README, чтобы уточнить, что проект не создан командой MOD и не аффилирован с нами.
 
 ### FAQ
 
@@ -131,11 +131,11 @@ XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://modtools.ai/install | bash
 По возможностям это очень похоже на Claude Code. Вот ключевые отличия:
 
 - 100% open source
-- Не привязано к одному провайдеру. Мы рекомендуем модели из [OpenCode Zen](https://modtools.ai/zen); но OpenCode можно использовать с Claude, OpenAI, Google или даже локальными моделями. По мере развития моделей разрыв будет сокращаться, а цены падать, поэтому важна независимость от провайдера.
+- Не привязано к одному провайдеру. Мы рекомендуем модели из [MOD Zen](https://mod.ai/zen); но MOD можно использовать с Claude, OpenAI, Google или даже локальными моделями. По мере развития моделей разрыв будет сокращаться, а цены падать, поэтому важна независимость от провайдера.
 - Поддержка LSP из коробки
-- Фокус на TUI. OpenCode построен пользователями neovim и создателями [terminal.shop](https://terminal.shop); мы будем раздвигать границы того, что возможно в терминале.
-- Архитектура клиент/сервер. Например, это позволяет запускать OpenCode на вашем компьютере, а управлять им удаленно из мобильного приложения. Это значит, что TUI-фронтенд - лишь один из возможных клиентов.
+- Фокус на TUI. MOD построен пользователями neovim и создателями [terminal.shop](https://terminal.shop); мы будем раздвигать границы того, что возможно в терминале.
+- Архитектура клиент/сервер. Например, это позволяет запускать MOD на вашем компьютере, а управлять им удаленно из мобильного приложения. Это значит, что TUI-фронтенд - лишь один из возможных клиентов.
 
 ---
 
-**Присоединяйтесь к нашему сообществу** [Discord](https://discord.gg/opencode) | [X.com](https://x.com/opencode)
+**Присоединяйтесь к нашему сообществу** [Discord](https://discord.gg/mod) | [X.com](https://x.com/mod)

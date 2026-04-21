@@ -148,7 +148,7 @@ interface State {
   root: Git.Base | undefined
 }
 
-export class Service extends Context.Service<Service, Interface>()("@opencode/Vcs") {}
+export class Service extends Context.Service<Service, Interface>()("@mod/Vcs") {}
 
 export const layer: Layer.Layer<Service, never, AppFileSystem.Service | Git.Service | Bus.Service> = Layer.effect(
   Service,

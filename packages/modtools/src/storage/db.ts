@@ -16,7 +16,7 @@ import { InstanceState } from "@/effect"
 import { iife } from "@/util/iife"
 import { init } from "#db"
 
-declare const MODTOOLS_MIGRATIONS: { sql: string; timestamp: number; name: string }[] | undefined
+declare const MOD_MIGRATIONS: { sql: string; timestamp: number; name: string }[] | undefined
 
 export const NotFoundError = NamedError.create(
   "NotFoundError",
@@ -29,9 +29,9 @@ const log = Log.create({ service: "db" })
 
 export function getChannelPath() {
   if (["latest", "beta", "prod"].includes(InstallationChannel) || Flag.MODTOOLS_DISABLE_CHANNEL_DB)
-    return path.join(Global.Path.data, "opencode.db")
+    return path.join(Global.Path.data, "mod.db")
   const safe = InstallationChannel.replace(/[^a-zA-Z0-9._-]/g, "-")
-  return path.join(Global.Path.data, `opencode-${safe}.db`)
+  return path.join(Global.Path.data, `mod-${safe}.db`)
 }
 
 export const Path = iife(() => {
@@ -95,13 +95,13 @@ export const Client = lazy(() => {
 
   // Apply schema migrations
   const entries =
-    typeof MODTOOLS_MIGRATIONS !== "undefined"
-      ? MODTOOLS_MIGRATIONS
+    typeof MOD_MIGRATIONS !== "undefined"
+      ? MOD_MIGRATIONS
       : migrations(path.join(import.meta.dirname, "../../migration"))
   if (entries.length > 0) {
     log.info("applying migrations", {
       count: entries.length,
-      mode: typeof MODTOOLS_MIGRATIONS !== "undefined" ? "bundled" : "dev",
+      mode: typeof MOD_MIGRATIONS !== "undefined" ? "bundled" : "dev",
     })
     if (Flag.MODTOOLS_SKIP_MIGRATIONS) {
       for (const item of entries) {

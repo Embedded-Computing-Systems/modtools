@@ -307,7 +307,7 @@ pub fn run() {
 
     #[cfg(all(target_os = "macos", not(debug_assertions)))]
     let _ = std::process::Command::new("killall")
-        .arg("modtools-cli")
+        .arg("mod-cli")
         .output();
 
     let mut builder = tauri::Builder::default()
@@ -396,6 +396,7 @@ fn make_specta_builder() -> tauri_specta::Builder<tauri::Wry> {
         .error_handling(tauri_specta::ErrorHandlingMode::Throw)
 }
 
+#[allow(dead_code)]
 fn export_types(builder: &tauri_specta::Builder<tauri::Wry>) {
     builder
         .export(
@@ -437,7 +438,7 @@ async fn initialize(app: AppHandle) {
     let (ready_tx, ready_rx) = oneshot::channel();
     let _ = ready_tx.send(ServerReadyData {
         url: url.clone(),
-        username: Some("modtools".to_string()),
+        username: Some("mod".to_string()),
         password: Some(password),
     });
     app.manage(SidecarReady(ready_rx.shared()));
@@ -571,17 +572,16 @@ fn sqlite_file_exists() -> bool {
 }
 
 fn modtools_db_path() -> Result<PathBuf, &'static str> {
-    let xdg_data_home = env::var_os("XDG_DATA_HOME").filter(|v| !v.is_empty());
+    let app_name = "mod";
+    let data_home = env::var_os("XDG_DATA_HOME")
+        .map(PathBuf::from)
+        .unwrap_or_else(|| {
+            dirs::home_dir()
+                .map(|h| h.join(".local").join("share"))
+                .unwrap_or_default()
+        });
 
-    let data_home = match xdg_data_home {
-        Some(v) => PathBuf::from(v),
-        None => {
-            let home = dirs::home_dir().ok_or("cannot determine home directory")?;
-            home.join(".local").join("share")
-        }
-    };
-
-    Ok(data_home.join("modtools").join("modtools.db"))
+    Ok(data_home.join(app_name).join(format!("{}.db", app_name)))
 }
 
 // Creates a `once` listener for the specified event and returns a future that resolves

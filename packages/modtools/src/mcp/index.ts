@@ -245,7 +245,7 @@ export interface Interface {
   readonly getAuthStatus: (mcpName: string) => Effect.Effect<AuthStatus>
 }
 
-export class Service extends Context.Service<Service, Interface>()("@opencode/MCP") {}
+export class Service extends Context.Service<Service, Interface>()("@mod/MCP") {}
 
 export const layer = Layer.effect(
   Service,
@@ -266,7 +266,7 @@ export const layer = Layer.effect(
         (t) =>
           Effect.tryPromise({
             try: () => {
-              const client = new Client({ name: "opencode", version: InstallationVersion })
+              const client = new Client({ name: "mod", version: InstallationVersion })
               return withTimeout(client.connect(t), timeout).then(() => client)
             },
             catch: (e) => (e instanceof Error ? e : new Error(String(e))),
@@ -398,7 +398,7 @@ export const layer = Layer.effect(
         cwd,
         env: {
           ...process.env,
-          ...(cmd === "opencode" ? { BUN_BE_BUN: "1" } : {}),
+          ...(cmd === "mod" || cmd === "opencode" ? { BUN_BE_BUN: "1" } : {}),
           ...mcp.environment,
         },
       })
@@ -770,7 +770,7 @@ export const layer = Layer.effect(
 
       return yield* Effect.tryPromise({
         try: () => {
-          const client = new Client({ name: "opencode", version: InstallationVersion })
+          const client = new Client({ name: "mod", version: InstallationVersion })
           return client
             .connect(transport)
             .then(() => ({ authorizationUrl: "", oauthState, client }) satisfies AuthResult)

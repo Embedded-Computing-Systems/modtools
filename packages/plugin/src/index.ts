@@ -1,6 +1,6 @@
 import type {
   Event,
-  createOpencodeClient,
+  createModClient,
   Project,
   Model,
   Provider,
@@ -55,7 +55,7 @@ export type WorkspaceAdaptor = {
 }
 
 export type PluginInput = {
-  client: ReturnType<typeof createOpencodeClient>
+  client: ReturnType<typeof createModClient>
   project: Project
   directory: string
   worktree: string

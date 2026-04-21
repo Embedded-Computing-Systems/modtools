@@ -28,7 +28,7 @@ export interface Interface {
   readonly file: (filepath: string) => Effect.Effect<void>
 }
 
-export class Service extends Context.Service<Service, Interface>()("@opencode/Format") {}
+export class Service extends Context.Service<Service, Interface>()("@mod/Format") {}
 
 export const layer = Layer.effect(
   Service,

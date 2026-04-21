@@ -680,7 +680,7 @@ export const SettingsGeneral: Component = () => {
           }}
         </Show>
 
-        <Show when={desktop() && import.meta.env.VITE_MODTOOLS_CHANNEL === "beta"}>
+        <Show when={desktop() && (import.meta.env.VITE_MOD_CHANNEL === "beta" || import.meta.env.VITE_MODTOOLS_CHANNEL === "beta")}>
           <AdvancedSection />
         </Show>
       </div>

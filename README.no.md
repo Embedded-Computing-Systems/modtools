@@ -1,17 +1,17 @@
 <p align="center">
-  <a href="https://modtools.ai">
+  <a href="https://mod.ai">
     <picture>
       <source srcset="packages/console/app/src/asset/logo-ornate-dark.svg" media="(prefers-color-scheme: dark)">
       <source srcset="packages/console/app/src/asset/logo-ornate-light.svg" media="(prefers-color-scheme: light)">
-      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="OpenCode logo">
+      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="MOD logo">
     </picture>
   </a>
 </p>
 <p align="center">AI-kodeagent med åpen kildekode.</p>
 <p align="center">
-  <a href="https://modtools.ai/discord"><img alt="Discord" src="https://img.shields.io/discord/1391832426048651334?style=flat-square&label=discord" /></a>
-  <a href="https://www.npmjs.com/package/opencode-ai"><img alt="npm" src="https://img.shields.io/npm/v/opencode-ai?style=flat-square" /></a>
-  <a href="https://github.com/anomalyco/opencode/actions/workflows/publish.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/anomalyco/opencode/publish.yml?style=flat-square&branch=dev" /></a>
+  <a href="https://mod.ai/discord"><img alt="Discord" src="https://img.shields.io/discord/1391832426048651334?style=flat-square&label=discord" /></a>
+  <a href="https://www.npmjs.com/package/mod-ai"><img alt="npm" src="https://img.shields.io/npm/v/mod-ai?style=flat-square" /></a>
+  <a href="https://github.com/anomalyco/mod/actions/workflows/publish.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/anomalyco/mod/publish.yml?style=flat-square&branch=dev" /></a>
 </p>
 
 <p align="center">
@@ -39,7 +39,7 @@
   <a href="README.vi.md">Tiếng Việt</a>
 </p>
 
-[![OpenCode Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://modtools.ai)
+[![MOD Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://mod.ai)
 
 ---
 
@@ -47,18 +47,18 @@
 
 ```bash
 # YOLO
-curl -fsSL https://modtools.ai/install | bash
+curl -fsSL https://mod.ai/install | bash
 
 # Pakkehåndterere
-npm i -g opencode-ai@latest        # eller bun/pnpm/yarn
-scoop install opencode             # Windows
-choco install opencode             # Windows
-brew install anomalyco/tap/opencode # macOS og Linux (anbefalt, alltid oppdatert)
-brew install opencode              # macOS og Linux (offisiell brew-formel, oppdateres sjeldnere)
-sudo pacman -S opencode            # Arch Linux (Stable)
-paru -S opencode-bin               # Arch Linux (Latest from AUR)
-mise use -g opencode               # alle OS
-nix run nixpkgs#opencode           # eller github:anomalyco/opencode for nyeste dev-branch
+npm i -g mod-ai@latest        # eller bun/pnpm/yarn
+scoop install mod             # Windows
+choco install mod             # Windows
+brew install anomalyco/tap/mod # macOS og Linux (anbefalt, alltid oppdatert)
+brew install mod              # macOS og Linux (offisiell brew-formel, oppdateres sjeldnere)
+sudo pacman -S mod            # Arch Linux (Stable)
+paru -S mod-bin               # Arch Linux (Latest from AUR)
+mise use -g mod               # alle OS
+nix run nixpkgs#mod           # eller github:anomalyco/mod for nyeste dev-branch
 ```
 
 > [!TIP]
@@ -66,20 +66,20 @@ nix run nixpkgs#opencode           # eller github:anomalyco/opencode for nyeste 
 
 ### Desktop-app (BETA)
 
-OpenCode er også tilgjengelig som en desktop-app. Last ned direkte fra [releases-siden](https://github.com/anomalyco/opencode/releases) eller [modtools.ai/download](https://modtools.ai/download).
+MOD er også tilgjengelig som en desktop-app. Last ned direkte fra [releases-siden](https://github.com/anomalyco/mod/releases) eller [mod.ai/download](https://mod.ai/download).
 
 | Plattform             | Nedlasting                            |
 | --------------------- | ------------------------------------- |
-| macOS (Apple Silicon) | `opencode-desktop-darwin-aarch64.dmg` |
-| macOS (Intel)         | `opencode-desktop-darwin-x64.dmg`     |
-| Windows               | `opencode-desktop-windows-x64.exe`    |
+| macOS (Apple Silicon) | `mod-desktop-darwin-aarch64.dmg` |
+| macOS (Intel)         | `mod-desktop-darwin-x64.dmg`     |
+| Windows               | `mod-desktop-windows-x64.exe`    |
 | Linux                 | `.deb`, `.rpm` eller AppImage         |
 
 ```bash
 # macOS (Homebrew)
-brew install --cask opencode-desktop
+brew install --cask mod-desktop
 # Windows (Scoop)
-scoop bucket add extras; scoop install extras/opencode-desktop
+scoop bucket add extras; scoop install extras/mod-desktop
 ```
 
 #### Installasjonsmappe
@@ -89,17 +89,17 @@ Installasjonsskriptet bruker følgende prioritet for installasjonsstien:
 1. `$OPENCODE_INSTALL_DIR` - Egendefinert installasjonsmappe
 2. `$XDG_BIN_DIR` - Sti som følger XDG Base Directory Specification
 3. `$HOME/bin` - Standard brukerbinar-mappe (hvis den finnes eller kan opprettes)
-4. `$HOME/.opencode/bin` - Standard fallback
+4. `$HOME/.mod/bin` - Standard fallback
 
 ```bash
 # Eksempler
-OPENCODE_INSTALL_DIR=/usr/local/bin curl -fsSL https://modtools.ai/install | bash
-XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://modtools.ai/install | bash
+OPENCODE_INSTALL_DIR=/usr/local/bin curl -fsSL https://mod.ai/install | bash
+XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://mod.ai/install | bash
 ```
 
 ### Agents
 
-OpenCode har to innebygde agents du kan bytte mellom med `Tab`-tasten.
+MOD har to innebygde agents du kan bytte mellom med `Tab`-tasten.
 
 - **build** - Standard, agent med full tilgang for utviklingsarbeid
 - **plan** - Skrivebeskyttet agent for analyse og kodeutforsking
@@ -110,19 +110,19 @@ OpenCode har to innebygde agents du kan bytte mellom med `Tab`-tasten.
 Det finnes også en **general**-subagent for komplekse søk og flertrinnsoppgaver.
 Den brukes internt og kan kalles via `@general` i meldinger.
 
-Les mer om [agents](https://modtools.ai/docs/agents).
+Les mer om [agents](https://mod.ai/docs/agents).
 
 ### Dokumentasjon
 
-For mer info om hvordan du konfigurerer OpenCode, [**se dokumentasjonen**](https://modtools.ai/docs).
+For mer info om hvordan du konfigurerer MOD, [**se dokumentasjonen**](https://mod.ai/docs).
 
 ### Bidra
 
-Hvis du vil bidra til OpenCode, les [contributing docs](./CONTRIBUTING.md) før du sender en pull request.
+Hvis du vil bidra til MOD, les [contributing docs](./CONTRIBUTING.md) før du sender en pull request.
 
-### Bygge på OpenCode
+### Bygge på MOD
 
-Hvis du jobber med et prosjekt som er relatert til OpenCode og bruker "opencode" som en del av navnet; for eksempel "opencode-dashboard" eller "opencode-mobile", legg inn en merknad i README som presiserer at det ikke er bygget av OpenCode-teamet og ikke er tilknyttet oss på noen måte.
+Hvis du jobber med et prosjekt som er relatert til MOD og bruker "mod" som en del av navnet; for eksempel "mod-dashboard" eller "mod-mobile", legg inn en merknad i README som presiserer at det ikke er bygget av MOD-teamet og ikke er tilknyttet oss på noen måte.
 
 ### FAQ
 
@@ -131,11 +131,11 @@ Hvis du jobber med et prosjekt som er relatert til OpenCode og bruker "opencode"
 Det er veldig likt Claude Code når det gjelder funksjonalitet. Her er de viktigste forskjellene:
 
 - 100% open source
-- Ikke knyttet til en bestemt leverandør. Selv om vi anbefaler modellene vi tilbyr gjennom [OpenCode Zen](https://modtools.ai/zen); kan OpenCode brukes med Claude, OpenAI, Google eller til og med lokale modeller. Etter hvert som modellene utvikler seg vil gapene lukkes og prisene gå ned, så det er viktig å være provider-agnostic.
+- Ikke knyttet til en bestemt leverandør. Selv om vi anbefaler modellene vi tilbyr gjennom [MOD Zen](https://mod.ai/zen); kan MOD brukes med Claude, OpenAI, Google eller til og med lokale modeller. Etter hvert som modellene utvikler seg vil gapene lukkes og prisene gå ned, så det er viktig å være provider-agnostic.
 - LSP-støtte rett ut av boksen
-- Fokus på TUI. OpenCode er bygget av neovim-brukere og skaperne av [terminal.shop](https://terminal.shop); vi kommer til å presse grensene for hva som er mulig i terminalen.
-- Klient/server-arkitektur. Dette kan for eksempel la OpenCode kjøre på maskinen din, mens du styrer den eksternt fra en mobilapp. Det betyr at TUI-frontend'en bare er en av de mulige klientene.
+- Fokus på TUI. MOD er bygget av neovim-brukere og skaperne av [terminal.shop](https://terminal.shop); vi kommer til å presse grensene for hva som er mulig i terminalen.
+- Klient/server-arkitektur. Dette kan for eksempel la MOD kjøre på maskinen din, mens du styrer den eksternt fra en mobilapp. Det betyr at TUI-frontend'en bare er en av de mulige klientene.
 
 ---
 
-**Bli med i fellesskapet** [Discord](https://discord.gg/opencode) | [X.com](https://x.com/opencode)
+**Bli med i fellesskapet** [Discord](https://discord.gg/mod) | [X.com](https://x.com/mod)

@@ -102,7 +102,7 @@ export interface Interface {
   readonly removeSandbox: (id: ProjectID, directory: string) => Effect.Effect<void>
 }
 
-export class Service extends Context.Service<Service, Interface>()("@opencode/Project") {}
+export class Service extends Context.Service<Service, Interface>()("@modtools/Project") {}
 
 type GitResult = { code: number; text: string; stderr: string }
 
@@ -159,11 +159,38 @@ export const layer: Layer.Layer<
     const scope = yield* Scope.Scope
 
     const readCachedProjectId = Effect.fnUntraced(function* (dir: string) {
-      return yield* fs.readFileString(pathSvc.join(dir, "opencode")).pipe(
+      const mod = pathSvc.join(dir, "mod")
+      const modtools = pathSvc.join(dir, "modtools")
+      const opencode = pathSvc.join(dir, "opencode")
+
+      const fromMod = yield* fs.readFileString(mod).pipe(
         Effect.map((x) => x.trim()),
-        Effect.map(ProjectID.make),
         Effect.catch(() => Effect.void),
       )
+      if (fromMod) return ProjectID.make(fromMod)
+
+      const fromModtools = yield* fs.readFileString(modtools).pipe(
+        Effect.map((x) => x.trim()),
+        Effect.catch(() => Effect.void),
+      )
+      if (fromModtools) {
+        const id = ProjectID.make(fromModtools)
+        yield* fs.writeFileString(mod, id).pipe(Effect.ignore)
+        return id
+      }
+
+      const fromOpencode = yield* fs.readFileString(opencode).pipe(
+        Effect.map((x) => x.trim()),
+        Effect.catch(() => Effect.void),
+      )
+
+      if (fromOpencode) {
+        const id = ProjectID.make(fromOpencode)
+        yield* fs.writeFileString(mod, id).pipe(Effect.ignore)
+        return id
+      }
+
+      return undefined
     })
 
     const fromDirectory = Effect.fn("Project.fromDirectory")(function* (directory: string) {
@@ -226,7 +253,7 @@ export const layer: Layer.Layer<
 
           id = roots[0] ? ProjectID.make(roots[0]) : undefined
           if (id) {
-            yield* fs.writeFileString(pathSvc.join(worktree, ".git", "opencode"), id).pipe(Effect.ignore)
+            yield* fs.writeFileString(pathSvc.join(worktree, ".git", "mod"), id).pipe(Effect.ignore)
           }
         }
 

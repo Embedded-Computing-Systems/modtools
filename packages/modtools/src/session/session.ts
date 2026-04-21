@@ -253,7 +253,7 @@ export const Event = {
 
 export function plan(input: { slug: string; time: { created: number } }) {
   const base = Instance.project.vcs
-    ? path.join(Instance.worktree, ".modtools", "plans")
+    ? path.join(Instance.worktree, ".mod", "plans")
     : path.join(Global.Path.data, "plans")
   return path.join(base, [input.time.created, input.slug].join("-") + ".md")
 }
@@ -376,7 +376,7 @@ export interface Interface {
   ) => Effect.Effect<Option.Option<MessageV2.WithParts>>
 }
 
-export class Service extends Context.Service<Service, Interface>()("@opencode/Session") {}
+export class Service extends Context.Service<Service, Interface>()("@modtools/Session") {}
 
 type Patch = z.infer<typeof Event.Updated.schema>["info"]
 
@@ -811,3 +811,5 @@ export function* listGlobal(input?: {
     yield { ...fromRow(row), project }
   }
 }
+
+export * as Session from "./session"

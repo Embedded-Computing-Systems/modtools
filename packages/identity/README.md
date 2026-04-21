@@ -24,4 +24,4 @@ Branding is propagated to:
 - `packages/web/src/assets/`
 - `packages/console/app/src/asset/`
 - `packages/desktop/src-tauri/icons/`
-- `packages/modtools/src/cli/` (ASCII version)
+- `packages/mod/src/cli/` (ASCII version)

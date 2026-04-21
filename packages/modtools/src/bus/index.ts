@@ -40,7 +40,7 @@ export interface Interface {
   readonly subscribeAllCallback: (callback: (event: any) => unknown) => Effect.Effect<() => void>
 }
 
-export class Service extends Context.Service<Service, Interface>()("@opencode/Bus") {}
+export class Service extends Context.Service<Service, Interface>()("@mod/Bus") {}
 
 export const layer = Layer.effect(
   Service,

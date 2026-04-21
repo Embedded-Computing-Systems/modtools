@@ -38,7 +38,8 @@ import { errorMessage } from "./util/error"
 import { PluginCommand } from "./cli/cmd/plug"
 import { Heap } from "./cli/heap"
 import { drizzle } from "drizzle-orm/bun-sqlite"
-import { ensureProcessMetadata } from "./util/modtools-process"
+import { ensureProcessMetadata } from "./util/mod-process"
+import fs from "fs"
 
 const processMetadata = ensureProcessMetadata("main")
 
@@ -58,7 +59,7 @@ const args = hideBin(process.argv)
 
 function show(out: string) {
   const text = out.trimStart()
-  if (!text.startsWith("modtools ")) {
+  if (!text.startsWith("mod ")) {
     process.stderr.write(UI.logo() + EOL + EOL)
     process.stderr.write(text)
     return
@@ -68,7 +69,7 @@ function show(out: string) {
 
 const cli = yargs(args)
   .parserConfiguration({ "populate--": true })
-  .scriptName("modtools")
+  .scriptName("mod")
   .wrap(100)
   .help("help", "show help")
   .alias("help", "h")
@@ -106,51 +107,70 @@ const cli = yargs(args)
 
     process.env.AGENT = "1"
     process.env.OPENCODE = "1"
+    process.env.MOD = "1"
     process.env.MODTOOLS = "1"
     process.env.MODTOOLS_PID = String(process.pid)
+    process.env.MOD_PID = String(process.pid)
 
-    Log.Default.info("modtools", {
+    Log.Default.info("mod", {
       version: InstallationVersion,
       args: process.argv.slice(2),
       process_role: processMetadata.processRole,
       run_id: processMetadata.runID,
     })
 
-    const marker = path.join(Global.Path.data, "modtools.db")
+    const marker = path.join(Global.Path.data, "mod.db")
     if (!(await Filesystem.exists(marker))) {
-      const tty = process.stderr.isTTY
-      process.stderr.write("Performing one time database migration, may take a few minutes..." + EOL)
-      const width = 36
-      const orange = "\x1b[38;5;214m"
-      const muted = "\x1b[0;2m"
-      const reset = "\x1b[0m"
-      let last = -1
-      if (tty) process.stderr.write("\x1b[?25l")
-      try {
-        await JsonMigration.run(drizzle({ client: Database.Client().$client }), {
-          progress: (event) => {
-            const percent = Math.floor((event.current / event.total) * 100)
-            if (percent === last && event.current !== event.total) return
-            last = percent
-            if (tty) {
-              const fill = Math.round((percent / 100) * width)
-              const bar = `${"■".repeat(fill)}${"･".repeat(width - fill)}`
-              process.stderr.write(
-                `\r${orange}${bar} ${percent.toString().padStart(3)}%${reset} ${muted}${event.label.padEnd(12)} ${event.current}/${event.total}${reset}`,
-              )
-              if (event.current === event.total) process.stderr.write("\n")
-            } else {
-              process.stderr.write(`sqlite-migration:${percent}${EOL}`)
-            }
-          },
-        })
-      } finally {
-        if (tty) process.stderr.write("\x1b[?25h")
-        else {
-          process.stderr.write(`sqlite-migration:done${EOL}`)
+      const legacy = path.join(Global.Path.data, "opencode.db")
+      if (await Filesystem.exists(legacy)) {
+        await fs.promises.rename(legacy, marker)
+        for (const ext of [".db-wal", ".db-shm"]) {
+          const oldFile = legacy + ext
+          const newFile = marker + ext
+          if (await Filesystem.exists(oldFile)) {
+            await fs.promises.rename(oldFile, newFile)
+          }
         }
+      } else {
+        const tty = process.stderr.isTTY
+        process.stderr.write("Performing one time database migration, may take a few minutes..." + EOL)
+        const width = 36
+        const orange = "\x1b[38;5;214m"
+        const muted = "\x1b[0;2m"
+        const reset = "\x1b[0m"
+        let last = -1
+        if (tty) process.stderr.write("\x1b[?25l")
+        try {
+          await JsonMigration.run(drizzle({ client: Database.Client().$client }), {
+            progress: (event) => {
+              const percent = Math.floor((event.current / event.total) * 100)
+              if (percent === last && event.current !== event.total) return
+              last = percent
+              if (tty) {
+                const fill = Math.round((percent / 100) * width)
+                const bar = `${"■".repeat(fill)}${"･".repeat(width - fill)}`
+                process.stderr.write(
+                  `\r${orange}${bar} ${percent.toString().padStart(3)}%${reset} ${muted}${event.label.padEnd(12)} ${event.current}/${event.total}${reset}`,
+                )
+                if (event.current === event.total) process.stderr.write("\n")
+              } else {
+                process.stderr.write(`sqlite-migration:${percent}${EOL}`)
+              }
+            },
+          })
+        } finally {
+          if (tty) process.stderr.write("\x1b[?25h")
+        }
+        process.stderr.write("Database migration complete." + EOL)
       }
-      process.stderr.write("Database migration complete." + EOL)
+
+      if (!process.stderr.isTTY) {
+        process.stderr.write(`sqlite-migration:done${EOL}`)
+      }
+    } else {
+      if (!process.stderr.isTTY) {
+        process.stderr.write(`sqlite-migration:done${EOL}`)
+      }
     }
   })
   .usage("")
@@ -215,22 +235,11 @@ try {
     Object.assign(data, {
       name: e.name,
       message: e.message,
-      cause: e.cause?.toString(),
+      cause: (e as any).cause?.toString(),
       stack: e.stack,
     })
   }
 
-  if (e instanceof ResolveMessage) {
-    Object.assign(data, {
-      name: e.name,
-      message: e.message,
-      code: e.code,
-      specifier: e.specifier,
-      referrer: e.referrer,
-      position: e.position,
-      importKind: e.importKind,
-    })
-  }
   Log.Default.error("fatal", data)
   const formatted = FormatError(e)
   if (formatted) UI.error(formatted)
@@ -240,9 +249,5 @@ try {
   }
   process.exitCode = 1
 } finally {
-  // Some subprocesses don't react properly to SIGTERM and similar signals.
-  // Most notably, some docker-container-based MCP servers don't handle such signals unless
-  // run using `docker run --init`.
-  // Explicitly exit to avoid any hanging subprocesses.
   process.exit()
 }

@@ -485,7 +485,7 @@ describe("tool.bash permissions", () => {
       test(
         `asks for external_directory permission for missing PowerShell env paths [${item.label}]`,
         withShell(item, async () => {
-          const key = "OPENCODE_TEST_MISSING"
+          const key = "MODTOOLS_TEST_MISSING"
           const prev = process.env[key]
           delete process.env[key]
           try {
@@ -809,7 +809,7 @@ describe("tool.bash permissions", () => {
                 Effect.runPromise(
                   bash.execute(
                     {
-                      command: "cat /tmp/opencode-does-not-exist",
+                      command: "cat /tmp/modtools-does-not-exist",
                       description: "Read Git Bash tmp file",
                     },
                     capture(requests, err),

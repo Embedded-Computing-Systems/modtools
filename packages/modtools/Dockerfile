@@ -7,10 +7,9 @@ ENV BUN_RUNTIME_TRANSPILER_CACHE_PATH=${BUN_RUNTIME_TRANSPILER_CACHE_PATH}
 RUN apk add libgcc libstdc++ ripgrep
 
 FROM base AS build-amd64
-COPY dist/modtools-linux-x64-baseline-musl/bin/modtools /usr/local/bin/modtools
-
-FROM base AS build-arm64
-COPY dist/modtools-linux-arm64-musl/bin/modtools /usr/local/bin/modtools
+COPY dist/modtools-linux-x64-baseline-musl/bin/mod /usr/local/bin/mod
+...
+COPY dist/modtools-linux-arm64-musl/bin/mod /usr/local/bin/mod
 
 ARG TARGETARCH
 FROM build-${TARGETARCH}

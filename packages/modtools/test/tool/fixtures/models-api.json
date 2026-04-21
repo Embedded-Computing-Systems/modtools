@@ -11341,12 +11341,12 @@
       }
     }
   },
-  "opencode": {
-    "id": "opencode",
-    "env": ["OPENCODE_API_KEY"],
+  "modtools": {
+    "id": "modtools",
+    "env": ["MODTOOLS_API_KEY"],
     "npm": "@ai-sdk/openai-compatible",
     "api": "https://modtools.ai/zen/v1",
-    "name": "OpenCode Zen",
+    "name": "modtools Zen",
     "doc": "https://modtools.ai/docs/zen",
     "models": {
       "gpt-5.2-codex": {
@@ -64067,12 +64067,12 @@
       }
     }
   },
-  "opencode-go": {
-    "id": "opencode-go",
-    "env": ["OPENCODE_API_KEY"],
+  "modtools-go": {
+    "id": "modtools-go",
+    "env": ["MODTOOLS_API_KEY"],
     "npm": "@ai-sdk/openai-compatible",
     "api": "https://modtools.ai/zen/go/v1",
-    "name": "OpenCode Go",
+    "name": "modtools Go",
     "doc": "https://modtools.ai/docs/zen",
     "models": {
       "kimi-k2.5": {

@@ -88,7 +88,7 @@ const AgentCreateCommand = cmd({
             scope = scopeResult
           }
           targetPath = path.join(
-            scope === "global" ? Global.Path.config : path.join(Instance.worktree, ".modtools"),
+            scope === "global" ? Global.Path.config : path.join(Instance.worktree, ".mod"),
             "agent",
           )
         }

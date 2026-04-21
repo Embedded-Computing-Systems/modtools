@@ -10,11 +10,11 @@ await Bun.write("./package.json", JSON.stringify(pkg, null, 2) + "\n")
 console.log(`Updated package.json version to ${Script.version}`)
 
 const sidecarConfig = getCurrentSidecar()
-const artifact = process.env.OPENCODE_CLI_ARTIFACT ?? "modtools-cli"
-
-const dir = "src-tauri/target/modtools-binaries"
+const artifact = process.env.MOD_CLI_ARTIFACT ?? "mod-cli"
+...
+const dir = "src-tauri/target/mod-binaries"
 
 await $`mkdir -p ${dir}`
 await $`gh run download ${process.env.GITHUB_RUN_ID} -n ${artifact}`.cwd(dir)
 
-await copyBinaryToSidecarFolder(windowsify(`${dir}/${sidecarConfig.ocBinary}/bin/modtools`))
+await copyBinaryToSidecarFolder(windowsify(`${dir}/${sidecarConfig.ocBinary}/bin/mod`))

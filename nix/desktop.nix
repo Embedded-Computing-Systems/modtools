@@ -24,77 +24,21 @@
   modtools,
 }:
 rustPlatform.buildRustPackage (finalAttrs: {
-  pname = "modtools-desktop";
-  inherit (modtools)
-    version
-    src
-    node_modules
-    patches
-    ;
-
-  cargoRoot = "packages/desktop/src-tauri";
-  cargoLock.lockFile = ../packages/desktop/src-tauri/Cargo.lock;
-  buildAndTestSubdir = finalAttrs.cargoRoot;
-
-  nativeBuildInputs = [
-    pkg-config
-    cargo-tauri.hook
-    bun
-    nodejs # for patchShebangs node_modules
-    cargo
-    rustc
-    jq
-    makeWrapper
-  ] ++ lib.optionals stdenv.hostPlatform.isLinux [ wrapGAppsHook4 ];
-
-  buildInputs = lib.optionals stdenv.isLinux [
-    dbus
-    glib
-    gtk4
-    libsoup_3
-    librsvg
-    libappindicator
-    glib-networking
-    openssl
-    webkitgtk_4_1
-    gst_all_1.gstreamer
-    gst_all_1.gst-plugins-base
-    gst_all_1.gst-plugins-good
-    gst_all_1.gst-plugins-bad
-  ];
-
-  strictDeps = true;
-
-  preBuild = ''
-    cp -a ${finalAttrs.node_modules}/{node_modules,packages} .
-    chmod -R u+w node_modules packages
-    patchShebangs node_modules
-    patchShebangs packages/desktop/node_modules
-
-    mkdir -p packages/desktop/src-tauri/sidecars
-    cp ${modtools}/bin/modtools packages/desktop/src-tauri/sidecars/modtools-cli-${stdenv.hostPlatform.rust.rustcTarget}
-  '';
-
-  # see publish-tauri job in .github/workflows/publish.yml
-  tauriBuildFlags = [
-    "--config"
-    "tauri.prod.conf.json"
-    "--no-sign" # no code signing or auto updates
-  ];
-
-  # FIXME: workaround for concerns about case insensitive filesystems
-  # should be removed once binary is renamed or decided otherwise
+  pname = "mod-desktop";
+...
+    cp ${modtools}/bin/mod packages/desktop/src-tauri/sidecars/mod-cli-${stdenv.hostPlatform.rust.rustcTarget}
+...
   # darwin output is a .app bundle so no conflict
   postFixup = lib.optionalString stdenv.hostPlatform.isLinux ''
-    mv $out/bin/OpenCode $out/bin/modtools-desktop
-    sed -i 's|^Exec=OpenCode$|Exec=modtools-desktop|' $out/share/applications/OpenCode.desktop
+    mv $out/bin/MOD $out/bin/mod-desktop
+    sed -i 's|^Exec=MOD$|Exec=mod-desktop|' $out/share/applications/MOD.desktop
   '';
 
   meta = {
-    description = "OpenCode Desktop App";
+    description = "MOD Desktop App";
     homepage = "https://modtools.ai";
     license = lib.licenses.mit;
-    mainProgram = "modtools-desktop";
+    mainProgram = "mod-desktop";
     inherit (modtools.meta) platforms;
   };
 })

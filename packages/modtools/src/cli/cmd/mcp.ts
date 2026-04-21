@@ -1,4 +1,5 @@
 import { cmd } from "./cmd"
+import fs from "fs"
 import { Client } from "@modelcontextprotocol/sdk/client/index.js"
 import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js"
 import { UnauthorizedError } from "@modelcontextprotocol/sdk/client/auth.js"
@@ -125,7 +126,7 @@ export const McpListCommand = cmd({
 
         if (servers.length === 0) {
           prompts.log.warn("No MCP servers configured")
-          prompts.outro("Add servers with: opencode mcp add")
+          prompts.outro("Add servers with: modtools mcp add")
           return
         }
 
@@ -198,7 +199,7 @@ export const McpAuthCommand = cmd({
 
         if (servers.length === 0) {
           prompts.log.warn("No OAuth-capable MCP servers configured")
-          prompts.log.info("Remote MCP servers support OAuth by default. Add a remote server in opencode.json:")
+          prompts.log.info("Remote MCP servers support OAuth by default. Add a remote server in modtools.json:")
           prompts.log.info(`
   "mcp": {
     "my-server": {
@@ -410,21 +411,36 @@ export const McpLogoutCommand = cmd({
 })
 
 async function resolveConfigPath(baseDir: string, global = false) {
-  // Check for existing config files (prefer .jsonc over .json, check .modtools/ subdirectory too)
-  const candidates = [path.join(baseDir, "opencode.json"), path.join(baseDir, "modtools.jsonc")]
+  // Check for existing config files (prefer .jsonc over .json, check .mod/ subdirectory too)
+  const candidates = [
+    path.join(baseDir, "mod.jsonc"),
+    path.join(baseDir, "mod.json"),
+    path.join(baseDir, "modtools.jsonc"),
+    path.join(baseDir, "modtools.json"),
+  ]
 
-  if (!global) {
-    candidates.push(path.join(baseDir, ".modtools", "opencode.json"), path.join(baseDir, ".modtools", "modtools.jsonc"))
+  if (baseDir !== "/") {
+    candidates.push(
+      path.join(baseDir, ".mod", "mod.jsonc"),
+      path.join(baseDir, ".mod", "mod.json"),
+      path.join(baseDir, ".modtools", "modtools.jsonc"),
+      path.join(baseDir, ".modtools", "modtools.json"),
+    )
   }
 
+  // Also check for legacy opencode config
+  if (baseDir !== "/") {
+    candidates.push(path.join(baseDir, ".mod", "opencode.json"))
+    candidates.push(path.join(baseDir, ".modtools", "opencode.json"))
+  }
+
+  // Check if any exist
   for (const candidate of candidates) {
-    if (await Filesystem.exists(candidate)) {
-      return candidate
-    }
+    if (fs.existsSync(candidate)) return candidate
   }
 
-  // Default to opencode.json if none exist
-  return candidates[0]
+  // Default to mod.json if none exist
+  return candidates[1] // mod.json
 }
 
 async function addMcpToConfig(name: string, mcpConfig: ConfigMCP.Info, configPath: string) {
@@ -510,7 +526,7 @@ export const McpAddCommand = cmd({
         if (type === "local") {
           const command = await prompts.text({
             message: "Enter command to run",
-            placeholder: "e.g., opencode x @modelcontextprotocol/server-filesystem",
+            placeholder: "e.g., modtools x @modelcontextprotocol/server-filesystem",
             validate: (x) => (x && x.length > 0 ? undefined : "Required"),
           })
           if (prompts.isCancel(command)) throw new UI.CancelledError()
@@ -699,7 +715,7 @@ export const McpDebugCommand = cmd({
               params: {
                 protocolVersion: "2024-11-05",
                 capabilities: {},
-                clientInfo: { name: "opencode-debug", version: InstallationVersion },
+                clientInfo: { name: "modtools-debug", version: InstallationVersion },
               },
               id: 1,
             }),
@@ -747,7 +763,7 @@ export const McpDebugCommand = cmd({
 
             try {
               const client = new Client({
-                name: "opencode-debug",
+                name: "mod-debug",
                 version: InstallationVersion,
               })
               await client.connect(transport)

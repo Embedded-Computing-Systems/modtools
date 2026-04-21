@@ -270,7 +270,7 @@ describe("session.prompt regression", () => {
         git: true,
         init: async (dir) => {
           await Bun.write(
-            path.join(dir, "opencode.json"),
+            path.join(dir, "modtools.json"),
             JSON.stringify({
               $schema: "https://modtools.ai/config.json",
               enabled_providers: ["alibaba"],
@@ -344,7 +344,7 @@ describe("session.prompt regression", () => {
         git: true,
         init: async (dir) => {
           await Bun.write(
-            path.join(dir, "opencode.json"),
+            path.join(dir, "modtools.json"),
             JSON.stringify({
               $schema: "https://modtools.ai/config.json",
               enabled_providers: ["alibaba"],
@@ -444,7 +444,7 @@ describe("session.prompt agent variant", () => {
               const other = yield* prompt.prompt({
                 sessionID: session.id,
                 agent: "build",
-                model: { providerID: ProviderID.make("opencode"), modelID: ModelID.make("kimi-k2.5-free") },
+                model: { providerID: ProviderID.make("modtools"), modelID: ModelID.make("kimi-k2.5-free") },
                 noReply: true,
                 parts: [{ type: "text", text: "hello" }],
               })

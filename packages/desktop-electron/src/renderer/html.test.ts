@@ -49,14 +49,9 @@ describe("electron renderer html", () => {
  * after the renderer root is accounted for.
  */
 describe("electron vite publicDir", () => {
-  test("configured publicDir resolves to a directory with oc-theme-preload.js", async () => {
-    const config = await Bun.file(join(root, "electron.vite.config.ts")).text()
-    const pub = config.match(/publicDir:\s*["']([^"']+)["']/)
-    const rendererRoot = config.match(/root:\s*["']([^"']+)["']/)
-    expect(pub).not.toBeNull()
-    expect(rendererRoot).not.toBeNull()
-    const resolved = resolve(root, rendererRoot![1], pub![1])
-    expect(existsSync(resolved)).toBe(true)
-    expect(existsSync(join(resolved, "oc-theme-preload.js"))).toBe(true)
+  test("configured publicDir resolves to a directory with mod-theme-preload.js", async () => {
+    const context = await getContext(defaultOptions)
+    const resolved = context.config.publicDir
+    expect(existsSync(join(resolved, "mod-theme-preload.js"))).toBe(true)
   })
 })

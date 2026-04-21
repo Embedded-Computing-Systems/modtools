@@ -1,4 +1,4 @@
-import { Log } from "../util"
+import { Log, Filesystem } from "../util"
 import path from "path"
 import { pathToFileURL } from "url"
 import os from "os"
@@ -62,7 +62,7 @@ function normalizeLoadedConfig(data: unknown, source: string) {
   delete copy.theme
   delete copy.keybinds
   delete copy.tui
-  log.warn("tui keys in modtools config are deprecated; move them to tui.json", { path: source })
+  log.warn("tui keys in config are deprecated; move them to tui.json", { path: source })
   return copy
 }
 
@@ -97,7 +97,7 @@ const InfoSchema = Schema.Struct({
   }),
   logLevel: Schema.optional(LogLevelRef).annotate({ description: "Log level" }),
   server: Schema.optional(ConfigServer.Server).annotate({
-    description: "Server configuration for modtools serve and web commands",
+    description: "Server configuration for MOD serve and web commands",
   }),
   command: Schema.optional(Schema.Record(Schema.String, ConfigCommand.Info)).annotate({
     description: "Command configuration, see https://modtools.ai/docs/commands",
@@ -284,7 +284,7 @@ export interface Interface {
 export class Service extends Context.Service<Service, Interface>()("@modtools/Config") {}
 
 function globalConfigFile() {
-  const candidates = ["modtools.jsonc", "modtools.json", "config.json"].map((file) =>
+  const candidates = ["mod.jsonc", "mod.json", "modtools.jsonc", "modtools.json"].map((file) =>
     path.join(Global.Path.config, file),
   )
   for (const file of candidates) {
@@ -377,6 +377,8 @@ export const layer = Layer.effect(
       let result: Info = pipe(
         {},
         mergeDeep(yield* loadFile(path.join(Global.Path.config, "config.json"))),
+        mergeDeep(yield* loadFile(path.join(Global.Path.config, "mod.json"))),
+        mergeDeep(yield* loadFile(path.join(Global.Path.config, "mod.jsonc"))),
         mergeDeep(yield* loadFile(path.join(Global.Path.config, "modtools.json"))),
         mergeDeep(yield* loadFile(path.join(Global.Path.config, "modtools.jsonc"))),
       )
@@ -504,8 +506,10 @@ export const layer = Layer.effect(
         }
 
         if (!Flag.MODTOOLS_DISABLE_PROJECT_CONFIG) {
-          for (const file of yield* ConfigPaths.files("modtools", ctx.directory, ctx.worktree).pipe(Effect.orDie)) {
-            yield* merge(file, yield* loadFile(file), "local")
+          for (const name of ["mod", "modtools"]) {
+            for (const file of yield* ConfigPaths.files(name, ctx.directory, ctx.worktree).pipe(Effect.orDie)) {
+              yield* merge(file, yield* loadFile(file))
+            }
           }
         }
 
@@ -522,8 +526,8 @@ export const layer = Layer.effect(
         const deps: Fiber.Fiber<void, never>[] = []
 
         for (const dir of directories) {
-          if (dir.endsWith(".modtools") || dir === Flag.MODTOOLS_CONFIG_DIR) {
-            for (const file of ["opencode.json", "modtools.jsonc"]) {
+          if (dir.endsWith(".mod") || dir.endsWith(".modtools") || dir === Flag.MODTOOLS_CONFIG_DIR) {
+            for (const file of ["mod.json", "mod.jsonc", "modtools.json", "modtools.jsonc"]) {
               const source = path.join(dir, file)
               log.debug(`loading config from ${source}`)
               yield* merge(source, yield* loadFile(source))
@@ -618,7 +622,7 @@ export const layer = Layer.effect(
 
         const managedDir = ConfigManaged.managedConfigDir()
         if (existsSync(managedDir)) {
-          for (const file of ["opencode.json", "modtools.jsonc"]) {
+          for (const file of ["modtools.json", "modtools.jsonc"]) {
             const source = path.join(managedDir, file)
             yield* merge(source, yield* loadFile(source), "global")
           }
@@ -715,7 +719,8 @@ export const layer = Layer.effect(
 
     const update = Effect.fn("Config.update")(function* (config: Info) {
       const dir = yield* InstanceState.directory
-      const file = path.join(dir, "config.json")
+      const exists = yield* Effect.promise(() => Filesystem.exists(path.join(dir, "mod.json")))
+      const file = exists ? path.join(dir, "mod.json") : path.join(dir, "modtools.json")
       const existing = yield* loadFile(file)
       yield* fs
         .writeFileString(file, JSON.stringify(mergeDeep(writable(existing), writable(config)), null, 2))

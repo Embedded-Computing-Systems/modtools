@@ -4,10 +4,10 @@ import { NamedError } from "@modtools-ai/shared/util/error"
 import { logo as glyphs } from "./logo"
 
 const wordmark = [
-  `⠀                                ▄     `,
-  `█▀▄▀█ █▀▀█ █▀▀▄ ▀▀█▀▀ █▀▀█ █▀▀█ █    █▀▀▀`,
-  `█ █ █ █  █ █  █   █   █  █ █  █ █    ▀▀▀█`,
-  `▀   ▀ ▀▀▀▀ ▀▀▀    ▀   ▀▀▀▀ ▀▀▀▀ ▀▀▀▀ ▀▀▀▀`,
+  `⠀            `,
+  `█▀▄▀█ █▀▀█ █▀▀▄`,
+  `█ █ █ █  █ █  █`,
+  `▀   ▀ ▀▀▀▀ ▀▀▀ `,
 ]
 
 export const CancelledError = NamedError.create("UICancelledError", z.void())

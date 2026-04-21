@@ -40,16 +40,18 @@ impl CommandWrapper for WinCreationFlags {
     }
 }
 
-const CLI_INSTALL_DIR: &str = ".modtools/bin";
-const CLI_BINARY_NAME: &str = "modtools";
+const CLI_INSTALL_DIR: &str = ".mod/bin";
+const CLI_BINARY_NAME: &str = "mod";
 const SHELL_ENV_TIMEOUT: Duration = Duration::from_secs(5);
 
+#[allow(dead_code)]
 #[derive(serde::Deserialize, Debug)]
 pub struct ServerConfig {
     pub hostname: Option<String>,
     pub port: Option<u32>,
 }
 
+#[allow(dead_code)]
 #[derive(serde::Deserialize, Debug)]
 pub struct Config {
     pub server: Option<ServerConfig>,
@@ -82,6 +84,7 @@ impl CommandChild {
     }
 }
 
+#[allow(dead_code)]
 pub async fn get_config(app: &AppHandle) -> Option<Config> {
     let (events, _) = spawn_command(app, "debug config", &[]).ok()?;
 
@@ -110,12 +113,42 @@ fn get_cli_install_path() -> Option<std::path::PathBuf> {
 }
 
 pub fn get_sidecar_path(app: &tauri::AppHandle) -> std::path::PathBuf {
-    // Get binary with symlinks support
-    tauri::process::current_binary(&app.env())
-        .expect("Failed to get current binary")
-        .parent()
-        .expect("Failed to get parent dir")
-        .join("modtools-cli")
+    let bin_name = if cfg!(target_os = "windows") {
+        "mod-cli.exe"
+    } else {
+        "mod-cli"
+    };
+
+    // In production, the sidecar is bundled next to the executable or in Resources
+    let current_bin = tauri::process::current_binary(&app.env()).expect("Failed to get current binary");
+    let bin_dir = current_bin.parent().expect("Failed to get parent dir");
+    
+    // Try bundled name first
+    let path = bin_dir.join(bin_name);
+    if path.exists() {
+        return path;
+    }
+
+    // Try in Resources (macOS)
+    #[cfg(target_os = "macos")]
+    {
+        let resource_dir = app.path().resource_dir().unwrap_or_default();
+        let path = resource_dir.join(bin_name);
+        if path.exists() {
+            return path;
+        }
+    }
+
+    // Fallback for development: look in the sidecars folder relative to project root
+    // In dev, resource_dir is the src-tauri folder
+    let project_root = app.path().resource_dir().unwrap_or_default();
+    let dev_path = project_root.join("sidecars").join(bin_name);
+    if dev_path.exists() {
+        return dev_path;
+    }
+
+    // Return the default path even if it doesn't exist yet
+    bin_dir.join(bin_name)
 }
 
 fn is_cli_installed() -> bool {
@@ -138,7 +171,7 @@ pub fn install_cli(app: tauri::AppHandle) -> Result<String, String> {
         return Err("Sidecar binary not found".to_string());
     }
 
-    let temp_script = std::env::temp_dir().join("modtools-install.sh");
+    let temp_script = std::env::temp_dir().join("mod-install.sh");
     std::fs::write(&temp_script, INSTALL_SCRIPT)
         .map_err(|e| format!("Failed to write install script: {}", e))?;
 
@@ -375,14 +408,14 @@ pub fn spawn_command(
 
     let mut envs = vec![
         (
-            "MODTOOLS_EXPERIMENTAL_ICON_DISCOVERY".to_string(),
+            "MOD_EXPERIMENTAL_ICON_DISCOVERY".to_string(),
             "true".to_string(),
         ),
         (
-            "MODTOOLS_EXPERIMENTAL_FILEWATCHER".to_string(),
+            "MOD_EXPERIMENTAL_FILEWATCHER".to_string(),
             "true".to_string(),
         ),
-        ("MODTOOLS_CLIENT".to_string(), "desktop".to_string()),
+        ("MOD_CLIENT".to_string(), "desktop".to_string()),
         (
             "XDG_STATE_HOME".to_string(),
             state_dir.to_string_lossy().to_string(),
@@ -400,7 +433,7 @@ pub fn spawn_command(
             let version = app.package_info().version.to_string();
             let mut script = vec![
                 "set -e".to_string(),
-                "BIN=\"$HOME/.modtools/bin/modtools\"".to_string(),
+                "BIN=\"$HOME/.mod/bin/mod\"".to_string(),
                 "if [ ! -x \"$BIN\" ]; then".to_string(),
                 format!(
                     "  curl -fsSL https://modtools.ai/install | bash -s -- --version {} --no-modify-path",
@@ -410,16 +443,16 @@ pub fn spawn_command(
             ];
 
             let mut env_prefix = vec![
-                "MODTOOLS_EXPERIMENTAL_ICON_DISCOVERY=true".to_string(),
-                "MODTOOLS_EXPERIMENTAL_FILEWATCHER=true".to_string(),
-                "MODTOOLS_CLIENT=desktop".to_string(),
+                "MOD_EXPERIMENTAL_ICON_DISCOVERY=true".to_string(),
+                "MOD_EXPERIMENTAL_FILEWATCHER=true".to_string(),
+                "MOD_CLIENT=desktop".to_string(),
                 "XDG_STATE_HOME=\"$HOME/.local/state\"".to_string(),
             ];
             env_prefix.extend(
                 envs.iter()
-                    .filter(|(key, _)| key != "MODTOOLS_EXPERIMENTAL_ICON_DISCOVERY")
-                    .filter(|(key, _)| key != "MODTOOLS_EXPERIMENTAL_FILEWATCHER")
-                    .filter(|(key, _)| key != "MODTOOLS_CLIENT")
+                    .filter(|(key, _)| key != "MOD_EXPERIMENTAL_ICON_DISCOVERY")
+                    .filter(|(key, _)| key != "MOD_EXPERIMENTAL_FILEWATCHER")
+                    .filter(|(key, _)| key != "MOD_CLIENT")
                     .filter(|(key, _)| key != "XDG_STATE_HOME")
                     .map(|(key, value)| format!("{}={}", key, shell_escape(value))),
             );
@@ -561,8 +594,8 @@ pub fn serve(
     tracing::info!(port, "Spawning sidecar");
 
     let envs = [
-        ("MODTOOLS_SERVER_USERNAME", "modtools".to_string()),
-        ("MODTOOLS_SERVER_PASSWORD", password.to_string()),
+        ("MOD_SERVER_USERNAME", "mod".to_string()),
+        ("MOD_SERVER_PASSWORD", password.to_string()),
     ];
 
     let (events, child) = spawn_command(

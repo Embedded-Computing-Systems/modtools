@@ -60,9 +60,10 @@ impl MainWindow {
         .maximized(true)
         .initialization_script(format!(
             r#"
-            window.__MODTOOLS__ ??= {{}};
-            window.__MODTOOLS__.updaterEnabled = {UPDATER_ENABLED};
-            window.__MODTOOLS__.wsl = {wsl_enabled};
+            window.__MOD__ ??= {{}};
+            window.__MOD__.updaterEnabled = {UPDATER_ENABLED};
+            window.__MOD__.wsl = {wsl_enabled};
+            window.__MODTOOLS__ = window.__MOD__;
           "#
         ));
 

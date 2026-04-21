@@ -179,7 +179,7 @@ describe("plugin.install.task", () => {
     "seed@1.0.0"
   ],
   // tui tail
-  "theme": "opencode"
+  "theme": "modtools"
 }
 `,
     )
@@ -264,7 +264,7 @@ describe("plugin.install.task", () => {
   test("does not change configured package version without force", async () => {
     await using tmp = await tmpdir()
     const target = await plugin(tmp.path, ["server"])
-    const cfg = path.join(tmp.path, ".modtools", "opencode.json")
+    const cfg = path.join(tmp.path, ".modtools", "modtools.json")
     await fs.mkdir(path.dirname(cfg), { recursive: true })
     await Bun.write(cfg, JSON.stringify({ plugin: ["acme@1.0.0"] }, null, 2))
 
@@ -284,7 +284,7 @@ describe("plugin.install.task", () => {
   test("does not change scoped package version without force", async () => {
     await using tmp = await tmpdir()
     const target = await plugin(tmp.path, ["server"])
-    const cfg = path.join(tmp.path, ".modtools", "opencode.json")
+    const cfg = path.join(tmp.path, ".modtools", "modtools.json")
     await fs.mkdir(path.dirname(cfg), { recursive: true })
     await Bun.write(cfg, JSON.stringify({ plugin: ["@scope/acme@1.0.0"] }, null, 2))
 
@@ -304,7 +304,7 @@ describe("plugin.install.task", () => {
   test("keeps file plugin entries and still adds npm plugin", async () => {
     await using tmp = await tmpdir()
     const target = await plugin(tmp.path, ["server"])
-    const cfg = path.join(tmp.path, ".modtools", "opencode.json")
+    const cfg = path.join(tmp.path, ".modtools", "modtools.json")
     await fs.mkdir(path.dirname(cfg), { recursive: true })
     await Bun.write(cfg, JSON.stringify({ plugin: ["file:///tmp/acme.ts"] }, null, 2))
 
@@ -324,7 +324,7 @@ describe("plugin.install.task", () => {
   test("force replaces configured package version and keeps tuple options", async () => {
     await using tmp = await tmpdir()
     const target = await plugin(tmp.path, ["server"])
-    const cfg = path.join(tmp.path, ".modtools", "opencode.json")
+    const cfg = path.join(tmp.path, ".modtools", "modtools.json")
     await fs.mkdir(path.dirname(cfg), { recursive: true })
     await Bun.write(
       cfg,
@@ -480,7 +480,7 @@ describe("plugin.install.task", () => {
   test("force replaces version in both server and tui configs", async () => {
     await using tmp = await tmpdir()
     const target = await plugin(tmp.path, ["server", "tui"])
-    const server = path.join(tmp.path, ".modtools", "opencode.json")
+    const server = path.join(tmp.path, ".modtools", "modtools.json")
     const tui = path.join(tmp.path, ".modtools", "tui.json")
     await fs.mkdir(path.dirname(server), { recursive: true })
     await Bun.write(server, JSON.stringify({ plugin: ["acme@1.0.0", "other@1.0.0"] }, null, 2))

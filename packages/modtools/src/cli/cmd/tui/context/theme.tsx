@@ -24,7 +24,7 @@ import nightowl from "./theme/nightowl.json" with { type: "json" }
 import nord from "./theme/nord.json" with { type: "json" }
 import osakaJade from "./theme/osaka-jade.json" with { type: "json" }
 import onedark from "./theme/one-dark.json" with { type: "json" }
-import modtools from "./theme/modtools.json" with { type: "json" }
+import mod from "./theme/mod.json" with { type: "json" }
 import orng from "./theme/orng.json" with { type: "json" }
 import lucentOrng from "./theme/lucent-orng.json" with { type: "json" }
 import palenight from "./theme/palenight.json" with { type: "json" }
@@ -105,18 +105,19 @@ export const DEFAULT_THEMES: Record<string, ThemeJson> = {
   monokai,
   nightowl,
   nord,
+  onedark,
   ["one-dark"]: onedark,
-  ["osaka-jade"]: osakaJade,
-  modtools,
+  osakaJade,
+  mod,
   orng,
-  ["lucent-orng"]: lucentOrng,
+  lucentOrng,
   palenight,
   rosepine,
   solarized,
   synthwave84,
   tokyonight,
-  vesper,
   vercel,
+  vesper,
   zenburn,
   carbonfox,
 }
@@ -420,7 +421,7 @@ export const { use: useTheme, provider: ThemeProvider } = createSimpleContext({
         if (theme) return resolveTheme(theme, store.mode)
       }
 
-      return resolveTheme(store.themes.modtools, store.mode)
+      return resolveTheme(store.themes.mod, store.mode)
     })
 
     createEffect(() => {
@@ -481,7 +482,7 @@ async function getCustomThemes() {
     Global.Path.config,
     ...(await Array.fromAsync(
       Filesystem.up({
-        targets: [".modtools"],
+        targets: [".mod", ".modtools"],
         start: process.cwd(),
       }),
     )),

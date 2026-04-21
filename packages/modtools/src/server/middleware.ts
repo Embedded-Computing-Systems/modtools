@@ -42,7 +42,7 @@ export const AuthMiddleware: MiddlewareHandler = (c, next) => {
   if (c.req.method === "OPTIONS") return next()
   const password = Flag.MODTOOLS_SERVER_PASSWORD
   if (!password) return next()
-  const username = Flag.MODTOOLS_SERVER_USERNAME ?? "opencode"
+  const username = Flag.MODTOOLS_SERVER_USERNAME ?? "mod"
 
   if (c.req.query("auth_token")) c.req.raw.headers.set("authorization", `Basic ${c.req.query("auth_token")}`)
 
@@ -76,7 +76,7 @@ export function CorsMiddleware(opts?: { cors?: string[] }): MiddlewareHandler {
       if (input === "tauri://localhost" || input === "http://tauri.localhost" || input === "https://tauri.localhost")
         return input
 
-      if (/^https:\/\/([a-z0-9-]+\.)*opencode\.ai$/.test(input)) return input
+      if (/^https:\/\/([a-z0-9-]+\.)*modtools\.ai$/.test(input)) return input
       if (opts?.cors?.includes(input)) return input
     },
   })

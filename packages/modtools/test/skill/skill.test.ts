@@ -362,21 +362,21 @@ description: A skill in the .agents/skills directory.
               Bun.write(
                 path.join(dir, ".modtools", "skill", "agent-skill", "SKILL.md"),
                 `---
-name: opencode-skill
+name: modtools-skill
 description: A skill in the .modtools/skill directory.
 ---
 
-# OpenCode Skill
+# modtools Skill
 `,
               ),
               Bun.write(
                 path.join(dir, ".modtools", "skills", "agent-skill", "SKILL.md"),
                 `---
-name: opencode-skill
+name: modtools-skill
 description: A skill in the .modtools/skills directory.
 ---
 
-# OpenCode Skill
+# modtools Skill
 `,
               ),
             ]),

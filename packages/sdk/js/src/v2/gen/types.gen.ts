@@ -1170,7 +1170,7 @@ export type GlobalEvent = {
 export type LogLevel = "DEBUG" | "INFO" | "WARN" | "ERROR"
 
 /**
- * Server configuration for modtools serve and web commands
+ * Server configuration for MOD serve and web commands
  */
 export type ServerConfig = {
   /**
@@ -1186,7 +1186,7 @@ export type ServerConfig = {
    */
   mdns?: boolean
   /**
-   * Custom domain name for mDNS service (default: opencode.local)
+   * Custom domain name for mDNS service (default: mod.local)
    */
   mdnsDomain?: string
   /**

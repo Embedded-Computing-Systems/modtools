@@ -1,5 +1,5 @@
 import { ripgrep } from "ripgrep"
-import { sanitizedProcessEnv } from "@/util/modtools-process"
+import { sanitizedProcessEnv } from "@/util/mod-process"
 
 function env() {
   const env = sanitizedProcessEnv()

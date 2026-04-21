@@ -65,7 +65,7 @@ export interface Interface {
   readonly tools: (model: { providerID: ProviderID; modelID: ModelID; agent: Agent.Info }) => Effect.Effect<Tool.Def[]>
 }
 
-export class Service extends Context.Service<Service, Interface>()("@opencode/ToolRegistry") {}
+export class Service extends Context.Service<Service, Interface>()("@mod/ToolRegistry") {}
 
 export const layer: Layer.Layer<
   Service,
@@ -269,7 +269,7 @@ export const layer: Layer.Layer<
     const tools: Interface["tools"] = Effect.fn("ToolRegistry.tools")(function* (input) {
       const filtered = (yield* all()).filter((tool) => {
         if (tool.id === CodeSearchTool.id || tool.id === WebSearchTool.id) {
-          return input.providerID === ProviderID.opencode || Flag.MODTOOLS_ENABLE_EXA
+          return input.providerID === ProviderID.mod || input.providerID === ProviderID.opencode || Flag.MODTOOLS_ENABLE_EXA
         }
 
         const usePatch =

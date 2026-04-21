@@ -49,8 +49,8 @@ function detectPlatformAndArch() {
 
 function findBinary() {
   const { platform, arch } = detectPlatformAndArch()
-  const packageName = `modtools-${platform}-${arch}`
-  const binaryName = platform === "windows" ? "modtools.exe" : "modtools"
+  const packageName = `mod-${platform}-${arch}`
+  const binaryName = platform === "windows" ? "mod.exe" : "mod"
 
   try {
     // Use require.resolve to find the package
@@ -80,7 +80,7 @@ async function main() {
     // On non-Windows platforms, just verify the binary package exists
     // Don't replace the wrapper script - it handles binary execution
     const { binaryPath } = findBinary()
-    const target = path.join(__dirname, "bin", ".modtools")
+    const target = path.join(__dirname, "bin", ".mod")
     if (fs.existsSync(target)) fs.unlinkSync(target)
     try {
       fs.linkSync(binaryPath, target)
@@ -89,7 +89,7 @@ async function main() {
     }
     fs.chmodSync(target, 0o755)
   } catch (error) {
-    console.error("Failed to setup modtools binary:", error.message)
+    console.error("Failed to setup MOD binary:", error.message)
     process.exit(1)
   }
 }

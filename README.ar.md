@@ -1,17 +1,17 @@
 <p align="center">
-  <a href="https://modtools.ai">
+  <a href="https://mod.ai">
     <picture>
       <source srcset="packages/console/app/src/asset/logo-ornate-dark.svg" media="(prefers-color-scheme: dark)">
       <source srcset="packages/console/app/src/asset/logo-ornate-light.svg" media="(prefers-color-scheme: light)">
-      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="شعار OpenCode">
+      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="شعار MOD">
     </picture>
   </a>
 </p>
 <p align="center">وكيل برمجة بالذكاء الاصطناعي مفتوح المصدر.</p>
 <p align="center">
-  <a href="https://modtools.ai/discord"><img alt="Discord" src="https://img.shields.io/discord/1391832426048651334?style=flat-square&label=discord" /></a>
-  <a href="https://www.npmjs.com/package/opencode-ai"><img alt="npm" src="https://img.shields.io/npm/v/opencode-ai?style=flat-square" /></a>
-  <a href="https://github.com/anomalyco/opencode/actions/workflows/publish.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/anomalyco/opencode/publish.yml?style=flat-square&branch=dev" /></a>
+  <a href="https://mod.ai/discord"><img alt="Discord" src="https://img.shields.io/discord/1391832426048651334?style=flat-square&label=discord" /></a>
+  <a href="https://www.npmjs.com/package/mod-ai"><img alt="npm" src="https://img.shields.io/npm/v/mod-ai?style=flat-square" /></a>
+  <a href="https://github.com/anomalyco/mod/actions/workflows/publish.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/anomalyco/mod/publish.yml?style=flat-square&branch=dev" /></a>
 </p>
 
 <p align="center">
@@ -39,7 +39,7 @@
   <a href="README.vi.md">Tiếng Việt</a>
 </p>
 
-[![OpenCode Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://modtools.ai)
+[![MOD Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://mod.ai)
 
 ---
 
@@ -47,18 +47,18 @@
 
 ```bash
 # YOLO
-curl -fsSL https://modtools.ai/install | bash
+curl -fsSL https://mod.ai/install | bash
 
 # مديري الحزم
-npm i -g opencode-ai@latest        # او bun/pnpm/yarn
-scoop install opencode             # Windows
-choco install opencode             # Windows
-brew install anomalyco/tap/opencode # macOS و Linux (موصى به، دائما محدث)
-brew install opencode              # macOS و Linux (صيغة brew الرسمية، تحديث اقل)
-sudo pacman -S opencode            # Arch Linux (Stable)
-paru -S opencode-bin               # Arch Linux (Latest from AUR)
-mise use -g opencode               # اي نظام
-nix run nixpkgs#opencode           # او github:anomalyco/opencode لاحدث فرع dev
+npm i -g mod-ai@latest        # او bun/pnpm/yarn
+scoop install mod             # Windows
+choco install mod             # Windows
+brew install anomalyco/tap/mod # macOS و Linux (موصى به، دائما محدث)
+brew install mod              # macOS و Linux (صيغة brew الرسمية، تحديث اقل)
+sudo pacman -S mod            # Arch Linux (Stable)
+paru -S mod-bin               # Arch Linux (Latest from AUR)
+mise use -g mod               # اي نظام
+nix run nixpkgs#mod           # او github:anomalyco/mod لاحدث فرع dev
 ```
 
 > [!TIP]
@@ -66,20 +66,20 @@ nix run nixpkgs#opencode           # او github:anomalyco/opencode لاحدث �
 
 ### تطبيق سطح المكتب (BETA)
 
-يتوفر OpenCode ايضا كتطبيق سطح مكتب. قم بالتنزيل مباشرة من [صفحة الاصدارات](https://github.com/anomalyco/opencode/releases) او من [modtools.ai/download](https://modtools.ai/download).
+يتوفر MOD ايضا كتطبيق سطح مكتب. قم بالتنزيل مباشرة من [صفحة الاصدارات](https://github.com/anomalyco/mod/releases) او من [mod.ai/download](https://mod.ai/download).
 
 | المنصة                | التنزيل                               |
 | --------------------- | ------------------------------------- |
-| macOS (Apple Silicon) | `opencode-desktop-darwin-aarch64.dmg` |
-| macOS (Intel)         | `opencode-desktop-darwin-x64.dmg`     |
-| Windows               | `opencode-desktop-windows-x64.exe`    |
+| macOS (Apple Silicon) | `mod-desktop-darwin-aarch64.dmg` |
+| macOS (Intel)         | `mod-desktop-darwin-x64.dmg`     |
+| Windows               | `mod-desktop-windows-x64.exe`    |
 | Linux                 | `.deb` او `.rpm` او AppImage          |
 
 ```bash
 # macOS (Homebrew)
-brew install --cask opencode-desktop
+brew install --cask mod-desktop
 # Windows (Scoop)
-scoop bucket add extras; scoop install extras/opencode-desktop
+scoop bucket add extras; scoop install extras/mod-desktop
 ```
 
 #### مجلد التثبيت
@@ -89,17 +89,17 @@ scoop bucket add extras; scoop install extras/opencode-desktop
 1. `$OPENCODE_INSTALL_DIR` - مجلد تثبيت مخصص
 2. `$XDG_BIN_DIR` - مسار متوافق مع مواصفات XDG Base Directory
 3. `$HOME/bin` - مجلد الثنائيات القياسي للمستخدم (ان وجد او امكن انشاؤه)
-4. `$HOME/.opencode/bin` - المسار الافتراضي الاحتياطي
+4. `$HOME/.mod/bin` - المسار الافتراضي الاحتياطي
 
 ```bash
 # امثلة
-OPENCODE_INSTALL_DIR=/usr/local/bin curl -fsSL https://modtools.ai/install | bash
-XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://modtools.ai/install | bash
+OPENCODE_INSTALL_DIR=/usr/local/bin curl -fsSL https://mod.ai/install | bash
+XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://mod.ai/install | bash
 ```
 
 ### Agents
 
-يتضمن OpenCode وكيليْن (Agents) مدمجين يمكنك التبديل بينهما باستخدام زر `Tab`.
+يتضمن MOD وكيليْن (Agents) مدمجين يمكنك التبديل بينهما باستخدام زر `Tab`.
 
 - **build** - الافتراضي، وكيل بصلاحيات كاملة لاعمال التطوير
 - **plan** - وكيل للقراءة فقط للتحليل واستكشاف الكود
@@ -110,19 +110,19 @@ XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://modtools.ai/install | bash
 بالاضافة الى ذلك يوجد وكيل فرعي **general** للبحث المعقد والمهام متعددة الخطوات.
 يستخدم داخليا ويمكن استدعاؤه بكتابة `@general` في الرسائل.
 
-تعرف على المزيد حول [agents](https://modtools.ai/docs/agents).
+تعرف على المزيد حول [agents](https://mod.ai/docs/agents).
 
 ### التوثيق
 
-لمزيد من المعلومات حول كيفية ضبط OpenCode، [**راجع التوثيق**](https://modtools.ai/docs).
+لمزيد من المعلومات حول كيفية ضبط MOD، [**راجع التوثيق**](https://mod.ai/docs).
 
 ### المساهمة
 
-اذا كنت مهتما بالمساهمة في OpenCode، يرجى قراءة [contributing docs](./CONTRIBUTING.md) قبل ارسال pull request.
+اذا كنت مهتما بالمساهمة في MOD، يرجى قراءة [contributing docs](./CONTRIBUTING.md) قبل ارسال pull request.
 
-### البناء فوق OpenCode
+### البناء فوق MOD
 
-اذا كنت تعمل على مشروع مرتبط بـ OpenCode ويستخدم "opencode" كجزء من اسمه (مثل "opencode-dashboard" او "opencode-mobile")، يرجى اضافة ملاحظة في README توضح انه ليس مبنيا بواسطة فريق OpenCode ولا يرتبط بنا بأي شكل.
+اذا كنت تعمل على مشروع مرتبط بـ MOD ويستخدم "mod" كجزء من اسمه (مثل "mod-dashboard" او "mod-mobile")، يرجى اضافة ملاحظة في README توضح انه ليس مبنيا بواسطة فريق MOD ولا يرتبط بنا بأي شكل.
 
 ### FAQ
 
@@ -131,11 +131,11 @@ XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://modtools.ai/install | bash
 هو مشابه جدا لـ Claude Code من حيث القدرات. هذه هي الفروقات الاساسية:
 
 - 100% مفتوح المصدر
-- غير مقترن بمزود معين. نوصي بالنماذج التي نوفرها عبر [OpenCode Zen](https://modtools.ai/zen)؛ لكن يمكن استخدام OpenCode مع Claude او OpenAI او Google او حتى نماذج محلية. مع تطور النماذج ستتقلص الفجوات وستنخفض الاسعار، لذا من المهم ان يكون مستقلا عن المزود.
+- غير مقترن بمزود معين. نوصي بالنماذج التي نوفرها عبر [MOD Zen](https://mod.ai/zen)؛ لكن يمكن استخدام MOD مع Claude او OpenAI او Google او حتى نماذج محلية. مع تطور النماذج ستتقلص الفجوات وستنخفض الاسعار، لذا من المهم ان يكون مستقلا عن المزود.
 - دعم LSP جاهز للاستخدام
-- تركيز على TUI. تم بناء OpenCode بواسطة مستخدمي neovim ومنشئي [terminal.shop](https://terminal.shop)؛ وسندفع حدود ما هو ممكن داخل الطرفية.
-- معمارية عميل/خادم. على سبيل المثال، يمكن تشغيل OpenCode على جهازك بينما تقوده عن بعد من تطبيق جوال. هذا يعني ان واجهة TUI هي واحدة فقط من العملاء الممكنين.
+- تركيز على TUI. تم بناء MOD بواسطة مستخدمي neovim ومنشئي [terminal.shop](https://terminal.shop)؛ وسندفع حدود ما هو ممكن داخل الطرفية.
+- معمارية عميل/خادم. على سبيل المثال، يمكن تشغيل MOD على جهازك بينما تقوده عن بعد من تطبيق جوال. هذا يعني ان واجهة TUI هي واحدة فقط من العملاء الممكنين.
 
 ---
 
-**انضم الى مجتمعنا** [Discord](https://discord.gg/opencode) | [X.com](https://x.com/opencode)
+**انضم الى مجتمعنا** [Discord](https://discord.gg/mod) | [X.com](https://x.com/mod)
