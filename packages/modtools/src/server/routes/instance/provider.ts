@@ -38,11 +38,11 @@ export const ProviderRoutes = lazy(() =>
           const config = yield* cfg.get()
           const modelsDevRaw = yield* Effect.promise(() => ModelsDev.get())
           const modelsDev = { ...modelsDevRaw }
-          if (modelsDev["mod"] && !modelsDev["mod"]) {
-            modelsDev["mod"] = { ...modelsDev["mod"], id: "mod", name: "MOD" }
+          if (modelsDev["opencode"] && !modelsDev["mod"]) {
+            modelsDev["mod"] = { ...modelsDev["opencode"], id: "mod", name: "MOD" }
           }
-          if (modelsDev["mod"] && !modelsDev["modtools"]) {
-            modelsDev["modtools"] = { ...modelsDev["mod"], id: "modtools", name: "MOD" }
+          if (modelsDev["opencode"] && !modelsDev["modtools"]) {
+            modelsDev["modtools"] = { ...modelsDev["opencode"], id: "modtools", name: "MOD" }
           }
           const disabled = new Set(config.disabled_providers ?? [])
           const enabled = config.enabled_providers ? new Set(config.enabled_providers) : undefined

@@ -11,7 +11,11 @@ public struct AskModIntent: AppIntent {
     public static var openAppWhenRun: Bool = false
     public static var isDiscoverable: Bool = true
 
-    @Parameter(title: "Message", description: "The message to send to MOD")
+    @Parameter(
+        title: "Message",
+        description: "The message to send to MOD",
+        requestValueDialog: IntentDialog("What would you like to ask MOD?")
+    )
     public var message: String?
 
     // This makes it look like ChatGPT in the Shortcut editor: "Ask MOD with [Message]"
@@ -29,11 +33,11 @@ public struct AskModIntent: AppIntent {
         logger.info("Performing AskModIntent with message: \(q)")
 
         let encodedQuestion = q.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        let urlString = "mod://ask?q=\(encodedQuestion)&source=shortcut"
+        let urlString = "mod://new-session?directory=~&prompt=\(encodedQuestion)&source=shortcut"
 
         if let url = URL(string: urlString) {
             let config = NSWorkspace.OpenConfiguration()
-            config.activates = false
+            config.activates = true
             config.addsToRecentItems = false
 
             logger.info("Opening deep link in background: \(url.absoluteString)")
@@ -46,9 +50,9 @@ public struct AskModIntent: AppIntent {
         }
 
         if q.isEmpty {
-            return .result(dialog: "Opening MOD...")
+            return .result(dialog: "Opening new MOD session...")
         } else {
-            return .result(dialog: "Asking MOD: \(q)")
+            return .result(dialog: "Starting new MOD session with: \(q)")
         }
     }
 }

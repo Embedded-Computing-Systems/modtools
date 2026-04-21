@@ -11,7 +11,11 @@ public struct AskModIntent: AppIntent {
     public static var openAppWhenRun: Bool = false
     public static var isDiscoverable: Bool = true
 
-    @Parameter(title: "Message", description: "The message to send to MOD")
+    @Parameter(
+        title: "Message",
+        description: "The message to send to MOD",
+        requestValueDialog: IntentDialog("What would you like to ask MOD?")
+    )
     public var message: String?
 
     // This makes it look like ChatGPT in the Shortcut editor: "Ask MOD with [Message]"
@@ -33,7 +37,7 @@ public struct AskModIntent: AppIntent {
 
         if let url = URL(string: urlString) {
             let config = NSWorkspace.OpenConfiguration()
-            config.activates = false
+            config.activates = true
             config.addsToRecentItems = false
 
             logger.info("Opening deep link in background: \(url.absoluteString)")

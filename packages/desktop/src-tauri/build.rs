@@ -128,7 +128,8 @@ fn main() {
                             {
                                 "identifier": "message",
                                 "type": "string",
-                                "title": "Message"
+                                "title": "Message",
+                                "isInput": true
                             }
                         ]
                     }

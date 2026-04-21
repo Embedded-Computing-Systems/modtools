@@ -29,11 +29,23 @@ export const parseNewSessionDeepLink = (input: string) => {
   return { directory, prompt }
 }
 
+export const parseAskDeepLink = (input: string) => {
+  const url = parseUrl(input)
+  if (!url) return
+  if (url.hostname !== "ask") return
+  const prompt = url.searchParams.get("q")
+  if (!prompt) return
+  return { prompt }
+}
+
 export const collectOpenProjectDeepLinks = (urls: string[]) =>
   urls.map(parseDeepLink).filter((directory): directory is string => !!directory)
 
 export const collectNewSessionDeepLinks = (urls: string[]) =>
   urls.map(parseNewSessionDeepLink).filter((link): link is { directory: string; prompt?: string } => !!link)
+
+export const collectAskDeepLinks = (urls: string[]) =>
+  urls.map(parseAskDeepLink).filter((link): link is { prompt: string } => !!link)
 
 type ModWindow = Window & {
   __MOD__?: {

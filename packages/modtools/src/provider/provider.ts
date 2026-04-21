@@ -1061,6 +1061,10 @@ const layer: Layer.Layer<
         const bridge = yield* EffectBridge.make()
         const cfg = yield* config.get()
         const modelsDev = yield* Effect.promise(() => ModelsDev.get())
+        if (modelsDev["opencode"]) {
+          modelsDev["mod"] = { ...modelsDev["opencode"], id: "mod", name: "MOD" }
+          modelsDev["modtools"] = { ...modelsDev["mod"], id: "modtools", name: "MOD" }
+        }
         const database = mapValues(modelsDev, fromModelsDevProvider)
 
         const providers: Record<ProviderID, Info> = {} as Record<ProviderID, Info>

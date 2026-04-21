@@ -298,6 +298,11 @@ fn wsl_path(path: String, mode: Option<WslPathMode>) -> Result<String, String> {
     Ok(String::from_utf8_lossy(&output.stdout).trim().to_string())
 }
 
+#[cfg(target_os = "macos")]
+unsafe extern "C" {
+    fn init_macos_intents();
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     let builder = make_specta_builder();
@@ -338,6 +343,11 @@ pub fn run() {
         .plugin(tauri_plugin_decorum::init())
         .invoke_handler(builder.invoke_handler())
         .setup(move |app| {
+            #[cfg(target_os = "macos")]
+            unsafe {
+                init_macos_intents();
+            }
+
             let handle = app.handle().clone();
 
             let log_dir = app

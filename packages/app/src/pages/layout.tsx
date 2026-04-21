@@ -73,6 +73,7 @@ import {
   workspaceKey,
 } from "./layout/helpers"
 import {
+  collectAskDeepLinks,
   collectNewSessionDeepLinks,
   collectOpenProjectDeepLinks,
   deepLinkEvent,
@@ -1376,6 +1377,14 @@ export default function Layout(props: ParentProps) {
       }
       const href = link.prompt ? `/${slug}/session?prompt=${encodeURIComponent(link.prompt)}` : `/${slug}/session`
       navigateWithSidebarReset(href)
+    }
+
+    for (const link of collectAskDeepLinks(urls)) {
+      const directory = "/tmp"
+      void openProject(directory, false)
+      const slug = base64Encode(directory)
+      setSessionHandoff(slug, { prompt: link.prompt })
+      navigateWithSidebarReset(`/${slug}/session?prompt=${encodeURIComponent(link.prompt)}`)
     }
   }
 
