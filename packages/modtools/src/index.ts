@@ -121,7 +121,7 @@ const cli = yargs(args)
 
     const marker = path.join(Global.Path.data, "mod.db")
     if (!(await Filesystem.exists(marker))) {
-      const legacy = path.join(Global.Path.data, "opencode.db")
+      const legacy = path.join(Global.Path.data, "mod.db")
       if (await Filesystem.exists(legacy)) {
         await fs.promises.rename(legacy, marker)
         for (const ext of [".db-wal", ".db-shm"]) {

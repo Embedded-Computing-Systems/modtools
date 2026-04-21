@@ -1,8 +1,10 @@
 {
+  "version": "1.14.18",
   "name": "modtools",
   "displayName": "modtools",
   "description": "modtools for VS Code",
-  "version": "1.4.14",
+  "displayName": "opencode",
+  "description": "opencode for VS Code",
   "publisher": "sst-dev",
   "repository": {
     "type": "git",

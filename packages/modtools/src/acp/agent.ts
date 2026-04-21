@@ -545,7 +545,7 @@ export class Agent implements ACPAgent {
         "terminal-auth": {
           command: "mod",
           args: ["auth", "login"],
-          label: "OpenCode Login",
+          label: "MOD Login",
         },
       }
     }
@@ -570,7 +570,7 @@ export class Agent implements ACPAgent {
       },
       authMethods: [authMethod],
       agentInfo: {
-        name: "OpenCode",
+        name: "MOD",
         version: InstallationVersion,
       },
     }
@@ -1003,7 +1003,7 @@ export class Agent implements ACPAgent {
         }
       } else if (part.type === "file") {
         // Replay file attachments as appropriate ACP content blocks.
-        // OpenCode stores files internally as { type: "file", url, filename, mime }.
+        // MOD stores files internally as { type: "file", url, filename, mime }.
         // We convert these back to ACP blocks based on the URL scheme and MIME type:
         // - file:// URLs → resource_link
         // - data: URLs with image/* → image block
@@ -1624,7 +1624,7 @@ async function defaultModel(config: ACPConfig, cwd?: string): Promise<{ provider
 
   if (specified && !providers.length) return specified
 
-  const modProvider = providers.find((p) => p.id === "mod" || p.id === "opencode")
+  const modProvider = providers.find((p) => p.id === "mod" || p.id === "mod")
   if (modProvider) {
     if (modProvider.models["big-pickle"]) {
       return { providerID: ProviderID.make("mod"), modelID: ModelID.make("big-pickle") }
@@ -1762,7 +1762,7 @@ function buildVariantMeta(input: {
   availableVariants: string[]
 }) {
   return {
-    opencode: {
+    mod: {
       modelId: `${input.model.providerID}/${input.model.modelID}`,
       variant: input.variant ?? null,
       availableVariants: input.availableVariants,

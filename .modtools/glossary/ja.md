@@ -2,8 +2,8 @@
 
 ## Sources
 
-- PR #9821: https://github.com/anomalyco/opencode/pull/9821
-- PR #13160: https://github.com/anomalyco/opencode/pull/13160
+- PR #9821: https://github.com/Embedded-Computing-Systems/modtools/pull/9821
+- PR #13160: https://github.com/Embedded-Computing-Systems/modtools/pull/13160
 
 ## Do Not Translate (Locale Additions)
 

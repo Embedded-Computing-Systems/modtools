@@ -7,7 +7,7 @@ import { isRecord } from "@/util/record"
 import { Npm } from "@/npm"
 
 // Old npm package names for plugins that are now built-in
-export const DEPRECATED_PLUGIN_PACKAGES = ["mod-openai-codex-auth", "mod-copilot-auth", "opencode-openai-codex-auth", "opencode-copilot-auth"]
+export const DEPRECATED_PLUGIN_PACKAGES = ["mod-openai-codex-auth", "mod-copilot-auth", "mod-openai-codex-auth", "mod-copilot-auth"]
 
 export function isDeprecatedPlugin(spec: string) {
   return DEPRECATED_PLUGIN_PACKAGES.some((pkg) => spec.includes(pkg))
@@ -197,10 +197,10 @@ export async function checkPluginCompatibility(target: string, modVersion: strin
   if (!hit) return
   const engines = hit.json.engines
   if (!isRecord(engines)) return
-  const range = (engines.mod ?? engines.opencode) as string | undefined
+  const range = (engines.mod ?? engines.mod) as string | undefined
   if (typeof range !== "string") return
   if (!semver.satisfies(modVersion, range)) {
-    throw new Error(`Plugin requires ${engines.mod ? "MOD" : "opencode"} ${range} but running ${modVersion}`)
+    throw new Error(`Plugin requires ${engines.mod ? "MOD" : "mod"} ${range} but running ${modVersion}`)
   }
 }
 

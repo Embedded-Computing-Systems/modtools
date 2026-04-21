@@ -19,17 +19,19 @@ try {
 process.env.MODTOOLS_DISABLE_EMBEDDED_WEB_UI = "true"
 
 const APP_NAMES: Record<string, string> = {
-  dev: "OpenCode Dev",
-  beta: "OpenCode Beta",
-  prod: "OpenCode",
+  dev: "MOD Dev",
+  beta: "MOD Beta",
+  prod: "MOD",
 }
 const APP_IDS: Record<string, string> = {
   dev: "ai.modtools.desktop.dev",
   beta: "ai.modtools.desktop.beta",
   prod: "ai.modtools.desktop",
 }
-app.setName(app.isPackaged ? APP_NAMES[CHANNEL] : "OpenCode Dev")
-app.setPath("userData", join(app.getPath("appData"), app.isPackaged ? APP_IDS[CHANNEL] : "ai.modtools.desktop.dev"))
+const appId = app.isPackaged ? APP_IDS[CHANNEL] : "ai.modtools.desktop.dev"
+app.setName(app.isPackaged ? APP_NAMES[CHANNEL] : "MOD Dev")
+app.setAppUserModelId(appId)
+app.setPath("userData", join(app.getPath("appData"), appId))
 const { autoUpdater } = pkg
 
 import type { InitStep, ServerReadyData, SqliteMigrationProgress, WslConfig } from "../preload/types"
@@ -41,6 +43,7 @@ import { parseMarkdown } from "./markdown"
 import { createMenu } from "./menu"
 import { getDefaultServerUrl, getWslConfig, setDefaultServerUrl, setWslConfig, spawnLocalServer } from "./server"
 import { createLoadingWindow, createMainWindow, setBackgroundColor, setDockIcon } from "./windows"
+import { drizzle } from "drizzle-orm/node-sqlite/driver"
 import type { Server } from "virtual:opencode-server"
 
 const initEmitter = new EventEmitter()
@@ -72,7 +75,7 @@ function setupApp() {
   }
 
   app.on("second-instance", (_event: Event, argv: string[]) => {
-    const urls = argv.filter((arg: string) => arg.startsWith("opencode://"))
+    const urls = argv.filter((arg: string) => arg.startsWith("mod://"))
     if (urls.length) {
       logger.log("deep link received via second-instance", { urls })
       emitDeepLinks(urls)
@@ -102,7 +105,7 @@ function setupApp() {
   }
 
   void app.whenReady().then(async () => {
-    app.setAsDefaultProtocolClient("opencode")
+    app.setAsDefaultProtocolClient("mod")
     setDockIcon()
     setupAutoUpdater()
     await initialize()
@@ -137,15 +140,6 @@ async function initialize() {
   const url = `http://${hostname}:${port}`
   const password = randomUUID()
 
-  logger.log("spawning sidecar", { url })
-  const { listener, health } = await spawnLocalServer(hostname, port, password)
-  server = listener
-  serverReady.resolve({
-    url,
-    username: "opencode",
-    password,
-  })
-
   const loadingTask = (async () => {
     logger.log("sidecar connection started", { url })
 
@@ -157,8 +151,30 @@ async function initialize() {
     })
 
     if (needsMigration) {
+      const { Database, JsonMigration } = await import("virtual:opencode-server")
+      await JsonMigration.run(drizzle({ client: Database.Client().$client }), {
+        progress: (event: { current: number; total: number }) => {
+          const percent = Math.round(event.current / event.total) * 100
+          initEmitter.emit("sqlite", { type: "InProgress", value: percent })
+        },
+      })
+      initEmitter.emit("sqlite", { type: "Done" })
+
+      sqliteDone?.resolve()
+    }
+
+    if (needsMigration) {
       await sqliteDone?.promise
     }
+
+    logger.log("spawning sidecar", { url })
+    const { listener, health } = await spawnLocalServer(hostname, port, password)
+    server = listener
+    serverReady.resolve({
+      url,
+      username: "mod",
+      password,
+    })
 
     await Promise.race([
       health.wait,
@@ -298,7 +314,7 @@ async function getSidecarPort() {
 function sqliteFileExists() {
   const xdg = process.env.XDG_DATA_HOME
   const base = xdg && xdg.length > 0 ? xdg : join(homedir(), ".local", "share")
-  return existsSync(join(base, "opencode", "opencode.db"))
+  return existsSync(join(base, "mod", "mod.db"))
 }
 
 function setupAutoUpdater() {

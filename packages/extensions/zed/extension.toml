@@ -1,36 +1,36 @@
-id = "opencode"
-name = "OpenCode"
-description = "The open source coding agent."
-version = "1.4.14"
+id = "mod"
+name = "MOD"
+description = "The open source coding agent from ECS."
+version = "1.14.18"
 schema_version = 1
-authors = ["Anomaly"]
-repository = "https://github.com/anomalyco/opencode"
+authors = ["Embedded Computing Systems"]
+repository = "https://github.com/Embedded-Computing-Systems/modtools"
 
-[agent_servers.opencode]
-name = "OpenCode"
-icon = "./icons/opencode.svg"
+[agent_servers.mod]
+name = "MOD"
+icon = "./icons/mod.svg"
 
-[agent_servers.opencode.targets.darwin-aarch64]
-archive = "https://github.com/anomalyco/opencode/releases/download/v1.4.14/opencode-darwin-arm64.zip"
-cmd = "./opencode"
+[agent_servers.mod.targets.darwin-aarch64]
+archive = "https://github.com/Embedded-Computing-Systems/modtools/releases/download/v1.14.18/mod-darwin-arm64.zip"
+cmd = "./mod"
 args = ["acp"]
 
-[agent_servers.opencode.targets.darwin-x86_64]
-archive = "https://github.com/anomalyco/opencode/releases/download/v1.4.14/opencode-darwin-x64.zip"
-cmd = "./opencode"
+[agent_servers.mod.targets.darwin-x86_64]
+archive = "https://github.com/Embedded-Computing-Systems/modtools/releases/download/v1.14.18/mod-darwin-x64.zip"
+cmd = "./mod"
 args = ["acp"]
 
-[agent_servers.opencode.targets.linux-aarch64]
-archive = "https://github.com/anomalyco/opencode/releases/download/v1.4.14/opencode-linux-arm64.tar.gz"
-cmd = "./opencode"
+[agent_servers.mod.targets.linux-aarch64]
+archive = "https://github.com/Embedded-Computing-Systems/modtools/releases/download/v1.14.18/mod-linux-arm64.tar.gz"
+cmd = "./mod"
 args = ["acp"]
 
-[agent_servers.opencode.targets.linux-x86_64]
-archive = "https://github.com/anomalyco/opencode/releases/download/v1.4.14/opencode-linux-x64.tar.gz"
-cmd = "./opencode"
+[agent_servers.mod.targets.linux-x86_64]
+archive = "https://github.com/Embedded-Computing-Systems/modtools/releases/download/v1.14.18/mod-linux-x64.tar.gz"
+cmd = "./mod"
 args = ["acp"]
 
-[agent_servers.opencode.targets.windows-x86_64]
-archive = "https://github.com/anomalyco/opencode/releases/download/v1.4.14/opencode-windows-x64.zip"
-cmd = "./opencode.exe"
+[agent_servers.mod.targets.windows-x86_64]
+archive = "https://github.com/Embedded-Computing-Systems/modtools/releases/download/v1.14.18/mod-windows-x64.zip"
+cmd = "./mod.exe"
 args = ["acp"]

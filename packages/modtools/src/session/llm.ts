@@ -228,7 +228,7 @@ const live: Layer.Layer<
       }
 
       // Wire up toolExecutor for DWS workflow models so that tool calls
-      // from the workflow service are executed via opencode's tool system
+      // from the workflow service are executed via mod's tool system
       // and results sent back over the WebSocket.
       if (language instanceof GitLabWorkflowLanguageModel) {
         const workflowModel = language as GitLabWorkflowLanguageModel & {
@@ -367,16 +367,16 @@ const live: Layer.Layer<
         maxOutputTokens: params.maxOutputTokens,
         abortSignal: input.abort,
         headers: {
-          ...(input.model.providerID.startsWith("mod") || input.model.providerID.startsWith("opencode")
+          ...(input.model.providerID.startsWith("mod") || input.model.providerID.startsWith("mod")
             ? {
                 "x-mod-project": Instance.project.id,
                 "x-mod-session": input.sessionID,
                 "x-mod-request": input.user.id,
                 "x-mod-client": Flag.MODTOOLS_CLIENT,
-                "x-opencode-project": Instance.project.id,
-                "x-opencode-session": input.sessionID,
-                "x-opencode-request": input.user.id,
-                "x-opencode-client": Flag.MODTOOLS_CLIENT,
+                "x-mod-project": Instance.project.id,
+                "x-mod-session": input.sessionID,
+                "x-mod-request": input.user.id,
+                "x-mod-client": Flag.MODTOOLS_CLIENT,
               }
             : {
                 "x-session-affinity": input.sessionID,

@@ -12,7 +12,7 @@ export function InstanceMiddleware(workspaceID?: WorkspaceID): MiddlewareHandler
       c.req.query("directory") ||
       c.req.header("x-mod-directory") ||
       c.req.header("x-modtools-directory") ||
-      c.req.header("x-opencode-directory") ||
+      c.req.header("x-mod-directory") ||
       process.cwd()
     const directory = AppFileSystem.resolve(
       (() => {

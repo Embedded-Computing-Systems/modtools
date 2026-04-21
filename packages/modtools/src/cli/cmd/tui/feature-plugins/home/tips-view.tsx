@@ -86,7 +86,7 @@ const TIPS = [
   "Run {highlight}mod debug config{/highlight} to troubleshoot configuration",
   "Use {highlight}Ctrl+O{/highlight} to open the current file in your default editor",
   "Press {highlight}Ctrl+L{/highlight} to clear the current conversation history",
-  "Run {highlight}docker run -it --rm ghcr.io/anomalyco/mod{/highlight} for containerized use",
+  "Run {highlight}docker run -it --rm ghcr.io/Embedded-Computing-Systems/modtools{/highlight} for containerized use",
   "Use {highlight}/connect{/highlight} with MOD Zen for curated, tested models",
   "Commit your project's {highlight}AGENTS.md{/highlight} file to Git for team sharing",
   "Use {highlight}/review{/highlight} to review uncommitted changes, branches, or PRs",

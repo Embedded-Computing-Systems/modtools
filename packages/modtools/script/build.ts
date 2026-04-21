@@ -55,6 +55,32 @@ console.log(`Loaded ${migrations.length} migrations`)
 const singleFlag = process.argv.includes("--single")
 const baselineFlag = process.argv.includes("--baseline")
 const skipInstall = process.argv.includes("--skip-install")
+const skipEmbedWebUi = process.argv.includes("--skip-embed-web-ui")
+
+const createEmbeddedWebUIBundle = async () => {
+  console.log(`Building Web UI to embed in the binary`)
+  const appDir = path.join(dir, "../../packages/app")
+  const dist = path.join(appDir, "dist")
+  await $`bun run --cwd ${appDir} build`
+  const files = (await Array.fromAsync(new Bun.Glob("**/*").scan({ cwd: dist })))
+    .map((file) => file.replaceAll("\\", "/"))
+    .sort()
+  const imports = files.map((file, i) => {
+    const spec = path.relative(dir, path.join(dist, file)).replaceAll("\\", "/")
+    return `import file_${i} from ${JSON.stringify(spec.startsWith(".") ? spec : `./${spec}`)} with { type: "file" };`
+  })
+  const entries = files.map((file, i) => `  ${JSON.stringify(file)}: file_${i},`)
+  return [
+    `// Import all files as file_$i with type: "file"`,
+    ...imports,
+    `// Export with original mappings`,
+    `export default {`,
+    ...entries,
+    `}`,
+  ].join("\n")
+}
+
+const embeddedFileMap = skipEmbedWebUi ? null : await createEmbeddedWebUIBundle()
 
 const allTargets: {
   os: string
@@ -169,10 +195,10 @@ for (const item of targets) {
     tsconfig: "./tsconfig.json",
     plugins: [solidPlugin, undiciPlugin],
     sourcemap: "external",
+    minify: true,
     compile: {
       autoloadBunfig: false,
       autoloadDotenv: false,
-      //@ts-ignore (bun types aren't up to date)
       autoloadTsconfig: true,
       autoloadPackageJson: true,
       target: name.replace(pkg.name, "bun") as any,
@@ -180,7 +206,8 @@ for (const item of targets) {
       execArgv: [`--user-agent=mod/${Script.version}`, "--use-system-ca", "--"],
       windows: {},
     },
-    entrypoints: ["./src/index.ts", parserWorker, workerPath],
+    files: embeddedFileMap ? { "mod-web-ui.gen.ts": embeddedFileMap } : {},
+    entrypoints: ["./src/index.ts", parserWorker, workerPath, ...(embeddedFileMap ? ["mod-web-ui.gen.ts"] : [])],
     define: {
       MOD_VERSION: `'${Script.version}'`,
       MOD_MIGRATIONS: JSON.stringify(migrations),

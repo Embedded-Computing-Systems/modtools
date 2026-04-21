@@ -43,7 +43,7 @@ export async function load(dir: string) {
     })
     if (!md) continue
 
-    const patterns = ["/.mod/command/", "/.mod/commands/", "/.opencode/command/", "/.opencode/commands/", "/command/", "/commands/"]
+    const patterns = ["/.mod/command/", "/.mod/commands/", "/.mod/command/", "/.mod/commands/", "/command/", "/commands/"]
     const name = configEntryNameFromPath(item, patterns)
 
     const config = {

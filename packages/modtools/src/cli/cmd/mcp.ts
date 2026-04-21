@@ -428,10 +428,10 @@ async function resolveConfigPath(baseDir: string, global = false) {
     )
   }
 
-  // Also check for legacy opencode config
+  // Also check for legacy mod config
   if (baseDir !== "/") {
-    candidates.push(path.join(baseDir, ".mod", "opencode.json"))
-    candidates.push(path.join(baseDir, ".modtools", "opencode.json"))
+    candidates.push(path.join(baseDir, ".mod", "mod.json"))
+    candidates.push(path.join(baseDir, ".modtools", "mod.json"))
   }
 
   // Check if any exist
