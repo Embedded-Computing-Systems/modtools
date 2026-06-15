@@ -47,7 +47,7 @@ const VERSION = await (async () => {
   return `${major}.${minor}.${patch + 1}`
 })()
 
-const bot = ["actions-user", "MOD", "MOD-agent[bot]"]
+const bot = ["actions-user", "modtools", "modtools-agent[bot]"]
 const teamPath = path.resolve(import.meta.dir, "../../../.github/TEAM_MEMBERS")
 const team = [
   ...(await Bun.file(teamPath)

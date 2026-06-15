@@ -3,7 +3,7 @@ import { defineConfig } from "electron-vite"
 import appPlugin from "@modtools-ai/app/vite"
 import * as fs from "node:fs/promises"
 
-const MODTOOLS_SERVER_DIST = "../MOD/dist/node"
+const MODTOOLS_SERVER_DIST = "../modtools/dist/node"
 
 const channel = (() => {
   const raw = process.env.MODTOOLS_CHANNEL
@@ -44,21 +44,21 @@ export default defineConfig({
     },
     plugins: [
       {
-        name: "MOD:node-pty-narrower",
+        name: "modtools:node-pty-narrower",
         enforce: "pre",
         resolveId(s) {
           if (s === "@lydell/node-pty") return nodePtyPkg
         },
       },
       {
-        name: "MOD:virtual-server-module",
+        name: "modtools:virtual-server-module",
         enforce: "pre",
         resolveId(id) {
           if (id === "virtual:MOD-server") return this.resolve(`${MODTOOLS_SERVER_DIST}/node.js`)
         },
       },
       {
-        name: "MOD:copy-server-assets",
+        name: "modtools:copy-server-assets",
         async writeBundle() {
           for (const l of await fs.readdir(MODTOOLS_SERVER_DIST)) {
             if (!l.endsWith(".wasm")) continue

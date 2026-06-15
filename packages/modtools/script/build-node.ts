@@ -24,7 +24,7 @@ await Bun.build({
     MODTOOLS_CHANNEL: `'${Script.channel}'`,
   },
   files: {
-    "MOD-web-ui.gen.ts": "",
+    "mod-web-ui.gen.ts": "",
   },
 })
 

@@ -9,7 +9,7 @@ import path from "path"
 
 import { createClient } from "@hey-api/openapi-ts"
 
-const MOD = path.resolve(dir, "../../MOD")
+const MOD = path.resolve(dir, "../../modtools")
 
 await $`bun dev generate > ${dir}/openapi.json`.cwd(MOD)
 
