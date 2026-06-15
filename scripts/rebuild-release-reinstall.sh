@@ -121,9 +121,9 @@ echo "  Install CLI/TUI: $INSTALL_CLI"
 echo "  Install GUI: $INSTALL_GUI"
 echo ""
 
-# Get project root (script is in .packages/scripts/, so need to go up 2 levels)
+# Get project root (script is in scripts/, so need to go up 1 level)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 cd "$PROJECT_ROOT"
 echo -e "${BLUE}Project root: $PROJECT_ROOT${NC}"
 
@@ -331,44 +331,17 @@ cd "$PROJECT_ROOT"
     echo -e "  ${BLUE}Updating desktop sidecar...${NC}"
     LOCAL_BIN="packages/modtools/dist/modtools-${PLATFORM}-${ARCH}/bin/mod"
     if [ -f "$LOCAL_BIN" ]; then
-      # v1.17.7 uses Electron; no Tauri sidecars dir
-      # cp "$LOCAL_BIN" "packages/desktop/src-tauri/sidecars/mod-cli"
-      
-      # Determine target triple for sidecar bundling
-      if [ "$PLATFORM" = "darwin" ]; then
-        if [ "$ARCH" = "arm64" ]; then
-          TRIPLE="aarch64-apple-darwin"
-        else
-          TRIPLE="x86_64-apple-darwin"
-        fi
-      elif [ "$PLATFORM" = "linux" ]; then
-        if [ "$ARCH" = "arm64" ]; then
-          TRIPLE="aarch64-unknown-linux-gnu"
-        else
-          TRIPLE="x86_64-unknown-linux-gnu"
-        fi
-      else
-        TRIPLE="x86_64-pc-windows-msvc"
-      fi
-
-      # TRIPLED_BIN="packages/desktop/src-tauri/sidecars/mod-cli-$TRIPLE"
-      if [ "$PLATFORM" = "windows" ]; then
-        TRIPLED_BIN="$TRIPLED_BIN.exe"
-      fi
-
-      # cp "$LOCAL_BIN" "$TRIPLED_BIN"
-      echo -e "  ${BLUE}Updated sidecar: $TRIPLED_BIN${NC}"
+      # v1.17.7 uses Electron; copy sidecar into resources/ for electron-builder
+      SIDECAR_DIR="packages/desktop/resources"
+      mkdir -p "$SIDECAR_DIR"
+      cp "$LOCAL_BIN" "$SIDECAR_DIR/modtools-cli"
 
       # Sign the sidecar for macOS
       if [ "$PLATFORM" = "darwin" ]; then
-        # for b in ... ; do
-          # if [ -f "$b" ]; then
-            # codesign --remove-signature "$b" 2>/dev/null || true
-            # codesign --force --sign - --deep "$b" 2>/dev/null || true
-          fi
-        done
+        codesign --remove-signature "$SIDECAR_DIR/modtools-cli" 2>/dev/null || true
+        codesign --force --sign - --deep "$SIDECAR_DIR/modtools-cli" 2>/dev/null || true
       fi
-      echo -e "  ${YELLOW}Skipping Tauri sidecar copy (Electron desktop in v1.17.7)${NC}"
+      echo -e "  ${GREEN}Updated sidecar: $SIDECAR_DIR/modtools-cli${NC}"
     else
       echo -e "  ${YELLOW}Warning: Could not find built binary at $LOCAL_BIN${NC}"
     fi
@@ -460,7 +433,7 @@ if [ "$INSTALL_CLI" = true ] || [ "$INSTALL_TUI" = true ]; then
     fi
   fi
 
-  PACKAGE_NAME="mod-${PLATFORM_SUFFIX}"
+  PACKAGE_NAME="modtools-${PLATFORM_SUFFIX}"
   BINARY_PATH="${DIST_DIR}/${PACKAGE_NAME}/bin/${BINARY_NAME}"
 
   if [ ! -f "$BINARY_PATH" ]; then
