@@ -1,9 +1,9 @@
 import { describe, expect } from "bun:test"
 import { Effect } from "effect"
-import { Catalog } from "@opencode-ai/core/catalog"
-import { PluginV2 } from "@opencode-ai/core/plugin"
-import { AmazonBedrockPlugin } from "@opencode-ai/core/plugin/provider/amazon-bedrock"
-import { ProviderV2 } from "@opencode-ai/core/provider"
+import { Catalog } from "@modtools-ai/core/catalog"
+import { PluginV2 } from "@modtools-ai/core/plugin"
+import { AmazonBedrockPlugin } from "@modtools-ai/core/plugin/provider/amazon-bedrock"
+import { ProviderV2 } from "@modtools-ai/core/provider"
 import { fakeSelectorSdk, it, model, provider, withEnv } from "./provider-helper"
 
 function bedrockBaseURL(sdk: unknown, modelID = "anthropic.claude-sonnet-4-5") {

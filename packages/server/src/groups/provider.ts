@@ -1,5 +1,5 @@
-import { ProviderV2 } from "@opencode-ai/core/provider"
-import { Location } from "@opencode-ai/core/location"
+import { ProviderV2 } from "@modtools-ai/core/provider"
+import { Location } from "@modtools-ai/core/location"
 import { Schema } from "effect"
 import { HttpApiEndpoint, HttpApiGroup, OpenApi } from "effect/unstable/httpapi"
 import { ProviderNotFoundError, ServiceUnavailableError } from "../errors"

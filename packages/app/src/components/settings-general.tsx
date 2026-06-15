@@ -1,12 +1,12 @@
 import { Component, Show, createMemo, createResource, onMount, type JSX } from "solid-js"
-import { Button } from "@opencode-ai/ui/button"
-import { Icon } from "@opencode-ai/ui/icon"
-import { Select } from "@opencode-ai/ui/select"
-import { Switch } from "@opencode-ai/ui/switch"
-import { TextField } from "@opencode-ai/ui/text-field"
-import { Tooltip } from "@opencode-ai/ui/tooltip"
-import { useTheme, type ColorScheme } from "@opencode-ai/ui/theme/context"
-import { useDialog } from "@opencode-ai/ui/context/dialog"
+import { Button } from "@modtools-ai/ui/button"
+import { Icon } from "@modtools-ai/ui/icon"
+import { Select } from "@modtools-ai/ui/select"
+import { Switch } from "@modtools-ai/ui/switch"
+import { TextField } from "@modtools-ai/ui/text-field"
+import { Tooltip } from "@modtools-ai/ui/tooltip"
+import { useTheme, type ColorScheme } from "@modtools-ai/ui/theme/context"
+import { useDialog } from "@modtools-ai/ui/context/dialog"
 import { useParams } from "@solidjs/router"
 import { useLanguage } from "@/context/language"
 import { usePermission } from "@/context/permission"
@@ -469,7 +469,7 @@ export const SettingsGeneral: Component = () => {
           description={
             <>
               {language.t("settings.general.row.theme.description")}{" "}
-              <Link href="https://opencode.ai/docs/themes/">{language.t("common.learnMore")}</Link>
+              <Link href="https://modtools.ai/docs/themes/">{language.t("common.learnMore")}</Link>
             </>
           }
         >

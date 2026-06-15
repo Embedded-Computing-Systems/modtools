@@ -49,11 +49,11 @@ export function registerWslIpcHandlers(controller: WslServersController) {
   ipcMain.handle("wsl-servers-probe-distro", (_event: IpcMainInvokeEvent, name: string) =>
     controller.probeDistro(requireWslIpcString("distro", name)),
   )
-  ipcMain.handle("wsl-servers-probe-opencode", (_event: IpcMainInvokeEvent, name: string) =>
-    controller.probeOpencode(requireWslIpcString("distro", name)),
+  ipcMain.handle("wsl-servers-probe-MOD", (_event: IpcMainInvokeEvent, name: string) =>
+    controller.probeMod(requireWslIpcString("distro", name)),
   )
-  ipcMain.handle("wsl-servers-install-opencode", (_event: IpcMainInvokeEvent, name: string) =>
-    controller.installOpencode(requireWslIpcString("distro", name)),
+  ipcMain.handle("wsl-servers-install-MOD", (_event: IpcMainInvokeEvent, name: string) =>
+    controller.installMod(requireWslIpcString("distro", name)),
   )
   ipcMain.handle("wsl-servers-open-terminal", (_event: IpcMainInvokeEvent, name: string) =>
     controller.openTerminal(requireWslIpcString("distro", name)),
@@ -82,7 +82,7 @@ function registerUnavailableWslIpcHandlers() {
     installed: [],
     online: [],
     distroProbes: {},
-    opencodeChecks: {},
+    MODChecks: {},
     pendingRestart: false,
     servers: [],
     job: null,
@@ -98,8 +98,8 @@ function registerUnavailableWslIpcHandlers() {
   ipcMain.handle("wsl-servers-install-wsl", unavailable)
   ipcMain.handle("wsl-servers-install-distro", unavailable)
   ipcMain.handle("wsl-servers-probe-distro", unavailable)
-  ipcMain.handle("wsl-servers-probe-opencode", unavailable)
-  ipcMain.handle("wsl-servers-install-opencode", unavailable)
+  ipcMain.handle("wsl-servers-probe-MOD", unavailable)
+  ipcMain.handle("wsl-servers-install-MOD", unavailable)
   ipcMain.handle("wsl-servers-open-terminal", unavailable)
   ipcMain.handle("wsl-servers-add", unavailable)
   ipcMain.handle("wsl-servers-remove", unavailable)
