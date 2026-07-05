@@ -264,6 +264,27 @@ echo -e "${YELLOW}Step 5: Building CLI/TUI...${NC}"
 cd packages/modtools
 
 # Set build flags
+export MOD_CHANNEL="latest"
+if [ -n "$RELEASE_VERSION" ]; then
+  export MOD_VERSION="$RELEASE_VERSION"
+  echo -e "  ${BLUE}Channel: latest | Version: $RELEASE_VERSION${NC}"
+else
+  GIT_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+  if [ -n "$GIT_TAG" ]; then
+    TAG_VERSION="${GIT_TAG#v}"
+    export MOD_VERSION="$TAG_VERSION"
+    echo -e "  ${BLUE}Channel: latest | Version: $TAG_VERSION (from git tag $GIT_TAG)${NC}"
+  else
+    PKG_VERSION=$(python3 -c "import json; print(json.load(open('packages/modtools/package.json'))['version'])" 2>/dev/null || echo "")
+    if [ -n "$PKG_VERSION" ]; then
+      export MOD_VERSION="$PKG_VERSION"
+      echo -e "  ${BLUE}Channel: latest | Version: $PKG_VERSION (from package.json)${NC}"
+    else
+      echo -e "  ${BLUE}Channel: latest | Version: auto-detected${NC}"
+    fi
+  fi
+fi
+
 if [ "$BUILD_ALL_PLATFORMS" = true ]; then
   echo -e "  ${BLUE}Building for all platforms...${NC}"
   bun run script/build.ts
