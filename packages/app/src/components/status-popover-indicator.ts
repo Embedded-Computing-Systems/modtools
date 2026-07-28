@@ -1,4 +1,4 @@
-import type { LspStatus } from "@opencode-ai/sdk/v2/client"
+import type { LspStatus } from "@modtools-ai/sdk/v2/client"
 import type { McpServer } from "@opencode-ai/client/promise"
 
 export function hasNonBlockingServiceIssue(input: {

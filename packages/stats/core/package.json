@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "@opencode-ai/stats-core",
+  "name": "@modtools-ai/stats-core",
   "version": "1.18.7",
   "private": true,
   "type": "module",
