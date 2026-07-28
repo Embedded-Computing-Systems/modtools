@@ -509,7 +509,11 @@ if [ "$INSTALL_CLI" = true ] || [ "$INSTALL_TUI" = true ]; then
 
 if [ ! -f "$MOD_BIN_PATH" ]; then
   echo "Error: MOD binary not found at $MOD_BIN_PATH"
-  echo "Please run: bash .packages/scripts/rebuild-release-reinstall.sh"
+  echo
+  echo "The build tree was cleaned or regenerated. Rebuild with:"
+  echo "  cd $PROJECT_ROOT && ./scripts/rebuild-release-reinstall.sh --no-gui --no-all-platforms"
+  echo "or all targets:"
+  echo "  cd $PROJECT_ROOT && ./scripts/rebuild-release-reinstall.sh"
   exit 1
 fi
 
