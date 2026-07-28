@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "@opencode-ai/tui",
-  "version": "1.17.13",
+  "name": "@modtools-ai/tui",
+  "version": "1.18.7",
   "private": true,
   "type": "module",
   "license": "MIT",
@@ -48,10 +48,10 @@
     "./component/register-spinner": "./src/component/register-spinner.ts"
   },
   "dependencies": {
-    "@opencode-ai/core": "workspace:*",
-    "@opencode-ai/plugin": "workspace:*",
-    "@opencode-ai/sdk": "workspace:*",
-    "@opencode-ai/ui": "workspace:*",
+    "@modtools-ai/core": "workspace:*",
+    "@modtools-ai/plugin": "workspace:*",
+    "@modtools-ai/sdk": "workspace:*",
+    "@modtools-ai/ui": "workspace:*",
     "@opentui/core": "catalog:",
     "@opentui/keymap": "catalog:",
     "@opentui/solid": "catalog:",
@@ -62,8 +62,8 @@
     "open": "10.1.2",
     "opentui-spinner": "catalog:",
     "remeda": "catalog:",
-    "strip-ansi": "7.1.2",
-    "solid-js": "catalog:"
+    "solid-js": "catalog:",
+    "strip-ansi": "7.1.2"
   },
   "devDependencies": {
     "@tsconfig/bun": "catalog:",

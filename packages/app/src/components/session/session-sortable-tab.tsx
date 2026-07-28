@@ -1,16 +1,16 @@
 import { createMemo, Show } from "solid-js"
 import type { JSX } from "solid-js"
 import { createSortable } from "@thisbeyond/solid-dnd"
-import { FileIcon } from "@opencode-ai/ui/file-icon"
-import { IconButton } from "@opencode-ai/ui/icon-button"
-import { TooltipKeybind } from "@opencode-ai/ui/tooltip"
-import { Tabs } from "@opencode-ai/ui/tabs"
-import { getFilename } from "@opencode-ai/core/util/path"
+import { FileIcon } from "@modtools-ai/ui/file-icon"
+import { IconButton } from "@modtools-ai/ui/icon-button"
+import { TooltipKeybind } from "@modtools-ai/ui/tooltip"
+import { Tabs } from "@modtools-ai/ui/tabs"
+import { getFilename } from "@modtools-ai/core/util/path"
 import { useFile } from "@/context/file"
 import { useLanguage } from "@/context/language"
 import { useCommand } from "@/context/command"
 
-export function FileVisual(props: { path: string; active?: boolean }): JSX.Element {
+export function FileVisual(props: { path: string; active?: boolean; temporary?: boolean }): JSX.Element {
   return (
     <div class="flex items-center gap-x-1.5 min-w-0">
       <Show
@@ -22,12 +22,19 @@ export function FileVisual(props: { path: string; active?: boolean }): JSX.Eleme
           <FileIcon node={{ path: props.path, type: "file" }} mono class="absolute inset-0 size-4 tab-fileicon-mono" />
         </span>
       </Show>
-      <span class="text-14-medium truncate">{getFilename(props.path)}</span>
+      <span class="text-14-medium truncate" classList={{ italic: props.temporary }}>
+        {getFilename(props.path)}
+      </span>
     </div>
   )
 }
 
-export function SortableTab(props: { tab: string; onTabClose: (tab: string) => void }): JSX.Element {
+export function SortableTab(props: {
+  tab: string
+  temporary?: boolean
+  onTabClose: (tab: string) => void
+  onTabDoubleClick?: (tab: string) => void
+}): JSX.Element {
   const file = useFile()
   const language = useLanguage()
   const command = useCommand()
@@ -36,7 +43,7 @@ export function SortableTab(props: { tab: string; onTabClose: (tab: string) => v
   const content = createMemo(() => {
     const value = path()
     if (!value) return
-    return <FileVisual path={value} />
+    return <FileVisual path={value} temporary={props.temporary} />
   })
   return (
     <div use:sortable class="h-full flex items-center" classList={{ "opacity-0": sortable.isActiveDraggable }}>
@@ -61,6 +68,7 @@ export function SortableTab(props: { tab: string; onTabClose: (tab: string) => v
           }
           hideCloseButton
           onMiddleClick={() => props.onTabClose(props.tab)}
+          onDblClick={() => props.onTabDoubleClick?.(props.tab)}
         >
           <Show when={content()}>{(value) => value()}</Show>
         </Tabs.Trigger>

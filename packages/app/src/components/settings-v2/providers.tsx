@@ -1,15 +1,14 @@
-import { ButtonV2 } from "@opencode-ai/ui/v2/button-v2"
-import { Tag } from "@opencode-ai/ui/v2/badge-v2"
-import { useDialog } from "@opencode-ai/ui/context/dialog"
-import { ProviderIcon } from "@opencode-ai/ui/provider-icon"
+import { ButtonV2 } from "@modtools-ai/ui/v2/button-v2"
+import { Tag } from "@modtools-ai/ui/v2/badge-v2"
+import { useDialog } from "@modtools-ai/ui/context/dialog"
+import { ProviderIcon } from "@modtools-ai/ui/provider-icon"
 import { showToast } from "@/utils/toast"
 import { popularProviders, useProviders } from "@/hooks/use-providers"
-import { createMemo, type Component, For, Show } from "solid-js"
+import { createMemo, type Accessor, type Component, For, Show } from "solid-js"
 import { useLanguage } from "@/context/language"
-import { useServerSDK } from "@/context/server-sdk"
+import { useServerProtocol, useServerSDK } from "@/context/server-sdk"
 import { useServerSync } from "@/context/server-sync"
-import { DialogConnectProvider } from "../dialog-connect-provider"
-import { DialogSelectProvider } from "../dialog-select-provider"
+import { DialogConnectProvider, useProviderConnectController } from "../dialog-connect-provider"
 import { DialogCustomProvider } from "../dialog-custom-provider"
 import { SettingsListV2 } from "./parts/list"
 import "./settings-v2.css"
@@ -18,8 +17,8 @@ type ProviderSource = "env" | "api" | "config" | "custom"
 type ProviderItem = ReturnType<ReturnType<typeof useProviders>["connected"]>[number]
 
 const PROVIDER_NOTES = [
-  { match: (id: string) => id === "opencode", key: "dialog.provider.opencode.note" },
-  { match: (id: string) => id === "opencode-go", key: "dialog.provider.opencodeGo.tagline" },
+  { match: (id: string) => id === "mod", key: "dialog.provider.mod.note" },
+  { match: (id: string) => id === "mod-go", key: "dialog.provider.modGo.tagline" },
   { match: (id: string) => id === "anthropic", key: "dialog.provider.anthropic.note" },
   { match: (id: string) => id.startsWith("github-copilot"), key: "dialog.provider.copilot.note" },
   { match: (id: string) => id === "openai", key: "dialog.provider.openai.note" },
@@ -30,17 +29,27 @@ const PROVIDER_NOTES = [
 
 const PROVIDER_ICON_SIZE = 16
 
-export const SettingsProvidersV2: Component = () => {
+export const SettingsProvidersV2: Component<{
+  directory: Accessor<string | undefined>
+  onBack?: () => void
+}> = (props) => {
   const dialog = useDialog()
   const language = useLanguage()
   const serverSdk = useServerSDK()
+  const protocol = useServerProtocol()
   const serverSync = useServerSync()
-  const providers = useProviders()
+  const providers = useProviders(props.directory)
+  const providerConnect = useProviderConnectController({ onBack: props.onBack })
+
+  const connect = (provider?: string) => {
+    providerConnect.select(provider)
+    void dialog.show(() => <DialogConnectProvider directory={props.directory} controller={providerConnect} />)
+  }
 
   const connected = createMemo(() => {
     return providers
       .connected()
-      .filter((p) => p.id !== "opencode" || Object.values(p.models).find((m) => m.cost?.input))
+      .filter((p) => p.id !== "mod" || Object.values(p.models).find((m) => m.cost?.input))
   })
 
   const popular = createMemo(() => {
@@ -72,7 +81,8 @@ export const SettingsProvidersV2: Component = () => {
     return language.t("settings.providers.tag.other")
   }
 
-  const canDisconnect = (item: ProviderItem) => source(item) !== "env"
+  const canDisconnect = (item: ProviderItem) =>
+    source(item) !== "env" && (protocol() === "v1" || !isConfigCustom(item.id))
 
   const note = (id: string) => PROVIDER_NOTES.find((item) => item.match(id))?.key
 
@@ -85,6 +95,7 @@ export const SettingsProvidersV2: Component = () => {
   }
 
   const disableProvider = async (providerID: string, name: string) => {
+    if (protocol() !== "v1") return
     const before = serverSync().data.config.disabled_providers ?? []
     const next = before.includes(providerID) ? before : [...before, providerID]
     serverSync().set("config", "disabled_providers", next)
@@ -197,7 +208,7 @@ export const SettingsProvidersV2: Component = () => {
                     <div class="settings-v2-provider-copy">
                       <div class="settings-v2-provider-main">
                         <span class="settings-v2-provider-name">{item.name}</span>
-                        <Show when={item.id === "opencode" || item.id === "opencode-go"}>
+                        <Show when={item.id === "mod" || item.id === "mod-go"}>
                           <Tag>{language.t("dialog.provider.tag.recommended")}</Tag>
                         </Show>
                       </div>
@@ -206,56 +217,47 @@ export const SettingsProvidersV2: Component = () => {
                       </Show>
                     </div>
                   </div>
-                  <ButtonV2
-                    size="normal"
-                    variant="neutral"
-                    icon="plus"
-                    onClick={() => {
-                      dialog.show(() => <DialogConnectProvider provider={item.id} />)
-                    }}
-                  >
+                  <ButtonV2 size="normal" variant="neutral" icon="plus" onClick={() => connect(item.id)}>
                     {language.t("common.connect")}
                   </ButtonV2>
                 </div>
               )}
             </For>
 
-            <div class="settings-v2-provider-row" data-component="custom-provider-section">
-              <div class="settings-v2-provider-lead">
-                <ProviderIcon
-                  id="synthetic"
-                  width={PROVIDER_ICON_SIZE}
-                  height={PROVIDER_ICON_SIZE}
-                  class="settings-v2-provider-icon shrink-0"
-                />
-                <div class="settings-v2-provider-copy">
-                  <div class="settings-v2-provider-main">
-                    <span class="settings-v2-provider-name">{language.t("provider.custom.title")}</span>
-                    <Tag>{language.t("settings.providers.tag.custom")}</Tag>
+            <Show when={protocol() === "v1"}>
+              <div class="settings-v2-provider-row" data-component="custom-provider-section">
+                <div class="settings-v2-provider-lead">
+                  <ProviderIcon
+                    id="synthetic"
+                    width={PROVIDER_ICON_SIZE}
+                    height={PROVIDER_ICON_SIZE}
+                    class="settings-v2-provider-icon shrink-0"
+                  />
+                  <div class="settings-v2-provider-copy">
+                    <div class="settings-v2-provider-main">
+                      <span class="settings-v2-provider-name">{language.t("provider.custom.title")}</span>
+                      <Tag>{language.t("settings.providers.tag.custom")}</Tag>
+                    </div>
+                    <p class="settings-v2-provider-description">
+                      {language.t("settings.providers.custom.description")}
+                    </p>
                   </div>
-                  <p class="settings-v2-provider-description">{language.t("settings.providers.custom.description")}</p>
                 </div>
+                <ButtonV2
+                  size="normal"
+                  variant="neutral"
+                  icon="plus"
+                  onClick={() => {
+                    dialog.show(() => <DialogCustomProvider onBack={dialog.close} />)
+                  }}
+                >
+                  {language.t("common.connect")}
+                </ButtonV2>
               </div>
-              <ButtonV2
-                size="normal"
-                variant="neutral"
-                icon="plus"
-                onClick={() => {
-                  dialog.show(() => <DialogCustomProvider back="close" />)
-                }}
-              >
-                {language.t("common.connect")}
-              </ButtonV2>
-            </div>
+            </Show>
           </SettingsListV2>
 
-          <button
-            type="button"
-            class="settings-v2-providers-view-all"
-            onClick={() => {
-              dialog.show(() => <DialogSelectProvider />)
-            }}
-          >
+          <button type="button" class="settings-v2-providers-view-all" onClick={() => connect()}>
             {language.t("dialog.provider.viewAll")}
           </button>
         </div>

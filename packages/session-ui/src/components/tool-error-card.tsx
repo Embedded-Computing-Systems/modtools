@@ -1,11 +1,11 @@
 import { type ComponentProps, createMemo, Show, splitProps } from "solid-js"
 import { createStore } from "solid-js/store"
-import { Card, CardDescription } from "@opencode-ai/ui/card"
-import { Collapsible } from "@opencode-ai/ui/collapsible"
-import { Icon } from "@opencode-ai/ui/icon"
-import { IconButton } from "@opencode-ai/ui/icon-button"
-import { Tooltip } from "@opencode-ai/ui/tooltip"
-import { useI18n } from "@opencode-ai/ui/context/i18n"
+import { Card, CardDescription } from "@modtools-ai/ui/card"
+import { Collapsible } from "@modtools-ai/ui/collapsible"
+import { Icon } from "@modtools-ai/ui/icon"
+import { IconButton } from "@modtools-ai/ui/icon-button"
+import { Tooltip } from "@modtools-ai/ui/tooltip"
+import { useI18n } from "@modtools-ai/ui/context/i18n"
 
 export interface ToolErrorCardProps extends Omit<ComponentProps<typeof Card>, "children" | "variant"> {
   tool: string
@@ -51,6 +51,8 @@ export function ToolErrorCard(props: ToolErrorCardProps) {
       webfetch: "ui.tool.webfetch",
       websearch: "ui.tool.websearch",
       bash: "ui.tool.shell",
+      shell: "ui.tool.shell",
+      patch: "ui.tool.patch",
       apply_patch: "ui.tool.patch",
       question: "ui.tool.questions",
     }

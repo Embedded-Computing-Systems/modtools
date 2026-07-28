@@ -1,15 +1,15 @@
 import { createStore, reconcile } from "solid-js/store"
 import { type Accessor, batch, createEffect, createMemo, createRoot, getOwner, onCleanup } from "solid-js"
 import { useParams, useSearchParams } from "@solidjs/router"
-import { createSimpleContext } from "@opencode-ai/ui/context"
+import { createSimpleContext } from "@modtools-ai/ui/context"
 import type { ServerSDK } from "./server-sdk"
 import type { ServerSync } from "./server-sync"
 import { usePlatform } from "@/context/platform"
 import { useLanguage } from "@/context/language"
 import { useSettings } from "@/context/settings"
-import { base64Encode } from "@opencode-ai/core/util/encode"
+import { base64Encode } from "@modtools-ai/core/util/encode"
 import { decode64 } from "@/utils/base64"
-import { EventSessionError } from "@opencode-ai/sdk/v2"
+import { EventSessionError } from "@modtools-ai/sdk/v2"
 import { Persist, persisted } from "@/utils/persist"
 import { playSoundById } from "@/utils/sound"
 import { useGlobal } from "./global"
@@ -176,7 +176,14 @@ export const { use: useNotification, provider: NotificationProvider } = createSi
 
     onCleanup(() => states.forEach((value) => value.dispose()))
 
-    const selected = () => ensure(activeServer())
+    const selected = () => {
+      const list = global.servers.list()
+      const key = activeServer()
+      if (list.some((conn) => ServerConnection.key(conn) === key)) return ensure(key)
+      const conn = list.find((conn) => ServerConnection.key(conn) === server.key) ?? list[0]
+      if (!conn) throw new Error("Notification server not found")
+      return ensure(ServerConnection.key(conn))
+    }
 
     return {
       ready: () => selected().ready(),

@@ -1644,7 +1644,7 @@ export type GlobalEvent = {
 export type LogLevel = "DEBUG" | "INFO" | "WARN" | "ERROR"
 
 /**
- * Server configuration for opencode serve and web commands
+ * Server configuration for mod serve and web commands
  */
 export type ServerConfig = {
   port?: number
@@ -1928,6 +1928,7 @@ export type Config = {
   model?: string
   small_model?: string
   default_agent?: string
+  subagent_depth?: number
   username?: string
   mode?: {
     build?: AgentConfig

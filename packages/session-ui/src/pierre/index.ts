@@ -15,6 +15,10 @@ export type DiffProps<T = {}> = FileDiffOptions<T> & {
 }
 
 const unsafeCSS = `
+:host {
+  --diffs-bg: var(--mod-diffs-bg, var(--color-background-stronger));
+}
+
 [data-diff],
 [data-file] {
   /* Pierre 1.2 mixes these override targets at 12% in light mode and 20% in dark mode. */
@@ -53,11 +57,11 @@ const unsafeCSS = `
   background-color: var(--diffs-bg-selection-text);
 }
 
-::highlight(opencode-find) {
+::highlight(mod-find) {
   background-color: rgb(from var(--surface-warning-base) r g b / 0.35);
 }
 
-::highlight(opencode-find-current) {
+::highlight(mod-find-current) {
   background-color: rgb(from var(--surface-warning-strong) r g b / 0.55);
 }
 
@@ -129,7 +133,7 @@ const unsafeCSS = `
     height: 24px;
   }
   [data-column-number] {
-    background-color: var(--background-stronger);
+    background-color: var(--diffs-bg);
     cursor: default !important;
   }
 
@@ -152,7 +156,7 @@ ${lineCommentStyles}
 
 export function createDefaultOptions<T>(style: FileDiffOptions<T>["diffStyle"]) {
   return {
-    theme: "OpenCode",
+    theme: "MOD",
     themeType: "system",
     disableLineNumbers: false,
     overflow: "wrap",

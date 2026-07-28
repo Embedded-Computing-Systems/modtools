@@ -75,7 +75,7 @@ test.describe("session timeline projection", () => {
           id: "prt_comment",
           synthetic: true,
           metadata: {
-            opencodeComment: {
+            modComment: {
               path: "src/a.ts",
               selection: { startLine: 4, startChar: 0, endLine: 8, endChar: 0 },
               comment: "Keep this stable",
@@ -135,7 +135,7 @@ test.describe("session timeline projection", () => {
           id: "prt_comment_only",
           synthetic: true,
           metadata: {
-            opencodeComment: {
+            modComment: {
               path: "src/a.ts",
               selection: { startLine: 4, startChar: 0, endLine: 8, endChar: 0 },
               comment: "Keep this stable",
@@ -152,7 +152,10 @@ test.describe("session timeline projection", () => {
       parentID: "msg_2000_diff_next_user",
       created: 1700000011000,
     })
-    await setupTimeline(page, { messages: [user, assistantMessage(), nextUser, nextAssistant] })
+    await setupTimeline(page, {
+      messages: [user, assistantMessage(), nextUser, nextAssistant],
+      settings: { newLayoutDesigns: false },
+    })
     const scroller = page.locator(".scroll-view__viewport", { has: page.locator("[data-timeline-row]") })
     await scroller.evaluate((element) => (element.scrollTop = 0))
 

@@ -1,5 +1,5 @@
-import { getFilename } from "@opencode-ai/core/util/path"
-import { type AgentPartInput, type FilePartInput, type Part, type TextPartInput } from "@opencode-ai/sdk/v2/client"
+import { getFilename } from "@modtools-ai/core/util/path"
+import { type AgentPartInput, type FilePartInput, type Part, type TextPartInput } from "@modtools-ai/sdk/v2/client"
 import type { FileSelection } from "@/context/file"
 import { encodeFilePath } from "@/context/file/path"
 import type { AgentPart, FileAttachmentPart, ImageAttachmentPart, Prompt } from "@/context/prompt"
@@ -89,13 +89,15 @@ const toOptimisticPart = (part: PromptRequestPart, sessionID: string, messageID:
 }
 
 export function buildRequestParts(input: BuildRequestPartsInput) {
-  const requestParts: PromptRequestPart[] = [
-    {
-      id: Identifier.ascending("part"),
-      type: "text",
-      text: input.text,
-    },
-  ]
+  const requestParts: PromptRequestPart[] = input.text.trim()
+    ? [
+        {
+          id: Identifier.ascending("part"),
+          type: "text",
+          text: input.text,
+        },
+      ]
+    : []
 
   const files = input.prompt.filter(isFileAttachment).map((attachment) => {
     const path = absolute(input.sessionDirectory, attachment.path)

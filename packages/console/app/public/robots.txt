@@ -4,3 +4,6 @@ Allow: /
 # Disallow shared content pages
 Disallow: /s/
 Disallow: /share/
+
+Sitemap: https://modtools.ai/sitemap.xml
+Sitemap: https://modtools.ai/data/sitemap.xml

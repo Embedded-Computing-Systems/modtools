@@ -58,7 +58,8 @@ export const dict: Record<string, string> = {
   "ui.sessionTurn.steps.hide": "Hide steps",
   "ui.sessionTurn.summary.response": "Response",
   "ui.sessionTurn.diff.showMore": "Show more changes ({{count}})",
-  "ui.sessionTurn.diffs.changed": "Changed",
+  "ui.sessionTurn.diffs.changed.one": "{{count}} Changed file",
+  "ui.sessionTurn.diffs.changed.other": "{{count}} Changed files",
   "ui.sessionTurn.diffs.showAll": "Show all",
   "ui.sessionTurn.diffs.showLess": "Show less",
   "ui.sessionTurn.diffs.more": "+{{count}} more files",
@@ -73,7 +74,7 @@ export const dict: Record<string, string> = {
 
   "dialog.usageExceeded.freeTier.title": "Free limit reached",
   "dialog.usageExceeded.freeTier.description":
-    "Subscribe to OpenCode Go for reliable access to the best open-source models, starting at $5/month.",
+    "Subscribe to MOD Go for reliable access to the best open-source models, starting at $5/month.",
   "dialog.usageExceeded.freeTier.actionLabel": "Subscribe",
   "dialog.usageExceeded.accountRateLimit.title": "Go limit reached",
   "dialog.usageExceeded.accountRateLimit.description":
@@ -161,6 +162,7 @@ export const dict: Record<string, string> = {
   "ui.common.close": "Close",
   "ui.common.next": "Next",
   "ui.common.submit": "Submit",
+  "ui.common.showMore": "Show more",
 
   "ui.permission.deny": "Deny",
   "ui.permission.allowAlways": "Allow always",

@@ -13,8 +13,8 @@ import {
   ServerConnection,
   useCommand,
   useWslServers,
-} from "@opencode-ai/app"
-import type { UpdaterState } from "@opencode-ai/app/updater"
+} from "@modtools-ai/app"
+import type { UpdaterState } from "@modtools-ai/app/updater"
 import * as Sentry from "@sentry/solid"
 import type { AsyncStorage } from "@solid-primitives/storage"
 import { createMemoryHistory, MemoryRouter, type BaseRouterProps } from "@solidjs/router"
@@ -23,11 +23,13 @@ import { render } from "solid-js/web"
 import pkg from "../../package.json"
 import { initI18n, t } from "./i18n"
 import { initializationData, initializationReady } from "./initialization"
+import { DesktopFirstLaunchOnboarding } from "./onboarding"
 import { resetZoom, setPinchZoomEnabled, webviewZoom, zoomIn, zoomOut } from "./webview-zoom"
+import { windowFullscreen } from "./window-fullscreen"
 import { availableStartupServer, readyWslConnections } from "./wsl/connections"
 import "./styles.css"
-import { Splash } from "@opencode-ai/ui/logo"
-import { useTheme } from "@opencode-ai/ui/theme/context"
+import { Splash } from "@modtools-ai/ui/logo"
+import { useTheme } from "@modtools-ai/ui/theme/context"
 
 const root = document.getElementById("root")
 if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
@@ -49,7 +51,7 @@ if (import.meta.env.VITE_SENTRY_DSN) {
         (i) =>
           i.name !== "Breadcrumbs" &&
           !(
-            import.meta.env.OPENCODE_CHANNEL === "prod" &&
+            import.meta.env.MODTOOLS_CHANNEL === "prod" &&
             (i.name === "GlobalHandlers" || i.name === "BrowserApiErrors")
           ),
       )
@@ -62,7 +64,7 @@ void initI18n()
 const [updaterState, setUpdaterState] = createSignal<UpdaterState>({ status: "disabled" })
 void window.api.updater.subscribe(setUpdaterState)
 
-const deepLinkEvent = "opencode:deep-link"
+const deepLinkEvent = "mod:deep-link"
 
 type DesktopWindowState = {
   id?: string
@@ -70,9 +72,9 @@ type DesktopWindowState = {
 
 const emitDeepLinks = (urls: string[]) => {
   if (urls.length === 0) return
-  window.__OPENCODE__ ??= {}
-  const pending = window.__OPENCODE__.deepLinks ?? []
-  window.__OPENCODE__.deepLinks = [...pending, ...urls]
+  window.__MODTOOLS__ ??= {}
+  const pending = window.__MODTOOLS__.deepLinks ?? []
+  window.__MODTOOLS__.deepLinks = [...pending, ...urls]
   window.dispatchEvent(new CustomEvent(deepLinkEvent, { detail: { urls } }))
 }
 
@@ -82,7 +84,7 @@ const listenForDeepLinks = () => {
 }
 
 function windowLastActiveUrlKey(windowID: string) {
-  return `opencode.desktop.window.${windowID}.last-active-url`
+  return `mod.desktop.window.${windowID}.last-active-url`
 }
 
 function getLastActiveUrl(windowID: string) {
@@ -217,6 +219,9 @@ const createPlatform = (windowState: DesktopWindowState): Platform => {
       }
       return window.api.openPath(path, app)
     },
+    async revealPath(path: string) {
+      return window.api.revealPath(path)
+    },
 
     back() {
       window.history.back()
@@ -236,6 +241,8 @@ const createPlatform = (windowState: DesktopWindowState): Platform => {
 
     exportDebugLogs: () => window.api.exportDebugLogs(),
 
+    setForceFocus: (enabled) => window.api.setForceFocus(enabled),
+
     recordFatalRendererError: (error) => window.api.recordFatalRendererError(error),
 
     restart: async () => {
@@ -249,7 +256,7 @@ const createPlatform = (windowState: DesktopWindowState): Platform => {
 
       const notification = new Notification(title, {
         body: description ?? "",
-        icon: "https://opencode.ai/favicon-96x96-v3.png",
+        icon: "https://modtools.ai/favicon-96x96-v3.png",
       })
       notification.onclick = () => {
         void window.api.showWindow()
@@ -287,6 +294,8 @@ const createPlatform = (windowState: DesktopWindowState): Platform => {
     parseMarkdown: (markdown: string) => window.api.parseMarkdownCommand(markdown),
 
     webviewZoom,
+
+    windowFullscreen,
 
     getPinchZoomEnabled: () => window.api.getPinchZoomEnabled(),
 
@@ -326,7 +335,7 @@ function LoadingSplash() {
 function DesktopRoot(props: { windowState: DesktopWindowState }) {
   const platform = createPlatform(props.windowState)
   const loadLocale = async () => {
-    const current = await platform.storage?.("opencode.global.dat").getItem("language")
+    const current = await platform.storage?.("mod.global.dat").getItem("language")
     const legacy = current ? undefined : await platform.storage?.().getItem("language.v1")
     const raw = current ?? legacy
     if (!raw) return
@@ -347,6 +356,7 @@ function DesktopRoot(props: { windowState: DesktopWindowState }) {
   const router = (props: BaseRouterProps) => (
     <DesktopMemoryRouter {...props} windowID={platform.windowID ?? "browser"} />
   )
+  const onboarding = Promise.withResolvers<void>()
 
   function handleClick(e: MouseEvent) {
     const link = (e.target as HTMLElement).closest("a.external-link") as HTMLAnchorElement | null
@@ -377,7 +387,8 @@ function DesktopRoot(props: { windowState: DesktopWindowState }) {
   function App() {
     const wslServers = useWslServers()
     const ready = createMemo(
-      () => !defaultServer.loading && !sidecar.loading && !windowCount.loading && !locale.loading,
+      () =>
+        !defaultServer.loading && !sidecar.loading && !windowCount.loading && !locale.loading && !wslServers.isLoading,
     )
     const servers = createMemo(() => {
       const data = initializationData(sidecar)
@@ -400,12 +411,22 @@ function DesktopRoot(props: { windowState: DesktopWindowState }) {
     const effectiveDefaultServer = createMemo(() =>
       ServerConnection.Key.make(availableStartupServer(defaultServer.latest, wslServers.data)),
     )
-
     return (
       <Show when={ready()} fallback={<LoadingSplash />}>
         <Show when={effectiveDefaultServer()} keyed>
           {(key) => (
-            <AppInterface defaultServer={key} servers={servers()} router={router}>
+            <AppInterface
+              defaultServer={key}
+              servers={servers()}
+              router={router}
+              startup={onboarding.promise}
+              serverScoped={
+                <DesktopFirstLaunchOnboarding
+                  initialUrl={getLastActiveUrl(platform.windowID ?? "browser")}
+                  onLoaded={onboarding.resolve}
+                />
+              }
+            >
               <Inner />
             </AppInterface>
           )}

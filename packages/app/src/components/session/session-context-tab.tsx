@@ -1,21 +1,21 @@
 import { createMemo, createEffect, on, onCleanup, For, Show } from "solid-js"
 import type { JSX } from "solid-js"
 import { useSync } from "@/context/sync"
-import { checksum } from "@opencode-ai/core/util/encode"
-import { findLast } from "@opencode-ai/core/util/array"
+import { checksum } from "@modtools-ai/core/util/encode"
+import { findLast } from "@modtools-ai/core/util/array"
 import { same } from "@/utils/same"
-import { Icon } from "@opencode-ai/ui/icon"
-import { Accordion } from "@opencode-ai/ui/accordion"
-import { StickyAccordionHeader } from "@opencode-ai/ui/sticky-accordion-header"
-import { File } from "@opencode-ai/session-ui/file"
-import { Markdown } from "@opencode-ai/session-ui/markdown"
-import { ScrollView } from "@opencode-ai/ui/scroll-view"
-import type { Message, Part, UserMessage } from "@opencode-ai/sdk/v2/client"
+import { Icon } from "@modtools-ai/ui/icon"
+import { Accordion } from "@modtools-ai/ui/accordion"
+import { StickyAccordionHeader } from "@modtools-ai/ui/sticky-accordion-header"
+import { File } from "@modtools-ai/session-ui/file"
+import { Markdown } from "@modtools-ai/session-ui/markdown"
+import { ScrollView } from "@modtools-ai/ui/scroll-view"
+import type { Message, Part, UserMessage } from "@modtools-ai/sdk/v2/client"
 import { useLanguage } from "@/context/language"
 import { useProviders } from "@/hooks/use-providers"
 import { useSDK } from "@/context/sdk"
 import { useSessionLayout } from "@/pages/session/session-layout"
-import { getSessionContext, getSessionTokenTotal } from "./session-context-metrics"
+import { getSessionContext } from "./session-context-metrics"
 import { estimateSessionContextBreakdown, type SessionContextBreakdownKey } from "./session-context-breakdown"
 import { createSessionContextFormatter } from "./session-context-format"
 
@@ -135,7 +135,6 @@ export function SessionContextTab() {
   )
 
   const ctx = createMemo(() => getSessionContext(messages(), [...providers.all().values()]))
-  const tokens = createMemo(() => info()?.tokens)
   const formatter = createMemo(() => createSessionContextFormatter(language.intl()))
 
   const cost = createMemo(() => {
@@ -204,14 +203,15 @@ export function SessionContextTab() {
     { label: "context.stats.provider", value: providerLabel },
     { label: "context.stats.model", value: modelLabel },
     { label: "context.stats.limit", value: () => formatter().number(ctx()?.limit) },
-    { label: "context.stats.totalTokens", value: () => formatter().number(getSessionTokenTotal(tokens())) },
+    { label: "context.stats.totalTokens", value: () => formatter().number(ctx()?.total) },
     { label: "context.stats.usage", value: () => formatter().percent(ctx()?.usage) },
-    { label: "context.stats.inputTokens", value: () => formatter().number(tokens()?.input) },
-    { label: "context.stats.outputTokens", value: () => formatter().number(tokens()?.output) },
-    { label: "context.stats.reasoningTokens", value: () => formatter().number(tokens()?.reasoning) },
+    { label: "context.stats.inputTokens", value: () => formatter().number(ctx()?.input) },
+    { label: "context.stats.outputTokens", value: () => formatter().number(ctx()?.message.tokens.output) },
+    { label: "context.stats.reasoningTokens", value: () => formatter().number(ctx()?.message.tokens.reasoning) },
     {
       label: "context.stats.cacheTokens",
-      value: () => `${formatter().number(tokens()?.cache.read)} / ${formatter().number(tokens()?.cache.write)}`,
+      value: () =>
+        `${formatter().number(ctx()?.message.tokens.cache.read)} / ${formatter().number(ctx()?.message.tokens.cache.write)}`,
     },
     { label: "context.stats.userMessages", value: () => counts().user.toLocaleString(language.intl()) },
     { label: "context.stats.assistantMessages", value: () => counts().assistant.toLocaleString(language.intl()) },

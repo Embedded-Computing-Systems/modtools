@@ -2,11 +2,11 @@ import type { JSX } from "solid-js"
 import { Show, createEffect, onCleanup } from "solid-js"
 import { createStore } from "solid-js/store"
 import { useSortable } from "@dnd-kit/solid/sortable"
-import { IconButton } from "@opencode-ai/ui/icon-button"
-import { Tabs } from "@opencode-ai/ui/tabs"
-import { DropdownMenu } from "@opencode-ai/ui/dropdown-menu"
-import { Icon } from "@opencode-ai/ui/icon"
-import { MenuV2 } from "@opencode-ai/ui/v2/menu-v2"
+import { IconButton } from "@modtools-ai/ui/icon-button"
+import { Tabs } from "@modtools-ai/ui/tabs"
+import { DropdownMenu } from "@modtools-ai/ui/dropdown-menu"
+import { Icon } from "@modtools-ai/ui/icon"
+import { MenuV2 } from "@modtools-ai/ui/v2/menu-v2"
 import { isDefaultTitle as isDefaultTerminalTitle } from "@/context/terminal-title"
 import { useTerminal, type LocalPTY } from "@/context/terminal"
 import { useLanguage } from "@/context/language"
@@ -65,9 +65,12 @@ export function SortableTerminalTabV2(props: {
 
   const focus = () => {
     if (store.editing) return
+    terminal.requestFocus(props.terminal.id)
     terminal.open(props.terminal.id)
     if (document.activeElement instanceof HTMLElement) document.activeElement.blur()
     focusTerminalById(props.terminal.id)
+    const input = document.getElementById(`terminal-wrapper-${props.terminal.id}`)?.querySelector("textarea")
+    if (input === document.activeElement) terminal.consumeFocus(props.terminal.id)
   }
 
   const edit = (e?: Event) => {
@@ -211,7 +214,17 @@ export function SortableTerminalTabV2(props: {
           <MenuV2.Context.Trigger class="relative" as="div">
             <Tabs.Trigger
               value={props.terminal.id}
-              onClick={focus}
+              onMouseDown={(e) => {
+                // Switch on mousedown to shave the press-release delay off tab switches.
+                if (e.button !== 0) return
+                if (store.editing) return
+                focus()
+              }}
+              onClick={(e) => {
+                // Mouse navigation already happened on mousedown; detail 0 means keyboard activation.
+                if (e.detail > 0) return
+                focus()
+              }}
               closeButton={
                 <IconButton
                   icon="close-small"

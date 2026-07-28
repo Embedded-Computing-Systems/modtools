@@ -1,5 +1,6 @@
-import type { Message, Session, Part, SnapshotFileDiff, SessionStatus, Provider } from "@opencode-ai/sdk/v2"
-import { createSimpleContext } from "@opencode-ai/ui/context"
+import type { Message, Session, Part, SnapshotFileDiff, SessionStatus, Provider } from "@modtools-ai/sdk/v2"
+import type { FileDiffInfo } from "@opencode-ai/client/promise"
+import { createSimpleContext } from "@modtools-ai/ui/context"
 import { PreloadMultiFileDiffResult } from "@pierre/diffs/ssr"
 
 export type NormalizedProviderListResponse = {
@@ -21,7 +22,7 @@ type Data = {
     [sessionID: string]: SessionStatus
   }
   session_diff: {
-    [sessionID: string]: SnapshotFileDiff[]
+    [sessionID: string]: (SnapshotFileDiff | FileDiffInfo)[]
   }
   session_diff_preload?: {
     [sessionID: string]: PreloadMultiFileDiffResult<any>[]

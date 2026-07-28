@@ -2,7 +2,7 @@ import { type Accessor, createMemo, createResource } from "solid-js"
 import { createStore } from "solid-js/store"
 import { DateTime } from "luxon"
 import { filter, firstBy, flat, groupBy, mapValues, pipe, uniqueBy, values } from "remeda"
-import { createSimpleContext } from "@opencode-ai/ui/context"
+import { createSimpleContext } from "@modtools-ai/ui/context"
 import { useProviders } from "@/hooks/use-providers"
 import { Persist, persisted } from "@/utils/persist"
 
@@ -26,7 +26,7 @@ export const { use: useModels, provider: ModelsProvider } = createSimpleContext(
   name: "Models",
   gate: false,
   init: (props: { directory?: Accessor<string | undefined> } = {}) => {
-    const providers = useProviders(props.directory)
+    const providers = useProviders(() => props.directory?.())
 
     const [store, setStore, _, ready] = persisted(
       Persist.global("model", ["model.v1"]),

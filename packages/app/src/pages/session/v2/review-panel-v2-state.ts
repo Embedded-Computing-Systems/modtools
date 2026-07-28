@@ -3,13 +3,13 @@ import {
   SESSION_REVIEW_V2_SIDEBAR_WIDTH_MAX,
   SESSION_REVIEW_V2_SIDEBAR_WIDTH_MIN,
   type SessionReviewExpandMode,
-} from "@opencode-ai/session-ui/v2/session-review-v2"
+} from "@modtools-ai/session-ui/v2/session-review-v2"
 import { createSignal } from "solid-js"
 import { createStore } from "solid-js/store"
 import { Persist, persisted } from "@/utils/persist"
 
 export function createReviewPanelV2State() {
-  const [store, setStore] = persisted(
+  const [store, setStore, , ready] = persisted(
     Persist.global("review-panel-v2"),
     createStore({
       sidebarOpened: true,
@@ -24,6 +24,7 @@ export function createReviewPanelV2State() {
   return {
     sidebarOpened: () => store.sidebarOpened,
     sidebarWidth: () => store.sidebarWidth,
+    sidebarTransition: ready,
     filter,
     setFilter,
     expandMode: () => store.expandMode,

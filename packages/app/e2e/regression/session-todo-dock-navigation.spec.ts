@@ -1,6 +1,6 @@
-import { base64Encode } from "@opencode-ai/core/util/encode"
+import { base64Encode } from "@modtools-ai/core/util/encode"
 import { expect, test, type Page } from "@playwright/test"
-import { mockOpenCodeServer } from "../utils/mock-server"
+import { mockModServer } from "../utils/mock-server"
 import { expectSessionTitle } from "../utils/waits"
 
 const directory = "C:/OpenCode/TodoDockNavigation"
@@ -27,8 +27,9 @@ test("animates todo lifecycle without replaying it across session tabs", async (
   test.setTimeout(90_000)
   const events: EventPayload[] = []
   const todos: Record<string, typeof activeTodos> = { [sourceID]: [], [otherID]: [] }
+  const sessionStatus: Record<string, { type: "busy" | "idle" }> = {}
 
-  await mockOpenCodeServer(page, {
+  await mockModServer(page, {
     directory,
     project: {
       id: projectID,
@@ -41,8 +42,8 @@ test("animates todo lifecycle without replaying it across session tabs", async (
     provider: {
       all: [
         {
-          id: "opencode",
-          name: "OpenCode",
+          id: "mod",
+          name: "MOD",
           models: {
             "claude-opus-4-6": {
               id: "claude-opus-4-6",
@@ -52,13 +53,15 @@ test("animates todo lifecycle without replaying it across session tabs", async (
           },
         },
       ],
-      connected: ["opencode"],
-      default: { providerID: "opencode", modelID: "claude-opus-4-6" },
+      connected: ["mod"],
+      default: { providerID: "mod", modelID: "claude-opus-4-6" },
     },
     sessions: [session(sourceID, sourceTitle, 1700000000000), session(otherID, otherTitle, 1700000001000)],
+    sessionStatus: { [sourceID]: { type: "busy" } },
     pageMessages: () => ({ items: [] }),
     events: () => events.splice(0, 1),
     eventRetry: 16,
+    sessionStatus: () => sessionStatus,
     todos: (sessionID) => todos[sessionID] ?? [],
   })
   await configurePage(page)
@@ -68,6 +71,7 @@ test("animates todo lifecycle without replaying it across session tabs", async (
   const dock = page.locator('[data-component="session-todo-dock"]')
   await expect(dock).toHaveCount(0)
 
+  sessionStatus[sourceID] = { type: "busy" }
   events.push(statusEvent(sourceID, "busy"))
   await expect(page.getByRole("button", { name: "Stop" })).toBeVisible()
 
@@ -138,14 +142,14 @@ async function configurePage(page: Page) {
     ({ directory, dirBase64, server, sessionIDs }) => {
       localStorage.setItem("settings.v3", JSON.stringify({ general: { newLayoutDesigns: true } }))
       localStorage.setItem(
-        "opencode.global.dat:server",
+        "mod.global.dat:server",
         JSON.stringify({
           projects: { local: [{ worktree: directory, expanded: true }] },
           lastProject: { local: directory },
         }),
       )
       localStorage.setItem(
-        "opencode.window.browser.dat:tabs",
+        "mod.window.browser.dat:tabs",
         JSON.stringify(sessionIDs.map((sessionId) => ({ type: "session", server, dirBase64, sessionId }))),
       )
     },

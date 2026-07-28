@@ -1,5 +1,5 @@
 import type { APIEvent } from "@solidjs/start/server"
-import { Resource } from "@opencode-ai/console-resource"
+import { Resource } from "@modtools-ai/console-resource"
 import { LOCALE_HEADER, cookie, localeFromRequest, route, tag } from "~/lib/language"
 
 const dataPath = "/data"
@@ -12,13 +12,14 @@ export async function statsProxy(evt: APIEvent) {
 
   const targetUrl = new URL(req.url)
   targetUrl.protocol = "https:"
-  targetUrl.hostname = Resource.App.stage === "production" ? "stats.opencode.ai" : "stats.dev.opencode.ai"
+  targetUrl.hostname = Resource.App.stage === "production" ? "stats.mod.ai" : "stats.dev.mod.ai"
   targetUrl.port = ""
 
   if (
     targetUrl.pathname.startsWith(`${dataPath}/_build/`) ||
     targetUrl.pathname === `${dataPath}/banner.jpg` ||
-    targetUrl.pathname === `${dataPath}/banner.png`
+    targetUrl.pathname === `${dataPath}/banner.png` ||
+    targetUrl.pathname === `${dataPath}/sitemap.xml`
   ) {
     targetUrl.pathname = targetUrl.pathname.slice(dataPath.length)
   }
@@ -97,7 +98,8 @@ function isDataBypassPath(pathname: string) {
     pathname.startsWith(`${dataPath}/api/`) ||
     pathname.startsWith(`${dataPath}/_server`) ||
     pathname === `${dataPath}/banner.jpg` ||
-    pathname === `${dataPath}/banner.png`
+    pathname === `${dataPath}/banner.png` ||
+    pathname === `${dataPath}/sitemap.xml`
   )
 }
 

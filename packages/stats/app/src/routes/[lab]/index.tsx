@@ -1,6 +1,5 @@
-import "../index.css"
 import { Meta, Title } from "@solidjs/meta"
-import { ProviderIcon } from "@opencode-ai/ui/provider-icon"
+import { ProviderIcon } from "@modtools-ai/ui/provider-icon"
 import {
   getStatsLabData,
   getStatsHomeData,
@@ -9,7 +8,7 @@ import {
   type ModelUsagePoint,
   type StatsHomeData,
   type StatsLabData,
-} from "@opencode-ai/stats-core/domain/home"
+} from "@modtools-ai/stats-core/domain/home"
 import { createAsync, query, useParams } from "@solidjs/router"
 import { createMemo, createSignal, createUniqueId, For, onMount, Show, type JSX } from "solid-js"
 import { getRequestEvent } from "solid-js/web"
@@ -28,6 +27,8 @@ import {
 import { SectionHeading } from "../section-heading"
 import { runStatsEffect } from "../../stats-runtime"
 import { setStatsPageCacheHeaders } from "../stats-cache"
+import { ComparisonCardsSection, modelRefFromCatalog, uniqueComparisonPairs } from "../compare-cards"
+import { BreadcrumbSelect } from "../breadcrumb-select"
 import {
   applyThemePreference,
   Footer,
@@ -119,7 +120,7 @@ export default function StatsLab() {
       <Meta name="description" content={labDescription()} />
       <LocaleLinks path={labPath()} />
       <Meta property="og:type" content="website" />
-      <Meta property="og:site_name" content="OpenCode" />
+      <Meta property="og:site_name" content="MOD" />
       <Meta property="og:title" content={labTitle()} />
       <Meta property="og:description" content={labDescription()} />
       <Meta property="og:url" content={labUrl()} />
@@ -149,6 +150,12 @@ export default function StatsLab() {
                     labs={catalog()?.labs ?? []}
                     market={homeStats()?.market["2M"] ?? []}
                   />
+                  <ComparisonCardsSection
+                    pairs={labComparisonPairs(data(), stats()?.models ?? [])}
+                    title={`${data().name} Model Comparisons`}
+                    description="Model pairs from this lab."
+                    variant="featured"
+                  />
                 </>
               )}
             </Show>
@@ -158,6 +165,7 @@ export default function StatsLab() {
           themePreference={themePreference()}
           onThemePreferenceChange={updateThemePreference}
           links={labFooterLinks()}
+          bridge={{ href: "#model-comparison", label: "MODEL COMPARISONS" }}
         />
       </div>
     </main>
@@ -198,6 +206,7 @@ function LabHero(props: { lab: ModelCatalogLab; labs: ModelCatalogLab[] }) {
 function LabHeroBreadcrumb(props: { label: string; labs?: ModelCatalogLab[] }) {
   const language = useLanguage()
   const labs = () => props.labs ?? []
+  const current = () => labs().find((lab) => lab.name === props.label)
   return (
     <nav data-component="lab-hero-breadcrumb" aria-label="Data breadcrumb">
       <a data-slot="lab-hero-crumb" href={language.route(import.meta.env.BASE_URL)}>
@@ -210,32 +219,23 @@ function LabHeroBreadcrumb(props: { label: string; labs?: ModelCatalogLab[] }) {
           <span data-slot="lab-hero-crumb" data-current="true" aria-current="page">
             <span>{props.label}</span>
             <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-              <path d="M4.75 6.25L8 9.5L11.25 6.25" fill="none" stroke="currentColor" stroke-width="1.5" />
+              <path d="M5 6.5L8 9.5L11 6.5" fill="none" stroke="currentColor" />
             </svg>
           </span>
         }
       >
-        <details data-component="lab-hero-menu">
-          <summary data-slot="lab-hero-crumb" data-current="true" aria-current="page">
-            <span>{props.label}</span>
-            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-              <path d="M4.75 6.25L8 9.5L11.25 6.25" fill="none" stroke="currentColor" stroke-width="1.5" />
-            </svg>
-          </summary>
-          <div data-slot="lab-hero-options">
-            <For each={labs()}>
-              {(lab) => (
-                <a
-                  data-slot="lab-hero-option"
-                  data-current={lab.name === props.label ? "true" : undefined}
-                  href={language.route(`${import.meta.env.BASE_URL}${lab.id}`)}
-                >
-                  {lab.name}
-                </a>
-              )}
-            </For>
-          </div>
-        </details>
+        <BreadcrumbSelect
+          ariaLabel="Choose a lab"
+          current
+          label={props.label}
+          options={labs().map((lab) => ({
+            href: language.route(`${import.meta.env.BASE_URL}${lab.id}`),
+            label: lab.name,
+            value: lab.id,
+          }))}
+          value={current()?.id ?? ""}
+          variant="lab"
+        />
       </Show>
     </nav>
   )
@@ -643,7 +643,7 @@ function LabModelTooltip(props: { state: LabModelTooltipState }) {
           </span>
           <strong>{props.state.model.name}</strong>
         </div>
-        <p>{props.state.model.description ?? "Recent OpenCode Go usage, share, context, and output limits."}</p>
+        <p>{props.state.model.description ?? "Recent MOD Go usage, share, context, and output limits."}</p>
       </div>
       <div data-slot="tooltip-divider" />
       <div data-slot="lab-model-tooltip-metrics">
@@ -729,6 +729,31 @@ function LabEmptyState(props: { title: string; description: string }) {
       <strong>{props.title}</strong>
       <p>{props.description}</p>
     </div>
+  )
+}
+
+function labComparisonPairs(lab: ModelCatalogLab, usage: LabUsageModelEntry[]) {
+  const usageRefs = usage.slice(0, 4).map((model) => ({
+    name: model.model,
+    lab: model.provider,
+    slug: model.slug,
+    labName: model.author,
+    metric: formatTokens(model.tokens),
+  }))
+  const refs = usageRefs.length > 1 ? usageRefs : lab.models.slice(0, 4).map(modelRefFromCatalog)
+  return uniqueComparisonPairs(
+    (
+      [
+        [0, 1, "Most-used lab pair"],
+        [0, 2, "Lab alternative"],
+        [1, 2, "Adjacent lab pair"],
+        [2, 3, "Same lab pair"],
+      ] as const
+    ).flatMap(([firstIndex, secondIndex, detail]) => {
+      const first = refs[firstIndex]
+      const second = refs[secondIndex]
+      return first && second ? [{ first, second, detail }] : []
+    }),
   )
 }
 

@@ -1,11 +1,11 @@
 import { Component, Show, createMemo, createResource, onMount } from "solid-js"
 import { createMediaQuery } from "@solid-primitives/media"
-import { ButtonV2 } from "@opencode-ai/ui/v2/button-v2"
-import { SelectV2 } from "@opencode-ai/ui/v2/select-v2"
-import { Switch } from "@opencode-ai/ui/v2/switch-v2"
-import { TextInputV2 } from "@opencode-ai/ui/v2/text-input-v2"
-import { useTheme, type ColorScheme } from "@opencode-ai/ui/theme/context"
-import { useDialog } from "@opencode-ai/ui/context/dialog"
+import { ButtonV2 } from "@modtools-ai/ui/v2/button-v2"
+import { SelectV2 } from "@modtools-ai/ui/v2/select-v2"
+import { Switch } from "@modtools-ai/ui/v2/switch-v2"
+import { TextInputV2 } from "@modtools-ai/ui/v2/text-input-v2"
+import { useTheme, type ColorScheme } from "@modtools-ai/ui/theme/context"
+import { useDialog } from "@modtools-ai/ui/context/dialog"
 import { useLanguage } from "@/context/language"
 import { usePermission } from "@/context/permission"
 import { usePlatform } from "@/context/platform"
@@ -28,6 +28,7 @@ import { playSoundById, SOUND_OPTIONS } from "@/utils/sound"
 import { Link } from "../link"
 import { SettingsListV2 } from "./parts/list"
 import { SettingsRowV2 } from "./parts/row"
+import { LayoutRetirementNotice, LayoutTransitionToggle } from "./interface-transition"
 import "./settings-v2.css"
 
 let demoSoundState = {
@@ -121,11 +122,14 @@ export const SettingsGeneralV2: Component<{
   const themeOptions = createMemo<ThemeOption[]>(() => theme.ids().map((id) => ({ id, name: theme.name(id) })))
 
   const [shells] = createResource(
-    () =>
-      serverSdk()
-        .client.pty.shells()
-        .then((res) => res.data ?? [])
-        .catch(() => [] as ShellOption[]),
+    async () => {
+      const sdk = serverSdk()
+      if ((await sdk.protocol) === "v1") {
+        return (await sdk.client.pty.shells()).data ?? []
+      }
+      // return (await sdk.api.pty.shells()).data
+      return [] as ShellOption[]
+    },
     { initialValue: [] as ShellOption[] },
   )
 
@@ -226,6 +230,31 @@ export const SettingsGeneralV2: Component<{
     },
   })
 
+  const InterfaceSection = () => (
+    <LayoutTransitionToggle
+      title={language.t("settings.general.row.newInterface.title")}
+      badge={language.t("settings.general.row.newInterface.badge")}
+      description={language.t("settings.general.row.newInterface.description")}
+      checked={settings.general.newLayoutDesigns()}
+      onChange={(checked) => {
+        settings.general.setNewLayoutDesigns(checked)
+        if (checked) return
+        void import("@/components/dialog-settings").then((module) => {
+          void dialog.show(() => <module.DialogSettings />)
+        })
+      }}
+    />
+  )
+
+  const InterfaceNoticeSection = () => (
+    <LayoutRetirementNotice
+      title={language.t("settings.general.row.newInterfaceNotice.title")}
+      description={language.t("settings.general.row.newInterfaceNotice.description")}
+      dismiss={language.t("settings.general.row.newInterfaceNotice.dismiss")}
+      onDismiss={settings.general.dismissNewInterfaceNotice}
+    />
+  )
+
   const GeneralSection = () => (
     <div class="settings-v2-section">
       <SettingsListV2>
@@ -312,25 +341,7 @@ export const SettingsGeneralV2: Component<{
           </div>
         </SettingsRowV2>
 
-        <SettingsRowV2
-          title={language.t("settings.general.row.newLayoutDesigns.title")}
-          description={language.t("settings.general.row.newLayoutDesigns.description")}
-        >
-          <div data-action="settings-new-layout-designs">
-            <Switch
-              checked={settings.general.newLayoutDesigns()}
-              onChange={(checked) => {
-                settings.general.setNewLayoutDesigns(checked)
-                if (checked) return
-                void import("@/components/dialog-settings").then((module) => {
-                  dialog.show(() => <module.DialogSettings />)
-                })
-              }}
-            />
-          </div>
-        </SettingsRowV2>
-
-        <Show when={mobile() && import.meta.env.VITE_OPENCODE_CHANNEL !== "prod"}>
+        <Show when={mobile() && import.meta.env.VITE_MODTOOLS_CHANNEL !== "prod"}>
           <SettingsRowV2
             title={language.t("settings.general.row.mobileTitlebarBottom.title")}
             description={language.t("settings.general.row.mobileTitlebarBottom.description")}
@@ -422,11 +433,6 @@ export const SettingsGeneralV2: Component<{
             value={(o) => o.value}
             label={(o) => o.label}
             onSelect={(option) => option && theme.setColorScheme(option.value)}
-            onHighlight={(option) => {
-              if (!option) return
-              theme.previewColorScheme(option.value)
-              return () => theme.cancelPreview()
-            }}
           />
         </SettingsRowV2>
 
@@ -435,7 +441,7 @@ export const SettingsGeneralV2: Component<{
           description={
             <>
               {language.t("settings.general.row.theme.description")}{" "}
-              <Link class="settings-v2-link" href="https://opencode.ai/docs/themes/">
+              <Link class="settings-v2-link" href="https://modtools.ai/docs/themes/">
                 {language.t("common.learnMore")}
               </Link>
             </>
@@ -453,11 +459,6 @@ export const SettingsGeneralV2: Component<{
             onSelect={(option) => {
               if (!option) return
               theme.setTheme(option.id)
-            }}
-            onHighlight={(option) => {
-              if (!option) return
-              theme.previewTheme(option.id)
-              return () => theme.cancelPreview()
             }}
           />
         </SettingsRowV2>
@@ -693,6 +694,14 @@ export const SettingsGeneralV2: Component<{
       </div>
 
       <div class="settings-v2-tab-body">
+        <Show when={settings.general.layoutTransitionAvailable()}>
+          <InterfaceSection />
+        </Show>
+
+        <Show when={settings.general.newInterfaceNoticeVisible()}>
+          <InterfaceNoticeSection />
+        </Show>
+
         <GeneralSection />
 
         <AppearanceSection />

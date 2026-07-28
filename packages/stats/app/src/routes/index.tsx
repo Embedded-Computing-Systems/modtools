@@ -1,6 +1,5 @@
-import "./index.css"
 import { Link, Meta, Title } from "@solidjs/meta"
-import { ProviderIcon } from "@opencode-ai/ui/provider-icon"
+import { ProviderIcon } from "@modtools-ai/ui/provider-icon"
 import { geoEquirectangular, geoPath } from "d3-geo"
 import { scaleSqrt } from "d3-scale"
 import countryCodesSource from "i18n-iso-countries/codes.json?raw"
@@ -20,7 +19,7 @@ import {
   type SessionCostEntry,
   type TokenCostEntry,
   type UsagePoint,
-} from "@opencode-ai/stats-core/domain/home"
+} from "@modtools-ai/stats-core/domain/home"
 import { createAsync, query } from "@solidjs/router"
 import { createEffect, createMemo, createSignal, For, onCleanup, onMount, Show, type JSX } from "solid-js"
 import { getRequestEvent } from "solid-js/web"
@@ -34,6 +33,7 @@ import { localizedUrl } from "../lib/language"
 import { findModelCatalogEntry, getModelCatalog, type ModelCatalog } from "./model-catalog"
 import { SectionHeading } from "./section-heading"
 import { setStatsPageCacheHeaders } from "./stats-cache"
+import { ComparisonCardsSection, uniqueComparisonPairs, type ComparisonModelRef } from "./compare-cards"
 import {
   applyThemePreference,
   Footer,
@@ -48,6 +48,12 @@ import {
 const products = ["All Users", "Zen", "Go"] as const
 const tokenProducts = ["Zen", "Go"] as const
 const ranges = ["1D", "1W", "2W", "1M", "2M"] as const
+const comparisonPairIndexes = [
+  [0, 1, "Top two by recent usage"],
+  [0, 2, "Leader vs challenger"],
+  [1, 2, "Adjacent leaderboard pair"],
+  [2, 3, "Top model alternative"],
+] as const
 const statsUnfurlPath = "banner.jpg"
 const usageColors = [
   "#ed6aff",
@@ -151,7 +157,7 @@ export default function StatsHome() {
       <Meta name="description" content={i18n.t("app.description")} />
       <LocaleLinks path="/data/" />
       <Meta property="og:type" content="website" />
-      <Meta property="og:site_name" content="OpenCode" />
+      <Meta property="og:site_name" content="MOD" />
       <Meta property="og:title" content={i18n.t("app.title")} />
       <Meta property="og:description" content={i18n.t("app.description")} />
       <Meta property="og:url" content={statsHomeUrl} />
@@ -183,11 +189,21 @@ export default function StatsHome() {
                 <CacheRatioSection data={stats().cacheRatio} />
                 <MarketShareSection data={stats().market} />
                 <GeoBreakdownSection data={stats().country} />
+                <ComparisonCardsSection
+                  pairs={homeComparisonPairs(stats().leaderboard["All Users"]["2M"])}
+                  title="Model Comparisons"
+                  description="Popular model pairs from the leaderboard."
+                  variant="featured"
+                />
               </>
             )}
           </Show>
         </div>
-        <Footer themePreference={themePreference()} onThemePreferenceChange={updateThemePreference} />
+        <Footer
+          themePreference={themePreference()}
+          onThemePreferenceChange={updateThemePreference}
+          bridge={{ href: "#model-comparison", label: "MODEL COMPARISONS" }}
+        />
       </div>
     </main>
   )
@@ -1967,6 +1983,26 @@ function catalogModelCost(catalog: ModelCatalog, model: string) {
 
 function formatSessionCost(value: number) {
   return `$${value.toFixed(4)}`
+}
+
+function homeComparisonPairs(leaderboard: LeaderboardEntry[]) {
+  return uniqueComparisonPairs(
+    comparisonPairIndexes.flatMap(([firstIndex, secondIndex, detail]) => {
+      const first = leaderboard[firstIndex]
+      const second = leaderboard[secondIndex]
+      return first && second ? [{ first: leaderboardRef(first), second: leaderboardRef(second), detail }] : []
+    }),
+  )
+}
+
+function leaderboardRef(entry: LeaderboardEntry): ComparisonModelRef {
+  return {
+    name: entry.model,
+    lab: entry.provider,
+    slug: modelSlug(entry.model),
+    labName: entry.author,
+    metric: `#${entry.rank} / ${formatBillions(entry.tokens)}`,
+  }
 }
 
 function modelSlug(value: string) {

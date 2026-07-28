@@ -1,10 +1,10 @@
 import { batch, createEffect, createMemo, onCleanup } from "solid-js"
 import { createStore, produce, reconcile } from "solid-js/store"
-import { createSimpleContext } from "@opencode-ai/ui/context"
+import { createSimpleContext } from "@modtools-ai/ui/context"
 import { showToast } from "@/utils/toast"
 import { useParams } from "@solidjs/router"
-import { base64Encode } from "@opencode-ai/core/util/encode"
-import { getFilename } from "@opencode-ai/core/util/path"
+import { base64Encode } from "@modtools-ai/core/util/encode"
+import { getFilename } from "@modtools-ai/core/util/path"
 import { useSDK } from "./sdk"
 import { useSync } from "./sync"
 import { useLanguage } from "@/context/language"
@@ -203,12 +203,23 @@ export const { use: useFile, provider: FileProvider } = createSimpleContext({
       return promise
     }
 
-    const search = (query: string, dirs: "true" | "false") =>
-      sdk()
-        .client.find.files({ query, dirs })
+    const search = (query: string, dirs: "true" | "false", options?: { limit?: number; signal?: AbortSignal }) =>
+      serverSDK()
+        .api.file.find(
+          {
+            location: { directory: sdk().directory },
+            query,
+            type: dirs === "true" ? "directory" : "file",
+            limit: options?.limit,
+          },
+          { signal: options?.signal },
+        )
         .then(
-          (x) => (x.data ?? []).map(path.normalize),
-          () => [],
+          (x) => x.data.map((entry) => path.normalize(entry.path)),
+          (error) => {
+            if (options?.signal?.aborted) throw error
+            return []
+          },
         )
 
     const stop = sdk().event.listen((e) => {
@@ -284,7 +295,8 @@ export const { use: useFile, provider: FileProvider } = createSimpleContext({
       setScrollLeft,
       selectedLines,
       setSelectedLines,
-      searchFiles: (query: string) => search(query, "false"),
+      searchFiles: (query: string, options?: { limit?: number; signal?: AbortSignal }) =>
+        search(query, "false", options),
       searchFilesAndDirectories: (query: string) => search(query, "true"),
     }
   },

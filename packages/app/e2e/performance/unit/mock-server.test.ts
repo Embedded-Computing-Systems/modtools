@@ -12,7 +12,7 @@ test("applies message latency after a list response gate is released", async () 
       return Promise.resolve()
     },
   } as unknown as Page
-  await mockOpenCodeServer(page, {
+  await mockModServer(page, {
     provider: {},
     directory: "C:/OpenCode",
     project: {},

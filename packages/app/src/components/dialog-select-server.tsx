@@ -1,11 +1,11 @@
-import { Button } from "@opencode-ai/ui/button"
-import { useDialog } from "@opencode-ai/ui/context/dialog"
-import { Dialog } from "@opencode-ai/ui/dialog"
-import { DropdownMenu } from "@opencode-ai/ui/dropdown-menu"
-import { Icon } from "@opencode-ai/ui/icon"
-import { IconButton } from "@opencode-ai/ui/icon-button"
-import { List } from "@opencode-ai/ui/list"
-import { TextField } from "@opencode-ai/ui/text-field"
+import { Button } from "@modtools-ai/ui/button"
+import { useDialog } from "@modtools-ai/ui/context/dialog"
+import { Dialog } from "@modtools-ai/ui/dialog"
+import { DropdownMenu } from "@modtools-ai/ui/dropdown-menu"
+import { Icon } from "@modtools-ai/ui/icon"
+import { IconButton } from "@modtools-ai/ui/icon-button"
+import { List } from "@modtools-ai/ui/list"
+import { TextField } from "@modtools-ai/ui/text-field"
 import { useMutation } from "@tanstack/solid-query"
 import { showToast } from "@/utils/toast"
 import { useNavigate } from "@solidjs/router"
@@ -16,11 +16,12 @@ import { useGlobal } from "@/context/global"
 import { useLanguage } from "@/context/language"
 import { usePlatform } from "@/context/platform"
 import { normalizeServerUrl, ServerConnection, useServer } from "@/context/server"
+import { detectServerProtocol } from "@/utils/server-protocol"
 import { type ServerHealth, useCheckServerHealth } from "@/utils/server-health"
 import { useSettings } from "@/context/settings"
 import { useTabs } from "@/context/tabs"
 
-const DEFAULT_USERNAME = "opencode"
+const DEFAULT_USERNAME = "mod"
 
 interface ServerFormProps {
   value: string
@@ -263,6 +264,13 @@ export function useServerManagementController(options: { onSelect?: () => void; 
         setStore("addServer", { error: language.t("dialog.server.add.error") })
         return
       }
+      if (
+        !settings.general.newLayoutDesigns() &&
+        (await detectServerProtocol(conn.http, platform.fetch ?? globalThis.fetch)) === "v2"
+      ) {
+        setStore("addServer", { error: language.t("dialog.server.add.error") })
+        return
+      }
 
       resetAdd()
       if (options.navigateOnAdd === false) {
@@ -307,6 +315,13 @@ export function useServerManagementController(options: { onSelect?: () => void; 
         setStore("editServer", { error: language.t("dialog.server.add.error") })
         return
       }
+      if (
+        !settings.general.newLayoutDesigns() &&
+        (await detectServerProtocol(conn.http, platform.fetch ?? globalThis.fetch)) === "v2"
+      ) {
+        setStore("editServer", { error: language.t("dialog.server.add.error") })
+        return
+      }
       if (normalized === input.original.http.url) {
         server.add(conn)
       } else {
@@ -344,7 +359,10 @@ export function useServerManagementController(options: { onSelect?: () => void; 
   )
 
   const sortedItems = createMemo(() => {
-    const list = items()
+    const raw = items()
+    const list = settings.general.newLayoutDesigns()
+      ? raw
+      : raw.filter((x) => global.ensureServerCtx(x).sdk.protocolKind() !== "v2")
     if (!list.length) return list
     const active = current()
     const order = new Map(list.map((url, index) => [url, index] as const))

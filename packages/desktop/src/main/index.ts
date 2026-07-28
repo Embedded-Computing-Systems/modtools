@@ -20,6 +20,12 @@ import { exportDebugLogs, initCrashReporter, initLogging, startNetLog, write as 
 import { parseMarkdown } from "./markdown"
 import { createMenu } from "./menu"
 import {
+  finishFirstLaunchOnboarding,
+  initializeOldLayoutEligibility,
+  isFirstLaunchOnboardingPending,
+  isOldLayoutEligible,
+} from "./onboarding"
+import {
   getDefaultServerUrl,
   preferAppEnv,
   setDefaultServerUrl,
@@ -27,6 +33,7 @@ import {
   type SidecarListener,
 } from "./server"
 import { setupAutoUpdater, showUpdaterDialog } from "./updater"
+import { safeWebContentsURL } from "./window-state"
 import {
   getLastFocusedWindow,
   registerRendererProtocol,
@@ -43,16 +50,16 @@ import { migrate } from "./migrate"
 import { cleanupStoreFiles } from "./store-cleanup"
 
 const APP_NAMES: Record<string, string> = {
-  dev: "OpenCode Dev",
-  beta: "OpenCode Beta",
-  prod: "OpenCode",
+  dev: "MOD Dev",
+  beta: "MOD Beta",
+  prod: "MOD",
 }
 const APP_IDS: Record<string, string> = {
-  dev: "ai.opencode.desktop.dev",
-  beta: "ai.opencode.desktop.beta",
-  prod: "ai.opencode.desktop",
+  dev: "ai.mod.desktop.dev",
+  beta: "ai.mod.desktop.beta",
+  prod: "ai.mod.desktop",
 }
-const TEST_ONBOARDING = process.env.OPENCODE_TEST_ONBOARDING === "1"
+const TEST_ONBOARDING = process.env.MODTOOLS_TEST_ONBOARDING === "1"
 const jsCallStackFeature = "DocumentPolicyIncludeJSCallStacksInCrashReports"
 
 let logger: ReturnType<typeof initLogging>
@@ -111,31 +118,32 @@ const main = Effect.gen(function* () {
     process.chdir(homedir())
   } catch {}
 
-  process.env.OPENCODE_DISABLE_EMBEDDED_WEB_UI = "true"
+  process.env.MODTOOLS_DISABLE_EMBEDDED_WEB_UI = "true"
 
-  const appId = app.isPackaged ? APP_IDS[CHANNEL] : "ai.opencode.desktop.dev"
+  const appId = app.isPackaged ? APP_IDS[CHANNEL] : "ai.mod.desktop.dev"
   const onboardingTestRoot = ((): string | undefined => {
     if (!TEST_ONBOARDING) return
 
-    const root = join(tmpdir(), `opencode-onboarding-${randomUUID()}`)
+    const root = join(tmpdir(), `mod-onboarding-${randomUUID()}`)
     rmSync(root, { recursive: true, force: true })
     ;["data", "config", "cache", "state", "desktop", "session"].forEach((dir) =>
       mkdirSync(join(root, dir), { recursive: true }),
     )
-    process.env.OPENCODE_DB = ":memory:"
+    process.env.MODTOOLS_DB = ":memory:"
     process.env.XDG_DATA_HOME = join(root, "data")
     process.env.XDG_CONFIG_HOME = join(root, "config")
     process.env.XDG_CACHE_HOME = join(root, "cache")
     process.env.XDG_STATE_HOME = join(root, "state")
     return root
   })()
-  app.setName(app.isPackaged ? APP_NAMES[CHANNEL] : "OpenCode Dev")
+  app.setName(app.isPackaged ? APP_NAMES[CHANNEL] : "MOD Dev")
   app.setAppUserModelId(appId)
   app.setPath(
     "userData",
     onboardingTestRoot ? join(onboardingTestRoot, "desktop") : join(app.getPath("appData"), appId),
   )
   if (onboardingTestRoot) app.setPath("sessionData", join(onboardingTestRoot, "session"))
+  initializeOldLayoutEligibility(app.getPath("userData"))
   logger = initLogging()
   initCrashReporter()
 
@@ -193,7 +201,7 @@ const main = Effect.gen(function* () {
   preferAppEnv(app.getPath("userData"))
 
   app.on("second-instance", (_event: Event, argv: string[]) => {
-    const urls = argv.filter((arg: string) => arg.startsWith("opencode://"))
+    const urls = argv.filter((arg: string) => arg.startsWith("mod://"))
     if (urls.length) {
       logger.log("deep link received via second-instance", { urls })
       emitDeepLinks(urls)
@@ -226,7 +234,7 @@ const main = Effect.gen(function* () {
   })
 
   app.on("render-process-gone", (_event, webContents, details) => {
-    writeLog("window", "app render process gone", { url: webContents.getURL(), details }, "error")
+    writeLog("window", "app render process gone", { url: safeWebContentsURL(webContents), details }, "error")
   })
 
   setRelaunchHandler(() => {
@@ -258,7 +266,7 @@ const main = Effect.gen(function* () {
       }),
     ),
   )
-  app.setAsDefaultProtocolClient("opencode")
+  app.setAsDefaultProtocolClient("mod")
   registerRendererProtocol()
   setDockIcon()
   const updater = setupAutoUpdater(stopSidecars)
@@ -277,6 +285,9 @@ const main = Effect.gen(function* () {
     consumeInitialDeepLinks: () => pendingDeepLinks.splice(0),
     getDefaultServerUrl: () => getDefaultServerUrl(),
     setDefaultServerUrl: (url) => setDefaultServerUrl(url),
+    isFirstLaunchOnboardingPending,
+    finishFirstLaunchOnboarding,
+    isOldLayoutEligible,
     getDisplayBackend: async () => null,
     setDisplayBackend: async () => undefined,
     parseMarkdown: async (markdown) => parseMarkdown(markdown),
@@ -302,7 +313,7 @@ const main = Effect.gen(function* () {
   )
 
   const port = yield* Effect.gen(function* () {
-    const fromEnv = process.env.OPENCODE_PORT
+    const fromEnv = process.env.MODTOOLS_PORT
     if (fromEnv) {
       const parsed = Number.parseInt(fromEnv, 10)
       if (!Number.isNaN(parsed)) return parsed
@@ -346,7 +357,7 @@ const main = Effect.gen(function* () {
     server = listener
     yield* Deferred.succeed(serverReady, {
       url,
-      username: "opencode",
+      username: "mod",
       password,
     })
 

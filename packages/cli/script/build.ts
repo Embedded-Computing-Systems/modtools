@@ -1,10 +1,9 @@
 #!/usr/bin/env bun
 
 import { $ } from "bun"
-import fs from "fs"
 import { rm } from "fs/promises"
 import path from "path"
-import { Script } from "@opencode-ai/script"
+import { Script } from "@modtools-ai/script"
 import { createSolidTransformPlugin } from "@opentui/solid/bun-plugin"
 import pkg from "../package.json"
 import { modelsData } from "./generate"
@@ -51,10 +50,6 @@ const targets = singleFlag
 
 if (!skipInstall) await $`bun install --os="*" --cpu="*" @opentui/core@${pkg.dependencies["@opentui/core"]}`
 
-const localParserWorker = path.resolve(dir, "node_modules/@opentui/core/parser.worker.js")
-const rootParserWorker = path.resolve(dir, "../../node_modules/@opentui/core/parser.worker.js")
-const parserWorker = fs.realpathSync(fs.existsSync(localParserWorker) ? localParserWorker : rootParserWorker)
-
 for (const item of targets) {
   const target = [
     binary,
@@ -68,7 +63,7 @@ for (const item of targets) {
   const name = target.replace(binary, "cli")
   console.log(`building ${name}`)
   const result = await Bun.build({
-    entrypoints: ["./src/index.ts", parserWorker],
+    entrypoints: ["./src/index.ts"],
     tsconfig: "./tsconfig.json",
     plugins: [plugin],
     external: ["node-gyp"],
@@ -87,17 +82,13 @@ for (const item of targets) {
       windows: {},
     },
     define: {
-      OPENCODE_VERSION: `'${Script.version}'`,
-      OPENCODE_CLI_NAME: `'${binary}'`,
-      OPENCODE_MODELS_DEV: modelsData,
-      OPENCODE_CHANNEL: `'${Script.channel}'`,
-      OPENCODE_LIBC: item.os === "linux" ? `'${item.abi ?? "glibc"}'` : "undefined",
+      MODTOOLS_VERSION: `'${Script.version}'`,
+      MODTOOLS_CLI_NAME: `'${binary}'`,
+      MODTOOLS_MODELS_DEV: modelsData,
+      MODTOOLS_CHANNEL: `'${Script.channel}'`,
+      MODTOOLS_LIBC: item.os === "linux" ? `'${item.abi ?? "glibc"}'` : "undefined",
       // FFF_LIBC selects the fff native lib variant: "musl" or "gnu".
       FFF_LIBC: item.os === "linux" ? `'${item.abi ?? "gnu"}'` : "undefined",
-      OTUI_TREE_SITTER_WORKER_PATH:
-        (item.os === "win32" ? '"B:/~BUN/root/' : '"/$bunfs/root/') +
-        path.relative(dir, parserWorker).replaceAll("\\", "/") +
-        '"',
       ...(item.os === "linux" ? { "process.env.OPENTUI_LIBC": JSON.stringify(item.abi ?? "glibc") } : {}),
     },
   })
@@ -111,10 +102,10 @@ for (const item of targets) {
     `./dist/${name}/package.json`,
     JSON.stringify(
       {
-        name: `@opencode-ai/${name}`,
+        name: `@modtools-ai/${name}`,
         version: Script.version,
         license: "MIT",
-        repository: { type: "git", url: "git+https://github.com/anomalyco/opencode.git" },
+        repository: { type: "git", url: "git+https://github.com/Embedded-Computing-Systems/modtools.git" },
         os: [item.os],
         cpu: [item.arch],
       },

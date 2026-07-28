@@ -1,22 +1,22 @@
-import { Dialog } from "@opencode-ai/ui/dialog"
-import { List } from "@opencode-ai/ui/list"
-import { Switch } from "@opencode-ai/ui/switch"
-import { Tooltip } from "@opencode-ai/ui/tooltip"
-import { Button } from "@opencode-ai/ui/button"
-import { ButtonV2 } from "@opencode-ai/ui/v2/button-v2"
-import { Dialog as DialogV2, DialogBody, DialogHeader, DialogTitleGroup } from "@opencode-ai/ui/v2/dialog-v2"
-import { Icon as IconV2 } from "@opencode-ai/ui/v2/icon"
-import { IconButtonV2 } from "@opencode-ai/ui/v2/icon-button-v2"
-import { TextInputV2 } from "@opencode-ai/ui/v2/text-input-v2"
-import { Switch as SwitchV2 } from "@opencode-ai/ui/v2/switch-v2"
-import { ProviderIcon } from "@opencode-ai/ui/provider-icon"
-import { useFilteredList } from "@opencode-ai/ui/hooks"
+import { Dialog } from "@modtools-ai/ui/dialog"
+import { List } from "@modtools-ai/ui/list"
+import { Switch } from "@modtools-ai/ui/switch"
+import { Tooltip } from "@modtools-ai/ui/tooltip"
+import { Button } from "@modtools-ai/ui/button"
+import { ButtonV2 } from "@modtools-ai/ui/v2/button-v2"
+import { Dialog as DialogV2, DialogBody, DialogHeader, DialogTitleGroup } from "@modtools-ai/ui/v2/dialog-v2"
+import { Icon as IconV2 } from "@modtools-ai/ui/v2/icon"
+import { IconButtonV2 } from "@modtools-ai/ui/v2/icon-button-v2"
+import { TextInputV2 } from "@modtools-ai/ui/v2/text-input-v2"
+import { Switch as SwitchV2 } from "@modtools-ai/ui/v2/switch-v2"
+import { ProviderIcon } from "@modtools-ai/ui/provider-icon"
+import { useFilteredList } from "@modtools-ai/ui/hooks"
 import { For, Show, type Component } from "solid-js"
 import { useLocal } from "@/context/local"
 import { popularProviders } from "@/hooks/use-providers"
 import { useLanguage } from "@/context/language"
-import { useDialog } from "@opencode-ai/ui/context/dialog"
-import { DialogSelectProvider } from "./dialog-select-provider"
+import { useDialog } from "@modtools-ai/ui/context/dialog"
+import { DialogConnectProvider } from "./dialog-connect-provider"
 import { decode64 } from "@/utils/base64"
 import { SettingsListV2 } from "./settings-v2/parts/list"
 import { SettingsRowV2 } from "./settings-v2/parts/row"
@@ -31,7 +31,7 @@ export const DialogManageModels: Component = () => {
   const directory = () => decode64(local.slug())
 
   const handleConnectProvider = () => {
-    dialog.show(() => <DialogSelectProvider directory={directory} />)
+    void dialog.show(() => <DialogConnectProvider directory={directory} />)
   }
   const providerRank = (id: string) => popularProviders.indexOf(id)
   const providerList = (providerID: string) => local.model.list().filter((x) => x.provider.id === providerID)
@@ -123,7 +123,7 @@ export const DialogManageModelsV2: Component = () => {
   const directory = () => decode64(local.slug())
 
   const handleConnectProvider = () => {
-    dialog.show(() => <DialogSelectProvider directory={directory} />)
+    void dialog.show(() => <DialogConnectProvider directory={directory} />)
   }
   const providerList = (providerID: string) => local.model.list().filter((x) => x.provider.id === providerID)
   const providerVisible = (providerID: string) =>

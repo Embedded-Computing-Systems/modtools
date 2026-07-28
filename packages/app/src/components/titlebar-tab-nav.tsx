@@ -1,15 +1,15 @@
 import { createEffect, createMemo, createSignal, onCleanup, Show, type Ref } from "solid-js"
 import { makeEventListener } from "@solid-primitives/event-listener"
 import { createResizeObserver } from "@solid-primitives/resize-observer"
-import { IconButtonV2 } from "@opencode-ai/ui/v2/icon-button-v2"
-import { Icon as IconV2 } from "@opencode-ai/ui/v2/icon"
+import { IconButtonV2 } from "@modtools-ai/ui/v2/icon-button-v2"
+import { Icon as IconV2 } from "@modtools-ai/ui/v2/icon"
 import { useGlobal } from "@/context/global"
 import { useLanguage } from "@/context/language"
 import { ServerConnection, serverName } from "@/context/server"
 import { displayName, projectForSession } from "@/pages/layout/helpers"
 import { SessionTabAvatar } from "@/pages/layout/session-tab-avatar"
 import { showToast } from "@/utils/toast"
-import type { Session } from "@opencode-ai/sdk/v2"
+import type { Session } from "@modtools-ai/sdk/v2"
 import { canOpenTabRename, forwardTabRef } from "./titlebar-tab-gesture"
 import { TabPreviewPopover } from "./titlebar-tab-popover"
 import "./titlebar-tab-nav.css"
@@ -120,8 +120,7 @@ export function TabNavItem(props: {
     const ctx = serverCtx()
     const session = props.session()
     if (!ctx || !session) return
-    const client = ctx.sdk.createClient({ directory: session.directory, throwOnError: true })
-    await client.session.update({ sessionID: session.id, title })
+    await ctx.sdk.api.session.rename({ sessionID: session.id, title })
   }
 
   const closeRename = async (save: boolean) => {
@@ -246,18 +245,23 @@ export function TabNavItem(props: {
           }}
           class="flex h-full min-w-0 flex-1 flex-row items-center gap-1.5 text-[13px] font-medium text-v2-text-text-faint group-data-[active='true']:text-v2-text-text-base group-data-[editing='true']:text-v2-text-text-base [-webkit-user-drag:none]"
         >
-          <Show when={props.session()}>
-            {(session) => (
-              <span data-slot="project-avatar-slot">
+          <span data-slot="project-avatar-slot" class="flex size-4 shrink-0 items-center justify-center">
+            <Show
+              when={props.session()}
+              fallback={
+                <span class="block size-4 rounded-[3px] border border-v2-border-border-muted" aria-hidden="true" />
+              }
+            >
+              {(session) => (
                 <SessionTabAvatar
                   project={project()}
                   directory={session().directory}
                   sessionId={session().id}
                   server={props.server}
                 />
-              </span>
-            )}
-          </Show>
+              )}
+            </Show>
+          </span>
           <span
             ref={(el) => {
               titleEl = el

@@ -1,10 +1,10 @@
 import { For, Show, createEffect, createMemo, on, onCleanup, onMount } from "solid-js"
 import { createStore } from "solid-js/store"
 import { makeEventListener } from "@solid-primitives/event-listener"
-import { Tabs } from "@opencode-ai/ui/tabs"
-import { ResizeHandle } from "@opencode-ai/ui/resize-handle"
-import { IconButton } from "@opencode-ai/ui/icon-button"
-import { TooltipKeybind } from "@opencode-ai/ui/tooltip"
+import { Tabs } from "@modtools-ai/ui/tabs"
+import { ResizeHandle } from "@modtools-ai/ui/resize-handle"
+import { IconButton } from "@modtools-ai/ui/icon-button"
+import { TooltipKeybind } from "@modtools-ai/ui/tooltip"
 import { DragDropProvider, DragDropSensors, DragOverlay, SortableProvider, closestCenter } from "@thisbeyond/solid-dnd"
 import type { DragEvent } from "@thisbeyond/solid-dnd"
 import { ConstrainDragYAxis, getDraggableId } from "@/utils/solid-dnd"
@@ -37,6 +37,8 @@ export function TerminalPanel() {
   const height = createMemo(() => layout.terminal.height())
   const close = () => view().terminal.close()
   let root: HTMLDivElement | undefined
+
+  onCleanup(() => terminal.cancelFocus())
 
   const [store, setStore] = createStore({
     autoCreated: false,
@@ -285,7 +287,7 @@ export function TerminalPanel() {
                         icon="plus-small"
                         variant="ghost"
                         iconSize="large"
-                        onClick={terminal.new}
+                        onClick={() => terminal.new()}
                         aria-label={language.t("command.terminal.new")}
                       />
                     </TooltipKeybind>
@@ -303,6 +305,7 @@ export function TerminalPanel() {
                             <Terminal
                               pty={pty()}
                               autoFocus={opened()}
+                              onAutoFocus={() => terminal.consumeFocus(id)}
                               onConnect={() => markTerminalConnected(terminalRecoveryKey(pty()), id, ops.trim)}
                               onCleanup={ops.update}
                               onConnectError={() => recoverTerminal(terminalRecoveryKey(pty()), id, ops.clone)}

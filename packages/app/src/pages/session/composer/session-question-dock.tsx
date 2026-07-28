@@ -1,12 +1,12 @@
 import { For, Show, createEffect, createMemo, onCleanup, onMount, type Component } from "solid-js"
 import { createStore } from "solid-js/store"
 import { useMutation } from "@tanstack/solid-query"
-import { Button } from "@opencode-ai/ui/button"
-import { DockPrompt } from "@opencode-ai/session-ui/dock-prompt"
-import { Icon } from "@opencode-ai/ui/icon"
-import { useSpring } from "@opencode-ai/ui/motion-spring"
+import { Button } from "@modtools-ai/ui/button"
+import { DockPrompt } from "@modtools-ai/session-ui/dock-prompt"
+import { Icon } from "@modtools-ai/ui/icon"
+import { useSpring } from "@modtools-ai/ui/motion-spring"
 import { showToast } from "@/utils/toast"
-import type { QuestionAnswer, QuestionRequest } from "@opencode-ai/sdk/v2"
+import type { QuestionAnswer, QuestionRequest } from "@modtools-ai/sdk/v2"
 import { useLanguage } from "@/context/language"
 import { useSDK } from "@/context/sdk"
 import { makeEventListener } from "@solid-primitives/event-listener"
@@ -223,7 +223,8 @@ export const SessionQuestionDock: Component<{ request: QuestionRequest; onSubmit
   }
 
   const replyMutation = useMutation(() => ({
-    mutationFn: (answers: QuestionAnswer[]) => sdk().client.question.reply({ requestID: props.request.id, answers }),
+    mutationFn: (answers: QuestionAnswer[]) =>
+      sdk().api.question.reply({ sessionID: props.request.sessionID, requestID: props.request.id, answers }),
     onMutate: () => {
       props.onSubmit()
     },
@@ -235,7 +236,7 @@ export const SessionQuestionDock: Component<{ request: QuestionRequest; onSubmit
   }))
 
   const rejectMutation = useMutation(() => ({
-    mutationFn: () => sdk().client.question.reject({ requestID: props.request.id }),
+    mutationFn: () => sdk().api.question.reject({ sessionID: props.request.sessionID, requestID: props.request.id }),
     onMutate: () => {
       props.onSubmit()
     },

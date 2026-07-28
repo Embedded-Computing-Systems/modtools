@@ -2,14 +2,14 @@ import { action, useParams, useAction, useSubmission, json, query, createAsync }
 import { createStore } from "solid-js/store"
 import { createMemo, For, Show } from "solid-js"
 import { Modal } from "~/component/modal"
-import { Billing } from "@opencode-ai/console-core/billing.js"
-import { Database, eq, and, isNull } from "@opencode-ai/console-core/drizzle/index.js"
-import { BillingTable, LiteTable } from "@opencode-ai/console-core/schema/billing.sql.js"
-import { WorkspaceTable } from "@opencode-ai/console-core/schema/workspace.sql.js"
-import { Actor } from "@opencode-ai/console-core/actor.js"
-import { Workspace } from "@opencode-ai/console-core/workspace.js"
-import { Subscription } from "@opencode-ai/console-core/subscription.js"
-import { LiteData } from "@opencode-ai/console-core/lite.js"
+import { Billing } from "@modtools-ai/console-core/billing.js"
+import { Database, eq, and, isNull } from "@modtools-ai/console-core/drizzle/index.js"
+import { BillingTable, LiteTable } from "@modtools-ai/console-core/schema/billing.sql.js"
+import { WorkspaceTable } from "@modtools-ai/console-core/schema/workspace.sql.js"
+import { Actor } from "@modtools-ai/console-core/actor.js"
+import { Workspace } from "@modtools-ai/console-core/workspace.js"
+import { Subscription } from "@modtools-ai/console-core/subscription.js"
+import { LiteData } from "@modtools-ai/console-core/lite.js"
 import { withActor } from "~/context/auth.withActor"
 import { queryBillingInfo } from "../../common"
 import styles from "./lite-section.module.css"
@@ -235,7 +235,7 @@ export function LiteSection(props: { lite: LiteSubscription | undefined }) {
             </div>
             <div data-slot="beta-notice">
               {i18n.t("workspace.lite.subscription.selectProvider")}{" "}
-              <a href={language.route("/docs/providers/#opencode-go")} target="_blank" rel="noopener noreferrer">
+              <a href={language.route("/docs/providers/#mod-go")} target="_blank" rel="noopener noreferrer">
                 {i18n.t("common.learnMore")}
               </a>
               .
@@ -306,10 +306,12 @@ export function LiteSection(props: { lite: LiteSubscription | undefined }) {
           </p>
           <h3 data-slot="promo-models-title">{i18n.t("workspace.lite.promo.modelsTitle")}</h3>
           <ul data-slot="promo-models">
-            <li>Kimi K2.7 Code</li>
-            <li>Kimi K2.6</li>
+            <li>Grok 4.5</li>
             <li>GLM-5.2</li>
             <li>GLM-5.1</li>
+            <li>Kimi K3</li>
+            <li>Kimi K2.7 Code</li>
+            <li>Kimi K2.6</li>
             <li>MiniMax M3</li>
             <li>MiniMax M2.7</li>
             <li>Qwen3.7 Max</li>
@@ -319,6 +321,7 @@ export function LiteSection(props: { lite: LiteSubscription | undefined }) {
             <li>DeepSeek V4 Flash</li>
             <li>MiMo-V2.5</li>
             <li>MiMo-V2.5-Pro</li>
+            <li>Hy3</li>
           </ul>
           <p data-slot="promo-description">{i18n.t("workspace.lite.promo.footer")}</p>
           <div data-slot="subscribe-actions">

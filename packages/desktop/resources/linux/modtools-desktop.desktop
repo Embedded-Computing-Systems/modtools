@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=MOD
+Exec=/opt/MOD/ai.mod.desktop %U
+Terminal=false
+Type=Application
+Icon=ai.mod.desktop
+StartupWMClass=ai.mod.desktop
+NoDisplay=true
+Comment=Open source AI coding agent
+Categories=Development;

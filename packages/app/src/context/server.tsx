@@ -1,4 +1,4 @@
-import { createSimpleContext } from "@opencode-ai/ui/context"
+import { createSimpleContext } from "@modtools-ai/ui/context"
 import { type Accessor, batch, createMemo } from "solid-js"
 import { createStore, type SetStoreFunction, type Store } from "solid-js/store"
 import { Persist, persisted } from "@/utils/persist"
@@ -312,7 +312,10 @@ export const { use: useServer, provider: ServerProvider } = createSimpleContext(
       })
     }
 
-    const isReady = createMemo(() => ready() && !!state.active)
+    const isReady = Object.assign(
+      createMemo(() => ready() && !!state.active),
+      { promise: ready.promise },
+    )
 
     const scope = (key = state.active) => ServerScope.fromServerKey(key, props.canonicalLocalServer)
     const projects = createServerProjects({ scope, store, setStore })

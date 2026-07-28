@@ -11,9 +11,9 @@ import type {
   ToolPart,
   FilePart,
   AgentPart,
-} from "@opencode-ai/sdk/v2"
+} from "@modtools-ai/sdk/v2"
 import { DataProvider } from "../context/data"
-import { FileComponentProvider } from "@opencode-ai/ui/context/file"
+import { FileComponentProvider } from "@modtools-ai/ui/context/file"
 import { SessionTurn } from "./session-turn"
 
 // ---------------------------------------------------------------------------
@@ -359,6 +359,34 @@ const TOOL_SAMPLES = {
     title: "Agent (Explore)",
     metadata: { sessionId: "sub-session-1" },
   },
+  "task build": {
+    tool: "task",
+    input: { description: "Implement the settings page", subagent_type: "build", prompt: "Build it" },
+    output: "Implemented the settings page.",
+    title: "Agent (Build)",
+    metadata: { sessionId: "sub-session-2" },
+  },
+  "task plan": {
+    tool: "task",
+    input: { description: "Plan the migration strategy", subagent_type: "plan", prompt: "Plan it" },
+    output: "Drafted a 4-step migration plan.",
+    title: "Agent (Plan)",
+    metadata: { sessionId: "sub-session-3" },
+  },
+  "task themed": {
+    tool: "task",
+    input: { description: "Review the diff for regressions", subagent_type: "review", prompt: "Review it" },
+    output: "No regressions found.",
+    title: "Agent (Review)",
+    metadata: { sessionId: "sub-session-4" },
+  },
+  "task fallback": {
+    tool: "task",
+    input: { description: "Write release notes", subagent_type: "writer", prompt: "Write them" },
+    output: "Release notes drafted.",
+    title: "Agent (Writer)",
+    metadata: { sessionId: "sub-session-5" },
+  },
   webfetch: {
     tool: "webfetch",
     input: { url: "https://solidjs.com/docs/latest/api" },
@@ -460,7 +488,7 @@ function normalize(raw: unknown) {
   }
 
   if (!record(raw) || !record(raw.info) || typeof raw.info.id !== "string" || !Array.isArray(raw.messages)) {
-    throw new Error("Expected an `opencode export` JSON file")
+    throw new Error("Expected an `mod export` JSON file")
   }
 
   return {
@@ -1216,6 +1244,7 @@ function Playground() {
 
   const data = createMemo(() => ({
     session: [session()],
+    agent: [{ name: "build" }, { name: "plan" }, { name: "explore" }, { name: "review" }],
     session_status: {},
     session_diff: {},
     message: { [session().id]: state.messages },
@@ -1339,6 +1368,19 @@ function Playground() {
       toolPart(TOOL_SAMPLES.edit),
       toolPart(TOOL_SAMPLES.bash),
       textPart(MARKDOWN_SAMPLES.mixed),
+    ])
+  }
+
+  const addAgentTasksTurn = () => {
+    addFullTurn("Run subagents with every agent type", [
+      toolPart(TOOL_SAMPLES.task),
+      toolPart(TOOL_SAMPLES["task build"]),
+      toolPart(TOOL_SAMPLES["task plan"]),
+      toolPart(TOOL_SAMPLES["task themed"]),
+      toolPart(TOOL_SAMPLES["task fallback"]),
+      toolPart(TOOL_SAMPLES.task, "running"),
+      toolPart(TOOL_SAMPLES["task build"], "running"),
+      toolPart(TOOL_SAMPLES["task plan"], "running"),
     ])
   }
 
@@ -1628,7 +1670,7 @@ function Playground() {
               {/* ---- Session import ---- */}
               <div style={sectionLabel}>Import session</div>
               <div style={{ "font-size": "10px", color: "var(--text-weaker)", "margin-bottom": "2px" }}>
-                Replaces the current timeline with an `opencode export` JSON file
+                Replaces the current timeline with an `mod export` JSON file
               </div>
               <div style={{ display: "flex", "flex-wrap": "wrap", gap: "4px" }}>
                 <button style={btnAccent} onClick={() => pick?.click()}>
@@ -1726,6 +1768,9 @@ function Playground() {
                 </button>
                 <button style={btnStyle} onClick={addReasoningFullTurn}>
                   full turn
+                </button>
+                <button style={btnStyle} onClick={addAgentTasksTurn}>
+                  agent tasks
                 </button>
                 <button style={btnAccent} onClick={addKitchenSink}>
                   kitchen sink
@@ -1966,7 +2011,7 @@ function Playground() {
       {/* Main area: timeline preview */}
       <div
         ref={previewRef!}
-        style={{ flex: "1", overflow: "auto", "min-width": "0", "background-color": "var(--background-stronger)" }}
+        style={{ flex: "1", overflow: "auto", "min-width": "0", "background-color": "var(--v2-background-bg-base)" }}
       >
         <DataProvider data={data()} directory="/project">
           <FileComponentProvider component={FileStub}>

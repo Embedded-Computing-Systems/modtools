@@ -3,14 +3,14 @@ import { describe, expect } from "bun:test"
 import fs from "fs/promises"
 import path from "path"
 import { ConfigProvider, Deferred, Duration, Effect, Fiber, Layer, Option, Stream } from "effect"
-import { Config } from "@opencode-ai/core/config"
-import { AppNodeBuilder } from "@opencode-ai/core/effect/app-node-builder"
-import { LayerNode } from "@opencode-ai/core/effect/layer-node"
-import { EventV2 } from "@opencode-ai/core/event"
-import { FSUtil } from "@opencode-ai/core/fs-util"
-import { Watcher } from "@opencode-ai/core/filesystem/watcher"
-import { Location } from "@opencode-ai/core/location"
-import { AbsolutePath } from "@opencode-ai/core/schema"
+import { Config } from "@modtools-ai/core/config"
+import { AppNodeBuilder } from "@modtools-ai/core/effect/app-node-builder"
+import { LayerNode } from "@modtools-ai/core/effect/layer-node"
+import { EventV2 } from "@modtools-ai/core/event"
+import { FSUtil } from "@modtools-ai/core/fs-util"
+import { Watcher } from "@modtools-ai/core/filesystem/watcher"
+import { Location } from "@modtools-ai/core/location"
+import { AbsolutePath } from "@modtools-ai/core/schema"
 import { location } from "../fixture/location"
 import { tmpdir } from "../fixture/tmpdir"
 import { testEffect } from "../lib/effect"
@@ -30,8 +30,8 @@ const configLayer = Layer.succeed(
 
 const flagsLayer = ConfigProvider.layer(
   ConfigProvider.fromUnknown({
-    OPENCODE_EXPERIMENTAL_FILEWATCHER: "true",
-    OPENCODE_EXPERIMENTAL_DISABLE_FILEWATCHER: "false",
+    MODTOOLS_EXPERIMENTAL_FILEWATCHER: "true",
+    MODTOOLS_EXPERIMENTAL_DISABLE_FILEWATCHER: "false",
   }),
 )
 
@@ -59,7 +59,7 @@ function withTmp<A, E, R>(
       await $`git init`.cwd(tmp.path).quiet()
       await $`git config core.fsmonitor false`.cwd(tmp.path).quiet()
       await $`git config commit.gpgsign false`.cwd(tmp.path).quiet()
-      await $`git config user.email test@opencode.test`.cwd(tmp.path).quiet()
+      await $`git config user.email test@mod.test`.cwd(tmp.path).quiet()
       await $`git config user.name Test`.cwd(tmp.path).quiet()
       await $`git commit --allow-empty -m root`.cwd(tmp.path).quiet()
       await options.init?.(tmp.path)
@@ -168,16 +168,12 @@ describeWatcher("Watcher", () => {
     ),
   )
 
-  it.live("watches non-git roots", () =>
+  it.live("skips non-git roots", () =>
     withTmp((directory) =>
       Effect.gen(function* () {
         const fs = yield* FSUtil.Service
         const file = path.join(directory, "plain.txt")
-        yield* ready(directory)
-        expect(yield* nextUpdate((event) => event.file === file, fs.writeFileString(file, "plain"))).toEqual({
-          file,
-          event: "add",
-        })
+        yield* noUpdate((event) => event.file === file, fs.writeFileString(file, "plain"))
       }),
     ),
   )
@@ -190,7 +186,10 @@ describeWatcher("Watcher", () => {
         Effect.promise(() => tmpdir()),
         (tmp) => Effect.promise(() => tmp[Symbol.asyncDispose]()),
       )
-      yield* ready(tmp.path).pipe(provide(tmp.path), Effect.scoped)
+      yield* ready(tmp.path).pipe(
+        provide(tmp.path, { type: "git", store: AbsolutePath.make(path.join(tmp.path, ".git")) }),
+        Effect.scoped,
+      )
       const file = path.join(tmp.path, "after-dispose.txt")
       yield* noUpdate((event) => event.file === file, fs.writeFileString(file, "gone")).pipe(
         Effect.provideService(EventV2.Service, events),

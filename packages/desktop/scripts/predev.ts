@@ -1,5 +1,7 @@
 import { $ } from "bun"
 
-await $`bun ./scripts/copy-icons.ts ${process.env.OPENCODE_CHANNEL ?? "dev"}`
+await $`bun run install-electron`
 
-await $`cd ../opencode && bun script/build-node.ts`
+await $`bun ./scripts/copy-icons.ts ${process.env.MODTOOLS_CHANNEL ?? "dev"}`
+
+await $`cd ../modtools && bun script/build-node.ts`

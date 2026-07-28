@@ -1,8 +1,8 @@
 import { useFile } from "@/context/file"
 import { encodeFilePath } from "@/context/file/path"
-import { Collapsible } from "@opencode-ai/ui/collapsible"
-import { FileIcon } from "@opencode-ai/ui/file-icon"
-import { Icon } from "@opencode-ai/ui/icon"
+import { Collapsible } from "@modtools-ai/ui/collapsible"
+import { FileIcon } from "@modtools-ai/ui/file-icon"
+import { Icon } from "@modtools-ai/ui/icon"
 import {
   createEffect,
   createMemo,
@@ -17,7 +17,7 @@ import {
   type ParentProps,
 } from "solid-js"
 import { Dynamic } from "solid-js/web"
-import type { FileNode } from "@opencode-ai/sdk/v2"
+import type { FileNode } from "@modtools-ai/sdk/v2"
 
 const MAX_DEPTH = 128
 
@@ -201,6 +201,7 @@ export default function FileTree(props: {
   kinds?: ReadonlyMap<string, Kind>
   draggable?: boolean
   onFileClick?: (file: FileNode) => void
+  onFileDoubleClick?: (file: FileNode) => void
 
   _filter?: Filter
   _marks?: Set<string>
@@ -440,6 +441,7 @@ export default function FileTree(props: {
                         active={props.active}
                         draggable={props.draggable}
                         onFileClick={props.onFileClick}
+                        onFileDoubleClick={props.onFileDoubleClick}
                         _filter={filter()}
                         _marks={marks()}
                         _deeps={deeps()}
@@ -462,6 +464,7 @@ export default function FileTree(props: {
                   as="button"
                   type="button"
                   onClick={() => props.onFileClick?.(node)}
+                  onDblClick={() => props.onFileDoubleClick?.(node)}
                 >
                   <div class="w-4 shrink-0" />
                   <Switch>

@@ -1,19 +1,19 @@
 import type { APIEvent } from "@solidjs/start/server"
-import { and, Database, eq, isNull, lt, or, sql } from "@opencode-ai/console-core/drizzle/index.js"
-import { KeyTable } from "@opencode-ai/console-core/schema/key.sql.js"
-import { BillingTable, LiteTable, SubscriptionTable, UsageTable } from "@opencode-ai/console-core/schema/billing.sql.js"
-import { centsToMicroCents } from "@opencode-ai/console-core/util/price.js"
-import { getMonthlyBounds, getWeekBounds } from "@opencode-ai/console-core/util/date.js"
-import { Identifier } from "@opencode-ai/console-core/identifier.js"
-import { Billing } from "@opencode-ai/console-core/billing.js"
-import { Actor } from "@opencode-ai/console-core/actor.js"
-import { WorkspaceTable } from "@opencode-ai/console-core/schema/workspace.sql.js"
-import { ZenData } from "@opencode-ai/console-core/model.js"
-import { Subscription } from "@opencode-ai/console-core/subscription.js"
-import { BlackData } from "@opencode-ai/console-core/black.js"
-import { UserTable } from "@opencode-ai/console-core/schema/user.sql.js"
-import { ModelTable } from "@opencode-ai/console-core/schema/model.sql.js"
-import { ProviderTable } from "@opencode-ai/console-core/schema/provider.sql.js"
+import { and, Database, eq, isNull, lt, or, sql } from "@modtools-ai/console-core/drizzle/index.js"
+import { KeyTable } from "@modtools-ai/console-core/schema/key.sql.js"
+import { BillingTable, LiteTable, SubscriptionTable, UsageTable } from "@modtools-ai/console-core/schema/billing.sql.js"
+import { centsToMicroCents } from "@modtools-ai/console-core/util/price.js"
+import { getMonthlyBounds, getWeekBounds } from "@modtools-ai/console-core/util/date.js"
+import { Identifier } from "@modtools-ai/console-core/identifier.js"
+import { Billing } from "@modtools-ai/console-core/billing.js"
+import { Actor } from "@modtools-ai/console-core/actor.js"
+import { WorkspaceTable } from "@modtools-ai/console-core/schema/workspace.sql.js"
+import { ZenData } from "@modtools-ai/console-core/model.js"
+import { Subscription } from "@modtools-ai/console-core/subscription.js"
+import { BlackData } from "@modtools-ai/console-core/black.js"
+import { UserTable } from "@modtools-ai/console-core/schema/user.sql.js"
+import { ModelTable } from "@modtools-ai/console-core/schema/model.sql.js"
+import { ProviderTable } from "@modtools-ai/console-core/schema/provider.sql.js"
 import { logger } from "./logger"
 import {
   AuthError,
@@ -42,15 +42,15 @@ import { createRateLimiter as createIpRateLimiter } from "./ipRateLimiter"
 import { createRateLimiter as createKeyRateLimiter } from "./keyRateLimiter"
 import { createTrialLimiter } from "./trialLimiter"
 import { createStickyTracker } from "./stickyProviderTracker"
-import { LiteData } from "@opencode-ai/console-core/lite.js"
-import { Resource } from "@opencode-ai/console-resource"
+import { LiteData } from "@modtools-ai/console-core/lite.js"
+import { Resource } from "@modtools-ai/console-resource"
 import { i18n, type Key } from "~/i18n"
 import { localeFromRequest } from "~/lib/language"
 import { createModelTpmLimiter } from "./modelTpmLimiter"
 import { createModelTpsLimiter } from "./modelTpsLimiter"
 import { createProviderBudgetTracker } from "./providerBudgetTracker"
 import { accumulateUsage, HOT_WORKSPACES } from "./usageBatcher"
-import { Workspace } from "@opencode-ai/console-core/workspace.js"
+import { Workspace } from "@modtools-ai/console-core/workspace.js"
 import { countryFromRequest } from "~/lib/request-country"
 
 type ZenData = Awaited<ReturnType<typeof ZenData.list>>
@@ -86,7 +86,7 @@ export async function handler(
   type CostInfo = ReturnType<typeof calculateCost>
 
   const MAX_FAILOVER_RETRIES = 3
-  const MAX_429_RETRIES = 3
+  const MAX_RETRYABLE_STATUS_RETRIES = 3
   const dict = i18n(localeFromRequest(input.request))
   const t = (key: Key, params?: Record<string, string | number>) => resolve(dict[key], params)
   const ADMIN_WORKSPACES = [
@@ -105,10 +105,10 @@ export async function handler(
     const ip = rawIp.includes(":") ? rawIp.split(":").slice(0, 4).join(":") : rawIp
     const rawZenApiKey = opts.parseApiKey(input.request.headers)
     const zenApiKey = rawZenApiKey === "public" ? undefined : rawZenApiKey
-    const sessionId = input.request.headers.get("x-opencode-session") ?? ""
-    const requestId = input.request.headers.get("x-opencode-request") ?? ""
-    const ocClient = input.request.headers.get("x-opencode-client") ?? ""
-    const projectId = input.request.headers.get("x-opencode-project") ?? ""
+    const sessionId = input.request.headers.get("x-mod-session") ?? ""
+    const requestId = input.request.headers.get("x-mod-request") ?? ""
+    const ocClient = input.request.headers.get("x-mod-client") ?? ""
+    const projectId = input.request.headers.get("x-mod-project") ?? ""
     const userAgent = input.request.headers.get("user-agent") ?? ""
     logger.metric({
       is_stream: isStream,
@@ -141,7 +141,7 @@ export async function handler(
       if (!allowedRegions?.includes("unavailable"))
         throw new RegionError(
           t("zen.api.error.regionNotAllowed", {
-            consoleGoUrl: `https://opencode.ai/workspace/${authInfo.workspaceID}/go`,
+            consoleGoUrl: `https://modtools.ai/workspace/${authInfo.workspaceID}/go`,
           }),
         )
     }
@@ -213,7 +213,7 @@ export async function handler(
       logger.debug("REQUEST URL: " + reqUrl)
       logger.debug("REQUEST: " + reqBody.substring(0, 300) + "...")
       const isNewInference = providerInfo.id.startsWith("console.") || providerInfo.id.startsWith("console-go.")
-      const res = await fetchWith429Retry(
+      const res = await fetchWithRetryableStatus(
         reqUrl,
         {
           method: "POST",
@@ -235,10 +235,10 @@ export async function handler(
             })
             headers.delete("host")
             headers.delete("content-length")
-            headers.delete("x-opencode-request")
-            headers.delete("x-opencode-session")
-            headers.delete("x-opencode-project")
-            headers.delete("x-opencode-client")
+            headers.delete("x-mod-request")
+            headers.delete("x-mod-session")
+            headers.delete("x-mod-project")
+            headers.delete("x-mod-client")
             return headers
           })(),
           body: reqBody,
@@ -246,12 +246,12 @@ export async function handler(
           // abandoned Console requests do not leave orphaned inference work open.
           signal: input.request.signal,
         },
-        { count: isNewInference ? MAX_429_RETRIES : 0 },
+        { count: isNewInference ? MAX_RETRYABLE_STATUS_RETRIES : 0 },
       )
 
       if (isNewInference) {
-        const resEndpointId = res.headers.get("x-opencode-endpoint-id")
-        const resEndpointModelId = res.headers.get("x-opencode-upstream-model-id")
+        const resEndpointId = res.headers.get("x-mod-endpoint-id")
+        const resEndpointModelId = res.headers.get("x-mod-upstream-model-id")
         if (resEndpointId && resEndpointModelId)
           logger.metric({
             provider: resEndpointId,
@@ -307,7 +307,7 @@ export async function handler(
     logger.debug("STATUS: " + res.status + " " + res.statusText)
 
     // Handle non-streaming response
-    if (!isStream || [400, 404, 429].includes(res.status)) {
+    if (!isStream || [400, 404, 429, 529].includes(res.status)) {
       const json = await res.json()
       await rateLimiter?.track()
       const usage = providerInfo.extractUsage(json)
@@ -552,7 +552,7 @@ export async function handler(
       throw new ModelError(
         `${t("zen.api.error.trialEnded", {
           model: modelData.name,
-          link: "https://opencode.ai/go",
+          link: "https://modtools.ai/go",
         })}`,
       )
 
@@ -697,6 +697,9 @@ export async function handler(
           workspace: {
             id: WorkspaceTable.id,
             region: WorkspaceTable.region,
+            isBlocked: WorkspaceTable.is_blocked,
+            isFlaggedByAnthropic: WorkspaceTable.is_flagged_by_anthropic,
+            isFlaggedByOpenAI: WorkspaceTable.is_flagged_by_openai,
           },
           billing: {
             balance: BillingTable.balance,
@@ -772,6 +775,12 @@ export async function handler(
     )
 
     if (!data) throw new AuthError(t("zen.api.error.invalidApiKey"))
+    if (
+      data.workspace.isBlocked ||
+      (data.workspace.isFlaggedByAnthropic && modelInfo.id.startsWith("claude-")) ||
+      (data.workspace.isFlaggedByOpenAI && modelInfo.id.startsWith("gpt-"))
+    )
+      throw new AuthError(t("zen.api.error.requestBlockedByUpstreamProvider"))
     if (
       modelInfo.id.startsWith("alpha-") &&
       Resource.App.stage === "production" &&
@@ -875,7 +884,7 @@ export async function handler(
     // Validate lite subscription billing
     if (opts.modelList === "lite" && authInfo.billing.lite && authInfo.lite) {
       try {
-        const consoleGoUrl = `https://opencode.ai/workspace/${authInfo.workspaceID}/go`
+        const consoleGoUrl = `https://modtools.ai/workspace/${authInfo.workspaceID}/go`
         const sub = authInfo.lite
         const liteData = LiteData.getLimits()
 
@@ -946,8 +955,8 @@ export async function handler(
 
     // Validate pay as you go billing
     const billing = authInfo.billing
-    const billingUrl = `https://opencode.ai/workspace/${authInfo.workspaceID}/billing`
-    const membersUrl = `https://opencode.ai/workspace/${authInfo.workspaceID}/members`
+    const billingUrl = `https://modtools.ai/workspace/${authInfo.workspaceID}/billing`
+    const membersUrl = `https://modtools.ai/workspace/${authInfo.workspaceID}/members`
     if (!billing.paymentMethodID && billing.balance <= 0)
       throw new CreditsError(t("zen.api.error.noPaymentMethod", { billingUrl }))
     if (billing.balance <= 0) throw new CreditsError(t("zen.api.error.insufficientBalance", { billingUrl }))
@@ -999,11 +1008,11 @@ export async function handler(
     providerInfo.apiKey = authInfo.provider.credentials
   }
 
-  async function fetchWith429Retry(url: string, options: RequestInit, retry = { count: 0 }) {
+  async function fetchWithRetryableStatus(url: string, options: RequestInit, retry = { count: 0 }) {
     const res = await fetch(url, options)
-    if (res.status === 429 && retry.count < MAX_429_RETRIES) {
+    if ([429, 529].includes(res.status) && retry.count < MAX_RETRYABLE_STATUS_RETRIES) {
       await new Promise((resolve) => setTimeout(resolve, Math.pow(2, retry.count) * 500))
-      return fetchWith429Retry(url, options, { count: retry.count + 1 })
+      return fetchWithRetryableStatus(url, options, { count: retry.count + 1 })
     }
     return res
   }
@@ -1168,28 +1177,29 @@ export async function handler(
             const week = getWeekBounds(new Date())
             const month = getMonthlyBounds(new Date(), authInfo.lite!.timeCreated)
             const rollingWindowSeconds = lite.rollingWindow * 3600
+            const quotaCost = Math.round(cost * modelInfo.costMultiplier)
             return [
               db
                 .update(LiteTable)
                 .set({
                   monthlyUsage: sql`
               CASE
-                WHEN ${LiteTable.timeMonthlyUpdated} >= ${month.start} THEN ${LiteTable.monthlyUsage} + ${cost}
-                ELSE ${cost}
+                WHEN ${LiteTable.timeMonthlyUpdated} >= ${month.start} THEN ${LiteTable.monthlyUsage} + ${quotaCost}
+                ELSE ${quotaCost}
               END
             `,
                   timeMonthlyUpdated: sql`now()`,
                   weeklyUsage: sql`
               CASE
-                WHEN ${LiteTable.timeWeeklyUpdated} >= ${week.start} THEN ${LiteTable.weeklyUsage} + ${cost}
-                ELSE ${cost}
+                WHEN ${LiteTable.timeWeeklyUpdated} >= ${week.start} THEN ${LiteTable.weeklyUsage} + ${quotaCost}
+                ELSE ${quotaCost}
               END
             `,
                   timeWeeklyUpdated: sql`now()`,
                   rollingUsage: sql`
               CASE
-                WHEN UNIX_TIMESTAMP(${LiteTable.timeRollingUpdated}) >= UNIX_TIMESTAMP(now()) - ${rollingWindowSeconds} THEN ${LiteTable.rollingUsage} + ${cost}
-                ELSE ${cost}
+                WHEN UNIX_TIMESTAMP(${LiteTable.timeRollingUpdated}) >= UNIX_TIMESTAMP(now()) - ${rollingWindowSeconds} THEN ${LiteTable.rollingUsage} + ${quotaCost}
+                ELSE ${quotaCost}
               END
             `,
                   timeRollingUpdated: sql`
