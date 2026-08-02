@@ -26,15 +26,21 @@ export const parseNewSessionDeepLink = (input: string) => {
   const directory = url.searchParams.get("directory")
   if (!directory) return
   const prompt = url.searchParams.get("prompt") || undefined
+  // Shortcut-originated links (Ask MOD) expect the prompt to be sent, not just
+  // prefilled; explicit submit=1 opts in for hand-written links.
+  const submit = url.searchParams.get("source") === "shortcut" || url.searchParams.get("submit") === "1"
   if (!prompt) return { directory }
-  return { directory, prompt }
+  return { directory, prompt, submit }
 }
 
 export const collectOpenProjectDeepLinks = (urls: string[]) =>
   urls.map(parseDeepLink).filter((directory): directory is string => !!directory)
 
 export const collectNewSessionDeepLinks = (urls: string[]) =>
-  urls.map(parseNewSessionDeepLink).filter((link): link is { directory: string; prompt?: string } => !!link)
+  urls.flatMap((url) => {
+    const link = parseNewSessionDeepLink(url)
+    return link ? [link] : []
+  })
 
 type OpenCodeWindow = Window & {
   __MODTOOLS__?: {

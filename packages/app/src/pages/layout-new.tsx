@@ -21,10 +21,33 @@ export default function NewLayout(props: ParentProps) {
   // Deep links were only handled by the legacy layout, which never mounts under
   // the new design, so mod://new-session (Ask MOD, Spotlight) silently did
   // nothing. A new-session link becomes a prefilled draft tab here.
+  //
+  // Submit-flagged links press Enter in the composer once the prefilled text has
+  // rendered. The submit pipeline is composer-internal (createPromptSubmit needs
+  // the mounted component's sdk/model/prompt wiring), so the editor's own Enter
+  // handler is the one stable seam available from the layout.
+  const autoSubmit = (text: string) => {
+    const marker = text.slice(0, 40)
+    const started = Date.now()
+    const tick = () => {
+      const el = document.querySelector<HTMLElement>('[contenteditable="true"]')
+      if (el && (el.textContent ?? "").includes(marker)) {
+        el.focus()
+        el.dispatchEvent(
+          new KeyboardEvent("keydown", { key: "Enter", code: "Enter", keyCode: 13, bubbles: true, cancelable: true }),
+        )
+        return
+      }
+      if (Date.now() - started < 5000) setTimeout(tick, 100)
+    }
+    setTimeout(tick, 150)
+  }
+
   const handleDeepLinks = (urls: string[]) => {
     if (!server.isLocal()) return
     for (const link of collectNewSessionDeepLinks(urls)) {
       void tabs.newDraft({ server: server.key, directory: link.directory }, link.prompt)
+      if (link.submit && link.prompt) autoSubmit(link.prompt)
     }
   }
 
