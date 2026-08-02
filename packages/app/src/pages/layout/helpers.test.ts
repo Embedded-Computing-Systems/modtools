@@ -83,6 +83,17 @@ describe("layout deep links", () => {
     expect(parseNewSessionDeepLink("mod://new-session?directory=/tmp/demo&prompt=hello%20world")).toEqual({
       directory: "/tmp/demo",
       prompt: "hello world",
+      submit: false,
+    })
+    expect(parseNewSessionDeepLink("mod://new-session?directory=/tmp/demo&prompt=go&source=shortcut")).toEqual({
+      directory: "/tmp/demo",
+      prompt: "go",
+      submit: true,
+    })
+    expect(parseNewSessionDeepLink("mod://new-session?directory=/tmp/demo&prompt=go&submit=1")).toEqual({
+      directory: "/tmp/demo",
+      prompt: "go",
+      submit: true,
     })
   })
 
@@ -97,7 +108,7 @@ describe("layout deep links", () => {
       "mod://open-project?directory=/b",
       "mod://new-session?directory=/c&prompt=ship%20it",
     ])
-    expect(result).toEqual([{ directory: "/a" }, { directory: "/c", prompt: "ship it" }])
+    expect(result).toEqual([{ directory: "/a" }, { directory: "/c", prompt: "ship it", submit: false }])
   })
 
   test("drains global deep links once", () => {
