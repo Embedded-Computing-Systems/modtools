@@ -378,10 +378,12 @@ export default function Page() {
 
   createEffect(() => {
     if (!prompt.ready()) return
+    // Track the search param so a deep link arriving while the page is already
+    // mounted (app running, new ?prompt= navigation) still prefills the input.
+    const text = searchParams.prompt
+    if (!text) return
     untrack(() => {
       if (params.id) return
-      const text = searchParams.prompt
-      if (!text) return
       prompt.set([{ type: "text", content: text, start: 0, end: text.length }], text.length)
       setSearchParams({ ...searchParams, prompt: undefined })
     })
