@@ -1,16 +1,41 @@
-import { createEffect, Suspense, type ParentProps } from "solid-js"
+import { createEffect, onMount, Suspense, type ParentProps } from "solid-js"
 import { createStore } from "solid-js/store"
+import { makeEventListener } from "@solid-primitives/event-listener"
 import { DebugBar } from "@/components/debug-bar"
 import { TabsInfoPopup } from "@/components/help-button"
 import { Titlebar, type TitlebarUpdate } from "@/components/titlebar"
 import { usePlatform } from "@/context/platform"
+import { useServer } from "@/context/server"
+import { useTabs } from "@/context/tabs"
+import { collectNewSessionDeepLinks, deepLinkEvent, drainPendingDeepLinks } from "@/pages/layout/deep-links"
 import { setV2Toast, ToastRegion } from "@/utils/toast"
 
 export default function NewLayout(props: ParentProps) {
   const platform = usePlatform()
+  const server = useServer()
+  const tabs = useTabs()
   const [state, setState] = createStore({ debugTools: true })
 
   createEffect(() => setV2Toast(true))
+
+  // Deep links were only handled by the legacy layout, which never mounts under
+  // the new design, so mod://new-session (Ask MOD, Spotlight) silently did
+  // nothing. A new-session link becomes a prefilled draft tab here.
+  const handleDeepLinks = (urls: string[]) => {
+    if (!server.isLocal()) return
+    for (const link of collectNewSessionDeepLinks(urls)) {
+      void tabs.newDraft({ server: server.key, directory: link.directory }, link.prompt)
+    }
+  }
+
+  onMount(() => {
+    const handler = (event: Event) => {
+      const urls = (event as CustomEvent<{ urls: string[] }>).detail?.urls ?? []
+      if (urls.length) handleDeepLinks(urls)
+    }
+    handleDeepLinks(drainPendingDeepLinks(window))
+    makeEventListener(window, deepLinkEvent, handler as EventListener)
+  })
 
   const update: TitlebarUpdate = {
     version: () => {
