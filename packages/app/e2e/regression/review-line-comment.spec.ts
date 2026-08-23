@@ -1,6 +1,6 @@
 import { expect, test, type Page } from "@playwright/test"
-import { base64Encode } from "@opencode-ai/core/util/encode"
-import { mockOpenCodeServer } from "../utils/mock-server"
+import { base64Encode } from "@modtools-ai/core/util/encode"
+import { mockModServer } from "../utils/mock-server"
 import { expectAppVisible, expectSessionTitle } from "../utils/waits"
 
 const directory = "C:/OpenCode/ReviewLineCommentRegression"
@@ -87,7 +87,7 @@ test("stages a submitted line comment in the prompt context", async ({ page }) =
 
 async function openReview(page: Page) {
   await page.setViewportSize({ width: 700, height: 900 })
-  await mockOpenCodeServer(page, {
+  await mockModServer(page, {
     protocol: "v2",
     directory,
     project: {
@@ -130,7 +130,7 @@ async function openReview(page: Page) {
             time: { created: 1700000000000 },
             summary: { diffs: [] },
             agent: "build",
-            model: { providerID: "opencode", modelID: "test" },
+            model: { providerID: "mod", modelID: "test" },
           },
           parts: [
             {

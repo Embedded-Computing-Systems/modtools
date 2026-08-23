@@ -1,13 +1,13 @@
 {
-  "name": "@opencode-ai/desktop",
+  "name": "@modtools-ai/desktop",
   "private": true,
   "version": "1.18.21",
   "type": "module",
   "license": "MIT",
-  "homepage": "https://opencode.ai",
+  "homepage": "https://modtools.ai",
   "author": {
-    "name": "OpenCode",
-    "email": "hello@opencode.ai"
+    "name": "MOD",
+    "email": "hello@modtools.ai"
   },
   "scripts": {
     "typecheck": "tsgo -b",
@@ -25,19 +25,19 @@
   "main": "./out/main/index.js",
   "dependencies": {
     "@zip.js/zip.js": "2.7.62",
+    "drizzle-orm": "catalog:",
     "effect": "catalog:",
     "electron-context-menu": "4.1.2",
     "electron-log": "^5",
     "electron-store": "11.0.2",
     "electron-updater": "6.8.9",
-    "electron-window-state": "^5.0.3",
-    "drizzle-orm": "catalog:"
+    "electron-window-state": "^5.0.3"
   },
   "devDependencies": {
     "@actions/artifact": "4.0.0",
     "@lydell/node-pty": "catalog:",
-    "@opencode-ai/app": "workspace:*",
-    "@opencode-ai/ui": "workspace:*",
+    "@modtools-ai/app": "workspace:*",
+    "@modtools-ai/ui": "workspace:*",
     "@sentry/solid": "catalog:",
     "@sentry/vite-plugin": "catalog:",
     "@solid-primitives/i18n": "2.2.1",

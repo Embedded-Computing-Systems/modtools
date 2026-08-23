@@ -88,7 +88,7 @@ export function parseTranslationArgs(args: string[]) {
     args,
     options: {
       concurrency: { type: "string", short: "c", default: "4" },
-      model: { type: "string", default: "opencode/gpt-5.5" },
+      model: { type: "string", default: "mod/gpt-5.5" },
       variant: { type: "string", default: "xhigh" },
       "dry-run": { type: "boolean", default: false },
       check: { type: "boolean", default: false },
@@ -123,9 +123,9 @@ export function targetFiles(locale: Locale) {
 }
 
 export function glossaryFile(locale: Locale) {
-  if (locale === "zh") return ".opencode/glossary/zh-cn.md"
-  if (locale === "zht") return ".opencode/glossary/zh-tw.md"
-  return `.opencode/glossary/${locale}.md`
+  if (locale === "zh") return ".mod/glossary/zh-cn.md"
+  if (locale === "zht") return ".mod/glossary/zh-tw.md"
+  return `.mod/glossary/${locale}.md`
 }
 
 export function findDrift(source: Dictionary, target: Dictionary, locale?: Locale) {
@@ -160,17 +160,17 @@ export function findDrift(source: Dictionary, target: Dictionary, locale?: Local
 
 export function sessionIDFromEvents(output: string) {
   const match = output.match(/"sessionID"\s*:\s*"([^"]+)"/)
-  if (!match?.[1]) throw new Error("OpenCode did not report a session ID.")
+  if (!match?.[1]) throw new Error("MOD did not report a session ID.")
   return match[1]
 }
 
 export function sessionModels(value: unknown) {
   if (!isRecord(value) || !Array.isArray(value.messages))
-    throw new Error("OpenCode returned an invalid session export.")
+    throw new Error("MOD returned an invalid session export.")
   return value.messages.flatMap((message) => {
     if (!isRecord(message) || !isRecord(message.info) || message.info.role !== "assistant") return []
     if (typeof message.info.providerID !== "string" || typeof message.info.modelID !== "string") {
-      throw new Error("OpenCode session export omitted the assistant model.")
+      throw new Error("MOD session export omitted the assistant model.")
     }
     return [
       {
@@ -196,7 +196,7 @@ export function modelVariants(output: string, model: string) {
 
 export function translationConfig(agent: string, model: string, targets: string[]) {
   return {
-    $schema: "https://opencode.ai/config.json",
+    $schema: "https://modtools.ai/config.json",
     model,
     default_agent: agent,
     share: "disabled" as const,
@@ -253,8 +253,8 @@ Usage: bun run translate:app -- <locale|all> [options]
 Synchronizes product app translations with the English app, UI, and desktop dictionaries.
 
 Options:
-  -c, --concurrency <count>  Maximum parallel OpenCode runs for 'all' (default: 4)
-      --model <provider/id>  OpenCode model (default: opencode/gpt-5.5)
+  -c, --concurrency <count>  Maximum parallel MOD runs for 'all' (default: 4)
+      --model <provider/id>  MOD model (default: mod/gpt-5.5)
       --variant <name>       Model variant (default: xhigh)
       --dry-run              Report drift without running OpenCode
       --check                Exit nonzero when translation drift exists
@@ -416,8 +416,8 @@ async function translate(
   )
   const agent = `translate-app-${plan.locale}-${process.pid}`
   const env = isolatedEnvironment()
-  env.OPENCODE_DISABLE_PROJECT_CONFIG = "1"
-  env.OPENCODE_CONFIG_CONTENT = JSON.stringify(
+  env.MODTOOLS_DISABLE_PROJECT_CONFIG = "1"
+  env.MODTOOLS_CONFIG_CONTENT = JSON.stringify(
     translationConfig(
       agent,
       model,
@@ -427,7 +427,7 @@ async function translate(
 
   const proc = Bun.spawn(
     [
-      "opencode",
+      "mod",
       "--pure",
       "run",
       "--dir",
@@ -459,7 +459,7 @@ async function translate(
   if (result[2] !== 0) return { locale: plan.locale, stdout: result[0], stderr: result[1], code: result[2] }
 
   const sessionID = sessionIDFromEvents(result[0])
-  const exported = Bun.spawn(["opencode", "--pure", "export", sessionID, "--sanitize"], {
+  const exported = Bun.spawn(["mod", "--pure", "export", sessionID, "--sanitize"], {
     cwd: root,
     env,
     stdout: "pipe",
@@ -530,8 +530,8 @@ async function resolveModelVariant(model: string, variant: string) {
   const provider = model.split("/")[0]
   if (!provider || !model.includes("/")) throw new Error(`Model must use provider/model syntax: ${model}`)
   const env = isolatedEnvironment()
-  env.OPENCODE_DISABLE_PROJECT_CONFIG = "1"
-  const proc = Bun.spawn(["opencode", "--pure", "models", provider, "--verbose"], {
+  env.MODTOOLS_DISABLE_PROJECT_CONFIG = "1"
+  const proc = Bun.spawn(["mod", "--pure", "models", provider, "--verbose"], {
     cwd: root,
     env,
     stdin: "ignore",
@@ -547,11 +547,11 @@ async function resolveModelVariant(model: string, variant: string) {
 
 function isolatedEnvironment() {
   const env = { ...process.env }
-  delete env.OPENCODE_CONFIG
-  delete env.OPENCODE_CONFIG_DIR
-  delete env.OPENCODE_CONFIG_CONTENT
-  delete env.OPENCODE_PERMISSION
-  delete env.OPENCODE_AUTO_SHARE
+  delete env.MODTOOLS_CONFIG
+  delete env.MODTOOLS_CONFIG_DIR
+  delete env.MODTOOLS_CONFIG_CONTENT
+  delete env.MODTOOLS_PERMISSION
+  delete env.MODTOOLS_AUTO_SHARE
   return env
 }
 
