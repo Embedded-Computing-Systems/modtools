@@ -9,7 +9,7 @@ import {
 } from "@modtools-ai/theme/tui"
 import {
   allThemes,
-  getOpenCode2Theme,
+  getMod2Theme,
   hasTheme,
   parseTheme,
   setCustomThemes,
@@ -290,7 +290,7 @@ const themeContext = createSimpleContext({
 
     const available = createMemo(
       (): Record<string, ThemeDocumentSource> =>
-        newDesigns() ? { mod2: getOpenCode2Theme(), ...themeSources() } : themeSources(),
+        newDesigns() ? { mod2: getMod2Theme(), ...themeSources() } : themeSources(),
     )
     const has = (name: string) => Boolean(name) && available()[name] !== undefined
 

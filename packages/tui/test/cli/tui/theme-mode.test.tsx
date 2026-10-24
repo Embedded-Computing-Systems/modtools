@@ -3,7 +3,7 @@ import { testRender } from "@opentui/solid"
 import { expect, test } from "bun:test"
 import { RGBA } from "@opentui/core"
 import { createTuiResolvedConfig } from "../../fixture/tui-runtime"
-import { getOpenCodeTheme } from "../../../src/theme"
+import { getModTheme } from "../../../src/theme"
 import modSource from "../../../src/theme/assets/MOD.json" with { type: "json" }
 import type { ThemeV1Json } from "@modtools-ai/theme/tui/v1"
 import { ConfigProvider } from "../../../src/config"
@@ -29,8 +29,8 @@ test("uses an available mode while retaining the pinned preference", async () =>
   darkOnly.theme.background = "#111111"
   darkOnly.theme.text = "#eeeeee"
   const native = {
-    base: { ...getOpenCodeTheme().base, text: { ...getOpenCodeTheme().base.text, base: "#abcdef" } },
-    dark: { hue: getOpenCodeTheme().dark.hue },
+    base: { ...getModTheme().base, text: { ...getModTheme().base.text, base: "#abcdef" } },
+    dark: { hue: getModTheme().dark.hue },
   } as const
   let themes: ReturnType<typeof useThemes> | undefined
 
@@ -89,8 +89,8 @@ test.each([
   [
     "token reference",
     {
-      base: { ...getOpenCodeTheme().base, text: { ...getOpenCodeTheme().base.text, base: "$missing" } },
-      light: getOpenCodeTheme().light,
+      base: { ...getModTheme().base, text: { ...getModTheme().base.text, base: "$missing" } },
+      light: getModTheme().light,
     },
   ],
 ] as const)("falls back to MOD when configured V2 theme %s is invalid", async (_label, source) => {

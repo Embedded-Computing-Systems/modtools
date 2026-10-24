@@ -17,7 +17,7 @@ let modTheme: (ThemeDocument & {
   readonly dark: ModeDefinition
 }) | undefined
 
-export function getOpenCodeTheme() {
+export function getModTheme() {
   if (modTheme) return modTheme
   const document = parseThemeDocument(mod, "mod") as NonNullable<typeof modTheme>
   modTheme = document
@@ -28,7 +28,7 @@ let mod2Theme: ThemeDocument | undefined
 
 // Temporary theme for the "new-designs" experiment. It is not part of allThemes(), so only the
 // TUI theme context offers it, and only while the experiment is enabled.
-export function getOpenCode2Theme() {
+export function getMod2Theme() {
   mod2Theme ??= parseThemeDocument(mod2, "mod2")
   return mod2Theme
 }
@@ -37,7 +37,7 @@ function listThemes(): Record<string, ThemeDocumentSource> {
   // Priority: defaults < custom files < generated system.
   const themes: Record<string, ThemeDocumentSource> = {
     ...DEFAULT_THEMES,
-    mod: getOpenCodeTheme(),
+    mod: getModTheme(),
     ...customThemes,
   }
   return {

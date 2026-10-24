@@ -7,7 +7,6 @@ import { Effect } from "effect"
 import { Database } from "@modtools-ai/core/database/database"
 import { DatabaseMigration } from "@modtools-ai/core/database/migration"
 import { LegacyBridge } from "@modtools-ai/core/database/legacy-bridge"
-import { sql } from "drizzle-orm"
 import { Global } from "@modtools-ai/util/global"
 
 // The v1 tables as the v1 engine defines them; the bridge copies rows between two files
@@ -82,7 +81,7 @@ const withDatabase = <A>(dir: string, effect: (db: Database.Interface["db"]) => 
         return yield* Effect.gen(function* () {
           const service = yield* Database.Service
           yield* DatabaseMigration.apply(service.db)
-          return yield* effect(service.db)
+          return yield* effect(service.db).pipe(Effect.orDie)
         }).pipe(Effect.provide(layer))
       }).pipe(Effect.provideService(Global.Service, Global.make({ data: dir }))),
     ) as Effect.Effect<A>,
@@ -95,13 +94,12 @@ describe("LegacyBridge", () => {
 
     const result = await withDatabase(dir, (db) =>
       Effect.gen(function* () {
-        const synced = yield* LegacyBridge.sync(db)
-        const copied = yield* db.all<{ id: string }>(sql`SELECT id FROM session`)
-        return { synced, copied }
+        return yield* LegacyBridge.sync(db)
       }),
     )
 
-    expect(result.synced).toMatchObject({ attached: true, sessions: 1 })
+    expect(result).toMatchObject({ attached: true, sessions: 1 })
+    expect(readV1Count(path.join(dir, "mod-v2.db"), "session")).toBe(1)
   })
 
   test("is idempotent: a second sync with nothing changed copies nothing", async () => {

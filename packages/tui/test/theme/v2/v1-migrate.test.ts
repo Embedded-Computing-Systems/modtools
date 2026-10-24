@@ -7,12 +7,12 @@ import {
   type HueScale,
   type ResolvedTheme,
 } from "@modtools-ai/theme/tui"
-import { DEFAULT_THEMES, getOpenCodeTheme, resolveTheme as resolveV1 } from "../../../src/theme"
+import { DEFAULT_THEMES, getModTheme, resolveTheme as resolveV1 } from "../../../src/theme"
 import modSource from "../../../src/theme/assets/MOD.json" with { type: "json" }
 import type { ThemeV1Json } from "@modtools-ai/theme/tui/v1"
 
 const modV1 = modSource as ThemeV1Json
-const modLight = resolveThemeDocument(getOpenCodeTheme(), "light")
+const modLight = resolveThemeDocument(getModTheme(), "light")
 const modLightHues = allHues(modLight)
 
 test("migrates resolved V1 modes into V2 tokens", () => {
