@@ -85,10 +85,11 @@ export default function NewSessionPage(props: { draftId: string }) {
   )
   createEffect(() => {
     if (!composer.ready()) return
+    // Read reactively: with the read inside untrack the effect only ran when the composer
+    // became ready, so a ?prompt= arriving while the app was already running was dropped.
+    const text = search.prompt
+    if (!text) return
     untrack(() => {
-      const text = search.prompt
-
-      if (!text) return
       composer.adapter.state.set([{ type: "text", content: text, start: 0, end: text.length }], text.length)
       setSearch({ ...search, prompt: undefined })
     })
