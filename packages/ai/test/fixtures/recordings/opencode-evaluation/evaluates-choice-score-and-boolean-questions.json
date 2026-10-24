@@ -3,11 +3,11 @@
   "metadata": {
     "model": "jev-1.13-free",
     "tags": [
-      "prefix:mod-evaluation",
-      "provider:mod",
+      "prefix:opencode-evaluation",
+      "provider:opencode",
       "protocol:system-one"
     ],
-    "name": "mod-evaluation/evaluates-choice-score-and-boolean-questions",
+    "name": "opencode-evaluation/evaluates-choice-score-and-boolean-questions",
     "recordedAt": "2026-09-22T03:44:57.511Z"
   },
   "interactions": [
