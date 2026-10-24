@@ -438,6 +438,7 @@ const lowerAssistantMessage = Effect.fnUntraced(function* (
   configuredField: string | undefined,
   requireReasoning: boolean,
   options: LoweringOptions & { readonly providerMetadataKey: string },
+  mistral: boolean,
 ) {
   const content: OpenAIChatTextContent[] = []
   const reasoning: ReasoningPart[] = []
@@ -484,11 +485,21 @@ const lowerAssistantMessage = Effect.fnUntraced(function* (
     if (reasoning.length === 0) return nativeReasoning ?? (requireReasoning ? "" : undefined)
     return text
   })()
+  // Mistral rejects an assistant message that carries neither content nor tool_calls
+  // ("Assistant message must have either content or tool_calls, but not none"). A turn
+  // that ended on reasoning alone is serialised exactly that way for every other
+  // OpenAI-compatible endpoint, and because the turn stays in history, every later
+  // request to that model fails while other providers accept it. Keep the reasoning as
+  // text in this case; a turn with nothing to say at all is dropped by the caller.
+  const reasoningOnlyFallback =
+    mistral && toolCalls.length === 0 && content.length === 0 ? text.trim() : undefined
   const result = {
     role: "assistant" as const,
     content: (() => {
       if (content.some((part) => part.cache_control !== undefined)) return content
       if (content.length === 0 && toolCalls.length > 0) return null
+      if (reasoningOnlyFallback !== undefined && reasoningOnlyFallback !== "")
+        return content.length === 0 ? reasoningOnlyFallback : content.map((part) => part.text).join("")
       return content.map((part) => part.text).join("")
     })(),
     ...(toolCalls.length > 0 ? { tool_calls: toolCalls } : {}),
@@ -540,10 +551,11 @@ const lowerMessage = Effect.fnUntraced(function* (
   reasoningField: string | undefined,
   requireReasoning: boolean,
   options: LoweringOptions & { readonly providerMetadataKey: string },
+  mistral: boolean,
 ) {
   if (message.role === "user") return [yield* lowerUserMessage(message, options)]
   if (message.role === "assistant") {
-    const lowered = yield* lowerAssistantMessage(message, reasoningField, requireReasoning, options)
+    const lowered = yield* lowerAssistantMessage(message, reasoningField, requireReasoning, options, mistral)
     return [options.assistant?.(message, lowered) ?? lowered]
   }
   return (yield* lowerToolMessages(message, options)).messages
@@ -658,7 +670,7 @@ const lowerMessages = Effect.fnUntraced(function* (request: LLMRequest, options:
       continue
     }
     flushAttachments()
-    messages.push(...(yield* lowerMessage(message, reasoningField, requireReasoning, lowering)))
+    messages.push(...(yield* lowerMessage(message, reasoningField, requireReasoning, lowering, mistral)))
   }
   flushAttachments()
   return messages

@@ -642,4 +642,50 @@ describe("OpenAI-compatible Chat route", () => {
       })
     }),
   )
+
+  // Mistral rejects an assistant message with neither content nor tool_calls, and the turn
+  // stays in history, so one reasoning-only turn fails every later request to the model.
+  describe("Mistral reasoning-only turns", () => {
+    const mistral = OpenAICompatibleChat.route
+      .with({
+        provider: "ollama-cloud",
+        endpoint: { baseURL: "https://ollama.test/v1/" },
+        auth: Auth.bearer("test-key"),
+      })
+      .model({ id: "mistral-large-4" })
+
+    it.effect("replays the reasoning as content instead of an empty assistant message", () =>
+      Effect.gen(function* () {
+        const prepared = yield* compileRequest(
+          LLM.request({
+            model: mistral,
+            messages: [Message.assistant([{ type: "reasoning", text: "thinking it through" }])],
+          }),
+        )
+
+        const assistant = prepared.body.messages.find((message) => message.role === "assistant")
+        expect(assistant?.content).toBe("thinking it through")
+        expect(assistant?.tool_calls).toBeUndefined()
+      }),
+    )
+
+    it.effect("leaves an answered turn alone", () =>
+      Effect.gen(function* () {
+        const prepared = yield* compileRequest(
+          LLM.request({
+            model: mistral,
+            messages: [
+              Message.assistant([
+                { type: "reasoning", text: "plan" },
+                { type: "text", text: "Here is the answer." },
+              ]),
+            ],
+          }),
+        )
+
+        const assistant = prepared.body.messages.find((message) => message.role === "assistant")
+        expect(assistant?.content).toBe("Here is the answer.")
+      }),
+    )
+  })
 })
