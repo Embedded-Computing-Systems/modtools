@@ -154,7 +154,7 @@ describe("query keys", () => {
             })),
             { id: "b", canonical: "/b", time: { created: 1, updated: 1 }, sandboxes: [] },
             { id: "a", canonical: "/a", time: { created: 1, updated: 1 }, sandboxes: ["/a/legacy"] },
-            { id: "test", canonical: "/tmp/mod-test-1", time: { created: 1, updated: 1 }, sandboxes: [] },
+            { id: "test", canonical: "/tmp/opencode-test-1", time: { created: 1, updated: 1 }, sandboxes: [] },
           ])
         },
         { preconnect() {} },

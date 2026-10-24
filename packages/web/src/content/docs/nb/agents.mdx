@@ -188,10 +188,10 @@ Konfigurer agenter i konfigurasjonsfilen `MOD.json`:
 
 Du kan også definere agenter ved å bruke markdown-filer. Plasser dem i:
 
-- Globalt: `~/.config/MOD/agents/`
+- Globalt: `~/.config/mod/agents/`
 - Per prosjekt: `.mod/agents/`
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Reviews code for quality and best practices
 mode: subagent
@@ -454,7 +454,7 @@ Du kan overstyre disse tillatelsene per agent.
 
 Du kan også angi tillatelser i Markdown-agenter.
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Code review without edits
 mode: subagent
@@ -671,7 +671,7 @@ Kjør `MOD models` for å se en liste over tilgjengelige modeller.
 
 ## Opprette agenter
 
-Opprett en ny agent ved å legge til en markdown-fil i `.mod/agents/` for prosjektet eller i `~/.config/MOD/agents/` globalt. Filnavnet blir agentens navn, og frontmatter konfigurerer beskrivelse, modus, modell og tillatelser. Se [Markdown](#markdown) ovenfor for filformatet.
+Opprett en ny agent ved å legge til en markdown-fil i `.mod/agents/` for prosjektet eller i `~/.config/mod/agents/` globalt. Filnavnet blir agentens navn, og frontmatter konfigurerer beskrivelse, modus, modell og tillatelser. Se [Markdown](#markdown) ovenfor for filformatet.
 
 Kjør `MOD agent list` for å liste agentene som MOD har lastet inn.
 
@@ -701,7 +701,7 @@ Har du en agent du vil dele? [Send inn en PR](https://github.com/Embedded-Comput
 
 ### Dokumentasjonsagent
 
-```markdown title="~/.config/MOD/agents/docs-writer.md"
+```markdown title="~/.config/mod/agents/docs-writer.md"
 ---
 description: Writes and maintains project documentation
 mode: subagent
@@ -723,7 +723,7 @@ Focus on:
 
 ### Sikkerhetsrevisor
 
-```markdown title="~/.config/MOD/agents/security-auditor.md"
+```markdown title="~/.config/mod/agents/security-auditor.md"
 ---
 description: Performs security audits and identifies vulnerabilities
 mode: subagent

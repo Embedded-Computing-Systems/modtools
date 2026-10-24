@@ -20,7 +20,7 @@ Eklentileri yüklemenin iki yolu vardır.
 JavaScript veya TypeScript dosyalarını eklenti dizinine yerleştirin.
 
 - `.mod/plugins/` - Proje düzeyinde eklentiler
-- `~/.config/MOD/plugins/` - Genel eklentiler
+- `~/.config/mod/plugins/` - Genel eklentiler
 
 Bu dizinlerdeki dosyalar başlangıçta otomatik olarak yüklenir.
 
@@ -55,9 +55,9 @@ Hem normal hem de kapsamlı npm paketleri desteklenir.
 
 Eklentiler tüm kaynaklardan yüklenir ve tüm kancalar sırayla çalışır. Yükleme sırası şöyledir:
 
-1. Global config (`~/.config/MOD/MOD.json`)
+1. Global config (`~/.config/mod/MOD.json`)
 2. Project config (`MOD.json`)
-3. Global eklenti dizini (`~/.config/MOD/plugins/`)
+3. Global eklenti dizini (`~/.config/mod/plugins/`)
 4. Proje eklenti dizini (`.mod/plugins/`)
 
 Aynı ad ve sürüme sahip yinelenen npm paketleri bir kez yüklenir. Ancak benzer adlara sahip bir yerel eklenti ve bir npm eklentisinin her ikisi de ayrı ayrı yüklenir.

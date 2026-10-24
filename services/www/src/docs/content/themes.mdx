@@ -5,7 +5,7 @@ title: "Themes"
 Choose a theme from the terminal UI by pressing `Ctrl+P`, selecting **Open settings**, and opening **Theme**. You can also
 set it directly in your global CLI config:
 
-```json title="~/.config/MOD/cli.json"
+```json title="~/.config/mod/cli.json"
 {
   "theme": {
     "name": "tokyonight",
@@ -21,7 +21,7 @@ Themes belong to the terminal client. Put theme selection in `cli.json`, not `MO
 
 Use `system` to follow your terminal's appearance, or lock the theme to one mode:
 
-```json title="~/.config/MOD/cli.json"
+```json title="~/.config/mod/cli.json"
 {
   "theme": {
     "name": "MOD",
@@ -42,7 +42,7 @@ If a custom theme provides only one mode, MOD uses that mode when the other is r
 
 Select a built-in theme by its name:
 
-```json title="~/.config/MOD/cli.json"
+```json title="~/.config/mod/cli.json"
 {
   "theme": {
     "name": "catppuccin"
@@ -65,7 +65,7 @@ The `system` theme is available when MOD can read your terminal palette.
 To create a global theme named `ocean`, use the theme tool to generate a complete file in the global theme directory.
 Its relevant structure looks like this:
 
-```json title="~/.config/MOD/themes/ocean.json (excerpt)"
+```json title="~/.config/mod/themes/ocean.json (excerpt)"
 {
   "base": {
     "text": {
@@ -85,7 +85,7 @@ theme name.
 
 | Scope   | Directory                                  |
 | ------- | ------------------------------------------ |
-| Global  | `~/.config/MOD/themes/`               |
+| Global  | `~/.config/mod/themes/`               |
 | Project | `.mod/themes/` in the project tree    |
 
 MOD reads `.json` files only. A theme closer to the current directory replaces a global or parent theme with the

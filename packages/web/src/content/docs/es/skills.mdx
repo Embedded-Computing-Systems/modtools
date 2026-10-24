@@ -14,7 +14,7 @@ Cree una carpeta por nombre de habilidad y coloque un `SKILL.md` dentro de ella.
 MOD busca estas ubicaciones:
 
 - Configuración del proyecto: `.mod/skills/<name>/SKILL.md`
-- Configuración global: `~/.config/MOD/skills/<name>/SKILL.md`
+- Configuración global: `~/.config/mod/skills/<name>/SKILL.md`
 - Compatible con Proyecto Claude: `.claude/skills/<name>/SKILL.md`
 - Compatible con Claude global: `~/.claude/skills/<name>/SKILL.md`
 - Compatible con agente de proyecto: `.agents/skills/<name>/SKILL.md`
@@ -27,7 +27,7 @@ MOD busca estas ubicaciones:
 Para las rutas locales del proyecto, MOD sube desde su directorio de trabajo actual hasta llegar al árbol de trabajo de git.
 Carga cualquier `skills/*/SKILL.md` coincidente en `.mod/` y cualquier `.claude/skills/*/SKILL.md` o `.agents/skills/*/SKILL.md` coincidente a lo largo del camino.
 
-Las definiciones globales también se cargan desde `~/.config/MOD/skills/*/SKILL.md`, `~/.claude/skills/*/SKILL.md` y `~/.agents/skills/*/SKILL.md`.
+Las definiciones globales también se cargan desde `~/.config/mod/skills/*/SKILL.md`, `~/.claude/skills/*/SKILL.md` y `~/.agents/skills/*/SKILL.md`.
 
 ---
 

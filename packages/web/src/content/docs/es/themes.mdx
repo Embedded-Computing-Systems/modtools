@@ -83,7 +83,7 @@ MOD admite un sistema de temas flexible basado en JSON que permite a los usuario
 Los temas se cargan desde varios directorios en el siguiente orden, donde los directorios posteriores anulan los anteriores:
 
 1. **Temas integrados**: están integrados en el binario
-2. **Directorio de configuración de usuario**: definido en `~/.config/MOD/themes/*.json` o `$XDG_CONFIG_HOME/MOD/themes/*.json`
+2. **Directorio de configuración de usuario**: definido en `~/.config/mod/themes/*.json` o `$XDG_CONFIG_HOME/MOD/themes/*.json`
 3. **Directorio raíz del proyecto**: definido en `<project-root>/.mod/themes/*.json`
 4. **Directorio de trabajo actual** - Definido en `./.mod/themes/*.json`
 
@@ -98,8 +98,8 @@ Para crear un tema personalizado, cree un archivo JSON en uno de los directorios
 Para temas para todo el usuario:
 
 ```bash no-frame
-mkdir -p ~/.config/MOD/themes
-vim ~/.config/MOD/themes/my-theme.json
+mkdir -p ~/.config/mod/themes
+vim ~/.config/mod/themes/my-theme.json
 ```
 
 Y para temas específicos del proyecto.

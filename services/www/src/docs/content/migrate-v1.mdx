@@ -56,7 +56,7 @@ V2 reads existing system, global, and project configuration from the same locati
 %ProgramData%\MOD\MOD.json(c)
 /Library/Managed Preferences/<user>/ai.mod.managed.plist
 /Library/Managed Preferences/ai.mod.managed.plist
-~/.config/MOD/MOD.json(c)
+~/.config/mod/MOD.json(c)
 <project>/MOD.json(c)
 <project>/.mod/MOD.json(c)
 ```
@@ -546,7 +546,7 @@ require a V2 rewrite. See [Skills](/skills).
 
 ### Instruction files
 
-Existing `AGENTS.md` files stay in place. V2 discovers the global `~/.config/MOD/AGENTS.md` and ambient `AGENTS.md`
+Existing `AGENTS.md` files stay in place. V2 discovers the global `~/.config/mod/AGENTS.md` and ambient `AGENTS.md`
 files from the current directory up to home. For projects outside home, discovery stops at the project root.
 
 If a V1 setup relied on a `CLAUDE.md` fallback, move that guidance into the applicable `AGENTS.md`. V2 currently only
@@ -558,7 +558,7 @@ the affected project details. See [Instructions](/instructions).
 V2 replaces layered V1 `tui.json(c)` files with one global terminal client configuration file:
 
 ```text
-~/.config/MOD/cli.json
+~/.config/mod/cli.json
 ```
 
 The terminal client owns this file; the background service does not load it. When `cli.json` is absent, the first V2

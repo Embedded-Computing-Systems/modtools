@@ -175,10 +175,10 @@ Konfigurieren Sie Agenten in Ihrer `MOD.json`-Konfigurationsdatei:
 
 Sie können Agenten auch mithilfe von Markdown-Dateien definieren. Platzieren Sie sie in:
 
-- Global: `~/.config/MOD/agents/`
+- Global: `~/.config/mod/agents/`
 - Pro Projekt: `.mod/agents/`
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Reviews code for quality and best practices
 mode: subagent
@@ -441,7 +441,7 @@ Sie können diese Berechtigungen pro Agent überschreiben.
 
 Sie können Berechtigungen auch in Markdown-Agenten festlegen.
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Code review without edits
 mode: subagent
@@ -658,7 +658,7 @@ Führen Sie `MOD models` aus, um eine Liste der verfügbaren Modelle anzubieten.
 
 ## Agenten erstellen
 
-Erstellen Sie einen neuen Agenten, indem Sie eine Markdown-Datei in `.mod/agents/` für das Projekt oder global in `~/.config/MOD/agents/` anlegen. Der Dateiname wird zum Namen des Agenten, und das Frontmatter konfiguriert Beschreibung, Modus, Modell und Berechtigungen. Das Dateiformat ist oben unter [Markdown](#markdown) beschrieben.
+Erstellen Sie einen neuen Agenten, indem Sie eine Markdown-Datei in `.mod/agents/` für das Projekt oder global in `~/.config/mod/agents/` anlegen. Der Dateiname wird zum Namen des Agenten, und das Frontmatter konfiguriert Beschreibung, Modus, Modell und Berechtigungen. Das Dateiformat ist oben unter [Markdown](#markdown) beschrieben.
 
 Führen Sie `MOD agent list` aus, um die von MOD geladenen Agenten aufzulisten.
 
@@ -688,7 +688,7 @@ Haben Sie einen Agenten, den Sie gerne teilen möchten? [Reichen Sie einen PR ei
 
 ### Dokumentationsagent
 
-```markdown title="~/.config/MOD/agents/docs-writer.md"
+```markdown title="~/.config/mod/agents/docs-writer.md"
 ---
 description: Writes and maintains project documentation
 mode: subagent
@@ -710,7 +710,7 @@ Focus on:
 
 ### Sicherheitsprüfer
 
-```markdown title="~/.config/MOD/agents/security-auditor.md"
+```markdown title="~/.config/mod/agents/security-auditor.md"
 ---
 description: Performs security audits and identifies vulnerabilities
 mode: subagent

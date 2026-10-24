@@ -188,10 +188,10 @@ Skonfiguruj agenta w pliku `MOD.json`:
 
 Możesz także definiować agentów za pomocą plików markdown. Przechowuj je w:
 
-- Globalnie: `~/.config/MOD/agents/`
+- Globalnie: `~/.config/mod/agents/`
 - W projekcie: `.mod/agents/`
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Reviews code for quality and best practices
 mode: subagent
@@ -454,7 +454,7 @@ Możesz nadpisać to dla każdego agenta.
 
 Można to również ustawić w agentach Markdown.
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Code review without edits
 mode: subagent
@@ -671,7 +671,7 @@ Uruchom `MOD models`, aby zobaczyć dostępne modele.
 
 ## Tworzenie agentów
 
-Aby utworzyć nowego agenta, dodaj plik markdown do `.mod/agents/` w projekcie lub do `~/.config/MOD/agents/` globalnie. Nazwa pliku staje się nazwą agenta, a frontmatter konfiguruje jego opis, tryb, model i uprawnienia. Format pliku opisano powyżej w sekcji [Markdown](#markdown).
+Aby utworzyć nowego agenta, dodaj plik markdown do `.mod/agents/` w projekcie lub do `~/.config/mod/agents/` globalnie. Nazwa pliku staje się nazwą agenta, a frontmatter konfiguruje jego opis, tryb, model i uprawnienia. Format pliku opisano powyżej w sekcji [Markdown](#markdown).
 
 Uruchom `MOD agent list`, aby wyświetlić listę agentów załadowanych przez MOD.
 
@@ -701,7 +701,7 @@ Masz agenta, którym warto się podzielić? [Prześlij PR](https://github.com/Em
 
 ### Agent Documentation
 
-```markdown title="~/.config/MOD/agents/docs-writer.md"
+```markdown title="~/.config/mod/agents/docs-writer.md"
 ---
 description: Writes and maintains project documentation
 mode: subagent
@@ -723,7 +723,7 @@ Focus on:
 
 ### Security Auditor
 
-```markdown title="~/.config/MOD/agents/security-auditor.md"
+```markdown title="~/.config/mod/agents/security-auditor.md"
 ---
 description: Performs security audits and identifies vulnerabilities
 mode: subagent

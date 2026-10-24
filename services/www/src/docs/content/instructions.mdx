@@ -19,7 +19,7 @@ Commit project instruction files so everyone working in the repository receives 
 Place `AGENTS.md` in the directory where its guidance should apply. MOD loads the global file followed by every `AGENTS.md` from the current workspace directory toward the home directory. For workspaces outside the home directory, it stops at the project root.
 
 ```text
-~/.config/MOD/AGENTS.md
+~/.config/mod/AGENTS.md
 ~/code/my-project/AGENTS.md
 ~/code/my-project/packages/AGENTS.md
 ~/code/my-project/packages/web/AGENTS.md  ← current workspace
@@ -28,7 +28,7 @@ Place `AGENTS.md` in the directory where its guidance should apply. MOD loads th
 In this example, all four files are loaded. They are combined in this order:
 
 ```text
-~/.config/MOD/AGENTS.md
+~/.config/mod/AGENTS.md
 packages/web/AGENTS.md
 packages/AGENTS.md
 AGENTS.md

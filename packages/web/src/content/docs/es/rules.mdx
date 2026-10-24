@@ -62,7 +62,7 @@ Coloque un `AGENTS.md` en la raíz de su proyecto para reglas específicas del p
 
 ### Global
 
-También puedes tener reglas globales en un archivo `~/.config/MOD/AGENTS.md`. Esto se aplica en todas las sesiones MOD.
+También puedes tener reglas globales en un archivo `~/.config/mod/AGENTS.md`. Esto se aplica en todas las sesiones MOD.
 
 Dado que esto no está comprometido con Git ni se comparte con su equipo, recomendamos usarlo para especificar las reglas personales que debe seguir LLM.
 
@@ -71,7 +71,7 @@ Dado que esto no está comprometido con Git ni se comparte con su equipo, recome
 Para los usuarios que migran desde Claude Code, MOD admite las convenciones de archivos de Claude Code como alternativas:
 
 - **Reglas del proyecto**: `CLAUDE.md` en el directorio de tu proyecto (se usa si no existe `AGENTS.md`)
-- **Reglas globales**: `~/.claude/CLAUDE.md` (se usa si no existe `~/.config/MOD/AGENTS.md`)
+- **Reglas globales**: `~/.claude/CLAUDE.md` (se usa si no existe `~/.config/mod/AGENTS.md`)
 - **Habilidades**: `~/.claude/skills/`; consulte [Habilidades del agente](/docs/skills/) para obtener más detalles.
 
 Para deshabilitar la compatibilidad de Claude Code, configure una de estas variables de entorno:
@@ -89,16 +89,16 @@ export MODTOOLS_DISABLE_CLAUDE_CODE_SKILLS=1 # Disable only .claude/skills
 Cuando se inicia MOD, busca archivos de reglas en este orden:
 
 1. **Archivos locales** atravesando desde el directorio actual (`AGENTS.md`, `CLAUDE.md`)
-2. **Archivo global** en `~/.config/MOD/AGENTS.md`
+2. **Archivo global** en `~/.config/mod/AGENTS.md`
 3. **Archivo de Claude Code** en `~/.claude/CLAUDE.md` (a menos que esté deshabilitado)
 
-El primer archivo coincidente gana en cada categoría. Por ejemplo, si tiene `AGENTS.md` y `CLAUDE.md`, solo se usa `AGENTS.md`. De manera similar, `~/.config/MOD/AGENTS.md` tiene prioridad sobre `~/.claude/CLAUDE.md`.
+El primer archivo coincidente gana en cada categoría. Por ejemplo, si tiene `AGENTS.md` y `CLAUDE.md`, solo se usa `AGENTS.md`. De manera similar, `~/.config/mod/AGENTS.md` tiene prioridad sobre `~/.claude/CLAUDE.md`.
 
 ---
 
 ## Instrucciones personalizadas
 
-Puede especificar archivos de instrucciones personalizados en su `MOD.json` o el `~/.config/MOD/MOD.json` global. Esto le permite a usted y a su equipo reutilizar las reglas existentes en lugar de tener que duplicarlas en AGENTS.md.
+Puede especificar archivos de instrucciones personalizados en su `MOD.json` o el `~/.config/mod/MOD.json` global. Esto le permite a usted y a su equipo reutilizar las reglas existentes en lugar de tener que duplicarlas en AGENTS.md.
 
 Ejemplo:
 

@@ -188,10 +188,10 @@ Konfigurirajte agente u svom konfiguracijskom fajlu `MOD.json`:
 
 Također možete definirati agente koristeći markdown datoteke. Stavite ih u:
 
-- Globalno: `~/.config/MOD/agents/`
+- Globalno: `~/.config/mod/agents/`
 - Po projektu: `.mod/agents/`
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Reviews code for quality and best practices
 mode: subagent
@@ -454,7 +454,7 @@ Možete nadjačati ove dozvole po agentu.
 
 Također možete postaviti dozvole u Markdown agentima.
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Code review without edits
 mode: subagent
@@ -671,7 +671,7 @@ Pokrenite `MOD models` da vidite listu dostupnih modela.
 
 ## Kreiranje agenata
 
-Novog agenta kreirate dodavanjem markdown datoteke u `.mod/agents/` za projekat ili u `~/.config/MOD/agents/` globalno. Naziv datoteke postaje naziv agenta, a frontmatter konfiguriše njegov opis, način rada, model i dozvole. Format datoteke pogledajte u odjeljku [Markdown](#markdown) iznad.
+Novog agenta kreirate dodavanjem markdown datoteke u `.mod/agents/` za projekat ili u `~/.config/mod/agents/` globalno. Naziv datoteke postaje naziv agenta, a frontmatter konfiguriše njegov opis, način rada, model i dozvole. Format datoteke pogledajte u odjeljku [Markdown](#markdown) iznad.
 
 Pokrenite `MOD agent list` da biste vidjeli listu agenata koje je MOD učitao.
 
@@ -701,7 +701,7 @@ Imate li agenta kojeg biste željeli podijeliti? [Pošalji PR](https://github.co
 
 ### Agent za dokumentaciju
 
-```markdown title="~/.config/MOD/agents/docs-writer.md"
+```markdown title="~/.config/mod/agents/docs-writer.md"
 ---
 description: Writes and maintains project documentation
 mode: subagent
@@ -723,7 +723,7 @@ Focus on:
 
 ### Sigurnosni revizor
 
-```markdown title="~/.config/MOD/agents/security-auditor.md"
+```markdown title="~/.config/mod/agents/security-auditor.md"
 ---
 description: Performs security audits and identifies vulnerabilities
 mode: subagent

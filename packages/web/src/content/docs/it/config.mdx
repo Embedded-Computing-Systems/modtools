@@ -43,7 +43,7 @@ Per esempio, se la tua configurazione globale imposta `autoupdate: true` e la co
 Le sorgenti di configurazione vengono caricate in questo ordine (le successive sovrascrivono le precedenti):
 
 1. **Config remota** (da `.well-known/MOD`) - default dell'organizzazione
-2. **Config globale** (`~/.config/MOD/MOD.json`) - preferenze utente
+2. **Config globale** (`~/.config/mod/MOD.json`) - preferenze utente
 3. **Config personalizzata** (variabile d'ambiente `MODTOOLS_CONFIG`) - sovrascritture personalizzate
 4. **Config di progetto** (`MOD.json` nel progetto) - impostazioni specifiche del progetto
 5. **Directory `.mod`** - agenti, comandi, plugin
@@ -52,7 +52,7 @@ Le sorgenti di configurazione vengono caricate in questo ordine (le successive s
 Questo significa che la configurazione di progetto puo sovrascrivere i default globali, e la configurazione globale puo sovrascrivere i default remoti dell'organizzazione.
 
 :::note
-Le directory `.mod` e `~/.config/MOD` usano **nomi al plurale** per le sottodirectory: `agents/`, `commands/`, `modes/`, `plugins/`, `skills/`, `tools/` e `themes/`. I nomi al singolare (ad es. `agent/`) sono supportati per retrocompatibilita.
+Le directory `.mod` e `~/.config/mod` usano **nomi al plurale** per le sottodirectory: `agents/`, `commands/`, `modes/`, `plugins/`, `skills/`, `tools/` e `themes/`. I nomi al singolare (ad es. `agent/`) sono supportati per retrocompatibilita.
 :::
 
 ---
@@ -95,9 +95,9 @@ Puoi abilitare server specifici nella tua configurazione locale:
 
 ### Configurazione globale
 
-Metti la configurazione globale di MOD in `~/.config/MOD/MOD.json`. Usa la configurazione globale per preferenze server/runtime valide per l'utente come provider, modelli e permessi.
+Metti la configurazione globale di MOD in `~/.config/mod/MOD.json`. Usa la configurazione globale per preferenze server/runtime valide per l'utente come provider, modelli e permessi.
 
-Per le impostazioni specifiche della TUI, usa `~/.config/MOD/tui.json`.
+Per le impostazioni specifiche della TUI, usa `~/.config/mod/tui.json`.
 
 La configurazione globale sovrascrive i default remoti dell'organizzazione.
 
@@ -335,7 +335,7 @@ Puoi configurare agenti specializzati per task specifici tramite l'opzione `agen
 }
 ```
 
-Puoi anche definire agenti usando file markdown in `~/.config/MOD/agents/` o `.mod/agents/`. [Scopri di piu](/docs/agents).
+Puoi anche definire agenti usando file markdown in `~/.config/mod/agents/` o `.mod/agents/`. [Scopri di piu](/docs/agents).
 
 ---
 
@@ -378,7 +378,7 @@ Puoi configurare comandi personalizzati per task ripetitivi tramite l'opzione `c
 }
 ```
 
-Puoi anche definire comandi usando file markdown in `~/.config/MOD/commands/` o `.mod/commands/`. [Scopri di piu](/docs/commands).
+Puoi anche definire comandi usando file markdown in `~/.config/mod/commands/` o `.mod/commands/`. [Scopri di piu](/docs/commands).
 
 ---
 
@@ -516,7 +516,7 @@ Puoi configurare i server MCP che vuoi usare tramite l'opzione `mcp`.
 
 [I plugin](/docs/plugins) estendono MOD con strumenti personalizzati, hook e integrazioni.
 
-Metti i file dei plugin in `.mod/plugins/` o `~/.config/MOD/plugins/`. Puoi anche caricare plugin da npm tramite l'opzione `plugin`.
+Metti i file dei plugin in `.mod/plugins/` o `~/.config/mod/plugins/`. Puoi anche caricare plugin da npm tramite l'opzione `plugin`.
 
 ```json title="MOD.json"
 {

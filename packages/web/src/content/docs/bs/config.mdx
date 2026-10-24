@@ -43,7 +43,7 @@ Na primjer, ako vaša globalna konfiguracija postavlja `autoupdate: true`, a va�
 Izvori konfiguracije se učitavaju ovim redoslijedom (kasniji izvori poništavaju ranije):
 
 1. **Udaljena konfiguracija** (od `.well-known/MOD`) - organizacijske postavke
-2. **Globalna konfiguracija** (`~/.config/MOD/MOD.json`) - korisničke preferencije
+2. **Globalna konfiguracija** (`~/.config/mod/MOD.json`) - korisničke preferencije
 3. **Prilagođena konfiguracija** (`MODTOOLS_CONFIG` env var) - prilagođena preinačenja
 4. **Konfiguracija projekta** (`MOD.json` u projektu) - postavke specifične za projekat
 5. **`.mod` direktoriji** - agenti, komande, dodaci
@@ -52,7 +52,7 @@ Izvori konfiguracije se učitavaju ovim redoslijedom (kasniji izvori poništavaj
 To znači da konfiguracije projekta mogu nadjačati globalne zadane postavke, a globalne konfiguracije mogu nadjačati postavke udaljene organizacije.
 
 :::note
-Direktoriji `.mod` i `~/.config/MOD` koriste **imena u množini** za poddirektorije: `agents/`, `commands/`, `modes/`, `plugins/`, `skills/`, `tools/` i `themes/`. Pojedinačna imena (npr. `agent/`) su također podržana za kompatibilnost unatrag.
+Direktoriji `.mod` i `~/.config/mod` koriste **imena u množini** za poddirektorije: `agents/`, `commands/`, `modes/`, `plugins/`, `skills/`, `tools/` i `themes/`. Pojedinačna imena (npr. `agent/`) su također podržana za kompatibilnost unatrag.
 :::
 
 ---
@@ -95,9 +95,9 @@ Možete omogućiti određene servere u vašoj lokalnoj konfiguraciji:
 
 ### Globalno
 
-Postavite svoju globalnu MOD konfiguraciju u `~/.config/MOD/MOD.json`. Koristite globalnu konfiguraciju za korisničke preferencije kao što su provajderi, modeli i dozvole.
+Postavite svoju globalnu MOD konfiguraciju u `~/.config/mod/MOD.json`. Koristite globalnu konfiguraciju za korisničke preferencije kao što su provajderi, modeli i dozvole.
 
-Za postavke specifične za TUI, koristite `~/.config/MOD/tui.json`.
+Za postavke specifične za TUI, koristite `~/.config/mod/tui.json`.
 
 Globalna konfiguracija poništava zadane postavke udaljene organizacije.
 
@@ -335,7 +335,7 @@ Možete konfigurirati specijalizirane agente za određene zadatke putem opcije `
 }
 ```
 
-Također možete definirati agente koristeći markdown datoteke u `~/.config/MOD/agents/` ili `.mod/agents/`. [Saznajte više ovdje](/docs/agents).
+Također možete definirati agente koristeći markdown datoteke u `~/.config/mod/agents/` ili `.mod/agents/`. [Saznajte više ovdje](/docs/agents).
 
 ---
 
@@ -378,7 +378,7 @@ Možete konfigurirati prilagođene naredbe za ponavljanje zadataka putem opcije 
 }
 ```
 
-Također možete definirati naredbe koristeći markdown fajlove u `~/.config/MOD/commands/` ili `.mod/commands/`. [Saznajte više ovdje](/docs/commands).
+Također možete definirati naredbe koristeći markdown fajlove u `~/.config/mod/commands/` ili `.mod/commands/`. [Saznajte više ovdje](/docs/commands).
 
 ---
 
@@ -516,7 +516,7 @@ Možete konfigurirati MCP servere koje želite koristiti putem opcije `mcp`.
 
 [Plugins](/docs/plugins) proširuju MOD sa prilagođenim alatima, kukicama i integracijama.
 
-Postavite datoteke dodataka u `.mod/plugins/` ili `~/.config/MOD/plugins/`. Također možete učitati dodatke iz npm-a preko opcije `plugin`.
+Postavite datoteke dodataka u `.mod/plugins/` ili `~/.config/mod/plugins/`. Također možete učitati dodatke iz npm-a preko opcije `plugin`.
 
 ```json title="MOD.json"
 {

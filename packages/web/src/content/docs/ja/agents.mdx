@@ -188,10 +188,10 @@ _モード_: `primary`
 
 Markdown ファイルを使用してエージェントを定義することもできます。それらを次の場所に置きます。
 
-- グローバル: `~/.config/MOD/agents/`
+- グローバル: `~/.config/mod/agents/`
 - プロジェクトごと: `.mod/agents/`
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Reviews code for quality and best practices
 mode: subagent
@@ -453,7 +453,7 @@ MCP サーバーからすべてのツールを無効にするには、次のよ�
 
 Markdown エージェントで権限を設定することもできます。
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Code review without edits
 mode: subagent
@@ -668,7 +668,7 @@ Only analyze code and suggest changes.
 
 ## エージェントの作成
 
-新しいエージェントを作成するには、プロジェクト用は `.mod/agents/`、グローバル用は `~/.config/MOD/agents/` に Markdown ファイルを追加します。ファイル名がエージェント名になり、フロントマターで説明、モード、モデル、権限を設定します。ファイル形式については、上記の [Markdown](#markdown) を参照してください。
+新しいエージェントを作成するには、プロジェクト用は `.mod/agents/`、グローバル用は `~/.config/mod/agents/` に Markdown ファイルを追加します。ファイル名がエージェント名になり、フロントマターで説明、モード、モデル、権限を設定します。ファイル形式については、上記の [Markdown](#markdown) を参照してください。
 
 `MOD agent list` を実行すると、MOD が読み込んだエージェントを一覧表示できます。
 
@@ -698,7 +698,7 @@ Only analyze code and suggest changes.
 
 ### ドキュメント作成エージェント
 
-```markdown title="~/.config/MOD/agents/docs-writer.md"
+```markdown title="~/.config/mod/agents/docs-writer.md"
 ---
 description: Writes and maintains project documentation
 mode: subagent
@@ -720,7 +720,7 @@ Focus on:
 
 ### セキュリティ監査エージェント
 
-```markdown title="~/.config/MOD/agents/security-auditor.md"
+```markdown title="~/.config/mod/agents/security-auditor.md"
 ---
 description: Performs security audits and identifies vulnerabilities
 mode: subagent

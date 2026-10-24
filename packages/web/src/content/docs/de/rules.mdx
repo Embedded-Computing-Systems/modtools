@@ -67,7 +67,7 @@ Diese gelten nur in diesem Verzeichnis und seinen Unterordnern.
 
 ### Global
 
-Du kannst auch globale Regeln in `~/.config/MOD/AGENTS.md` speichern.
+Du kannst auch globale Regeln in `~/.config/mod/AGENTS.md` speichern.
 Diese gelten in allen MOD-Sitzungen.
 
 Da diese Datei nicht in Git landet und nicht mit dem Team geteilt wird, eignet sie sich fuer persoenliche Regeln.
@@ -77,7 +77,7 @@ Da diese Datei nicht in Git landet und nicht mit dem Team geteilt wird, eignet s
 Wenn du von Claude Code kommst, unterstuetzt MOD dessen Dateikonventionen als Fallback:
 
 - **Projektregeln**: `CLAUDE.md` im Projekt (wenn keine `AGENTS.md` existiert)
-- **Globale Regeln**: `~/.claude/CLAUDE.md` (wenn keine `~/.config/MOD/AGENTS.md` existiert)
+- **Globale Regeln**: `~/.claude/CLAUDE.md` (wenn keine `~/.config/mod/AGENTS.md` existiert)
 - **Skills**: `~/.claude/skills/` - siehe [Agent Skills](/docs/skills/) fuer Details
 
 Um die Claude-Code-Kompatibilitaet zu deaktivieren, setze eine dieser Umgebungsvariablen:
@@ -95,7 +95,7 @@ export MODTOOLS_DISABLE_CLAUDE_CODE_SKILLS=1 # Disable only .claude/skills
 Beim Start sucht MOD in dieser Reihenfolge nach Regeldateien:
 
 1. **Lokale Dateien** beim Hochlaufen ab dem aktuellen Verzeichnis (`AGENTS.md`, `CLAUDE.md`)
-2. **Globale Datei** unter `~/.config/MOD/AGENTS.md`
+2. **Globale Datei** unter `~/.config/mod/AGENTS.md`
 3. **Claude-Code-Datei** unter `~/.claude/CLAUDE.md` (falls nicht deaktiviert)
 
 Pro Kategorie gewinnt die zuerst passende Datei.
@@ -105,7 +105,7 @@ Wenn sowohl `AGENTS.md` als auch `CLAUDE.md` existieren, wird nur `AGENTS.md` ve
 
 ## Eigene Anweisungen
 
-Du kannst zusaetzliche Anweisungsdateien in deiner `MOD.json` oder in `~/.config/MOD/MOD.json` angeben.
+Du kannst zusaetzliche Anweisungsdateien in deiner `MOD.json` oder in `~/.config/mod/MOD.json` angeben.
 So kann dein Team bestehende Regeln wiederverwenden, statt Inhalte in `AGENTS.md` zu duplizieren.
 
 Beispiel:

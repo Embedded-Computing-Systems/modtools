@@ -43,7 +43,7 @@ MOD は、**JSON** と **JSONC** (コメント付きの JSON) 形式の両方を
 設定ソースは次の順序でロードされます (後のソースは前のソースをオーバーライドします)。
 
 1. **リモート設定** (`.well-known/MOD` から) - 組織のデフォルト
-2. **グローバル設定** (`~/.config/MOD/MOD.json`) - ユーザー設定
+2. **グローバル設定** (`~/.config/mod/MOD.json`) - ユーザー設定
 3. **カスタム設定** (`MODTOOLS_CONFIG` 環境変数) - カスタムオーバーライド
 4. **プロジェクト設定** (プロジェクト内の `MOD.json`) - プロジェクト固有の設定
 5. **`.mod` ディレクトリ** - エージェント、コマンド、プラグイン
@@ -52,7 +52,7 @@ MOD は、**JSON** と **JSONC** (コメント付きの JSON) 形式の両方を
 つまり、プロジェクト設定はグローバルのデフォルトをオーバーライドでき、グローバル設定はリモート組織のデフォルトをオーバーライドできます。
 
 :::note
-`.mod` および `~/.config/MOD` ディレクトリでは、サブディレクトリに **複数名** が使用されています: `agents/`、`commands/`、`modes/`、`plugins/`、`skills/`、`tools/`、および `themes/`。下位互換性のために、単数形の名前 (`agent/` など) もサポートされています。
+`.mod` および `~/.config/mod` ディレクトリでは、サブディレクトリに **複数名** が使用されています: `agents/`、`commands/`、`modes/`、`plugins/`、`skills/`、`tools/`、および `themes/`。下位互換性のために、単数形の名前 (`agent/` など) もサポートされています。
 :::
 
 ---
@@ -95,9 +95,9 @@ MOD は、**JSON** と **JSONC** (コメント付きの JSON) 形式の両方を
 
 ### グローバル
 
-グローバル MOD 設定を `~/.config/MOD/MOD.json` に配置します。プロバイダー、モデル、権限などのユーザー全体の設定にはグローバル設定を使用します。
+グローバル MOD 設定を `~/.config/mod/MOD.json` に配置します。プロバイダー、モデル、権限などのユーザー全体の設定にはグローバル設定を使用します。
 
-TUI 固有の設定には、`~/.config/MOD/tui.json` を使用します。
+TUI 固有の設定には、`~/.config/mod/tui.json` を使用します。
 
 グローバル設定はリモート組織のデフォルトをオーバーライドします。
 
@@ -338,7 +338,7 @@ UI テーマを `tui.json` で設定します。
 }
 ```
 
-`~/.config/MOD/agents/` または `.mod/agents/` の Markdown ファイルを使用してエージェントを定義することもできます。 [詳細はこちら](/docs/agents)。
+`~/.config/mod/agents/` または `.mod/agents/` の Markdown ファイルを使用してエージェントを定義することもできます。 [詳細はこちら](/docs/agents)。
 
 ---
 
@@ -381,7 +381,7 @@ UI テーマを `tui.json` で設定します。
 }
 ```
 
-`~/.config/MOD/commands/` または `.mod/commands/` の Markdown ファイルを使用してコマンドを定義することもできます。 [詳細はこちら](/docs/commands)。
+`~/.config/mod/commands/` または `.mod/commands/` の Markdown ファイルを使用してコマンドを定義することもできます。 [詳細はこちら](/docs/commands)。
 
 ---
 
@@ -517,7 +517,7 @@ MOD は起動時に新しいアップデートを自動的にダウンロード�
 
 [Plugins](/docs/plugins) は、カスタムツール、フック、統合を使用して MOD を拡張します。
 
-プラグインファイルを `.mod/plugins/` または `~/.config/MOD/plugins/` に配置します。 `plugin` オプションを使用して npm からプラグインをロードすることもできます。
+プラグインファイルを `.mod/plugins/` または `~/.config/mod/plugins/` に配置します。 `plugin` オプションを使用して npm からプラグインをロードすることもできます。
 
 ```json title="MOD.json"
 {

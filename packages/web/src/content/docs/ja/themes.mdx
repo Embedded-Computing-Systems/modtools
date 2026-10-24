@@ -83,7 +83,7 @@ MOD は、ユーザーがテーマを簡単に作成およびカスタマイズ�
 テーマは複数のディレクトリから次の順序でロードされ、後のディレクトリが前のディレクトリをオーバーライドします。
 
 1. **組み込みテーマ** - これらはバイナリに埋め込まれています
-2. **ユーザー設定ディレクトリ** - `~/.config/MOD/themes/*.json` または `$XDG_CONFIG_HOME/MOD/themes/*.json` で定義されます
+2. **ユーザー設定ディレクトリ** - `~/.config/mod/themes/*.json` または `$XDG_CONFIG_HOME/MOD/themes/*.json` で定義されます
 3. **プロジェクトのルートディレクトリ** - `<project-root>/.mod/themes/*.json` で定義されます。
 4. **現在の作業ディレクトリ** - `./.mod/themes/*.json` で定義
 
@@ -98,8 +98,8 @@ MOD は、ユーザーがテーマを簡単に作成およびカスタマイズ�
 ユーザー全体のテーマの場合:
 
 ```bash no-frame
-mkdir -p ~/.config/MOD/themes
-vim ~/.config/MOD/themes/my-theme.json
+mkdir -p ~/.config/mod/themes
+vim ~/.config/mod/themes/my-theme.json
 ```
 
 そしてプロジェクト固有のテーマについても。

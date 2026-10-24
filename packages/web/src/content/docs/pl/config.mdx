@@ -42,7 +42,7 @@ Na przykład, jeśli konfiguracja globalna ustawi `theme: "MOD"` i `autoupdate: 
 Źródła konfiguracji są ładowane w następującej kolejności (źródła występujące później mają pierwszeństwo):
 
 1. **Konfiguracja zdalna** (z `.well-known/MOD`) – ustawienia wymuszane przez organizację
-2. **Konfiguracja globalna** (`~/.config/MOD/MOD.json`) – preferencje użytkownika
+2. **Konfiguracja globalna** (`~/.config/mod/MOD.json`) – preferencje użytkownika
 3. **Konfiguracja niestandardowa** (zmienna `MODTOOLS_CONFIG`) — jawne nadpisanie
 4. **Konfiguracja projektu** (`MOD.json` w projekcie) - ustawienia specyficzne dla projektu
 5. **Katalogi `.mod`** - agenci, polecenia, umiejętności
@@ -51,7 +51,7 @@ Na przykład, jeśli konfiguracja globalna ustawi `theme: "MOD"` i `autoupdate: 
 Oznacza to, że konfiguracje projektu mogą nadpisywać konfiguracje globalne, a konfiguracje globalne mogą nadpisywać konfiguracje zdalne.
 
 :::note
-W katalogach `.mod` i `~/.config/MOD` używane są **nazwy w liczbie mnogiej** dla podkatalogów: `agents/`, `commands/`, `modes/`, `plugins/`, `skills/`, `tools/` i `themes/`. Nazwy w liczbie pojedynczej (np. `agent/`) są również obsługiwane dla kompatybilności wstecznej.
+W katalogach `.mod` i `~/.config/mod` używane są **nazwy w liczbie mnogiej** dla podkatalogów: `agents/`, `commands/`, `modes/`, `plugins/`, `skills/`, `tools/` i `themes/`. Nazwy w liczbie pojedynczej (np. `agent/`) są również obsługiwane dla kompatybilności wstecznej.
 :::
 
 ---
@@ -94,9 +94,9 @@ Możesz włączyć serwer w konfiguracji projektu:
 
 ### Globalna
 
-Umieść swoją globalną konfigurację MOD w `~/.config/MOD/MOD.json`. Użyj jej do ustawień ogólnych dla użytkownika, takich jak dostawcy, modele i uprawnienia.
+Umieść swoją globalną konfigurację MOD w `~/.config/mod/MOD.json`. Użyj jej do ustawień ogólnych dla użytkownika, takich jak dostawcy, modele i uprawnienia.
 
-Dla ustawień specyficznych dla TUI, użyj `~/.config/MOD/tui.json`.
+Dla ustawień specyficznych dla TUI, użyj `~/.config/mod/tui.json`.
 
 Konfiguracja globalna ma pierwszeństwo przed konfiguracją zdalną.
 
@@ -332,7 +332,7 @@ Możesz zdefiniować i skonfigurować agentów za pomocą opcji `agent`.
 }
 ```
 
-Możesz także definiować agentów przy użyciu plików markdown w `~/.config/MOD/agents/` lub `.mod/agents/`. [Dowiedz się więcej o agentach](/docs/agents).
+Możesz także definiować agentów przy użyciu plików markdown w `~/.config/mod/agents/` lub `.mod/agents/`. [Dowiedz się więcej o agentach](/docs/agents).
 
 ---
 
@@ -375,7 +375,7 @@ Możesz zdefiniować niestandardowe polecenia dla powtarzalnych zadań za pomoc�
 }
 ```
 
-Możesz także definiować polecenia przy użyciu plików Markdown w `~/.config/MOD/commands/` lub `.mod/commands/`. [Dowiedz się więcej o poleceniach](/docs/commands).
+Możesz także definiować polecenia przy użyciu plików Markdown w `~/.config/mod/commands/` lub `.mod/commands/`. [Dowiedz się więcej o poleceniach](/docs/commands).
 
 ---
 
@@ -511,7 +511,7 @@ Skonfiguruj serwery MCP, których chcesz używać, za pomocą opcji `mcp`.
 
 [Wtyczki](/docs/plugins) rozszerzają MOD o niestandardowe narzędzia, hooki i integracje.
 
-Umieść pliki wtyczek w `.mod/plugins/` lub `~/.config/MOD/plugins/`. Możesz także załadować wtyczkę z npm za pomocą opcji `plugin`.
+Umieść pliki wtyczek w `.mod/plugins/` lub `~/.config/mod/plugins/`. Możesz także załadować wtyczkę z npm za pomocą opcji `plugin`.
 
 ```json title="MOD.json"
 {

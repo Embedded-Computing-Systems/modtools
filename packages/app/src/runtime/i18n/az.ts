@@ -669,7 +669,7 @@ export const dict = {
   "command.project.copyID": "Layihə ID-sini kopyala",
   "command.session.copyID": "Sessiya ID-sini kopyala",
   "server.row.incompatible":
-    "Bu server bu tətbiqlə uyğun olmayan MOD {{version}} versiyasını işlədir. Davam etmək üçün onu MOD V2-yə yeniləyin.",
+    "Bu server bu tətbiqlə uyğun olmaya MOD {{version}} versiyasını işlədir. Davam etmək üçün onu MOD V2-yə yeniləyin.",
   "toast.session.copyID.failed.title": "Sessiya ID-sini kopyalamaq mümkün olmadı",
   "toast.session.copyID.failed.description": "Sessiya ID-si kopyalanarkən xəta baş verdi",
   "toast.project.copyID.failed.title": "Layihə ID-sini kopyalamaq mümkün olmadı",
@@ -679,7 +679,7 @@ export const dict = {
   "error.page.action.reload": "Yenidən yüklə",
   "session.error.incompatible": "Bu server versiyası dəstəklənmir",
   "session.error.incompatible.description":
-    "{{server}} bu tətbiqlə uyğun olmayan MOD {{version}} versiyasını işlədir. Davam etmək üçün serveri MOD V2-yə yeniləyin.",
+    "{{server}} bu tətbiqlə uyğun olmaya MOD {{version}} versiyasını işlədir. Davam etmək üçün serveri MOD V2-yə yeniləyin.",
   "session.background.moveInline": "İşləyən işi arxa plana keçirmək üçün {{keybind}} basın",
   "settings.general.row.terminalPlacement.title": "Terminalın yerləşməsi",
   "settings.general.row.terminalPlacement.description": "Sessiyalarda terminalın harada açılacağını seçin",

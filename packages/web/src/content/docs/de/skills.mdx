@@ -14,7 +14,7 @@ Erstelle pro Skill-Namen einen Ordner und lege dort eine `SKILL.md` ab.
 MOD sucht in folgenden Pfaden:
 
 - Project config: `.mod/skills/<name>/SKILL.md`
-- Global config: `~/.config/MOD/skills/<name>/SKILL.md`
+- Global config: `~/.config/mod/skills/<name>/SKILL.md`
 - Project Claude-compatible: `.claude/skills/<name>/SKILL.md`
 - Global Claude-compatible: `~/.claude/skills/<name>/SKILL.md`
 - Project agent-compatible: `.agents/skills/<name>/SKILL.md`
@@ -27,7 +27,7 @@ MOD sucht in folgenden Pfaden:
 Bei projektlokalen Pfaden laeuft MOD vom aktuellen Verzeichnis nach oben bis zum Git-Worktree.
 Dabei werden passende `skills/*/SKILL.md` in `.mod/` sowie passende Dateien unter `.claude/skills/*/SKILL.md` und `.agents/skills/*/SKILL.md` geladen.
 
-Globale Definitionen kommen zusaetzlich aus `~/.config/MOD/skills/*/SKILL.md`, `~/.claude/skills/*/SKILL.md` und `~/.agents/skills/*/SKILL.md`.
+Globale Definitionen kommen zusaetzlich aus `~/.config/mod/skills/*/SKILL.md`, `~/.claude/skills/*/SKILL.md` und `~/.agents/skills/*/SKILL.md`.
 
 ---
 

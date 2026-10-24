@@ -20,7 +20,7 @@ There are two ways to load plugins.
 Place JavaScript or TypeScript files in the plugin directory.
 
 - `.mod/plugins/` - Project-level plugins
-- `~/.config/MOD/plugins/` - Global plugins
+- `~/.config/mod/plugins/` - Global plugins
 
 Files in these directories are automatically loaded at startup.
 
@@ -55,9 +55,9 @@ Browse available plugins in the [ecosystem](/docs/ecosystem#plugins).
 
 Plugins are loaded from all sources and all hooks run in sequence. The load order is:
 
-1. Global config (`~/.config/MOD/MOD.json`)
+1. Global config (`~/.config/mod/MOD.json`)
 2. Project config (`MOD.json`)
-3. Global plugin directory (`~/.config/MOD/plugins/`)
+3. Global plugin directory (`~/.config/mod/plugins/`)
 4. Project plugin directory (`.mod/plugins/`)
 
 Duplicate npm packages with the same name and version are loaded once. However, a local plugin and an npm plugin with similar names are both loaded separately.
@@ -118,7 +118,7 @@ The plugin function receives:
 - `project`: The current project information.
 - `directory`: The current working directory.
 - `worktree`: The git worktree path.
-- `client`: An MOD SDK client for interacting with the AI.
+- `client`: A MOD SDK client for interacting with the AI.
 - `$`: Bun's [shell API](https://bun.com/docs/runtime/shell) for executing commands.
 
 ---

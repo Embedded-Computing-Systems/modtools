@@ -189,10 +189,10 @@ Configure os agentes em seu arquivo de configuração `MOD.json`:
 
 Você também pode definir agentes usando arquivos markdown. Coloque-os em:
 
-- Global: `~/.config/MOD/agents/`
+- Global: `~/.config/mod/agents/`
 - Por projeto: `.mod/agents/`
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Revisa código para qualidade e melhores práticas
 mode: subagent
@@ -455,7 +455,7 @@ Você pode substituir essas permissões por agente.
 
 Você também pode definir permissões em agentes Markdown.
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Revisão de código sem edições
 mode: subagent
@@ -672,7 +672,7 @@ Execute `MOD models` para ver uma lista dos modelos disponíveis.
 
 ## Criando agentes
 
-Crie um novo agente adicionando um arquivo markdown em `.mod/agents/` para o projeto ou em `~/.config/MOD/agents/` globalmente. O nome do arquivo se torna o nome do agente, e o frontmatter configura sua descrição, modo, modelo e permissões. Consulte [Markdown](#markdown) acima para ver o formato do arquivo.
+Crie um novo agente adicionando um arquivo markdown em `.mod/agents/` para o projeto ou em `~/.config/mod/agents/` globalmente. O nome do arquivo se torna o nome do agente, e o frontmatter configura sua descrição, modo, modelo e permissões. Consulte [Markdown](#markdown) acima para ver o formato do arquivo.
 
 Execute `MOD agent list` para listar os agentes que o MOD carregou.
 
@@ -702,7 +702,7 @@ Você tem um agente que gostaria de compartilhar? [Envie um PR](https://github.c
 
 ### Agente de documentação
 
-```markdown title="~/.config/MOD/agents/docs-writer.md"
+```markdown title="~/.config/mod/agents/docs-writer.md"
 ---
 description: Escreve e mantém a documentação do projeto
 mode: subagent
@@ -724,7 +724,7 @@ Foque em:
 
 ### Auditor de segurança
 
-```markdown title="~/.config/MOD/agents/security-auditor.md"
+```markdown title="~/.config/mod/agents/security-auditor.md"
 ---
 description: Realiza auditorias de segurança e identifica vulnerabilidades
 mode: subagent

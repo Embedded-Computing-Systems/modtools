@@ -38,7 +38,7 @@ export default {
   "error.executeDistro": "Kan geen opdrachten uitvoeren in de distributie",
   "error.installWsl": "Installatie van WSL is mislukt",
   "error.installDistro": "Kan distributie niet installeren: {{distro}}",
-  "error.installMod": "Installatie van MOD is mislukt",
+  "error.installMod": "Installatie va MOD is mislukt",
   "error.alreadyAdded": "{{distro}} is al toegevoegd",
   "error.modMissing": "mod is niet geïnstalleerd in deze distributie",
   "error.modCannotRun": "mod is geïnstalleerd, maar kan niet worden uitgevoerd",

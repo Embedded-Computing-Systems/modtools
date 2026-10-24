@@ -18,10 +18,10 @@ MOD submits `Review src/auth.ts for bugs and missing tests.` as a user prompt.
 
 ## Markdown
 
-Put global commands in `~/.config/MOD/commands/` and project commands in `.mod/commands/`.
+Put global commands in `~/.config/mod/commands/` and project commands in `.mod/commands/`.
 
 ```text
-~/.config/MOD/commands/review.md
+~/.config/mod/commands/review.md
 .mod/commands/review.md
 ```
 
@@ -245,7 +245,7 @@ This example runs in the current session because `subagent` takes precedence.
 Markdown and JSON commands share one registry. Later sources replace earlier commands with the same name.
 
 ```text
-~/.config/MOD/commands/review.md   # Lower priority
+~/.config/mod/commands/review.md   # Lower priority
 .mod/commands/review.md           # Replaces the global command
 ```
 

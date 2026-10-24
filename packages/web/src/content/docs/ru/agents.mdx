@@ -188,10 +188,10 @@ _Режим_: `primary`
 
 Вы также можете определить агентов, используя файлы Markdown. Поместите их в:
 
-- Глобальный: `~/.config/MOD/agents/`
+- Глобальный: `~/.config/mod/agents/`
 - Для каждого проекта: `.mod/agents/`
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Reviews code for quality and best practices
 mode: subagent
@@ -454,7 +454,7 @@ Provide constructive feedback without making direct changes.
 
 Вы также можете установить разрешения в агентах Markdown.
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Code review without edits
 mode: subagent
@@ -671,7 +671,7 @@ Only analyze code and suggest changes.
 
 ## Создание агентов
 
-Чтобы создать нового агента, добавьте файл Markdown в `.mod/agents/` для проекта или в `~/.config/MOD/agents/` глобально. Имя файла становится именем агента, а frontmatter задает его описание, режим, модель и разрешения. Формат файла описан выше в разделе [Markdown](#markdown).
+Чтобы создать нового агента, добавьте файл Markdown в `.mod/agents/` для проекта или в `~/.config/mod/agents/` глобально. Имя файла становится именем агента, а frontmatter задает его описание, режим, модель и разрешения. Формат файла описан выше в разделе [Markdown](#markdown).
 
 Выполните `MOD agent list`, чтобы вывести список агентов, загруженных MOD.
 
@@ -701,7 +701,7 @@ Only analyze code and suggest changes.
 
 ### Агент документации
 
-```markdown title="~/.config/MOD/agents/docs-writer.md"
+```markdown title="~/.config/mod/agents/docs-writer.md"
 ---
 description: Writes and maintains project documentation
 mode: subagent
@@ -723,7 +723,7 @@ Focus on:
 
 ### Аудитор безопасности
 
-```markdown title="~/.config/MOD/agents/security-auditor.md"
+```markdown title="~/.config/mod/agents/security-auditor.md"
 ---
 description: Performs security audits and identifies vulnerabilities
 mode: subagent

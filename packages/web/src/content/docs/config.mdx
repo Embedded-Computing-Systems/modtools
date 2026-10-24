@@ -44,7 +44,7 @@ For example, if your global config sets `autoupdate: true` and your project conf
 Config sources are loaded in this order (later sources override earlier ones):
 
 1. **Remote config** (from `.well-known/MOD`) - organizational defaults
-2. **Global config** (`~/.config/MOD/MOD.json`) - user preferences
+2. **Global config** (`~/.config/mod/MOD.json`) - user preferences
 3. **Custom config** (`MODTOOLS_CONFIG` env var) - custom overrides
 4. **Project config** (`MOD.json` in project) - project-specific settings
 5. **`.mod` directories** - agents, commands, plugins
@@ -55,7 +55,7 @@ Config sources are loaded in this order (later sources override earlier ones):
 This means project configs can override global defaults, and global configs can override remote organizational defaults. Managed settings override everything.
 
 :::note
-The `.mod` and `~/.config/MOD` directories use **plural names** for subdirectories: `agents/`, `commands/`, `modes/`, `plugins/`, `skills/`, `tools/`, and `themes/`. Singular names (e.g., `agent/`) are also supported for backwards compatibility.
+The `.mod` and `~/.config/mod` directories use **plural names** for subdirectories: `agents/`, `commands/`, `modes/`, `plugins/`, `skills/`, `tools/`, and `themes/`. Singular names (e.g., `agent/`) are also supported for backwards compatibility.
 :::
 
 ---
@@ -98,9 +98,9 @@ You can enable specific servers in your local config:
 
 ### Global
 
-Place your global MOD config in `~/.config/MOD/MOD.json`. Use global config for user-wide server/runtime preferences like providers, models, and permissions.
+Place your global MOD config in `~/.config/mod/MOD.json`. Use global config for user-wide server/runtime preferences like providers, models, and permissions.
 
-For TUI-specific settings, use `~/.config/MOD/tui.json`.
+For TUI-specific settings, use `~/.config/mod/tui.json`.
 
 Global config overrides remote organizational defaults.
 
@@ -524,7 +524,7 @@ You can configure specialized agents for specific tasks through the `agent` opti
 }
 ```
 
-You can also define agents using markdown files in `~/.config/MOD/agents/` or `.mod/agents/`. [Learn more here](/docs/agents).
+You can also define agents using markdown files in `~/.config/mod/agents/` or `.mod/agents/`. [Learn more here](/docs/agents).
 
 ---
 
@@ -582,7 +582,7 @@ You can configure custom commands for repetitive tasks through the `command` opt
 }
 ```
 
-You can also define commands using markdown files in `~/.config/MOD/commands/` or `.mod/commands/`. [Learn more here](/docs/commands).
+You can also define commands using markdown files in `~/.config/mod/commands/` or `.mod/commands/`. [Learn more here](/docs/commands).
 
 ---
 
@@ -779,7 +779,7 @@ You can configure MCP servers you want to use through the `mcp` option.
 
 [Plugins](/docs/plugins) extend MOD with custom tools, hooks, and integrations.
 
-Place plugin files in `.mod/plugins/` or `~/.config/MOD/plugins/`. You can also load plugins from npm through the `plugin` option.
+Place plugin files in `.mod/plugins/` or `~/.config/mod/plugins/`. You can also load plugins from npm through the `plugin` option.
 
 ```json title="MOD.json"
 {

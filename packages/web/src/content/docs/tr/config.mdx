@@ -43,7 +43,7 @@ Yapılandırma dosyaları değiştirilmez, birleştirilir. Aşağıdaki yapılan
 Yapılandırma kaynakları bu sırayla yüklenir (sonraki kaynaklar öncekileri geçersiz kılar):
 
 1. **Uzak yapılandırma** (`.well-known/MOD`'dan) - kurumsal varsayılanlar
-2. **Genel yapılandırma** (`~/.config/MOD/MOD.json`) - kullanıcı tercihleri
+2. **Genel yapılandırma** (`~/.config/mod/MOD.json`) - kullanıcı tercihleri
 3. **Özel yapılandırma** (`MODTOOLS_CONFIG` env var) - özel geçersiz kılmalar
 4. **Proje yapılandırması** (projedeki `MOD.json`) - projeye özgü ayarlar
 5. **`.mod` dizinleri** - agent'lar, komutlar, eklentiler
@@ -52,7 +52,7 @@ Yapılandırma kaynakları bu sırayla yüklenir (sonraki kaynaklar öncekileri 
 Bu, proje yapılandırmalarının genel varsayılanları geçersiz kılabileceği ve genel yapılandırmaların uzak organizasyonel varsayılanları geçersiz kılabileceği anlamına gelir.
 
 :::note
-`.mod` ve `~/.config/MOD` dizinleri alt dizinler için **çoğul adlar** kullanır: `agents/`, `commands/`, `modes/`, `plugins/`, `skills/`, `tools/` ve `themes/`. Tekil adlar (örneğin, `agent/`) da geriye dönük uyumluluk açısından desteklenir.
+`.mod` ve `~/.config/mod` dizinleri alt dizinler için **çoğul adlar** kullanır: `agents/`, `commands/`, `modes/`, `plugins/`, `skills/`, `tools/` ve `themes/`. Tekil adlar (örneğin, `agent/`) da geriye dönük uyumluluk açısından desteklenir.
 :::
 
 ---
@@ -95,7 +95,7 @@ Yerel yapılandırmanızda belirli sunucuları etkinleştirebilirsiniz:
 
 ### Global
 
-Global MOD yapılandırmanızı `~/.config/MOD/MOD.json` içine yerleştirin. Temalar, sağlayıcılar veya tuş atamaları gibi kullanıcı çapındaki tercihler için genel yapılandırmayı kullanın.
+Global MOD yapılandırmanızı `~/.config/mod/MOD.json` içine yerleştirin. Temalar, sağlayıcılar veya tuş atamaları gibi kullanıcı çapındaki tercihler için genel yapılandırmayı kullanın.
 
 Genel yapılandırma, uzak kurumsal varsayılanları geçersiz kılar.
 
@@ -337,7 +337,7 @@ MOD yapılandırmanızda kullanmak istediğiniz temayı `theme` seçeneği arac�
 }
 ```
 
-Agent'ları `~/.config/MOD/agents/` veya `.mod/agents/` içindeki Markdown dosyalarıyla da tanımlayabilirsiniz. [Daha fazla bilgi](/docs/agents).
+Agent'ları `~/.config/mod/agents/` veya `.mod/agents/` içindeki Markdown dosyalarıyla da tanımlayabilirsiniz. [Daha fazla bilgi](/docs/agents).
 
 ---
 
@@ -380,7 +380,7 @@ Bu ayar tüm arayüzler için geçerlidir: TUI, CLI (`MOD run`), masaüstü uygu
 }
 ```
 
-Komutları `~/.config/MOD/commands/` veya `.mod/commands/` içindeki Markdown dosyalarıyla da tanımlayabilirsiniz. [Daha fazla bilgi](/docs/commands).
+Komutları `~/.config/mod/commands/` veya `.mod/commands/` içindeki Markdown dosyalarıyla da tanımlayabilirsiniz. [Daha fazla bilgi](/docs/commands).
 
 ---
 
@@ -518,7 +518,7 @@ Kullanmak istediğiniz MCP sunucularını `mcp` seçeneği aracılığıyla yap�
 
 [Eklentiler](/docs/plugins) MOD'u özel araçlar, kancalar ve entegrasyonlarla genişletin.
 
-Eklenti dosyalarını `.mod/plugins/` veya `~/.config/MOD/plugins/` içine yerleştirin. Ayrıca eklentileri `plugin` seçeneği aracılığıyla npm'den de yükleyebilirsiniz.
+Eklenti dosyalarını `.mod/plugins/` veya `~/.config/mod/plugins/` içine yerleştirin. Ayrıca eklentileri `plugin` seçeneği aracılığıyla npm'den de yükleyebilirsiniz.
 
 ```json title="MOD.json"
 {

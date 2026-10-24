@@ -42,7 +42,7 @@ MOD automatically searches these locations:
 
 | Scope                 | Sources                                |
 | --------------------- | -------------------------------------- |
-| Global                | `~/.config/MOD/skills`            |
+| Global                | `~/.config/mod/skills`            |
 | Global compatibility  | `~/.claude/skills`, `~/.agents/skills` |
 | Project               | `.mod/skills`                     |
 | Project compatibility | `.claude/skills`, `.agents/skills`     |
@@ -164,7 +164,7 @@ V2 currently does not enforce this pattern, the 1–64 character recommendation,
 Skills are selected by ID. If two sources define `git-release`, the source registered later supplies the skill that MOD loads:
 
 ```text
-~/.config/MOD/skills/git-release/SKILL.md  ← lower precedence
+~/.config/mod/skills/git-release/SKILL.md  ← lower precedence
 .mod/skills/git-release/SKILL.md           ← loaded
 ```
 
@@ -173,7 +173,7 @@ Sources are registered from lower to higher precedence:
 1. Built-in skills
 2. `.claude/skills`, global first and then from the farthest ancestor toward the current directory
 3. `.agents/skills`, global first and then from the farthest ancestor toward the current directory
-4. `~/.config/MOD/skills`
+4. `~/.config/mod/skills`
 5. Project `.mod/skills`, from the project root toward the current directory
 6. Explicit `skills` config entries, in config priority and array order
 

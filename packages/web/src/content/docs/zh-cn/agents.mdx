@@ -188,10 +188,10 @@ _模式_：`primary`
 
 您还可以使用 Markdown 文件定义代理。将它们放在：
 
-- 全局：`~/.config/MOD/agents/`
+- 全局：`~/.config/mod/agents/`
 - 项目级：`.mod/agents/`
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Reviews code for quality and best practices
 mode: subagent
@@ -454,7 +454,7 @@ MOD 配置中的模型 ID 使用 `provider/model-id` 格式。例如，如果您
 
 您还可以在 Markdown 代理中设置权限。
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Code review without edits
 mode: subagent
@@ -671,7 +671,7 @@ Only analyze code and suggest changes.
 
 ## 创建代理
 
-要创建新代理，请将 Markdown 文件添加到项目的 `.mod/agents/` 或全局的 `~/.config/MOD/agents/` 中。文件名即为代理名称，frontmatter 用于配置其描述、模式、模型和权限。文件格式请参阅上文的 [Markdown](#markdown)。
+要创建新代理，请将 Markdown 文件添加到项目的 `.mod/agents/` 或全局的 `~/.config/mod/agents/` 中。文件名即为代理名称，frontmatter 用于配置其描述、模式、模型和权限。文件格式请参阅上文的 [Markdown](#markdown)。
 
 运行 `MOD agent list` 可列出 MOD 已加载的代理。
 
@@ -701,7 +701,7 @@ Only analyze code and suggest changes.
 
 ### 文档代理
 
-```markdown title="~/.config/MOD/agents/docs-writer.md"
+```markdown title="~/.config/mod/agents/docs-writer.md"
 ---
 description: Writes and maintains project documentation
 mode: subagent
@@ -723,7 +723,7 @@ Focus on:
 
 ### 安全审计代理
 
-```markdown title="~/.config/MOD/agents/security-auditor.md"
+```markdown title="~/.config/mod/agents/security-auditor.md"
 ---
 description: Performs security audits and identifies vulnerabilities
 mode: subagent

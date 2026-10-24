@@ -65,7 +65,7 @@ configuration to enforce restrictions.
 Put user settings for every project in the global configuration:
 
 ```text
-~/.config/MOD/MOD.json(c)
+~/.config/mod/MOD.json(c)
 ```
 
 Put project settings in either of these files:
@@ -85,7 +85,7 @@ For example, start MOD from `/home/user/projects/acme/packages/web`:
 
 ```text
 /etc/MOD/MOD.json
-~/.config/MOD/MOD.json
+~/.config/mod/MOD.json
 
 /home/user/projects/acme/
 ├── MOD.json
@@ -97,7 +97,7 @@ For example, start MOD from `/home/user/projects/acme/packages/web`:
 
 MOD applies these files from lowest to highest precedence:
 
-1. `~/.config/MOD/MOD.json`
+1. `~/.config/mod/MOD.json`
 2. `/home/user/projects/acme/MOD.json`
 3. `/home/user/projects/acme/packages/web/MOD.json`
 4. `/etc/MOD/MOD.json`

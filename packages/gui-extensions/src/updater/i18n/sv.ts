@@ -10,7 +10,7 @@ export default {
   "toast.latest.description": "Du kör den senaste versionen av MOD.",
   "migration.title": "Byt från Beta till Stabil",
   "migration.description":
-    "MOD Beta flyttas tills vidare till MOD Stabil. Hämta version {{version}} och installera sedan MOD från skivavbildningen för att fortsätta få uppdateringar.",
+    "MOD Beta flyttas tills vidare till MOD Stabil. Hämta version {{version}} och installera seda MOD från skivavbildningen för att fortsätta få uppdateringar.",
   "section.title": "Uppdateringar",
   "releaseNotes.title": "Versionsinformation",
   "releaseNotes.description": "Visa popup-fönster för vad som är nytt efter uppdateringar",

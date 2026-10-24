@@ -2,7 +2,7 @@
 
 The Promise plugin API at `@modtools-ai/plugin` is the async/await equivalent of `@modtools-ai/plugin/effect`. It grants plugins the same two in-process capabilities:
 
-- `hook` installs behavior at an MOD extension point.
+- `hook` installs behavior at a MOD extension point.
 - `reload` reruns every transform hook for a stateful domain.
 
 The Promise API uses Promises instead of Effects for setup, runtime hook

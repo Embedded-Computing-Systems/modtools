@@ -667,7 +667,7 @@ export const dict = {
   "command.project.copyID": "Loyiha ID-sini nusxalash",
   "command.session.copyID": "Sessiya ID-sini nusxalash",
   "server.row.incompatible":
-    "Bu server ushbu ilovaga mos kelmaydigan MOD {{version}} versiyasini ishlatmoqda. Davom etish uchun uni MOD V2 versiyasiga yangilang.",
+    "Bu server ushbu ilovaga mos kelmaydiga MOD {{version}} versiyasini ishlatmoqda. Davom etish uchun uni MOD V2 versiyasiga yangilang.",
   "toast.session.copyID.failed.title": "Sessiya ID-sini nusxalab bo‘lmadi",
   "toast.session.copyID.failed.description": "Sessiya ID-sini nusxalashda xatolik yuz berdi",
   "toast.project.copyID.failed.title": "Loyiha ID-sini nusxalab bo‘lmadi",
@@ -677,7 +677,7 @@ export const dict = {
   "error.page.action.reload": "Qayta yuklash",
   "session.error.incompatible": "Bu server versiyasi qo‘llab-quvvatlanmaydi",
   "session.error.incompatible.description":
-    "{{server}} ushbu ilovaga mos kelmaydigan MOD {{version}} versiyasini ishlatmoqda. Davom etish uchun serverni MOD V2 versiyasiga yangilang.",
+    "{{server}} ushbu ilovaga mos kelmaydiga MOD {{version}} versiyasini ishlatmoqda. Davom etish uchun serverni MOD V2 versiyasiga yangilang.",
   "session.background.moveInline": "Bajarilayotgan ishni fonga o‘tkazish uchun {{keybind}} tugmasini bosing",
   "settings.general.row.terminalPlacement.title": "Terminal joylashuvi",
   "settings.general.row.terminalPlacement.description": "Sessiyalarda terminal qayerda ochilishini tanlang",

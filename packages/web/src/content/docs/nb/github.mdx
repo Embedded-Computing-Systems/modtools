@@ -82,7 +82,7 @@ Eller du kan sette den opp manuelt.
 
 - `model`: Modellen som skal brukes med MOD. Tar formatet `provider/model`. Dette er **obligatorisk**.
 - `agent`: Agenten som skal brukes. Må være en primær agent. Faller tilbake til `default_agent` fra config eller `"build"` hvis ikke funnet.
-- `prompt`: Valgfri egendefinert melding for å overstyre standard oppførsel. Bruk dette til å tilpasse hvordan MOD behandler forespørsler.
+- `prompt`: Valgfri egendefinert melding for å overstyre standard oppførsel. Bruk dette til å tilpasse hvorda MOD behandler forespørsler.
 - `token`: Valgfritt GitHub-tilgangstoken for å utføre operasjoner som å lage kommentarer, foreta endringer og åpne pull-forespørsler. Som standard bruker MOD installasjonstilgangstokenet fra MOD GitHub-appen, så commits, kommentarer og pull-forespørsler ser ut til å komme fra appen.
 
   Alternativt kan du bruke GitHub Action-løperens [innebygde `GITHUB_TOKEN`](https://docs.github.com/en/actions/tutorials/authenticate-with-github_token) uten å installere MOD GitHub-appen. Bare sørg for å gi de nødvendige tillatelsene i arbeidsflyten din:

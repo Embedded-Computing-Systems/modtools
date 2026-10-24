@@ -2,7 +2,7 @@
 
 The Effect plugin API grants plugins two in-process capabilities:
 
-- `hook` installs behavior at an MOD extension point.
+- `hook` installs behavior at a MOD extension point.
 - `reload` reruns every transform hook for a stateful domain.
 
 ## Defining A Plugin

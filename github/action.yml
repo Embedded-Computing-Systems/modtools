@@ -58,7 +58,7 @@ runs:
     - name: Install mod
       if: steps.cache.outputs.cache-hit != 'true'
       shell: bash
-      run: curl -fsSL https://modtools.ai/install | bash
+      run: curl -fsSL https://opencode.ai/install | bash
 
     - name: Add mod to PATH
       shell: bash

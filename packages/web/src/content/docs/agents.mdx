@@ -202,10 +202,10 @@ Configure agents in your `MOD.json` config file:
 
 You can also define agents using markdown files. Place them in:
 
-- Global: `~/.config/MOD/agents/`
+- Global: `~/.config/mod/agents/`
 - Per-project: `.mod/agents/`
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Reviews code for quality and best practices
 mode: subagent
@@ -495,7 +495,7 @@ You can override these permissions per agent.
 
 You can also set permissions in Markdown agents.
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Code review without edits
 mode: subagent
@@ -712,7 +712,7 @@ Run `MOD models` to see a list of the available models.
 
 ## Create agents
 
-Create a new agent by adding a markdown file to `.mod/agents/` for the project or `~/.config/MOD/agents/` globally. The file name becomes the agent name, and the frontmatter configures its description, mode, model, and permissions. See [Markdown](#markdown) above for the file format.
+Create a new agent by adding a markdown file to `.mod/agents/` for the project or `~/.config/mod/agents/` globally. The file name becomes the agent name, and the frontmatter configures its description, mode, model, and permissions. See [Markdown](#markdown) above for the file format.
 
 You can also run `MOD agent create` to create an agent interactively. Run `MOD agent list` to list the agents that MOD has loaded.
 
@@ -742,7 +742,7 @@ Do you have an agent you'd like to share? [Submit a PR](https://github.com/Embed
 
 ### Documentation agent
 
-```markdown title="~/.config/MOD/agents/docs-writer.md"
+```markdown title="~/.config/mod/agents/docs-writer.md"
 ---
 description: Writes and maintains project documentation
 mode: subagent
@@ -764,7 +764,7 @@ Focus on:
 
 ### Security auditor
 
-```markdown title="~/.config/MOD/agents/security-auditor.md"
+```markdown title="~/.config/mod/agents/security-auditor.md"
 ---
 description: Performs security audits and identifies vulnerabilities
 mode: subagent

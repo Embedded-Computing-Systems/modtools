@@ -681,7 +681,7 @@ export const dict = {
   "command.project.copyID": "Proje kimliğini kopyala",
   "command.session.copyID": "Oturum kimliğini kopyala",
   "server.row.incompatible":
-    "Bu sunucu, bu uygulamayla uyumlu olmayan MOD {{version}} sürümünü çalıştırıyor. Devam etmek için MOD V2'ye yükseltin.",
+    "Bu sunucu, bu uygulamayla uyumlu olmaya MOD {{version}} sürümünü çalıştırıyor. Devam etmek için MOD V2'ye yükseltin.",
   "toast.session.copyID.failed.title": "Oturum kimliği kopyalanamadı",
   "toast.session.copyID.failed.description": "Oturum kimliği kopyalanırken bir hata oluştu",
   "toast.project.copyID.failed.title": "Proje kimliği kopyalanamadı",
@@ -691,7 +691,7 @@ export const dict = {
   "error.page.action.reload": "Yeniden yükle",
   "session.error.incompatible": "Bu sunucu sürümü desteklenmiyor",
   "session.error.incompatible.description":
-    "{{server}}, bu uygulamayla uyumlu olmayan MOD {{version}} sürümünü çalıştırıyor. Devam etmek için sunucuyu MOD V2'ye yükseltin.",
+    "{{server}}, bu uygulamayla uyumlu olmaya MOD {{version}} sürümünü çalıştırıyor. Devam etmek için sunucuyu MOD V2'ye yükseltin.",
   "session.background.moveInline": "Çalışan işi arka plana taşımak için {{keybind}} tuşuna basın",
   "settings.general.row.terminalPlacement.title": "Terminal yerleşimi",
   "settings.general.row.terminalPlacement.description": "Oturumlarda terminalin nerede açılacağını seçin",

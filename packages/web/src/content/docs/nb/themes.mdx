@@ -83,7 +83,7 @@ MOD støtter et fleksibelt JSON-basert temasystem som lar brukere enkelt lage og
 Temaer lastes inn fra flere kataloger i følgende rekkefølge der senere kataloger overstyrer tidligere:
 
 1. **Innebygde temaer** - Disse er innebygd i binæren
-2. **Brukerkonfigurasjonskatalog** - Definert i `~/.config/MOD/themes/*.json` eller `$XDG_CONFIG_HOME/MOD/themes/*.json`
+2. **Brukerkonfigurasjonskatalog** - Definert i `~/.config/mod/themes/*.json` eller `$XDG_CONFIG_HOME/MOD/themes/*.json`
 3. **Prosjektrotkatalog** - Definert i `<project-root>/.mod/themes/*.json`
 4. **Gjeldende arbeidskatalog** - Definert i `./.mod/themes/*.json`
 
@@ -98,8 +98,8 @@ For å lage et tilpasset tema, lag en JSON-fil i en av temakatalogene.
 For brukerspesifikke temaer:
 
 ```bash no-frame
-mkdir -p ~/.config/MOD/themes
-vim ~/.config/MOD/themes/my-theme.json
+mkdir -p ~/.config/mod/themes
+vim ~/.config/mod/themes/my-theme.json
 ```
 
 Og for prosjektspesifikke temaer.

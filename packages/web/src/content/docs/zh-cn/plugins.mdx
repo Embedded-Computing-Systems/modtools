@@ -20,7 +20,7 @@ description: 编写自己的插件来扩展 MOD。
 将 JavaScript 或 TypeScript 文件放置在插件目录中。
 
 - `.mod/plugins/` - 项目级插件
-- `~/.config/MOD/plugins/` - 全局插件
+- `~/.config/mod/plugins/` - 全局插件
 
 这些目录中的文件会在启动时自动加载。
 
@@ -55,9 +55,9 @@ description: 编写自己的插件来扩展 MOD。
 
 插件从所有来源加载，所有钩子按顺序执行。加载顺序为：
 
-1. 全局配置 (`~/.config/MOD/MOD.json`)
+1. 全局配置 (`~/.config/mod/MOD.json`)
 2. 项目配置 (`MOD.json`)
-3. 全局插件目录 (`~/.config/MOD/plugins/`)
+3. 全局插件目录 (`~/.config/mod/plugins/`)
 4. 项目插件目录 (`.mod/plugins/`)
 
 名称和版本相同的重复 npm 包只会加载一次。但本地插件和名称相似的 npm 插件会分别独立加载。

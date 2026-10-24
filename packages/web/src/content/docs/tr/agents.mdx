@@ -188,10 +188,10 @@ Agent'ları `MOD.json` yapılandırma dosyanızda yapılandırın:
 
 Ayrıca agent'ları Markdown dosyalarını kullanarak da tanımlayabilirsiniz. Bunları şuraya yerleştirin:
 
-- Global: `~/.config/MOD/agents/`
+- Global: `~/.config/mod/agents/`
 - Proje başına: `.mod/agents/`
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Reviews code for quality and best practices
 mode: subagent
@@ -454,7 +454,7 @@ Bu izinleri agent başına geçersiz kılabilirsiniz.
 
 İzinleri Markdown agent'larında da ayarlayabilirsiniz.
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Code review without edits
 mode: subagent
@@ -671,7 +671,7 @@ Mevcut modellerin listesini görmek için `MOD models` komutunu çalıştırın.
 
 ## Agent Oluşturma
 
-Yeni bir agent oluşturmak için proje düzeyinde `.mod/agents/` dizinine veya global olarak `~/.config/MOD/agents/` dizinine bir Markdown dosyası ekleyin. Dosya adı agent'ın adı olur; frontmatter ise açıklamasını, modunu, modelini ve izinlerini yapılandırır. Dosya biçimi için yukarıdaki [Markdown](#markdown) bölümüne bakın.
+Yeni bir agent oluşturmak için proje düzeyinde `.mod/agents/` dizinine veya global olarak `~/.config/mod/agents/` dizinine bir Markdown dosyası ekleyin. Dosya adı agent'ın adı olur; frontmatter ise açıklamasını, modunu, modelini ve izinlerini yapılandırır. Dosya biçimi için yukarıdaki [Markdown](#markdown) bölümüne bakın.
 
 MOD'un yüklediği agent'ları listelemek için `MOD agent list` komutunu çalıştırın.
 
@@ -701,7 +701,7 @@ Paylaşmak istediğiniz bir agent'ınız var mı? [Submit a PR](https://github.c
 
 ### Dokümantasyon agent'ı
 
-```markdown title="~/.config/MOD/agents/docs-writer.md"
+```markdown title="~/.config/mod/agents/docs-writer.md"
 ---
 description: Writes and maintains project documentation
 mode: subagent
@@ -723,7 +723,7 @@ Focus on:
 
 ### Güvenlik denetçisi
 
-```markdown title="~/.config/MOD/agents/security-auditor.md"
+```markdown title="~/.config/mod/agents/security-auditor.md"
 ---
 description: Performs security audits and identifies vulnerabilities
 mode: subagent

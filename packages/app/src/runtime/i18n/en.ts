@@ -372,7 +372,7 @@ export const dict = {
   "server.connect.pair.link": "Run this command on the server's computer to get a pairing link and QR code.",
   "server.connect.scan": "Scan QR code",
   "server.connect.scan.description": "Point your camera at the QR code shown by mod pair.",
-  "server.connect.scan.invalid": "This is not an MOD pairing code. Scan the code shown by mod pair.",
+  "server.connect.scan.invalid": "This is not a MOD pairing code. Scan the code shown by mod pair.",
   "server.connect.scan.failed": "This browser could not read the QR code. Enter your connection details manually.",
   "server.connect.link.expired": "This pairing link expired or was already used. Run mod pair to get a new one.",
   "server.connect.link.unreachable":

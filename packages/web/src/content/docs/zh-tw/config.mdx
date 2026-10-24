@@ -43,7 +43,7 @@ MOD 支援 **JSON** 和 **JSONC**（帶註解的 JSON）格式。
 設定來源按以下順序載入（後面的來源覆寫前面的來源）：
 
 1. **遠端設定**（來自 `.well-known/MOD`）- 組織預設值
-2. **全域設定**（`~/.config/MOD/MOD.json`）- 使用者偏好
+2. **全域設定**（`~/.config/mod/MOD.json`）- 使用者偏好
 3. **自訂設定**（`MODTOOLS_CONFIG` 環境變數）- 自訂覆寫
 4. **專案設定**（專案中的 `MOD.json`）- 專案特定設定
 5. **`.mod` 目錄** - 代理、指令、外掛程式
@@ -52,7 +52,7 @@ MOD 支援 **JSON** 和 **JSONC**（帶註解的 JSON）格式。
 這意味著專案設定可以覆寫全域預設值，全域設定可以覆寫遠端組織預設值。
 
 :::note
-`.mod` 和 `~/.config/MOD` 目錄的子目錄使用**複數名稱**：`agents/`、`commands/`、`modes/`、`plugins/`、`skills/`、`tools/` 和 `themes/`。為了向後相容，也支援單數名稱（例如 `agent/`）。
+`.mod` 和 `~/.config/mod` 目錄的子目錄使用**複數名稱**：`agents/`、`commands/`、`modes/`、`plugins/`、`skills/`、`tools/` 和 `themes/`。為了向後相容，也支援單數名稱（例如 `agent/`）。
 :::
 
 ---
@@ -95,7 +95,7 @@ MOD 支援 **JSON** 和 **JSONC**（帶註解的 JSON）格式。
 
 ### 全域
 
-將全域 MOD 設定放在 `~/.config/MOD/MOD.json` 中。使用全域設定來設定使用者層級的偏好，例如主題、供應商或快捷鍵。
+將全域 MOD 設定放在 `~/.config/mod/MOD.json` 中。使用全域設定來設定使用者層級的偏好，例如主題、供應商或快捷鍵。
 
 全域設定覆寫遠端組織預設值。
 
@@ -337,7 +337,7 @@ Bearer Token（`AWS_BEARER_TOKEN_BEDROCK` 或 `/connect`）優先於基於設定
 }
 ```
 
-您還可以使用 `~/.config/MOD/agents/` 或 `.mod/agents/` 中的 Markdown 檔案定義代理。[在此了解更多](/docs/agents)。
+您還可以使用 `~/.config/mod/agents/` 或 `.mod/agents/` 中的 Markdown 檔案定義代理。[在此了解更多](/docs/agents)。
 
 ---
 
@@ -380,7 +380,7 @@ Bearer Token（`AWS_BEARER_TOKEN_BEDROCK` 或 `/connect`）優先於基於設定
 }
 ```
 
-您還可以使用 `~/.config/MOD/commands/` 或 `.mod/commands/` 中的 Markdown 檔案定義指令。[在此了解更多](/docs/commands)。
+您還可以使用 `~/.config/mod/commands/` 或 `.mod/commands/` 中的 Markdown 檔案定義指令。[在此了解更多](/docs/commands)。
 
 ---
 
@@ -518,7 +518,7 @@ MOD 啟動時會自動下載新版本。您可以使用 `autoupdate` 選項停�
 
 [外掛程式](/docs/plugins)透過自訂工具、掛鉤和整合來擴展 MOD。
 
-將外掛程式檔案放置在 `.mod/plugins/` 或 `~/.config/MOD/plugins/` 中。您還可以透過 `plugin` 選項從 npm 載入外掛程式。
+將外掛程式檔案放置在 `.mod/plugins/` 或 `~/.config/mod/plugins/` 中。您還可以透過 `plugin` 選項從 npm 載入外掛程式。
 
 ```json title="MOD.json"
 {

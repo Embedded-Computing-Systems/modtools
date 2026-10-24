@@ -10,7 +10,7 @@ export default {
   "toast.latest.description": "Þú ert að keyra nýjustu útgáfuna af MOD.",
   "migration.title": "Fara úr Beta í Stöðuga útgáfu",
   "migration.description":
-    "MOD Beta er um sinn að færast yfir í MOD Stable. Sæktu útgáfu {{version}} og settu síðan MOD upp úr diskmyndinni til að halda áfram að fá uppfærslur.",
+    "MOD Beta er um sinn að færast yfir í MOD Stable. Sæktu útgáfu {{version}} og settu síða MOD upp úr diskmyndinni til að halda áfram að fá uppfærslur.",
   "section.title": "Uppfærslur",
   "releaseNotes.title": "Útgáfuskýrslur",
   "releaseNotes.description": "Sýna hvað er nýtt sprettiglugga eftir uppfærslur",

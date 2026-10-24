@@ -734,7 +734,7 @@ export const dict = {
   "command.project.copyID": "Salin ID Proyek",
   "command.session.copyID": "Salin ID Sesi",
   "server.row.incompatible":
-    "Server ini menjalankan MOD {{version}}, yang tidak kompatibel dengan aplikasi ini. Tingkatkan ke MOD V2 untuk melanjutkan.",
+    "Server ini menjalanka MOD {{version}}, yang tidak kompatibel dengan aplikasi ini. Tingkatkan ke MOD V2 untuk melanjutkan.",
   "toast.session.copyID.failed.title": "Gagal menyalin ID sesi",
   "toast.session.copyID.failed.description": "Terjadi kesalahan saat menyalin ID sesi",
   "toast.project.copyID.failed.title": "Gagal menyalin ID proyek",
@@ -744,7 +744,7 @@ export const dict = {
   "error.page.action.reload": "Muat ulang",
   "session.error.incompatible": "Versi server ini tidak didukung",
   "session.error.incompatible.description":
-    "{{server}} menjalankan MOD {{version}}, yang tidak kompatibel dengan aplikasi ini. Tingkatkan server ke MOD V2 untuk melanjutkan.",
+    "{{server}} menjalanka MOD {{version}}, yang tidak kompatibel dengan aplikasi ini. Tingkatkan server ke MOD V2 untuk melanjutkan.",
   "session.background.moveInline": "Tekan {{keybind}} untuk memindahkan pekerjaan yang berjalan ke latar belakang",
   "settings.general.row.terminalPlacement.title": "Penempatan terminal",
   "settings.general.row.terminalPlacement.description": "Pilih tempat terminal dibuka dalam sesi",

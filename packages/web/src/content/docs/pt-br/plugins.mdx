@@ -20,7 +20,7 @@ Existem duas maneiras de carregar plugins.
 Coloque arquivos JavaScript ou TypeScript no diretório de plugins.
 
 - `.mod/plugins/` - Plugins em nível de projeto
-- `~/.config/MOD/plugins/` - Plugins globais
+- `~/.config/mod/plugins/` - Plugins globais
 
 Os arquivos nesses diretórios são carregados automaticamente na inicialização.
 
@@ -55,9 +55,9 @@ Navegue pelos plugins disponíveis no [ecossistema](/docs/ecosystem#plugins).
 
 Os plugins são carregados de todas as fontes e todos os hooks são executados em sequência. A ordem de carregamento é:
 
-1. Configuração global (`~/.config/MOD/MOD.json`)
+1. Configuração global (`~/.config/mod/MOD.json`)
 2. Configuração do projeto (`MOD.json`)
-3. Diretório de plugins global (`~/.config/MOD/plugins/`)
+3. Diretório de plugins global (`~/.config/mod/plugins/`)
 4. Diretório de plugins do projeto (`.mod/plugins/`)
 
 Pacotes npm duplicados com o mesmo nome e versão são carregados uma vez. No entanto, um plugin local e um plugin npm com nomes semelhantes são carregados separadamente.

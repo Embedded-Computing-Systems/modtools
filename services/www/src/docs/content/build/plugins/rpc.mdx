@@ -165,7 +165,7 @@ Once the RPC is registered, it can be called over HTTP or from another plugin.
 
 ### HTTP
 
-Create an MOD client, then use `client.rpc` to create a subclient for the
+Create a MOD client, then use `client.rpc` to create a subclient for the
 RPC:
 
 ```ts
@@ -182,7 +182,7 @@ const result = await acme.search({ query: "hello" })
 
 ### Plugin
 
-Plugins already have an MOD client. For example, a TUI plugin can create
+Plugins already have a MOD client. For example, a TUI plugin can create
 the same RPC subclient from `context.client`:
 
 ```ts title="src/tui.ts"

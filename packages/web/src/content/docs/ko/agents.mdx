@@ -188,10 +188,10 @@ _Mode_: `primary`
 
 Markdown 파일로도 agent를 정의할 수 있습니다. 다음 위치에 두세요.
 
-- Global: `~/.config/MOD/agents/`
+- Global: `~/.config/mod/agents/`
 - Per-project: `.mod/agents/`
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Reviews code for quality and best practices
 mode: subagent
@@ -454,7 +454,7 @@ permission을 설정해 agent가 수행할 수 있는 action을 제어할 수 �
 
 Markdown agent에서도 permission을 설정할 수 있습니다.
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Code review without edits
 mode: subagent
@@ -671,7 +671,7 @@ agent config에 지정한 나머지 옵션은 모델 옵션으로 provider에 **
 
 ## 에이전트 생성
 
-새 agent를 만들려면 프로젝트용은 `.mod/agents/`, 전역용은 `~/.config/MOD/agents/`에 Markdown 파일을 추가하세요. 파일 이름이 agent 이름이 되고, frontmatter에서 설명, 모드, 모델, 권한을 설정합니다. 파일 형식은 위의 [Markdown](#markdown)을 참고하세요.
+새 agent를 만들려면 프로젝트용은 `.mod/agents/`, 전역용은 `~/.config/mod/agents/`에 Markdown 파일을 추가하세요. 파일 이름이 agent 이름이 되고, frontmatter에서 설명, 모드, 모델, 권한을 설정합니다. 파일 형식은 위의 [Markdown](#markdown)을 참고하세요.
 
 `MOD agent list`를 실행하면 MOD가 로드한 agent 목록을 볼 수 있습니다.
 
@@ -701,7 +701,7 @@ agent config에 지정한 나머지 옵션은 모델 옵션으로 provider에 **
 
 ### Documentation agent
 
-```markdown title="~/.config/MOD/agents/docs-writer.md"
+```markdown title="~/.config/mod/agents/docs-writer.md"
 ---
 description: Writes and maintains project documentation
 mode: subagent
@@ -723,7 +723,7 @@ Focus on:
 
 ### Security auditor
 
-```markdown title="~/.config/MOD/agents/security-auditor.md"
+```markdown title="~/.config/mod/agents/security-auditor.md"
 ---
 description: Performs security audits and identifies vulnerabilities
 mode: subagent

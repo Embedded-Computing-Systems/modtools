@@ -1,7 +1,7 @@
 # Native Terminal Benchmark
 
 Manual Windows benchmark. Run only in an isolated development worktree. It does
-not connect to an MOD service, user profile, or database.
+not connect to a MOD service, user profile, or database.
 
 Build from `packages/app` with
 `bun x vite build --config e2e/performance/terminals/vite.config.ts`, then freeze

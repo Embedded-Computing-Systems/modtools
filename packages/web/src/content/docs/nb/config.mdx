@@ -44,7 +44,7 @@ For eksempel, hvis din globale konfigurasjon setter `theme: "MOD"` og `autoupdat
 Konfigurasjonskilder lastes inn i denne rekkefølgen (senere kilder overstyrer tidligere):
 
 1. **Ekstern konfigurasjon** (fra `.well-known/MOD`) - organisasjonsstandarder
-2. **Global konfigurasjon** (`~/.config/MOD/MOD.json`) - brukerinnstillinger
+2. **Global konfigurasjon** (`~/.config/mod/MOD.json`) - brukerinnstillinger
 3. **Egendefinert konfigurasjon** (`MODTOOLS_CONFIG` env var) - egendefinerte overstyringer
 4. **Prosjektkonfigurasjon** (`MOD.json` i prosjekt) - prosjektspesifikke innstillinger
 5. **`.mod` kataloger** - agenter, kommandoer, plugins
@@ -53,7 +53,7 @@ Konfigurasjonskilder lastes inn i denne rekkefølgen (senere kilder overstyrer t
 Dette betyr at prosjektkonfigurasjoner kan overstyre globale standardinnstillinger, og globale konfigurasjoner kan overstyre eksterne organisasjonsstandarder.
 
 :::note
-`.mod` og `~/.config/MOD` katalogene bruker **flertallsnavn** på underkataloger: `agents/`, `commands/`, `modes/`, `plugins/`, `skills/`, `tools/` og `themes/`. Enkeltnavn (f.eks. `agent/`) støttes også for bakoverkompatibilitet.
+`.mod` og `~/.config/mod` katalogene bruker **flertallsnavn** på underkataloger: `agents/`, `commands/`, `modes/`, `plugins/`, `skills/`, `tools/` og `themes/`. Enkeltnavn (f.eks. `agent/`) støttes også for bakoverkompatibilitet.
 :::
 
 ---
@@ -96,7 +96,7 @@ Du kan aktivere spesifikke servere i din lokale konfigurasjon:
 
 ### Global konfigurasjon
 
-Plasser din globale MOD-konfigurasjon i `~/.config/MOD/MOD.json`. Bruk global konfigurasjon for brukerspesifikke preferanser som temaer, leverandører eller nøkkelbindinger.
+Plasser din globale MOD-konfigurasjon i `~/.config/mod/MOD.json`. Bruk global konfigurasjon for brukerspesifikke preferanser som temaer, leverandører eller nøkkelbindinger.
 
 Global konfigurasjon overstyrer eksterne organisasjonsstandarder.
 
@@ -337,7 +337,7 @@ Du kan konfigurere spesialiserte agenter for spesifikke oppgaver gjennom alterna
 }
 ```
 
-Du kan også definere agenter ved å bruke markdown-filer i `~/.config/MOD/agents/` eller `.mod/agents/`. [Les mer her](/docs/agents).
+Du kan også definere agenter ved å bruke markdown-filer i `~/.config/mod/agents/` eller `.mod/agents/`. [Les mer her](/docs/agents).
 
 ---
 
@@ -380,7 +380,7 @@ Du kan konfigurere egendefinerte kommandoer for repeterende oppgaver gjennom alt
 }
 ```
 
-Du kan også definere kommandoer ved å bruke markdown-filer i `~/.config/MOD/commands/` eller `.mod/commands/`. [Les mer her](/docs/commands).
+Du kan også definere kommandoer ved å bruke markdown-filer i `~/.config/mod/commands/` eller `.mod/commands/`. [Les mer her](/docs/commands).
 
 ---
 
@@ -518,7 +518,7 @@ Du kan konfigurere MCP-servere du vil bruke gjennom alternativet `mcp`.
 
 [Plugins](/docs/plugins) utvider MOD med tilpassede verktøy, kroker og integrasjoner.
 
-Plasser plugin-filer i `.mod/plugins/` eller `~/.config/MOD/plugins/`. Du kan også laste inn plugins fra npm gjennom alternativet `plugin`.
+Plasser plugin-filer i `.mod/plugins/` eller `~/.config/mod/plugins/`. Du kan også laste inn plugins fra npm gjennom alternativet `plugin`.
 
 ```json title="MOD.json"
 {

@@ -188,10 +188,10 @@ _الوضع_: `primary`
 
 يمكنك أيضا تعريف الوكلاء باستخدام ملفات Markdown. ضعها في:
 
-- عام: `~/.config/MOD/agents/`
+- عام: `~/.config/mod/agents/`
 - لكل مشروع: `.mod/agents/`
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Reviews code for quality and best practices
 mode: subagent
@@ -454,7 +454,7 @@ Provide constructive feedback without making direct changes.
 
 يمكنك أيضا ضبط الأذونات في وكلاء Markdown.
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Code review without edits
 mode: subagent
@@ -671,7 +671,7 @@ Only analyze code and suggest changes.
 
 ## إنشاء وكلاء
 
-أنشئ وكيلا جديدا بإضافة ملف Markdown إلى `.mod/agents/` للمشروع أو إلى `~/.config/MOD/agents/` على المستوى العام. يصبح اسم الملف اسم الوكيل، وتضبط الواجهة الأمامية (frontmatter) وصفه ووضعه ونموذجه وصلاحياته. راجع [Markdown](#markdown) أعلاه لمعرفة تنسيق الملف.
+أنشئ وكيلا جديدا بإضافة ملف Markdown إلى `.mod/agents/` للمشروع أو إلى `~/.config/mod/agents/` على المستوى العام. يصبح اسم الملف اسم الوكيل، وتضبط الواجهة الأمامية (frontmatter) وصفه ووضعه ونموذجه وصلاحياته. راجع [Markdown](#markdown) أعلاه لمعرفة تنسيق الملف.
 
 شغّل `MOD agent list` لعرض الوكلاء الذين حمّلهم MOD.
 
@@ -701,7 +701,7 @@ Only analyze code and suggest changes.
 
 ### وكيل التوثيق
 
-```markdown title="~/.config/MOD/agents/docs-writer.md"
+```markdown title="~/.config/mod/agents/docs-writer.md"
 ---
 description: Writes and maintains project documentation
 mode: subagent
@@ -723,7 +723,7 @@ Focus on:
 
 ### مدقق أمني
 
-```markdown title="~/.config/MOD/agents/security-auditor.md"
+```markdown title="~/.config/mod/agents/security-auditor.md"
 ---
 description: Performs security audits and identifies vulnerabilities
 mode: subagent

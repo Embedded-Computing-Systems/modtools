@@ -25,7 +25,7 @@ export default {
   "onboarding.wslUnavailable.title": "WSL ekki í boði",
   "onboarding.wslUnavailable.description": "MOD gat ekki staðfest WSL á þessari vél.",
   "onboarding.installWsl": "Settu upp WSL",
-  "onboarding.windowsRestartRequired": "Endurræstu Windows til að klára að setja upp WSL, opnaðu síðan MOD aftur.",
+  "onboarding.windowsRestartRequired": "Endurræstu Windows til að klára að setja upp WSL, opnaðu síða MOD aftur.",
   "onboarding.allDistrosAdded": "Öllum uppsettum dreifingum er þegar bætt við.",
   "onboarding.noDistros": "Engin dreifing hefur fundist ennþá.",
   "onboarding.installDistro": "Settu upp distro",

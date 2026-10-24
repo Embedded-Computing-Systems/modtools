@@ -17,7 +17,7 @@ Postoje dva načina za učitavanje dodataka.
 Postavite JavaScript ili TypeScript datoteke u direktorij dodataka.
 
 - `.mod/plugins/` - Dodaci na nivou projekta
-- `~/.config/MOD/plugins/` - Globalni dodaci
+- `~/.config/mod/plugins/` - Globalni dodaci
   Datoteke u ovim direktorijumima se automatski učitavaju pri pokretanju.
 
 ---
@@ -49,9 +49,9 @@ Pregledajte dostupne dodatke u [ecosystem](/docs/ecosystem#plugins).
 
 Dodaci se učitavaju iz svih izvora i svi zakačnjaci rade u nizu. Redoslijed učitavanja je:
 
-1. Globalna konfiguracija (`~/.config/MOD/MOD.json`)
+1. Globalna konfiguracija (`~/.config/mod/MOD.json`)
 2. Konfiguracija projekta (`MOD.json`)
-3. Globalni direktorij dodataka (`~/.config/MOD/plugins/`)
+3. Globalni direktorij dodataka (`~/.config/mod/plugins/`)
 4. Direktorij dodataka projekta (`.mod/plugins/`)
    Duplicirani npm paketi sa istim imenom i verzijom se učitavaju jednom. Međutim, lokalni dodatak i npm dodatak sa sličnim nazivima se učitavaju odvojeno.
 

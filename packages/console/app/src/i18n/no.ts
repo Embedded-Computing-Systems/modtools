@@ -149,7 +149,7 @@ export const dict = {
     "Zen tilbyr bare modeller som er testet og benchmarked spesifikt for kodeagenter. Du ville ikke brukt en smørkniv til å skjære biff; ikke bruk dårlige modeller til koding.",
   "zen.faq.q3": "Er Zen billigere?",
   "zen.faq.a3":
-    "Zen er ikke for profitt. Zen videreformidler kostnadene fra modellleverandørene direkte til deg. Jo mer Zen brukes, desto bedre priser kan MOD forhandle og gi videre til deg.",
+    "Zen er ikke for profitt. Zen videreformidler kostnadene fra modellleverandørene direkte til deg. Jo mer Zen brukes, desto bedre priser ka MOD forhandle og gi videre til deg.",
   "zen.faq.q4": "Hva koster Zen?",
   "zen.faq.a4.p1.beforePricing": "Zen",
   "zen.faq.a4.p1.pricingLink": "tar betalt per forespørsel",

@@ -186,13 +186,13 @@ configuration and the connected Console always have the final say.
 | 1 (highest) | Connected MOD Console workspace                                                                           |
 | 2           | macOS managed preferences (`/Library/Managed Preferences/ai.mod.managed.plist`)                           |
 | 3           | System `MOD.json(c)` (`/Library/Application Support/MOD`, `/etc/MOD`, `%ProgramData%\MOD`) |
-| 4           | Global `~/.config/MOD/MOD.json(c)`                                                                   |
+| 4           | Global `~/.config/mod/MOD.json(c)`                                                                   |
 | 5           | Direct `MOD.json(c)`; outer directories beat inner ones                                                   |
 | 6 (lowest)  | `.mod/MOD.json(c)`; outer directories beat inner ones                                                |
 
 A repository cannot re-enable a provider you deny globally:
 
-```jsonc title="~/.config/MOD/MOD.jsonc"
+```jsonc title="~/.config/mod/MOD.jsonc"
 {
   "policies": [{ "action": "provider.use", "resource": "openai", "effect": "deny" }],
 }

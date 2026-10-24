@@ -38,7 +38,7 @@ export default {
   "error.executeDistro": "Tidak dapat melaksanakan arahan dalam distro",
   "error.installWsl": "Pemasangan WSL gagal",
   "error.installDistro": "Gagal memasang distro: {{distro}}",
-  "error.installMod": "Pemasangan MOD gagal",
+  "error.installMod": "Pemasanga MOD gagal",
   "error.alreadyAdded": "{{distro}} telah pun ditambah",
   "error.modMissing": "mod tidak dipasang dalam distro ini",
   "error.modCannotRun": "mod dipasang tetapi tidak dapat dijalankan",

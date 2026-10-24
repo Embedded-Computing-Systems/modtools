@@ -20,7 +20,7 @@ Istnieją dwa sposoby ładowania wtyczek.
 Miejsce plików JavaScript lub TypeScript w katalogu wtyczki.
 
 - `.mod/plugins/` - Wtyczki na poziomie projektu
-- `~/.config/MOD/plugins/` - Wtyczki globalne
+- `~/.config/mod/plugins/` - Wtyczki globalne
 
 Pliki w tych katalogach są automatycznie ładowane podczas uruchamiania.
 
@@ -55,9 +55,9 @@ Przeglądaj dostępną wtyczkę w [ekosystemie](/docs/ecosystem#plugins).
 
 Wtyczki są ładowane ze wszystkich źródeł, a wszystkie hooki napisane po kolei. Kolejność ładowania do:
 
-1. Konfiguracja globalna (`~/.config/MOD/MOD.json`)
+1. Konfiguracja globalna (`~/.config/mod/MOD.json`)
 2. Konfiguracja projektu (`MOD.json`)
-3. Globalny katalog wtyczek (`~/.config/MOD/plugins/`)
+3. Globalny katalog wtyczek (`~/.config/mod/plugins/`)
 4. Katalog wtyczek projektu (`.mod/plugins/`)
 
 Zduplikowane pakiety npm o tej samej nazwie i wersji są ładowane raz. Równie ważny jest dostęp lokalny i zewnętrzny npm o dodatkowych nazwach, które są zewnętrzne.

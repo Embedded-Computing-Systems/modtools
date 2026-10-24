@@ -44,7 +44,7 @@ export default {
   "error.modCannotRun": "mod telah terinstal, tetapi tidak dapat dijalankan",
   "error.modNotInstalled": "MOD belum terinstal di {{distro}}",
   "error.updateVersion":
-    "Pembaruan MOD selesai, tetapi {{distro}} masih melaporkan {{installed}}; seharusnya {{expected}}",
+    "Pembarua MOD selesai, tetapi {{distro}} masih melaporkan {{installed}}; seharusnya {{expected}}",
   "error.noVersion": "tanpa versi",
   "error.serverExited": "Server WSL berhenti setelah dimulai (kode={{code}} sinyal={{signal}})",
   "error.serverExitedBeforeHealthy": "Server WSL berhenti sebelum siap (kode={{code}} sinyal={{signal}}){{output}}",

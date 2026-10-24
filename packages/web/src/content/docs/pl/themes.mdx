@@ -83,7 +83,7 @@ MOD obsługuje elastyczny system motywów oparty na JSON, który pozwala użytko
 Motywy są ładowane z wielu katalogów w następującej kolejności, przy czym późniejsze katalogi zastępują wcześniejsze:
 
 1. **Wbudowane motywy** – są osadzone w formacie binarnym
-2. **Katalog konfiguracji użytkownika** - Zdefiniowany w `~/.config/MOD/themes/*.json` lub `$XDG_CONFIG_HOME/MOD/themes/*.json`
+2. **Katalog konfiguracji użytkownika** - Zdefiniowany w `~/.config/mod/themes/*.json` lub `$XDG_CONFIG_HOME/MOD/themes/*.json`
 3. **Katalog główny projektu** - Zdefiniowany w `<project-root>/.mod/themes/*.json`
 4. **Bieżący katalog roboczy** - Zdefiniowany w `./.mod/themes/*.json`
 
@@ -98,8 +98,8 @@ Aby utworzyć niestandardowy motyw, utwórz plik JSON w jednym z katalogów moty
 W przypadku motywów dla całego użytkownika:
 
 ```bash no-frame
-mkdir -p ~/.config/MOD/themes
-vim ~/.config/MOD/themes/my-theme.json
+mkdir -p ~/.config/mod/themes
+vim ~/.config/mod/themes/my-theme.json
 ```
 
 Oraz dla tematów specyficznych dla projektu.

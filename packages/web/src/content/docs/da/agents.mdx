@@ -189,10 +189,10 @@ Konfigurer agent i din `MOD.json`-konfigurationsfil:
 
 Du kan også definere agenter ved hjælp af markdown-filer. Placer dem i:
 
-- Globalt: `~/.config/MOD/agents/`
+- Globalt: `~/.config/mod/agents/`
 - Pr. projekt: `.mod/agents/`
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Reviews code for quality and best practices
 mode: subagent
@@ -455,7 +455,7 @@ Du kan tilsidesætte disse tilladelser pr. agent.
 
 Du kan også angive tilladelser i Markdown-agenter.
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Code review without edits
 mode: subagent
@@ -672,7 +672,7 @@ Kør `MOD models` for at se en liste over de tilgængelige modeller.
 
 ## Oprettelse af agent
 
-Opret en ny agent ved at tilføje en markdown-fil til `.mod/agents/` for projektet eller `~/.config/MOD/agents/` globalt. Filnavnet bliver agentens navn, og frontmatter konfigurerer dens beskrivelse, tilstand, model og tilladelser. Se [Markdown](#markdown) ovenfor for filformatet.
+Opret en ny agent ved at tilføje en markdown-fil til `.mod/agents/` for projektet eller `~/.config/mod/agents/` globalt. Filnavnet bliver agentens navn, og frontmatter konfigurerer dens beskrivelse, tilstand, model og tilladelser. Se [Markdown](#markdown) ovenfor for filformatet.
 
 Kør `MOD agent list` for at se de agenter, som MOD har indlæst.
 
@@ -702,7 +702,7 @@ Har du en agent, du gerne vil dele? [Send en PR](https://github.com/Embedded-Com
 
 ### Dokumentations-agent
 
-```markdown title="~/.config/MOD/agents/docs-writer.md"
+```markdown title="~/.config/mod/agents/docs-writer.md"
 ---
 description: Writes and maintains project documentation
 mode: subagent
@@ -724,7 +724,7 @@ Focus on:
 
 ### Sikkerheds-agent
 
-```markdown title="~/.config/MOD/agents/security-auditor.md"
+```markdown title="~/.config/mod/agents/security-auditor.md"
 ---
 description: Performs security audits and identifies vulnerabilities
 mode: subagent

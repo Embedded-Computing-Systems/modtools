@@ -668,7 +668,7 @@ export const dict = {
   "settings.general.row.colorScheme.description":
     "Kies of MOD het systeemthema, het lichte thema of het donkere thema gebruikt",
   "settings.general.row.theme.title": "Thema",
-  "settings.general.row.theme.description": "Pas het thema van MOD aan.",
+  "settings.general.row.theme.description": "Pas het thema va MOD aan.",
   "settings.general.row.font.title": "Codelettertype",
   "settings.general.row.font.description": "Pas het lettertype aan dat in codeblokken wordt gebruikt",
   "settings.general.row.terminalFont.title": "Terminal-lettertype",

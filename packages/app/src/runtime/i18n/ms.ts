@@ -667,7 +667,7 @@ export const dict = {
   "command.project.copyID": "Salin ID Projek",
   "command.session.copyID": "Salin ID Sesi",
   "server.row.incompatible":
-    "Pelayan ini menjalankan MOD {{version}}, yang tidak serasi dengan aplikasi ini. Tingkatkan kepada MOD V2 untuk meneruskan.",
+    "Pelayan ini menjalanka MOD {{version}}, yang tidak serasi dengan aplikasi ini. Tingkatkan kepada MOD V2 untuk meneruskan.",
   "toast.session.copyID.failed.title": "Gagal menyalin ID sesi",
   "toast.session.copyID.failed.description": "Ralat berlaku semasa menyalin ID sesi",
   "toast.project.copyID.failed.title": "Gagal menyalin ID projek",
@@ -677,7 +677,7 @@ export const dict = {
   "error.page.action.reload": "Muat semula",
   "session.error.incompatible": "Versi pelayan ini tidak disokong",
   "session.error.incompatible.description":
-    "{{server}} menjalankan MOD {{version}}, yang tidak serasi dengan aplikasi ini. Tingkatkan pelayan kepada MOD V2 untuk meneruskan.",
+    "{{server}} menjalanka MOD {{version}}, yang tidak serasi dengan aplikasi ini. Tingkatkan pelayan kepada MOD V2 untuk meneruskan.",
   "session.background.moveInline": "Tekan {{keybind}} untuk mengalihkan kerja yang sedang berjalan ke latar belakang",
   "settings.general.row.terminalPlacement.title": "Kedudukan terminal",
   "settings.general.row.terminalPlacement.description": "Pilih tempat terminal dibuka dalam sesi",

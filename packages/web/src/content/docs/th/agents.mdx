@@ -187,10 +187,10 @@ _Mode_: `primary`
 
 คุณสามารถกำหนดเอเจนต์ด้วยไฟล์ Markdown ได้ใน:
 
-- ระดับผู้ใช้ (Global): `~/.config/MOD/agents/`
+- ระดับผู้ใช้ (Global): `~/.config/mod/agents/`
 - ระดับโปรเจ็กต์: `.mod/agents/`
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Reviews code for quality and best practices
 mode: subagent
@@ -453,7 +453,7 @@ ID ของโมเดลใช้รูปแบบ `provider/model-id`
 
 ใน Markdown agent:
 
-```markdown title="~/.config/MOD/agents/review.md"
+```markdown title="~/.config/mod/agents/review.md"
 ---
 description: Code review without edits
 mode: subagent
@@ -663,7 +663,7 @@ Only analyze code and suggest changes.
 
 ## การสร้างเอเจนต์
 
-สร้างเอเจนต์ใหม่โดยเพิ่มไฟล์ Markdown ไว้ใน `.mod/agents/` สำหรับโปรเจ็กต์ หรือ `~/.config/MOD/agents/` สำหรับระดับผู้ใช้ (Global) ชื่อไฟล์จะกลายเป็นชื่อเอเจนต์ และ frontmatter ใช้กำหนดคำอธิบาย โหมด โมเดล และสิทธิ์ของเอเจนต์ ดูรูปแบบไฟล์ได้ที่ [Markdown](#markdown) ด้านบน
+สร้างเอเจนต์ใหม่โดยเพิ่มไฟล์ Markdown ไว้ใน `.mod/agents/` สำหรับโปรเจ็กต์ หรือ `~/.config/mod/agents/` สำหรับระดับผู้ใช้ (Global) ชื่อไฟล์จะกลายเป็นชื่อเอเจนต์ และ frontmatter ใช้กำหนดคำอธิบาย โหมด โมเดล และสิทธิ์ของเอเจนต์ ดูรูปแบบไฟล์ได้ที่ [Markdown](#markdown) ด้านบน
 
 รัน `MOD agent list` เพื่อแสดงรายการเอเจนต์ที่ MOD โหลดไว้
 
@@ -691,7 +691,7 @@ Only analyze code and suggest changes.
 
 ### Docs Writer
 
-```markdown title="~/.config/MOD/agents/docs-writer.md"
+```markdown title="~/.config/mod/agents/docs-writer.md"
 ---
 description: Writes and maintains project documentation
 mode: subagent
@@ -713,7 +713,7 @@ Focus on:
 
 ### Security Auditor
 
-```markdown title="~/.config/MOD/agents/security-auditor.md"
+```markdown title="~/.config/mod/agents/security-auditor.md"
 ---
 description: Performs security audits and identifies vulnerabilities
 mode: subagent
