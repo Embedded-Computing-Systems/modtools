@@ -738,7 +738,7 @@ export const dict = {
   "settings.about.otherContributor.other": "{{count}} yang lain",
   "settings.about.firstPublished": "Pertama kali diterbitkan di Missouri, Amerika Syarikat",
   "settings.about.firstIllustrated": "Pertama digambarkan di London, England",
-  "settings.about.website": "www.mod.ai",
+  "settings.about.website": "embedded-computing.systems",
   "settings.about.description": "MOD, ejen pengekodan sumber terbuka",
   "settings.about.trademark": "MOD ialah tanda dagangan berdaftar Anomaly Innovations, Inc.",
   "settings.about.typeset": "Set taip dalam Inter dan IBM Plex Mono",

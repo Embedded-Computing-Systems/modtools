@@ -745,7 +745,7 @@ export const dict = {
   "settings.about.otherContributor.other": "\u2068{{count}}\u2069 ہور",
   "settings.about.firstPublished": "پہلی واری میزوری، امریکہ وچ شائع ہویا",
   "settings.about.firstIllustrated": "پہلی واری لندن، انگلینڈ وچ تصویراں بݨیاں",
-  "settings.about.website": "www.mod.ai",
+  "settings.about.website": "embedded-computing.systems",
   "settings.about.description": "MOD، اوپن سورس کوڈنگ ایجنٹ",
   "settings.about.trademark": "MOD، Anomaly Innovations, Inc. دا رجسٹرڈ ٹریڈ مارک اے۔",
   "settings.about.typeset": "Inter تے IBM Plex Mono وچ ٹائپ سیٹ",

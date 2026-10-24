@@ -143,7 +143,7 @@ export const dict = {
   "settings.about.otherContributor.other": "{{count}} muuta",
   "settings.about.firstPublished": "Julkaistu ensimmäisen kerran Missourissa, Yhdysvalloissa",
   "settings.about.firstIllustrated": "Kuvitettu ensimmäisen kerran Lontoossa, Englannissa",
-  "settings.about.website": "www.mod.ai",
+  "settings.about.website": "embedded-computing.systems",
   "settings.about.description": "MOD, avoimen lähdekoodin koodausagentti",
   "settings.about.trademark": "MOD on Anomaly Innovations, Inc:n rekisteröity tavaramerkki.",
   "settings.about.typeset": "Kirjasinlajit Inter ja IBM Plex Mono",

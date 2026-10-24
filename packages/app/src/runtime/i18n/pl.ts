@@ -757,7 +757,7 @@ export const dict = {
   "settings.about.otherContributor.other": "{{count}} innego",
   "settings.about.firstPublished": "Opublikowano po raz pierwszy w Missouri, USA",
   "settings.about.firstIllustrated": "Pierwsza ilustracja w Londynie, w Anglii",
-  "settings.about.website": "www.mod.ai",
+  "settings.about.website": "embedded-computing.systems",
   "settings.about.description": "MOD, agent kodujący typu open source",
   "settings.about.trademark": "MOD jest zastrzeżonym znakiem towarowym firmy Anomaly Innovations, Inc.",
   "settings.about.typeset": "Zestaw w Inter i IBM Plex Mono",

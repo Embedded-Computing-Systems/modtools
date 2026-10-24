@@ -740,7 +740,7 @@ export const dict = {
   "settings.about.otherContributor.other": "{{count}} digər",
   "settings.about.firstPublished": "İlk dəfə Missuri, ABŞ-da nəşr olunub",
   "settings.about.firstIllustrated": "İlk dəfə London, İngiltərədə illüstrasiya olunub",
-  "settings.about.website": "www.mod.ai",
+  "settings.about.website": "embedded-computing.systems",
   "settings.about.description": "MOD, açıq mənbəli kodlaşdırma agenti",
   "settings.about.trademark": "MOD, Anomaly Innovations, Inc. şirkətinin qeydiyyatdan keçmiş ticarət nişanıdır.",
   "settings.about.typeset": "Inter və IBM Plex Mono şriftləri ilə tərtib olunub",

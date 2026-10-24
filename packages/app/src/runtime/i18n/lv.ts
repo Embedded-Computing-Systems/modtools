@@ -740,7 +740,7 @@ export const dict = {
   "settings.about.otherContributor.other": "{{count}} citi",
   "settings.about.firstPublished": "Pirmo reizi publicēts Misūri štatā, ASV",
   "settings.about.firstIllustrated": "Pirmo reizi ilustrēts Londonā, Anglijā",
-  "settings.about.website": "www.mod.ai",
+  "settings.about.website": "embedded-computing.systems",
   "settings.about.description": "MOD, atvērtā koda kodēšanas aģents",
   "settings.about.trademark": "MOD ir Anomaly Innovations, Inc. reģistrēta preču zīme.",
   "settings.about.typeset": "Salikums Inter un IBM Plex Mono",

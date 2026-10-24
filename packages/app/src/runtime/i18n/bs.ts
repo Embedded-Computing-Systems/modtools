@@ -802,7 +802,7 @@ export const dict = {
   "settings.about.otherContributor.other": "{{count}} drugih",
   "settings.about.firstPublished": "Prvi put objavljeno u Missouriju, SAD",
   "settings.about.firstIllustrated": "Prvi put ilustrovan u Londonu, Engleska",
-  "settings.about.website": "www.mod.ai",
+  "settings.about.website": "embedded-computing.systems",
   "settings.about.description": "MOD, agent za kodiranje otvorenog koda",
   "settings.about.trademark": "MOD je registrovani zaštitni znak Anomaly Innovations, Inc.",
   "settings.about.typeset": "Postavljen u Inter i IBM Plex Mono",

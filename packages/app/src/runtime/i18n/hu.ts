@@ -742,7 +742,7 @@ export const dict = {
   "settings.about.otherContributor.other": "{{count}} egyebek",
   "settings.about.firstPublished": "Először az Egyesült Államokban, Missouriban jelent meg",
   "settings.about.firstIllustrated": "Először Londonban, Angliában illusztrálták",
-  "settings.about.website": "www.mod.ai",
+  "settings.about.website": "embedded-computing.systems",
   "settings.about.description": "MOD, a nyílt forráskódú kódoló ügynök",
   "settings.about.trademark": "A MOD a Anomaly Innovations, Inc. bejegyzett védjegye.",
   "settings.about.typeset": "Betűkészlet Inter és IBM Plex Mono nyelven",

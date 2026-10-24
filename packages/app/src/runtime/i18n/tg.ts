@@ -737,7 +737,7 @@ export const dict = {
   "settings.about.otherContributor.other": "{{count}} нафари дигар",
   "settings.about.firstPublished": "Бори аввал дар Миссури, ИМА нашр шудааст",
   "settings.about.firstIllustrated": "Бори аввал дар Лондон, Англия мусаввар шудааст",
-  "settings.about.website": "www.mod.ai",
+  "settings.about.website": "embedded-computing.systems",
   "settings.about.description": "MOD, агенти рамзнависии манбаи кушода",
   "settings.about.trademark": "MOD тамғаи тиҷории бақайдгирифтаи Anomaly Innovations, Inc. мебошад.",
   "settings.about.typeset": "Бо Inter ва IBM Plex Mono ҳуруфчинӣ шудааст",

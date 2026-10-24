@@ -733,7 +733,7 @@ export const dict = {
   "settings.about.otherContributor.other": "{{count}} të tjerët",
   "settings.about.firstPublished": "Botuar për herë të parë në Misuri, SHBA",
   "settings.about.firstIllustrated": "Ilustruar për herë të parë në Londër, Angli",
-  "settings.about.website": "www.mod.ai",
+  "settings.about.website": "embedded-computing.systems",
   "settings.about.description": "MOD, agjenti kodues me burim të hapur",
   "settings.about.trademark": "MOD është një markë e regjistruar e Anomaly Innovations, Inc.",
   "settings.about.typeset": "Llojet në Inter dhe IBM Plex Mono",

@@ -734,7 +734,7 @@ export const dict = {
   "settings.about.otherContributor.other": "{{count}} այլ",
   "settings.about.firstPublished": "Առաջին անգամ հրատարակվել է Միսուրիում, ԱՄՆ",
   "settings.about.firstIllustrated": "Առաջին անգամ նկարազարդվել է Լոնդոնում, Անգլիա",
-  "settings.about.website": "www.mod.ai",
+  "settings.about.website": "embedded-computing.systems",
   "settings.about.description": "MOD՝ բաց կոդով կոդավորման գործակալ",
   "settings.about.trademark": "MOD-ը Anomaly Innovations, Inc.-ի գրանցված ապրանքային նշանն է։",
   "settings.about.typeset": "Շարված է Inter և IBM Plex Mono տառատեսակներով",

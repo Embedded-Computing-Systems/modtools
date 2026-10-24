@@ -735,7 +735,7 @@ export const dict = {
   "settings.about.otherContributor.other": "{{count}} aðrir",
   "settings.about.firstPublished": "Fyrst gefin út í Missouri í Bandaríkjunum",
   "settings.about.firstIllustrated": "Fyrst myndskreytt í London á Englandi",
-  "settings.about.website": "www.mod.ai",
+  "settings.about.website": "embedded-computing.systems",
   "settings.about.description": "MOD, opinn kóðunaraðili",
   "settings.about.trademark": "MOD er skráð vörumerki Anomaly Innovations, Inc.",
   "settings.about.typeset": "Tegund í Inter og IBM Plex Mono",

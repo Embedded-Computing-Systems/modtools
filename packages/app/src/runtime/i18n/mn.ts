@@ -738,7 +738,7 @@ export const dict = {
   "settings.about.otherContributor.other": "өөр {{count}}",
   "settings.about.firstPublished": "Анх АНУ-ын Миссури мужид хэвлэгдсэн",
   "settings.about.firstIllustrated": "Анх Английн Лондон хотод зурагласан",
-  "settings.about.website": "www.mod.ai",
+  "settings.about.website": "embedded-computing.systems",
   "settings.about.description": "MOD, нээлттэй эхийн кодчиллын агент",
   "settings.about.trademark": "MOD нь Anomaly Innovations, Inc.-ийн бүртгэлтэй барааны тэмдэг юм.",
   "settings.about.typeset": "Inter болон IBM Plex Mono үсгийн хэвээр өрсөн",

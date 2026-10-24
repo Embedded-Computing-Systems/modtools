@@ -693,7 +693,7 @@ export const dict = {
   "settings.about.otherContributor.other": "{{count}} others",
   "settings.about.firstPublished": "First published in Missouri, USA",
   "settings.about.firstIllustrated": "First illustrated in London, England",
-  "settings.about.website": "www.mod.ai",
+  "settings.about.website": "embedded-computing.systems",
   "settings.about.description": "MOD, the open source coding agent",
   "settings.about.trademark": "MOD is a registered trademark of Anomaly Innovations, Inc.",
   "settings.about.typeset": "Typeset in Inter and IBM Plex Mono",

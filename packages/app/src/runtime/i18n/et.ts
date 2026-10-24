@@ -728,7 +728,7 @@ export const dict = {
   "settings.about.otherContributor.other": "{{count}} teised",
   "settings.about.firstPublished": "Esmakordselt avaldati USA-s Missouris",
   "settings.about.firstIllustrated": "Esmakordselt illustreeritud Londonis, Inglismaal",
-  "settings.about.website": "www.mod.ai",
+  "settings.about.website": "embedded-computing.systems",
   "settings.about.description": "MOD, avatud lähtekoodiga kodeerimisagent",
   "settings.about.trademark": "MOD on ettevõtte Anomaly Innovations, Inc. registreeritud kaubamärk.",
   "settings.about.typeset": "Sisestatud Inter ja IBM Plex Mono",

@@ -746,7 +746,7 @@ export const dict = {
   "settings.about.otherContributor.other": "\u2068{{count}}\u2069 دیگر",
   "settings.about.firstPublished": "پہلی بار میزوری، امریکہ میں شائع ہوا",
   "settings.about.firstIllustrated": "پہلی بار لندن، انگلینڈ میں مصور کیا گیا",
-  "settings.about.website": "www.mod.ai",
+  "settings.about.website": "embedded-computing.systems",
   "settings.about.description": "MOD، اوپن سورس کوڈنگ ایجنٹ",
   "settings.about.trademark": "MOD، Anomaly Innovations, Inc. کا رجسٹرڈ ٹریڈ مارک ہے۔",
   "settings.about.typeset": "Inter اور IBM Plex Mono میں ٹائپ سیٹ",

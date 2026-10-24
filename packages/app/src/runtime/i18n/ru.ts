@@ -811,7 +811,7 @@ export const dict = {
   "settings.about.otherContributor.other": "{{count}} другого",
   "settings.about.firstPublished": "Впервые опубликовано в Миссури, США.",
   "settings.about.firstIllustrated": "Впервые показано в Лондоне, Англия.",
-  "settings.about.website": "www.mod.ai",
+  "settings.about.website": "embedded-computing.systems",
   "settings.about.description": "MOD, агент кодирования с открытым исходным кодом.",
   "settings.about.trademark": "MOD является зарегистрированной торговой маркой Anomaly Innovations, Inc..",
   "settings.about.typeset": "Набор в Inter и IBM Plex Mono",

@@ -748,7 +748,7 @@ export const dict = {
   "settings.about.otherContributor.other": "他{{count}}人",
   "settings.about.firstPublished": "米国ミズーリ州で初公開",
   "settings.about.firstIllustrated": "イングランド、ロンドンで最初のイラスト",
-  "settings.about.website": "www.mod.ai",
+  "settings.about.website": "embedded-computing.systems",
   "settings.about.description": "オープンソースのコーディングエージェントであるMOD",
   "settings.about.trademark": "MODはAnomaly Innovations, Inc.の登録商標です。",
   "settings.about.typeset": "InterおよびIBM Plex Monoのタイプセット",

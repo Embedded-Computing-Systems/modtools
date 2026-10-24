@@ -156,7 +156,7 @@ export const dict = {
   "settings.about.otherContributor.other": "{{count}} outros",
   "settings.about.firstPublished": "Publicado pela primeira vez no Missouri, EUA",
   "settings.about.firstIllustrated": "Ilustrado pela primeira vez em Londres, Inglaterra",
-  "settings.about.website": "www.mod.ai",
+  "settings.about.website": "embedded-computing.systems",
   "settings.about.description": "MOD, o agente de programação de código aberto",
   "settings.about.trademark": "MOD é uma marca registrada da Anomaly Innovations, Inc.",
   "settings.about.typeset": "Composto em Inter e IBM Plex Mono",

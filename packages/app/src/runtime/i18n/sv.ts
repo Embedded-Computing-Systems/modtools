@@ -147,7 +147,7 @@ export const dict = {
   "settings.about.otherContributor.other": "{{count}} andra",
   "settings.about.firstPublished": "Först publicerad i Missouri, USA",
   "settings.about.firstIllustrated": "Först illustrerad i London, England",
-  "settings.about.website": "www.mod.ai",
+  "settings.about.website": "embedded-computing.systems",
   "settings.about.description": "MOD, kodningsagenten med öppen källkod",
   "settings.about.trademark": "MOD är ett registrerat varumärke som tillhör Anomaly Innovations, Inc.",
   "settings.about.typeset": "Satt med Inter och IBM Plex Mono",

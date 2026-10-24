@@ -750,7 +750,7 @@ export const dict = {
   "settings.about.otherContributor.other": "{{count}} kitų",
   "settings.about.firstPublished": "Pirmą kartą išleista Misūrio valstijoje, JAV",
   "settings.about.firstIllustrated": "Pirmą kartą iliustruotas Londone, Anglijoje",
-  "settings.about.website": "www.mod.ai",
+  "settings.about.website": "embedded-computing.systems",
   "settings.about.description": "MOD, atvirojo kodo kodavimo agentas",
   "settings.about.trademark": "MOD yra registruotasis Anomaly Innovations, Inc. prekės ženklas.",
   "settings.about.typeset": "Rinkinys „Inter“ ir „IBM Plex Mono“.",
