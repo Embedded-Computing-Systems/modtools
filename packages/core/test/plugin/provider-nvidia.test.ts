@@ -35,7 +35,7 @@ describe("NvidiaPlugin", () => {
       yield* addPlugin()
       expect((yield* catalog.get(Provider.ID.make("nvidia")))?.headers).toEqual({
         Existing: "value",
-        "HTTP-Referer": "https://modtools.ai/",
+        "HTTP-Referer": "https://embedded-computing.systems/",
         "X-Title": "mod",
         "X-BILLING-INVOKE-ORIGIN": "MOD",
       })
@@ -55,7 +55,7 @@ describe("NvidiaPlugin", () => {
       yield* addPlugin()
 
       expect((yield* catalog.get(Provider.ID.make("nvidia")))?.headers).toEqual({
-        "HTTP-Referer": "https://modtools.ai/",
+        "HTTP-Referer": "https://embedded-computing.systems/",
         "X-Title": "mod",
         "X-BILLING-INVOKE-ORIGIN": "MOD",
       })
@@ -75,7 +75,7 @@ describe("NvidiaPlugin", () => {
       yield* addPlugin()
 
       expect((yield* catalog.get(Provider.ID.make("nvidia")))?.headers).toEqual({
-        "HTTP-Referer": "https://modtools.ai/",
+        "HTTP-Referer": "https://embedded-computing.systems/",
         "X-Title": "mod",
         "X-BILLING-INVOKE-ORIGIN": "CustomOrigin",
       })

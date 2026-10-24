@@ -1227,7 +1227,7 @@ describe("ModelResolver", () => {
       model(Provider.aisdk("@openrouter/ai-sdk-provider"), {
         settings: {
           appName: "MOD",
-          appUrl: "https://opencode.ai",
+          appUrl: "https://embedded-computing.systems",
           extraBody: { transforms: ["middle-out"], provider: { sort: "price" } },
         },
         headers: { "X-OpenRouter-Title": "Custom" },
@@ -1239,7 +1239,7 @@ describe("ModelResolver", () => {
           Effect.succeed({
             model: (modelID, settings) => {
               expect(settings.headers).toEqual({
-                "HTTP-Referer": "https://modtools.ai",
+                "HTTP-Referer": "https://embedded-computing.systems",
                 "X-OpenRouter-Title": "Custom",
               })
               expect(settings.body).toEqual({

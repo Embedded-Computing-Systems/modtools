@@ -37,7 +37,7 @@ describe("ZenmuxPlugin", () => {
       })
       yield* addPlugin()
       const result = required(yield* catalog.get(Provider.ID.make("zenmux")))
-      expect(result.headers).toEqual({ "HTTP-Referer": "https://modtools.ai/", "X-Title": "mod" })
+      expect(result.headers).toEqual({ "HTTP-Referer": "https://embedded-computing.systems/", "X-Title": "mod" })
       expect(Object.keys(required(result.headers)).sort()).toEqual(["HTTP-Referer", "X-Title"])
     }),
   )
@@ -56,7 +56,7 @@ describe("ZenmuxPlugin", () => {
 
       expect(required(yield* catalog.get(Provider.ID.make("zenmux"))).headers).toEqual({
         Existing: "value",
-        "HTTP-Referer": "https://modtools.ai/",
+        "HTTP-Referer": "https://embedded-computing.systems/",
         "X-Title": "mod",
       })
     }),

@@ -139,14 +139,14 @@ it.effect("sets known OpenAI Responses defaults without overriding configured or
       ref("cloudflare-chat", "selected"),
       ref("vercel-other", "selected"),
       ref("openai", "gpt-6-astra", "quiet"),
-      ref("mod", "no-default"),
+      ref("opencode", "no-default"),
     ]) {
       const event = request(model)
       yield* hooks.trigger("session", "context", event)
       expect(event.options.textVerbosity).toBeUndefined()
     }
 
-    const alias = request(ref("mod", "astra-alias"))
+    const alias = request(ref("opencode", "astra-alias"))
     yield* hooks.trigger("session", "context", alias)
     expect(alias.options.textVerbosity).toBe("low")
 

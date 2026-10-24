@@ -41,7 +41,7 @@ describe("LLMGatewayPlugin", () => {
       yield* addPlugin()
       expect((yield* catalog.get(Provider.ID.make("llmgateway")))?.headers).toEqual({
         Existing: "value",
-        "HTTP-Referer": "https://modtools.ai/",
+        "HTTP-Referer": "https://embedded-computing.systems/",
         "X-Title": "mod",
         "X-Source": "mod",
       })

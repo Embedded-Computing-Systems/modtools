@@ -30,7 +30,7 @@ describe("VercelPlugin", () => {
       yield* addPlugin()
       expect((yield* catalog.get(Provider.ID.make("vercel")))?.headers).toEqual({
         Existing: "1",
-        "http-referer": "https://modtools.ai/",
+        "http-referer": "https://embedded-computing.systems/",
         "x-title": "mod",
       })
     }),

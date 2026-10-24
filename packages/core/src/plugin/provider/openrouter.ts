@@ -9,7 +9,7 @@ export const OpenRouterPlugin = define({
       for (const item of evt.list()) {
         if (item.provider.package !== "@modtools-ai/ai/providers/openrouter") continue
         evt.update(item.provider.id, (provider) => {
-          provider.headers = { ...provider.headers, "HTTP-Referer": "https://modtools.ai/", "X-Title": "mod" }
+          provider.headers = { ...provider.headers, "HTTP-Referer": "https://embedded-computing.systems/", "X-Title": "mod" }
         })
       }
     })

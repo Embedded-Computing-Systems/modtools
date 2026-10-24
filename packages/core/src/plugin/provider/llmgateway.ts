@@ -16,7 +16,7 @@ export const LLMGatewayPlugin = define({
         evt.update(item.provider.id, (provider) => {
           provider.headers = {
             ...provider.headers,
-            "HTTP-Referer": "https://modtools.ai/",
+            "HTTP-Referer": "https://embedded-computing.systems/",
             "X-Title": "mod",
             "X-Source": "mod",
           }

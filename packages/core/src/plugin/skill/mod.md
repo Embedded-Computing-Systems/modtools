@@ -39,7 +39,7 @@ For questions about the terminal interface, command-line invocation, `run`,
 that section.
 
 CLI and TUI preferences are separate from MOD's server and project
-configuration. They live in the global `~/.config/MOD/cli.json`, or
+configuration. They live in the global `~/.config/mod/cli.json`, or
 `$XDG_CONFIG_HOME/MOD/cli.json` when `XDG_CONFIG_HOME` is set. There is no
 project-local CLI configuration. Set `MODTOOLS_CLI_CONFIG_CONTENT` to merge
 inline JSON over the global settings. Most preferences can also be changed from
@@ -77,7 +77,7 @@ autocomplete:
 }
 ```
 
-Global configuration lives at `~/.config/MOD/MOD.json(c)` and applies
+Global configuration lives at `~/.config/mod/MOD.json(c)` and applies
 to every project for that user. Project configuration can live in any directory
 as `MOD.json(c)` or `.mod/MOD.json(c)`, including nested packages
 in a monorepo.

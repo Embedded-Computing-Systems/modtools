@@ -465,7 +465,7 @@ describe("AISDKNative", () => {
     expect(
       map("@openrouter/ai-sdk-provider", {
         appName: "MOD",
-        appUrl: "https://opencode.ai",
+        appUrl: "https://embedded-computing.systems",
         headers: { "x-openrouter-title": "Configured", "x-provider-api-keys": "Configured BYOK" },
         api_keys: { anthropic: "provider-key" },
         extraBody: { transforms: ["middle-out"] },
@@ -484,7 +484,7 @@ describe("AISDKNative", () => {
       },
       headers: {
         "x-openrouter-title": "Configured",
-        "HTTP-Referer": "https://modtools.ai",
+        "HTTP-Referer": "https://embedded-computing.systems",
         "x-provider-api-keys": "Configured BYOK",
       },
       body: { transforms: ["middle-out"] },

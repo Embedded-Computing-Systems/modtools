@@ -172,7 +172,7 @@ describe("ConfigPolicyPlugin.Plugin", () => {
         catalog.update(Provider.ID.anthropic, () => {})
         catalog.update(Provider.ID.opencode, () => {})
       })
-      yield* managed.set({ statements: [provider("deny", "*"), provider("allow", "mod")] })
+      yield* managed.set({ statements: [provider("deny", "*"), provider("allow", "opencode")] })
       yield* addPlugin([document(provider("allow", "anthropic"))])
 
       expect(yield* catalog.get(Provider.ID.anthropic)).toBeUndefined()

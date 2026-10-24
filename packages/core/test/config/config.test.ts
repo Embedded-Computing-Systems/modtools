@@ -1404,7 +1404,7 @@ describe("Config", () => {
                             "headers": {
                               "Authorization": "Bearer {env:MODTOOLS_TEST_MCP_TOKEN}",
                               "X-Token": "{file:token.txt}",
-                              "X-Missing": "Bearer {file:~/.mod-test-missing/key}",
+                              "X-Missing": "Bearer {file:~/.opencode-test-missing/key}",
                               "X-Folder": "{file:.}"
                             }
                           }

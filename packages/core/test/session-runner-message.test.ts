@@ -905,7 +905,7 @@ Earlier work
     ])
   })
 
-  test("replays flat state under an MOD hosted model's route key", () => {
+  test("replays flat state under a MOD hosted model's route key", () => {
     const mod = Model.Ref.make({ id: Model.ID.make("claude-fable-5"), providerID: Provider.ID.opencode })
     const messages = toLLMMessages(
       [

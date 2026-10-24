@@ -4,9 +4,9 @@
   content.
 -->
 
-# Report an MOD Issue
+# Report a MOD Issue
 
-Use this skill when the user wants to report an MOD issue or bug. Your job
+Use this skill when the user wants to report a MOD issue or bug. Your job
 is to turn the user's problem into a useful GitHub issue with standard
 diagnostics plus the context needed to reproduce and resolve it.
 
@@ -36,7 +36,7 @@ Collect these values when possible:
   or release if the version output or environment reveals it.
 - Active plugins: inspect MOD config for configured plugins when possible.
   Check likely config locations such as `MOD.json`, `MOD.jsonc`,
-  `.mod/MOD.json`, and `~/.config/MOD/MOD.json`. Record
+  `.mod/MOD.json`, and `~/.config/mod/MOD.json`. Record
   configured plugin entries, local plugin files under `.mod/plugin/` or
   `.mod/plugins/`, and note if plugin status could not be determined.
 
