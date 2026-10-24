@@ -2,6 +2,7 @@ export * as V1Migration from "./v1-migration.js"
 
 import { Cause, Effect, Fiber, Layer, Option, Schema, Semaphore } from "effect"
 import { Database } from "./database.js"
+import { LegacyBridge } from "./legacy-bridge.js"
 import { storedAbsolutePath } from "./path.js"
 import { SessionMessageTable, SessionTable } from "../session/sql.js"
 import { SessionV1 } from "@modtools-ai/schema/session-v1"
@@ -545,6 +546,9 @@ export function run(
     Effect.gen(function* () {
       const db = (yield* Database.Service).db
       const global = yield* Global.Service
+      // Bring over what changed in the read-only v1 store since the last sync. The bridge
+      // clears the completion marker when it copied a delta, so the import below sees it.
+      yield* LegacyBridge.sync(db)
       const state = yield* readState(db)
       if (state?.phase === "completed") return { status: "completed" as const }
       if (!(yield* hasLegacySessions(db))) return { status: "completed" as const }
