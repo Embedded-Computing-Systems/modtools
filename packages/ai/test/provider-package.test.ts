@@ -335,7 +335,7 @@ describe("provider package entrypoints", () => {
 
     expect(Azure.model("deployment", settings).route.id).toBe("azure-openai-responses")
     expect(responses.route.id).toBe("azure-openai-responses")
-    expect(responses.route.endpoint.baseURL).toBe("https://mod-test.openai.azure.com/openai/v1")
+    expect(responses.route.endpoint.baseURL).toBe("https://opencode-test.openai.azure.com/openai/v1")
     expect(responses.route.defaults.headers).toEqual({ "x-application": "mod" })
     expect(responses.route.defaults.http?.body).toEqual({ service_tier: "priority" })
     expect(chat.route.id).toBe("azure-openai-chat")
@@ -355,7 +355,7 @@ describe("provider package entrypoints", () => {
     })
 
     expect(deployment.route.endpoint).toMatchObject({
-      baseURL: "https://mod-test.openai.azure.com/openai/deployments/custom-deployment",
+      baseURL: "https://opencode-test.openai.azure.com/openai/deployments/custom-deployment",
       query: { "api-version": "2025-01-01-preview" },
     })
     expect(gateway.route.endpoint.baseURL).toBe("https://gateway.example/azure")

@@ -32,11 +32,11 @@ const typesafe = recordedTests({
   metadata: { model: "jev-latest" },
 })
 
-const mod = recordedTests({
-  prefix: "mod-evaluation",
-  provider: "mod",
+const opencode = recordedTests({
+  prefix: "opencode-evaluation",
+  provider: "opencode",
   protocol: "system-one",
-  requires: ["MODTOOLS_API_KEY"],
+  requires: ["OPENCODE_API_KEY"],
   metadata: { model: "jev-1.13-free" },
 })
 
@@ -55,9 +55,9 @@ describe("experimental Evaluation recorded", () => {
     ),
   )
 
-  mod.effect("evaluates choice score and boolean questions", () =>
+  opencode.effect("evaluates choice score and boolean questions", () =>
     assertEvaluation(
-      OpenCode.configure({ apiKey: process.env.MODTOOLS_API_KEY ?? "fixture" }).experimental.evaluation(
+      OpenCode.configure({ apiKey: process.env.OPENCODE_API_KEY ?? "fixture" }).experimental.evaluation(
         "jev-1.13-free",
       ),
     ),
