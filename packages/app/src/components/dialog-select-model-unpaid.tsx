@@ -1,10 +1,10 @@
-import { Button } from "@opencode-ai/ui/button"
-import { useDialog } from "@opencode-ai/ui/context/dialog"
-import { Dialog } from "@opencode-ai/ui/dialog"
-import { List, type ListRef } from "@opencode-ai/ui/list"
-import { ProviderIcon } from "@opencode-ai/ui/provider-icon"
-import { Tag } from "@opencode-ai/ui/tag"
-import { Tooltip } from "@opencode-ai/ui/tooltip"
+import { Button } from "@modtools-ai/ui/button"
+import { useDialog } from "@modtools-ai/ui/context/dialog"
+import { Dialog } from "@modtools-ai/ui/dialog"
+import { List, type ListRef } from "@modtools-ai/ui/list"
+import { ProviderIcon } from "@modtools-ai/ui/provider-icon"
+import { Tag } from "@modtools-ai/ui/tag"
+import { Tooltip } from "@modtools-ai/ui/tooltip"
 import { type Component, Show } from "solid-js"
 import { useLocal } from "@/context/local"
 import { popularProviders, useProviders } from "@/hooks/use-providers"
@@ -111,7 +111,7 @@ export const DialogSelectModelUnpaid: Component<{ model?: ModelState }> = (props
                     <ProviderIcon data-slot="list-item-extra-icon" id={i.id} />
                     <span>{i.name}</span>
                     <Show when={i.id === "opencode"}>
-                      <div class="text-14-regular text-text-weak">{language.t("dialog.provider.opencode.tagline")}</div>
+                      <div class="text-14-regular text-text-weak">{language.t("dialog.provider.mod.tagline")}</div>
                     </Show>
                     <Show when={i.id === "opencode"}>
                       <Tag>{language.t("dialog.provider.tag.recommended")}</Tag>
@@ -119,7 +119,7 @@ export const DialogSelectModelUnpaid: Component<{ model?: ModelState }> = (props
                     <Show when={i.id === "opencode-go"}>
                       <>
                         <div class="text-14-regular text-text-weak">
-                          {language.t("dialog.provider.opencodeGo.tagline")}
+                          {language.t("dialog.provider.modGo.tagline")}
                         </div>
                         <Tag>{language.t("dialog.provider.tag.recommended")}</Tag>
                       </>

@@ -1,7 +1,7 @@
 import windowState from "electron-window-state"
-import { resolveThemeVariant } from "@opencode-ai/ui/theme/resolve"
-import type { DesktopTheme } from "@opencode-ai/ui/theme/types"
-import oc2ThemeJson from "../../../ui/src/theme/themes/oc-2.json"
+import { resolveThemeVariant } from "@modtools-ai/ui/theme/resolve"
+import type { DesktopTheme } from "@modtools-ai/ui/theme/types"
+import mod2ThemeJson from "../../../ui/src/theme/themes/oc-2.json"
 import { randomUUID } from "node:crypto"
 import { rmSync } from "node:fs"
 import { app, BrowserWindow, dialog, net, nativeImage, nativeTheme, protocol, shell } from "electron"
@@ -24,10 +24,10 @@ const rendererHost = "renderer"
 const clipboardWritePermission = "clipboard-sanitized-write"
 const notificationPermission = "notifications"
 const rendererPermissions = new Set([clipboardWritePermission, notificationPermission])
-const oc2Theme = oc2ThemeJson as DesktopTheme
+const mod2Theme = mod2ThemeJson as DesktopTheme
 const oc2Background = {
-  light: resolveThemeVariant(oc2Theme.light, false)["background-base"],
-  dark: resolveThemeVariant(oc2Theme.dark, true)["background-base"],
+  light: resolveThemeVariant(mod2Theme.light, false)["background-base"],
+  dark: resolveThemeVariant(mod2Theme.dark, true)["background-base"],
 }
 const documentPolicyHeader = "Document-Policy"
 const jsCallStacksDocumentPolicy = "include-js-call-stacks-in-crash-reports"
@@ -180,7 +180,7 @@ export function createMainWindow(id: string = randomUUID()) {
     height: state.height,
     show: false,
     autoHideMenuBar: true,
-    title: "OpenCode",
+    title: "MOD",
     icon: iconPath(),
     backgroundColor: backgroundColor ?? defaultBackgroundColor(),
     ...(process.platform === "darwin"
@@ -285,7 +285,7 @@ function windowStateFile(id: string) {
 // Mirrors windowStorage() in packages/app/src/utils/persist.ts, which names
 // the per-window renderer store this window persists its tabs into.
 function windowDataFile(id: string) {
-  return `opencode.window.${id.replace(/[^a-zA-Z0-9._-]/g, "-")}.dat`
+  return `mod.window.${id.replace(/[^a-zA-Z0-9._-]/g, "-")}.dat`
 }
 
 export function registerRendererProtocol() {

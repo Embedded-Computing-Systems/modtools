@@ -1,19 +1,19 @@
 import type { APIEvent } from "@solidjs/start/server"
-import { and, Database, eq, isNull, lt, or, sql } from "@opencode-ai/console-core/drizzle/index.js"
-import { KeyTable } from "@opencode-ai/console-core/schema/key.sql.js"
-import { BillingTable, LiteTable, SubscriptionTable, UsageTable } from "@opencode-ai/console-core/schema/billing.sql.js"
-import { centsToMicroCents } from "@opencode-ai/console-core/util/price.js"
-import { getMonthlyBounds, getWeekBounds } from "@opencode-ai/console-core/util/date.js"
-import { Identifier } from "@opencode-ai/console-core/identifier.js"
-import { Billing } from "@opencode-ai/console-core/billing.js"
-import { Actor } from "@opencode-ai/console-core/actor.js"
-import { WorkspaceTable } from "@opencode-ai/console-core/schema/workspace.sql.js"
-import { ZenData } from "@opencode-ai/console-core/model.js"
-import { Subscription } from "@opencode-ai/console-core/subscription.js"
-import { BlackData } from "@opencode-ai/console-core/black.js"
-import { UserTable } from "@opencode-ai/console-core/schema/user.sql.js"
-import { ModelTable } from "@opencode-ai/console-core/schema/model.sql.js"
-import { ProviderTable } from "@opencode-ai/console-core/schema/provider.sql.js"
+import { and, Database, eq, isNull, lt, or, sql } from "@modtools-ai/console-core/drizzle/index.js"
+import { KeyTable } from "@modtools-ai/console-core/schema/key.sql.js"
+import { BillingTable, LiteTable, SubscriptionTable, UsageTable } from "@modtools-ai/console-core/schema/billing.sql.js"
+import { centsToMicroCents } from "@modtools-ai/console-core/util/price.js"
+import { getMonthlyBounds, getWeekBounds } from "@modtools-ai/console-core/util/date.js"
+import { Identifier } from "@modtools-ai/console-core/identifier.js"
+import { Billing } from "@modtools-ai/console-core/billing.js"
+import { Actor } from "@modtools-ai/console-core/actor.js"
+import { WorkspaceTable } from "@modtools-ai/console-core/schema/workspace.sql.js"
+import { ZenData } from "@modtools-ai/console-core/model.js"
+import { Subscription } from "@modtools-ai/console-core/subscription.js"
+import { BlackData } from "@modtools-ai/console-core/black.js"
+import { UserTable } from "@modtools-ai/console-core/schema/user.sql.js"
+import { ModelTable } from "@modtools-ai/console-core/schema/model.sql.js"
+import { ProviderTable } from "@modtools-ai/console-core/schema/provider.sql.js"
 import { logger } from "./logger"
 import {
   AuthError,
@@ -38,15 +38,15 @@ import { createRateLimiter as createIpRateLimiter } from "./ipRateLimiter"
 import { createRateLimiter as createKeyRateLimiter } from "./keyRateLimiter"
 import { createTrialLimiter } from "./trialLimiter"
 import { createStickyTracker } from "./stickyProviderTracker"
-import { LiteData } from "@opencode-ai/console-core/lite.js"
-import { Resource } from "@opencode-ai/console-resource"
+import { LiteData } from "@modtools-ai/console-core/lite.js"
+import { Resource } from "@modtools-ai/console-resource"
 import { i18n, type Key } from "~/i18n"
 import { localeFromRequest } from "~/lib/language"
 import { createModelTpmLimiter } from "./modelTpmLimiter"
 import { createModelTpsLimiter } from "./modelTpsLimiter"
 import { createProviderBudgetTracker } from "./providerBudgetTracker"
 import { accumulateUsage, HOT_WORKSPACES } from "./usageBatcher"
-import { Workspace } from "@opencode-ai/console-core/workspace.js"
+import { Workspace } from "@modtools-ai/console-core/workspace.js"
 import { countryFromRequest, isModelCountryRestricted } from "~/lib/request-country"
 import { isPeakPricing } from "./pricing"
 import { prepareRequestBody } from "./requestBody"
@@ -280,8 +280,8 @@ export async function handler(
       logger.metric({ is_stream: isStream })
 
       if (isNewInference) {
-        const resEndpointId = res.headers.get("x-opencode-endpoint-id")
-        const resEndpointModelId = res.headers.get("x-opencode-upstream-model-id")
+        const resEndpointId = res.headers.get("x-mod-endpoint-id")
+        const resEndpointModelId = res.headers.get("x-mod-upstream-model-id")
         if (resEndpointId && resEndpointModelId)
           logger.metric({
             provider: resEndpointId,

@@ -1,4 +1,4 @@
-import { base64Encode } from "@opencode-ai/core/util/encode"
+import { base64Encode } from "@modtools-ai/core/util/encode"
 import { expect, test, type Page } from "@playwright/test"
 import { currentSession, mockOpenCodeServer } from "../utils/mock-server"
 import { expectSessionTitle } from "../utils/waits"
@@ -23,7 +23,7 @@ test("navigates to a subagent child session missing from the session list", asyn
   await expectSessionTitle(page, taskDescription)
   await expect(page.getByRole("heading", { name: parentTitle })).toHaveCount(0)
 
-  const titlebarRight = page.locator("#opencode-titlebar-right")
+  const titlebarRight = page.locator("#mod-titlebar-right")
   await expect(titlebarRight.getByRole("button", { name: "Toggle review" })).toHaveCount(1)
 })
 
@@ -44,7 +44,7 @@ test("shows the not found fallback when the viewed session is deleted", async ({
 })
 
 async function setup(page: Page, events?: () => EventPayload[]) {
-  await mockOpenCodeServer(page, {
+  await mockModServer(page, {
     directory,
     project: {
       id: projectID,
@@ -57,15 +57,15 @@ async function setup(page: Page, events?: () => EventPayload[]) {
     provider: {
       all: [
         {
-          id: "opencode",
-          name: "OpenCode",
+          id: "mod",
+          name: "MOD",
           models: {
             "claude-opus-4-6": { id: "claude-opus-4-6", name: "Claude Opus 4.6", limit: { context: 200_000 } },
           },
         },
       ],
-      connected: ["opencode"],
-      default: { providerID: "opencode", modelID: "claude-opus-4-6" },
+      connected: ["mod"],
+      default: { providerID: "mod", modelID: "claude-opus-4-6" },
     },
     sessions: [session(parentID, parentTitle, 1700000000000), childSession()],
     pageMessages: (sessionID) => ({ items: sessionID === parentID ? parentMessages() : [] }),
@@ -129,7 +129,7 @@ function parentMessages() {
         role: "user",
         time: { created: 1700000000000 },
         agent: "build",
-        model: { providerID: "opencode", modelID: "claude-opus-4-6" },
+        model: { providerID: "mod", modelID: "claude-opus-4-6" },
       },
       parts: [
         {
@@ -149,7 +149,7 @@ function parentMessages() {
         time: { created: 1700000001000, completed: 1700000002000 },
         parentID: userID,
         modelID: "claude-opus-4-6",
-        providerID: "opencode",
+        providerID: "mod",
         mode: "build",
         agent: "build",
         path: { cwd: directory, root: directory },
@@ -185,13 +185,13 @@ async function configurePage(page: Page) {
     ({ directory, server, sessionId }) => {
       localStorage.setItem("settings.v3", JSON.stringify({ general: { newLayoutDesigns: true } }))
       localStorage.setItem(
-        "opencode.global.dat:server",
+        "mod.global.dat:server",
         JSON.stringify({
           projects: { local: [{ worktree: directory, expanded: true }] },
           lastProject: { local: directory },
         }),
       )
-      localStorage.setItem("opencode.window.browser.dat:tabs", JSON.stringify([{ type: "session", server, sessionId }]))
+      localStorage.setItem("mod.window.browser.dat:tabs", JSON.stringify([{ type: "session", server, sessionId }]))
     },
     { directory, server, sessionId: parentID },
   )

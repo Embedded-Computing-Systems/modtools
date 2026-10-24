@@ -36,7 +36,7 @@ export const Info = Schema.Struct({
   shell: Schema.optional(Schema.String).annotate({ description: "Default shell to use for terminal and bash tool" }),
   logLevel: Schema.optional(LogLevelRef).annotate({ description: "Log level" }),
   server: Schema.optional(ConfigServerV1.Server).annotate({
-    description: "Server configuration for opencode serve and web commands",
+    description: "Server configuration for mod serve and web commands",
   }),
   command: Schema.optional(Schema.Record(Schema.String, ConfigCommandV1.Info)).annotate({
     description: "Command configuration, see https://opencode.ai/docs/commands",
@@ -63,7 +63,7 @@ export const Info = Schema.Struct({
   }),
   autoupdate: Schema.optional(Schema.Union([Schema.Boolean, Schema.Literal("notify")])).annotate({
     description:
-      "Check for new versions and show an update notice. Updates are never installed automatically; run /update or `opencode upgrade`. Set to false to disable update checks. true and 'notify' behave the same",
+      "Check for new versions and show an update notice. Updates are never installed automatically; run /update or `mod upgrade`. Set to false to disable update checks. true and 'notify' behave the same",
   }),
   disabled_providers: Schema.optional(Schema.mutable(Schema.Array(Schema.String))).annotate({
     description: "Disable providers that are loaded automatically",

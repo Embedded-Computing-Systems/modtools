@@ -6,9 +6,9 @@ import { useDialog } from "../ui/dialog"
 import { useBindings } from "../keymap"
 import { errorMessage } from "../util/error"
 import { Spinner } from "./spinner"
-import { openUrl } from "@opencode-ai/core/open"
+import { openUrl } from "@modtools-ai/core/open"
 
-export const V2_ANNOUNCEMENT_URL = "https://anoma.ly/notes/opencode-2-0"
+export const V2_ANNOUNCEMENT_URL = "https://anoma.ly/notes/mod-2-0"
 
 type Version = { current: string; latest?: string }
 
@@ -97,7 +97,7 @@ export function DialogUpdate(props: {
       <box flexDirection="row" justifyContent="space-between">
         <text attributes={TextAttributes.BOLD} fg={theme.text}>
           {state().type === "installing"
-            ? "Updating OpenCode"
+            ? "Updating MOD"
             : state().type === "available" || state().type === "major" || state().type === "failed"
               ? "Update available"
               : "Update"}
@@ -115,15 +115,15 @@ export function DialogUpdate(props: {
               </Match>
               <Match when={current.type === "available"}>
                 <text fg={theme.textMuted} wrapMode="word">
-                  An update is available. After installing, you'll be prompted to restart OpenCode.
+                  An update is available. After installing, you'll be prompted to restart MOD.
                 </text>
               </Match>
               <Match when={current.type === "installing" && current} keyed>
                 {(installing) => (
                   <Spinner color={theme.text}>
                     {installing.target.type === "major"
-                      ? "Installing OpenCode 2.0…"
-                      : `Installing OpenCode ${installing.target.version}…`}
+                      ? "Installing MOD 2.0…"
+                      : `Installing MOD ${installing.target.version}…`}
                   </Spinner>
                 )}
               </Match>
@@ -131,7 +131,7 @@ export function DialogUpdate(props: {
                 {(installed) => (
                   <text fg={theme.textMuted} wrapMode="word">
                     {installed.target.type === "major"
-                      ? "Update successful! A restart is required. Run `opencode` to start OpenCode 2.0."
+                      ? "Update successful! A restart is required. Run `mod` to start MOD 2.0."
                       : "Update successful! A restart is required."}
                   </text>
                 )}

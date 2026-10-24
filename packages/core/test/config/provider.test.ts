@@ -1,13 +1,13 @@
 import { describe, expect } from "bun:test"
 import { Effect, Schema } from "effect"
-import { Catalog } from "@opencode-ai/core/catalog"
-import { Config } from "@opencode-ai/core/config"
-import { ConfigProviderPlugin } from "@opencode-ai/core/config/plugin/provider"
-import { Integration } from "@opencode-ai/core/integration"
-import { ModelV2 } from "@opencode-ai/core/model"
-import { PluginV2 } from "@opencode-ai/core/plugin"
-import { PluginHost } from "@opencode-ai/core/plugin/host"
-import { ProviderV2 } from "@opencode-ai/core/provider"
+import { Catalog } from "@modtools-ai/core/catalog"
+import { Config } from "@modtools-ai/core/config"
+import { ConfigProviderPlugin } from "@modtools-ai/core/config/plugin/provider"
+import { Integration } from "@modtools-ai/core/integration"
+import { ModelV2 } from "@modtools-ai/core/model"
+import { PluginV2 } from "@modtools-ai/core/plugin"
+import { PluginHost } from "@modtools-ai/core/plugin/host"
+import { ProviderV2 } from "@modtools-ai/core/provider"
 import { testEffect } from "../lib/effect"
 import { PluginTestLayer } from "../plugin/fixture"
 
@@ -68,7 +68,7 @@ describe("ConfigProviderPlugin.Plugin", () => {
               info: decode({
                 providers: {
                   opencode: {
-                    api: { type: "aisdk", package: "@ai-sdk/openai", url: "https://opencode.test/v1" },
+                    api: { type: "aisdk", package: "@ai-sdk/openai", url: "https://mod.test/v1" },
                     models: {
                       "alpha-gpt-next": {
                         variants: [
@@ -119,7 +119,7 @@ describe("ConfigProviderPlugin.Plugin", () => {
               info: decode({
                 providers: {
                   opencode: {
-                    api: { type: "aisdk", package: "@ai-sdk/openai", url: "https://opencode.test/v1" },
+                    api: { type: "aisdk", package: "@ai-sdk/openai", url: "https://mod.test/v1" },
                   },
                 },
               }),

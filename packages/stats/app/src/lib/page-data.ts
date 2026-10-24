@@ -5,8 +5,8 @@ import {
   getStatsModelsComparisonData,
   type MarketDay,
   type TokenCostEntry,
-} from "@opencode-ai/stats-core/domain/home"
-import { statModel } from "@opencode-ai/stats-core/domain/model-normalization"
+} from "@modtools-ai/stats-core/domain/home"
+import { statModel } from "@modtools-ai/stats-core/domain/model-normalization"
 import { runStatsEffect } from "../stats-runtime"
 import {
   catalogSlug,

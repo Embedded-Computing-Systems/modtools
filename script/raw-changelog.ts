@@ -22,8 +22,8 @@ type Diff = {
   message: string
 }
 
-const repo = process.env.GH_REPO ?? "anomalyco/opencode"
-const bot = ["actions-user", "github-actions[bot]", "opencode", "opencode-agent[bot]"]
+const repo = process.env.GH_REPO ?? "anomalyco/mod"
+const bot = ["actions-user", "github-actions[bot]", "mod", "mod-agent[bot]"]
 const team = [
   ...(await Bun.file(new URL("../.github/TEAM_MEMBERS", import.meta.url))
     .text()
@@ -58,7 +58,7 @@ export function latestV1(releases: Release[]) {
 async function latest() {
   const data = await $`gh api "/repos/${repo}/releases?per_page=100"`.json()
   const release = latestV1(data as Release[])
-  if (!release) throw new Error("No OpenCode 1 releases found")
+  if (!release) throw new Error("No MOD 1 releases found")
   return release
 }
 
@@ -125,7 +125,7 @@ async function commits(from: string, to: string) {
   }
 
   const log =
-    await $`git log ${base}..${head} --format=%H -- packages/opencode packages/sdk packages/plugin packages/desktop packages/app sdks/vscode packages/extensions github`.text()
+    await $`git log ${base}..${head} --format=%H -- packages/modtools packages/sdk packages/plugin packages/desktop packages/app sdks/vscode packages/extensions github`.text()
 
   const list: Commit[] = []
   for (const hash of log.split("\n").filter(Boolean)) {
@@ -137,8 +137,8 @@ async function commits(from: string, to: string) {
     const areas = new Set<string>()
 
     for (const file of diff.split("\n").filter(Boolean)) {
-      if (file.startsWith("packages/opencode/src/cli/cmd/")) areas.add("tui")
-      else if (file.startsWith("packages/opencode/")) areas.add("core")
+      if (file.startsWith("packages/modtools/src/cli/cmd/")) areas.add("tui")
+      else if (file.startsWith("packages/modtools/")) areas.add("core")
       else if (file.startsWith("packages/desktop/src-tauri/")) areas.add("tauri")
       else if (file.startsWith("packages/desktop/") || file.startsWith("packages/app/")) areas.add("app")
       else if (file.startsWith("packages/sdk/") || file.startsWith("packages/plugin/")) areas.add("sdk")

@@ -83,7 +83,7 @@ async function trial(page: Page, mode: ParentHydrationBenchmarkMode) {
   const requests: { type: "list" | "parent"; before?: string }[] = []
   const history = mode === "candidate" ? Promise.withResolvers<void>() : undefined
   let historyGates = 0
-  await mockOpenCodeServer(page, {
+  await mockModServer(page, {
     sessions: fixture.sessions.filter((session) => session.id === fixture.sourceID),
     provider: fixture.provider,
     directory: fixture.directory,

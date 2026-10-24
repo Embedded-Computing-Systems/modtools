@@ -1,6 +1,6 @@
-# OpenCode Desktop
+# MOD Desktop
 
-The OpenCode Desktop app, built with Electron.
+The MOD Desktop app, built with Electron.
 
 ## Development
 

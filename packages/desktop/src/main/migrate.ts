@@ -23,19 +23,19 @@ function tauriDir(id: string) {
 
 // The Tauri app identifier changes between dev/beta/prod builds.
 const TAURI_APP_IDS: Record<string, string> = {
-  dev: "ai.opencode.desktop.dev",
-  beta: "ai.opencode.desktop.beta",
-  prod: "ai.opencode.desktop",
+  dev: "ai.mod.desktop.dev",
+  beta: "ai.mod.desktop.beta",
+  prod: "ai.mod.desktop",
 }
 function tauriAppId() {
-  return app.isPackaged ? TAURI_APP_IDS[CHANNEL] : "ai.opencode.desktop.dev"
+  return app.isPackaged ? TAURI_APP_IDS[CHANNEL] : "ai.mod.desktop.dev"
 }
 
 // Migrate a single Tauri .dat file into the corresponding electron-store.
-// `opencode.settings.dat` is special: it maps to the `opencode.settings` store
+// `mod.settings.dat` is special: it maps to the `mod.settings` store
 // (the electron-store name without the `.dat` extension). All other .dat files
 // keep their full filename as the electron-store name so they match what the
-// renderer already passes via IPC (e.g. `"default.dat"`, `"opencode.global.dat"`).
+// renderer already passes via IPC (e.g. `"default.dat"`, `"mod.global.dat"`).
 function migrateFile(datPath: string, filename: string) {
   let data: Record<string, unknown>
   try {
@@ -45,10 +45,10 @@ function migrateFile(datPath: string, filename: string) {
     return
   }
 
-  // opencode.settings.dat → the electron settings store ("opencode.settings").
+  // mod.settings.dat → the electron settings store ("mod.settings").
   // All other .dat files keep their full filename as the store name so they match
-  // what the renderer passes via IPC (e.g. "default.dat", "opencode.global.dat").
-  const storeName = filename === "opencode.settings.dat" ? "opencode.settings" : filename
+  // what the renderer passes via IPC (e.g. "default.dat", "mod.global.dat").
+  const storeName = filename === "mod.settings.dat" ? "mod.settings" : filename
   const target = getStore(storeName)
   const migrated: string[] = []
   const skipped: string[] = []

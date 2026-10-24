@@ -1,6 +1,6 @@
-import { createOpencodeClient } from "@opencode-ai/sdk/v2"
-import type { GlobalEvent } from "@opencode-ai/sdk/v2"
-import { Flag } from "@opencode-ai/core/flag/flag"
+import { createModClient } from "@modtools-ai/sdk/v2"
+import type { GlobalEvent } from "@modtools-ai/sdk/v2"
+import { Flag } from "@modtools-ai/core/flag/flag"
 import { createSimpleContext } from "./helper"
 import { batch, onCleanup, onMount } from "solid-js"
 
@@ -21,7 +21,7 @@ export const { use: useSDK, provider: SDKProvider } = createSimpleContext({
     let sse: AbortController | undefined
 
     function createSDK() {
-      return createOpencodeClient({
+      return createModClient({
         baseUrl: props.url,
         signal: abort.signal,
         directory: props.directory,
@@ -93,7 +93,7 @@ export const { use: useSDK, provider: SDKProvider } = createSimpleContext({
             sseMaxRetryAttempts: 0,
           })
 
-          if (Flag.OPENCODE_EXPERIMENTAL_WORKSPACES) {
+          if (Flag.MODTOOLS_EXPERIMENTAL_WORKSPACES) {
             // Start syncing workspaces, it's important to do this after
             // we've started listening to events
             await sdk.sync.start().catch(() => {})
@@ -121,7 +121,7 @@ export const { use: useSDK, provider: SDKProvider } = createSimpleContext({
         const unsub = await props.events.subscribe(handleEvent)
         onCleanup(unsub)
 
-        if (Flag.OPENCODE_EXPERIMENTAL_WORKSPACES) {
+        if (Flag.MODTOOLS_EXPERIMENTAL_WORKSPACES) {
           // Start syncing workspaces, it's important to do this after
           // we've started listening to events
           await sdk.sync.start().catch(() => {})

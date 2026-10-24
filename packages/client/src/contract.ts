@@ -1,5 +1,5 @@
-import { makeDefaultApi } from "@opencode-ai/protocol/api"
-import { InvalidRequestError, SessionNotFoundError } from "@opencode-ai/protocol/errors"
+import { makeDefaultApi } from "@modtools-ai/protocol/api"
+import { InvalidRequestError, SessionNotFoundError } from "@modtools-ai/protocol/errors"
 import { HttpApiMiddleware } from "effect/unstable/httpapi"
 
 class LocationMiddleware extends HttpApiMiddleware.Service<LocationMiddleware>()(

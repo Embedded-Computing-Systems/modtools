@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test"
-import { mockOpenCodeServer } from "../utils/mock-server"
+import { mockModServer } from "../utils/mock-server"
 import { expectAppVisible } from "../utils/waits"
 
 const draftID = "draft_new_session_panel_corner"
@@ -12,7 +12,7 @@ test.use({
 })
 
 test("matches the rounded panel corners to the dark new-session background", async ({ page }, testInfo) => {
-  await mockOpenCodeServer(page, {
+  await mockModServer(page, {
     directory,
     project: {
       id: "proj_new_session_panel_corner",
@@ -29,17 +29,17 @@ test("matches the rounded panel corners to the dark new-session background", asy
   await page.addInitScript(
     ({ directory, draftID, server }) => {
       localStorage.setItem("settings.v3", JSON.stringify({ general: { newLayoutDesigns: true } }))
-      localStorage.setItem("opencode-theme-id", "oc-2")
-      localStorage.setItem("opencode-color-scheme", "dark")
+      localStorage.setItem("mod-theme-id", "oc-2")
+      localStorage.setItem("mod-color-scheme", "dark")
       localStorage.setItem(
-        "opencode.global.dat:server",
+        "mod.global.dat:server",
         JSON.stringify({
           projects: { local: [{ worktree: directory, expanded: true }] },
           lastProject: { local: directory },
         }),
       )
       localStorage.setItem(
-        "opencode.window.browser.dat:tabs",
+        "mod.window.browser.dat:tabs",
         JSON.stringify([{ type: "draft", draftID, server, directory }]),
       )
     },

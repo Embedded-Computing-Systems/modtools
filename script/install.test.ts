@@ -5,7 +5,7 @@ import os from "os"
 import path from "path"
 
 const script = path.resolve(import.meta.dir, "../install")
-const root = await mkdtemp(path.join(os.tmpdir(), "opencode-install-test-"))
+const root = await mkdtemp(path.join(os.tmpdir(), "mod-install-test-"))
 afterAll(() => rm(root, { recursive: true, force: true }))
 
 // Stands in for curl: answers the npm registry, the GitHub release list, and release downloads.
@@ -25,9 +25,9 @@ while [ $# -gt 0 ]; do
   esac
 done
 case "$url" in
-  https://registry.npmjs.org/opencode-ai/latest) [ -n "$NPM_BODY" ] || exit 22; printf '%s' "$NPM_BODY" ;;
-  https://api.github.com/repos/anomalyco/opencode/releases*) printf '%s' "$GITHUB_BODY" ;;
-  https://github.com/anomalyco/opencode/releases/download/*)
+  https://registry.npmjs.org/modtools-ai/latest) [ -n "$NPM_BODY" ] || exit 22; printf '%s' "$NPM_BODY" ;;
+  https://api.github.com/repos/anomalyco/mod/releases*) printf '%s' "$GITHUB_BODY" ;;
+  https://github.com/Embedded-Computing-Systems/modtools/releases/download/*)
     if [ "$head" = true ]; then printf '%s' "\${ASSET_STATUS:-200}"; else cp "$ARCHIVE" "$out"; fi ;;
   *) exit 22 ;;
 esac
@@ -36,9 +36,9 @@ esac
 const bin = path.join(root, "bin")
 await Bun.write(path.join(bin, "curl"), curl)
 await $`chmod +x ${path.join(bin, "curl")}`
-const archive = path.join(root, "opencode.tar.gz")
-await Bun.write(path.join(root, "payload", "opencode"), "#!/bin/sh\necho installed\n")
-await $`tar -czf ${archive} -C ${path.join(root, "payload")} opencode`
+const archive = path.join(root, "mod.tar.gz")
+await Bun.write(path.join(root, "payload", "mod"), "#!/bin/sh\necho installed\n")
+await $`tar -czf ${archive} -C ${path.join(root, "payload")} mod`
 
 let run = 0
 async function install(input: { env?: Record<string, string>; args?: string[] }) {
@@ -67,12 +67,12 @@ async function install(input: { env?: Record<string, string>; args?: string[] })
     code,
     output: stdout + stderr,
     curl: (await Bun.file(log).text()).trim().split("\n").filter(Boolean),
-    installed: await Bun.file(path.join(home, ".opencode", "bin", "opencode")).exists(),
+    installed: await Bun.file(path.join(home, ".mod", "bin", "mod")).exists(),
   }
 }
 
 describe("install script", () => {
-  test("refuses an OpenCode 2 VERSION before downloading anything", async () => {
+  test("refuses an MOD 2 VERSION before downloading anything", async () => {
     for (const version of ["2.0.0", "v2.0.27", "10.1.0"]) {
       const result = await install({ env: { VERSION: version } })
       expect(result.code).toBe(1)
@@ -82,13 +82,13 @@ describe("install script", () => {
     }
   })
 
-  test("refuses an OpenCode 2 --version", async () => {
+  test("refuses an MOD 2 --version", async () => {
     const result = await install({ args: ["--version", "2.0.0"] })
     expect(result.code).toBe(1)
-    expect(result.output).toContain("opencode upgrade --major")
+    expect(result.output).toContain("mod upgrade --major")
   })
 
-  test.skipIf(process.platform !== "linux")("installs an explicit OpenCode 1 version", async () => {
+  test.skipIf(process.platform !== "linux")("installs an explicit MOD 1 version", async () => {
     const result = await install({ env: { VERSION: "1.18.35" } })
     expect(result.code).toBe(0)
     expect(result.installed).toBe(true)
@@ -97,7 +97,7 @@ describe("install script", () => {
 
   test.skipIf(process.platform !== "linux")("reads the version from npm", async () => {
     const result = await install({
-      env: { NPM_BODY: '{"name":"opencode-ai","_npmVersion":"11.0.0","version":"1.19.2"}' },
+      env: { NPM_BODY: '{"name":"modtools-ai","_npmVersion":"11.0.0","version":"1.19.2"}' },
     })
     expect(result.code).toBe(0)
     expect(result.output).toContain("version: \x1b[0m1.19.2")
@@ -125,7 +125,7 @@ describe("install script", () => {
     },
   )
 
-  test.skipIf(process.platform !== "linux")("ignores an OpenCode 2 version from npm", async () => {
+  test.skipIf(process.platform !== "linux")("ignores an MOD 2 version from npm", async () => {
     const result = await install({
       env: { NPM_BODY: '{"version":"2.0.27"}', GITHUB_BODY: '[{"tag_name": "v1.19.0"}]' },
     })
