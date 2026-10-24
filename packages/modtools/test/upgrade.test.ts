@@ -98,6 +98,9 @@ async function cli(args: string[], env: Record<string, string> = {}, entry = "fi
           XDG_CACHE_HOME: path.join(root, "cache"),
           XDG_STATE_HOME: path.join(root, "state"),
           MODTOOLS_DISABLE_AUTOUPDATE: "1",
+          // These tests exercise the upgrade machinery itself; the command refuses by
+          // default because MOD's feed would install an upstream build.
+          MODTOOLS_ALLOW_UPGRADE: "1",
           ...env,
         },
         stdout: "pipe",
