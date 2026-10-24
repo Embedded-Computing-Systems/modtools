@@ -260,7 +260,7 @@ test.describe("timeline history", () => {
           id,
           type: "assistant",
           time: { ...time, completed: time.created + 500 },
-          model: { id: "claude-opus-4-6", providerID: "mod" },
+          model: { id: "claude-opus-4-6", providerID: "opencode" },
           agent: "build",
           content: [{ type: "text", text: index === 60 ? "## Hydrated tail\n\n**Ready.**" : `Answer ${index}` }],
         }

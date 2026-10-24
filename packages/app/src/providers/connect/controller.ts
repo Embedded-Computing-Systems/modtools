@@ -24,9 +24,9 @@ type Polling = {
   attempt?: Authorization
 }
 
-// MOD Go and MOD Zen both bill through the MOD Console, so the
+// OpenCode Go and OpenCode Zen both bill through the OpenCode Console, so the
 // Console sign-in is the connection method for both providers.
-export const CONSOLE_INTEGRATION = "mod"
+export const CONSOLE_INTEGRATION = "opencode"
 
 export const CONSOLE_PROVIDERS = new Set(["opencode", "opencode-go"])
 

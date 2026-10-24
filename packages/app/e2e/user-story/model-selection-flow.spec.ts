@@ -37,7 +37,7 @@ test("creates a session in a new project and selects its model", async ({ page }
         },
         {
           id: "opencode-go",
-          name: "MOD Go",
+          name: "OpenCode Go",
           models: {
             "go-model-1": {
               id: "go-model-1",
@@ -49,7 +49,7 @@ test("creates a session in a new project and selects its model", async ({ page }
         },
       ],
       connected: ["opencode", "opencode-go"],
-      default: { providerID: "mod", modelID: "free-model" },
+      default: { providerID: "opencode", modelID: "free-model" },
     }),
     sessions: [],
     pageMessages: () => ({ items: [] }),
@@ -62,7 +62,7 @@ test("creates a session in a new project and selects its model", async ({ page }
       "mod.global.dat:model",
       JSON.stringify({
         user: [
-          { providerID: "mod", modelID: "free-model", visibility: "show" },
+          { providerID: "opencode", modelID: "free-model", visibility: "show" },
           { providerID: "opencode-go", modelID: "go-model-1", visibility: "show" },
         ],
         recent: [{ providerID: "opencode-go", modelID: "go-model-1" }],
@@ -120,7 +120,7 @@ test("restores each existing session's model and variant when switching tabs", a
   const sessions = ["A", "B"].map((name) => ({
     id: `ses_model_${name}`,
     title: `Model ${name}`,
-    model: { id: `model-${name}`, providerID: "mod", variant: "balanced" },
+    model: { id: `model-${name}`, providerID: "opencode", variant: "balanced" },
   }))
 
   await openSession(page, {

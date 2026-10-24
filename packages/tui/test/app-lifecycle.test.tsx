@@ -1704,7 +1704,7 @@ test("server plugin failures share one notice and use source names before an ID 
   expect(setup.captureCharFrame()).toContain("Open plugins")
 })
 
-test("free usage limit offers MOD Go once per 24h, transitions Subscribe to Connect Go, and restores focus", async () => {
+test("free usage limit offers OpenCode Go once per 24h, transitions Subscribe to Connect Go, and restores focus", async () => {
   await using state = await tmpdir()
   const baseNow = 1_700_000_000_000
   let currentNow = baseNow
@@ -1719,10 +1719,10 @@ test("free usage limit offers MOD Go once per 24h, transitions Subscribe to Conn
     tokens: { input: 0, output: 0, reasoning: 0, cache: { read: 0, write: 0 } },
     time: { created: 1, updated: 1 },
   }
-  const model = { id: "big-pickle", providerID: "mod" }
+  const model = { id: "big-pickle", providerID: "opencode" }
   const freeModel = {
     id: "big-pickle",
-    providerID: "mod",
+    providerID: "opencode",
     name: "Big Pickle",
     status: "active",
     cost: [{ input: 0, output: 0, cache: { read: 0, write: 0 } }],
@@ -1772,8 +1772,8 @@ test("free usage limit offers MOD Go once per 24h, transitions Subscribe to Conn
         return json({
           location,
           data: [
-            { id: "mod", name: "MOD Zen" },
-            ...(authorized ? [{ id: "opencode-go", integrationID: "opencode", name: "MOD Go" }] : []),
+            { id: "opencode", name: "OpenCode Zen" },
+            ...(authorized ? [{ id: "opencode-go", integrationID: "opencode", name: "OpenCode Go" }] : []),
           ],
         })
       if (url.pathname === "/api/model")
@@ -1786,13 +1786,13 @@ test("free usage limit offers MOD Go once per 24h, transitions Subscribe to Conn
           location,
           data: [
             {
-              id: "mod",
-              name: "MOD Console",
+              id: "opencode",
+              name: "OpenCode Console",
               methods: [
                 {
                   id: "device",
                   type: "oauth",
-                  label: "MOD Console account",
+                  label: "OpenCode Console account",
                   form: [
                     {
                       key: "server",
@@ -1811,13 +1811,13 @@ test("free usage limit offers MOD Go once per 24h, transitions Subscribe to Conn
             },
             {
               id: "opencode-go",
-              name: "MOD Go",
+              name: "OpenCode Go",
               methods: [{ type: "key", label: "Enter Go API key" }],
               connections: [],
             },
           ],
         })
-      if (url.pathname === "/api/integration/mod/connect/oauth" && request.method === "POST") {
+      if (url.pathname === "/api/integration/opencode/connect/oauth" && request.method === "POST") {
         oauthRequests.push(await request.json())
         return json({
           location,
@@ -1829,7 +1829,7 @@ test("free usage limit offers MOD Go once per 24h, transitions Subscribe to Conn
           },
         })
       }
-      if (url.pathname === "/api/integration/mod/connect/oauth/attempt_go") {
+      if (url.pathname === "/api/integration/opencode/connect/oauth/attempt_go") {
         if (request.method === "DELETE") return new Response(null, { status: 204 })
         await oauthGate
         authorized = true
@@ -1896,13 +1896,13 @@ test("free usage limit offers MOD Go once per 24h, transitions Subscribe to Conn
   using openSpy = spyOn(Open, "openUrl").mockResolvedValue(undefined as never)
   await setup.waitForFrame((frame) => frame.includes("Free limit reached"))
   const upsell = setup.captureCharFrame()
-  expect(upsell).toContain("MOD Go gives you reliable access")
+  expect(upsell).toContain("OpenCode Go gives you reliable access")
   expect(upsell).toContain("▀▀▀▀ ▀▀▀▀")
   expect(upsell).toContain("opencode.ai/go")
   expect(upsell).toContain("don't show again")
   expect(upsell).toContain("dismiss")
   expect(upsell).toContain("subscribe")
-  expect(upsell).not.toContain("Connect MOD Go")
+  expect(upsell).not.toContain("Connect OpenCode Go")
   expect(upsell).not.toContain("Session failed")
   // Dismiss closes the modal, leaves the muted notice, and restores focus to the composer.
   setup.mockInput.pressArrow("left")
@@ -1910,7 +1910,7 @@ test("free usage limit offers MOD Go once per 24h, transitions Subscribe to Conn
   await setup.waitForFrame((frame) => !frame.includes("Free limit reached"))
   const frame = setup.captureCharFrame()
   expect(frame).toContain("You've used today's free messages. They reset at")
-  expect(frame).toContain("Upgrade to MOD Go → /connect · Switch model → /models")
+  expect(frame).toContain("Upgrade to OpenCode Go → /connect · Switch model → /models")
   expect(frame).not.toContain("Error:")
   expect(frame).not.toContain("Session failed")
   // The delivered prompt (not the queued one) shows once in the transcript and once more back in the composer.
@@ -1963,9 +1963,9 @@ test("free usage limit offers MOD Go once per 24h, transitions Subscribe to Conn
       frame.split("You've used today's free messages").length === 3 && frame.split("Queued follow-up").length === 3,
   )
   expect(setup.captureCharFrame()).not.toContain("Free limit reached")
-  expect(setup.captureCharFrame()).not.toContain("Connect MOD Go")
+  expect(setup.captureCharFrame()).not.toContain("Connect OpenCode Go")
 
-  // Exactly at 24h (86_400_000 ms) with an empty composer: reopens Free limit reached, and Subscribe starts MOD device OAuth directly, selects Go, and resends the saved prompt.
+  // Exactly at 24h (86_400_000 ms) with an empty composer: reopens Free limit reached, and Subscribe starts OpenCode device OAuth directly, selects Go, and resends the saved prompt.
   currentNow = baseNow + 86_400_000
   setup.mockInput.pressKey("c", { ctrl: true })
   await setup.waitForFrame((frame) => frame.split("Queued follow-up").length === 2)
@@ -1991,7 +1991,7 @@ test("free usage limit offers MOD Go once per 24h, transitions Subscribe to Conn
     { methodID: "device", answer: { server: "https://opencode.ai/console" } },
   ])
   const connectFrame = setup.captureCharFrame()
-  expect(connectFrame).toContain("MOD Console account")
+  expect(connectFrame).toContain("OpenCode Console account")
   expect(connectFrame).not.toContain("Enter Go API key")
   expect(connectFrame).not.toContain("API key (service account)")
   releaseOAuth()
@@ -2020,10 +2020,10 @@ test("free usage limit Subscribe handles mid-auth/mid-sync Escape, sync failure,
     tokens: { input: 0, output: 0, reasoning: 0, cache: { read: 0, write: 0 } },
     time: { created: 1, updated: 1 },
   }
-  const model = { id: "big-pickle", providerID: "mod" }
+  const model = { id: "big-pickle", providerID: "opencode" }
   const freeModel = {
     id: "big-pickle",
-    providerID: "mod",
+    providerID: "opencode",
     name: "Big Pickle",
     status: "active",
     cost: [{ input: 0, output: 0, cache: { read: 0, write: 0 } }],
@@ -2079,8 +2079,8 @@ test("free usage limit Subscribe handles mid-auth/mid-sync Escape, sync failure,
         return json({
           location,
           data: [
-            { id: "mod", name: "MOD Zen" },
-            ...(goEntitled ? [{ id: "opencode-go", integrationID: "opencode", name: "MOD Go" }] : []),
+            { id: "opencode", name: "OpenCode Zen" },
+            ...(goEntitled ? [{ id: "opencode-go", integrationID: "opencode", name: "OpenCode Go" }] : []),
           ],
         })
       if (url.pathname === "/api/model") {
@@ -2095,10 +2095,10 @@ test("free usage limit Subscribe handles mid-auth/mid-sync Escape, sync failure,
           location,
           data: [
             {
-              id: "mod",
-              name: "MOD Console",
+              id: "opencode",
+              name: "OpenCode Console",
               methods: [
-                { id: "device", type: "oauth", label: "MOD Console account" },
+                { id: "device", type: "oauth", label: "OpenCode Console account" },
                 { type: "key", label: "API key (service account)" },
               ],
               connections: connected
@@ -2117,7 +2117,7 @@ test("free usage limit Subscribe handles mid-auth/mid-sync Escape, sync failure,
           ],
         })
       }
-      if (url.pathname === "/api/integration/mod/connect/oauth" && request.method === "POST") {
+      if (url.pathname === "/api/integration/opencode/connect/oauth" && request.method === "POST") {
         oauthConnectCalls += 1
         return json({
           location,
@@ -2129,7 +2129,7 @@ test("free usage limit Subscribe handles mid-auth/mid-sync Escape, sync failure,
           },
         })
       }
-      if (url.pathname === "/api/integration/mod/connect/oauth/attempt_no_go") {
+      if (url.pathname === "/api/integration/opencode/connect/oauth/attempt_no_go") {
         if (request.method === "DELETE") return new Response(null, { status: 204 })
         await oauthGate
         if (failModelSync) connected = true
@@ -2393,7 +2393,7 @@ test("free usage limit Subscribe handles mid-auth/mid-sync Escape, sync failure,
       if (url.pathname === "/api/integration")
         return json({
           location: { directory, project: { id: "proj_test", directory, canonical: directory } },
-          data: [{ id: "opencode-go", name: "MOD Go", methods: [{ type: "key" }], connections: [] }],
+          data: [{ id: "opencode-go", name: "OpenCode Go", methods: [{ type: "key" }], connections: [] }],
         })
       if (url.pathname === `/api/session/${session.id}/message`)
         return json({
@@ -2441,7 +2441,7 @@ test("free usage limit claims suppression atomically across two TUI instances an
     tokens: { input: 0, output: 0, reasoning: 0, cache: { read: 0, write: 0 } },
     time: { created: 1, updated: 1 },
   }
-  const model = { id: "big-pickle", providerID: "mod" }
+  const model = { id: "big-pickle", providerID: "opencode" }
   const error = {
     type: "provider.free-limit",
     message: "Free usage limit reached.",
@@ -2457,8 +2457,8 @@ test("free usage limit claims suppression atomically across two TUI instances an
         data: [
           {
             id: "opencode-go",
-            name: "MOD Go",
-            methods: [{ id: "device", type: "oauth", label: "Sign in with your MOD account" }, { type: "key" }],
+            name: "OpenCode Go",
+            methods: [{ id: "device", type: "oauth", label: "Sign in with your OpenCode account" }, { type: "key" }],
             connections: [],
           },
         ],
@@ -2546,7 +2546,7 @@ test("free usage limit claims suppression atomically across two TUI instances an
   expect(frame).toContain("Draft in progress")
   expect(frame.split("Refactor the parser").length).toBe(2)
   expect(frame).not.toContain("Free limit reached")
-  expect(frame).not.toContain("Connect MOD Go")
+  expect(frame).not.toContain("Connect OpenCode Go")
 })
 
 test("free usage limit modal manages live animation FPS and adapts to 44x24 and 60x12 terminals", async () => {
@@ -2559,7 +2559,7 @@ test("free usage limit modal manages live animation FPS and adapts to 44x24 and 
     tokens: { input: 0, output: 0, reasoning: 0, cache: { read: 0, write: 0 } },
     time: { created: 1, updated: 1 },
   }
-  const model = { id: "big-pickle", providerID: "mod" }
+  const model = { id: "big-pickle", providerID: "opencode" }
   const error = {
     type: "provider.free-limit",
     message: "Free usage limit reached.",

@@ -1,13 +1,13 @@
 ---
 title: "Models"
-description: "Curated coding models, pay-as-you-go pricing, and API access through MOD Console."
+description: "Curated coding models, pay-as-you-go pricing, and API access through OpenCode Console."
 ---
 
-MOD Console provides a list of models tested and verified by the MOD team. Sign in, add credits, and get an
+OpenCode Console provides a list of models tested and verified by the MOD team. Sign in, add credits, and get an
 API key to use them with MOD or another coding agent.
 
 Console works like any other provider in MOD. It's **completely optional**, and you can use any other provider
-instead. For a subscription with included usage, see [MOD Go](/console/go).
+instead. For a subscription with included usage, see [OpenCode Go](/console/go).
 
 ## How it works
 
@@ -144,7 +144,7 @@ curl https://opencode.ai/inference/v1/models
 
 Jev is a System One model from TypeSafe AI for fast, structured decisions. Instead of generating text, it evaluates a `state` against typed questions and returns values and probabilities that your code can use directly. It supports yes/no (`noul`), multiple-choice (`choice`), and rubric-based (`score`) questions.
 
-Use your MOD Console API key with the `https://opencode.ai/inference/systemone/v1/systemone` endpoint. This example checks whether a support request is urgent:
+Use your OpenCode Console API key with the `https://opencode.ai/inference/systemone/v1/systemone` endpoint. This example checks whether a support request is urgent:
 
 ```bash
 curl https://opencode.ai/inference/systemone/v1/systemone \

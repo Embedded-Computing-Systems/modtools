@@ -136,12 +136,12 @@ export const dict = {
     "Zen giver dig adgang til et håndplukket sæt AI-modeller, som MOD har testet og benchmarked specifikt til kodningsagenter. Du behøver ikke bekymre dig om svingende performance og kvalitet på tværs af udbydere: brug validerede modeller, der virker.",
   "home.zenCta.link": "Læs om Zen",
 
-  "zen.title": "MOD Zen | Et kurateret sæt af pålidelige, optimerede modeller til kodningsagenter",
+  "zen.title": "OpenCode Zen | Et kurateret sæt af pålidelige, optimerede modeller til kodningsagenter",
   "zen.hero.title": "Pålidelige optimerede modeller til kodningsagenter",
   "zen.hero.body":
     "Zen giver dig adgang til et kurateret sæt AI-modeller, som MOD har testet og benchmarked specifikt til kodningsagenter. Du behøver ikke bekymre dig om svingende performance og kvalitet: brug validerede modeller, der virker.",
 
-  "zen.faq.q1": "Hvad er MOD Zen?",
+  "zen.faq.q1": "Hvad er OpenCode Zen?",
   "zen.faq.a1":
     "Zen er et kurateret sæt AI-modeller testet og benchmarked til kodningsagenter, skabt af teamet bag MOD.",
   "zen.faq.q2": "Hvad gør Zen mere præcis?",
@@ -199,7 +199,7 @@ export const dict = {
     "Alle Zen-modeller er hostet i USA og EU. Udbydere følger en nulopbevaringspolitik og bruger ikke dine data til modeltræning med",
   "zen.privacy.exceptionsLink": "følgende undtagelser",
 
-  "go.title": "MOD Go | Kodningsmodeller til lav pris for alle",
+  "go.title": "OpenCode Go | Kodningsmodeller til lav pris for alle",
   "go.meta.description":
     "Go koster $10/måned, med generøse brugsgrænser og pålidelig adgang til førende kodningsmodeller.",
   "go.hero.title": "Kodningsmodeller til lav pris for alle",
@@ -235,7 +235,7 @@ export const dict = {
 
   "go.problem.title": "Hvilket problem løser Go?",
   "go.problem.body":
-    "Vi fokuserer på at bringe MOD-oplevelsen ud til så mange som muligt. MOD Go er et lavprisabonnement til $10/måned. Det giver generøse grænser og pålidelig adgang til de mest kapable open source-modeller.",
+    "Vi fokuserer på at bringe MOD-oplevelsen ud til så mange som muligt. OpenCode Go er et lavprisabonnement til $10/måned. Det giver generøse grænser og pålidelig adgang til de mest kapable open source-modeller.",
   "go.problem.item1": "Lavpris abonnementspriser",
   "go.problem.item2": "Generøse grænser og pålidelig adgang",
   "go.problem.item3": "Bygget til så mange programmører som muligt",
@@ -250,7 +250,7 @@ export const dict = {
   "go.how.step2.afterLink": "med generøse grænser",
   "go.how.step3.title": "Start kodning",
   "go.how.step3.body": "med pålidelig adgang til open source-modeller",
-  "go.faq.q1": "Hvad er MOD Go?",
+  "go.faq.q1": "Hvad er OpenCode Go?",
   "go.faq.a1":
     "Go er et lavprisabonnement, der giver dig pålidelig adgang til kapable open source-modeller til agentisk kodning.",
   "go.faq.q2": "Hvilke modeller inkluderer Go?",
@@ -362,16 +362,16 @@ export const dict = {
   "enterprise.form.error.internalServer": "Intern serverfejl.",
   "enterprise.form.error.captcha": "Captcha-verificering mislykkedes. Prøv igen.",
   "enterprise.faq.title": "FAQ",
-  "enterprise.faq.q1": "Hvad er MOD Enterprise?",
+  "enterprise.faq.q1": "Hvad er OpenCode Enterprise?",
   "enterprise.faq.a1":
-    "MOD Enterprise er til organisationer, der vil sikre, at deres kode og data aldrig forlader deres infrastruktur. Det kan gøres med en central konfiguration, der integrerer med dit SSO og din interne AI-gateway.",
-  "enterprise.faq.q2": "Hvordan kommer jeg i gang med MOD Enterprise?",
+    "OpenCode Enterprise er til organisationer, der vil sikre, at deres kode og data aldrig forlader deres infrastruktur. Det kan gøres med en central konfiguration, der integrerer med dit SSO og din interne AI-gateway.",
+  "enterprise.faq.q2": "Hvordan kommer jeg i gang med OpenCode Enterprise?",
   "enterprise.faq.a2":
     "Start blot med en intern prøveperiode med dit team. MOD gemmer som standard ikke din kode eller kontekstdata, hvilket gør det nemt at komme i gang. Kontakt os derefter for at tale om priser og implementeringsmuligheder.",
   "enterprise.faq.q3": "Hvordan fungerer enterprise-priser?",
   "enterprise.faq.a3":
     "Hvis du har din egen LLM-gateway, opkræver vi ikke for brugte tokens. Kontakt os for flere detaljer og et tilbud tilpasset din organisations behov.",
-  "enterprise.faq.q4": "Er mine data sikre med MOD Enterprise?",
+  "enterprise.faq.q4": "Er mine data sikre med OpenCode Enterprise?",
   "enterprise.faq.a4":
     "Ja. MOD gemmer ikke din kode eller kontekstdata. Al behandling sker lokalt eller via direkte API-kald til din AI-udbyder. Med central konfiguration og SSO-integration forbliver dine data sikre inden for din organisations infrastruktur.",
 

@@ -36,7 +36,7 @@ Core MOD server and harness issues, including sqlite, snapshots, memory, API beh
 
 ### Inference
 
-MOD Zen, MOD Go, and billing issues.
+OpenCode Zen, OpenCode Go, and billing issues.
 
 ### Windows
 

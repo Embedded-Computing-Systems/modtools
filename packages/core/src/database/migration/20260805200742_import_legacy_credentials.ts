@@ -104,6 +104,6 @@ export function importLegacyCredentials(tx: Parameters<DatabaseMigration.Migrati
 
 function methodID(integrationID: string) {
   if (integrationID === "openai") return "chatgpt-browser"
-  if (["github-copilot", "mod", "xai"].includes(integrationID)) return "device"
+  if (["github-copilot", "opencode", "xai"].includes(integrationID)) return "device"
   return "oauth"
 }

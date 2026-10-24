@@ -26,7 +26,7 @@ const tokenSharingMessages = {
 }
 
 const FREE_USAGE_LIMIT_MESSAGE =
-  "Free usage limit reached. Connect a provider or subscribe to MOD Go to keep going, or switch models."
+  "Free usage limit reached. Connect a provider or subscribe to OpenCode Go to keep going, or switch models."
 
 export function toSessionError(cause: unknown): SessionError.Error {
   if (cause instanceof AIError) {

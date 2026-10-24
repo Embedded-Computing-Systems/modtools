@@ -25,7 +25,7 @@ export const textPartID = `${assistantMessageID}:text:0`
 
 const title = "Timeline collapse state regression"
 
-const model = { providerID: "mod", modelID: "claude-opus-4-6", variant: "max" }
+const model = { providerID: "opencode", modelID: "claude-opus-4-6", variant: "max" }
 
 type EventPayload = OpenCodeEvent
 
@@ -556,6 +556,6 @@ function provider() {
       },
     ],
     connected: ["mod"],
-    default: { providerID: "mod", modelID: "claude-opus-4-6" },
+    default: { providerID: "opencode", modelID: "claude-opus-4-6" },
   }
 }

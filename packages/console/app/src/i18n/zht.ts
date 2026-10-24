@@ -130,12 +130,12 @@ export const dict = {
     "Zen 提供一組精選的 AI 模型，這些模型是 MOD 為了編碼代理專門測試與評測過的。無需擔心不同供應商之間效能與品質參差不齊，使用經過驗證的模型即可。",
   "home.zenCta.link": "了解 Zen",
 
-  "zen.title": "MOD Zen | 專為編碼代理精選的可靠最佳化模型",
+  "zen.title": "OpenCode Zen | 專為編碼代理精選的可靠最佳化模型",
   "zen.hero.title": "專為編碼代理提供的可靠最佳化模型",
   "zen.hero.body":
     "Zen 提供一組精選的 AI 模型，這些模型是 MOD 為了編碼代理專門測試與評測過的。無需擔心效能與品質參差不齊，使用經過驗證的模型即可。",
 
-  "zen.faq.q1": "什麼是 MOD Zen？",
+  "zen.faq.q1": "什麼是 OpenCode Zen？",
   "zen.faq.a1": "Zen 是由 MOD 團隊打造、專為編碼代理測試與評測的 AI 模型精選集合。",
   "zen.faq.q2": "是什麼讓 Zen 更準確？",
   "zen.faq.a2": "Zen 只提供專為編碼代理測試與評測的模型。你不會用奶油刀切牛排，也別用糟糕的模型來寫程式。",
@@ -189,7 +189,7 @@ export const dict = {
     "所有 Zen 模型均在美國和歐盟託管。供應商遵循零留存政策，不會將你的資料用於模型訓練，並且有",
   "zen.privacy.exceptionsLink": "以下例外情況",
 
-  "go.title": "MOD Go | 低成本全民編碼模型",
+  "go.title": "OpenCode Go | 低成本全民編碼模型",
   "go.meta.description": "Go 每月 $10，提供充裕的使用限額，並可穩定存取領先的編碼模型。",
   "go.hero.title": "低成本全民編碼模型",
   "go.hero.tagline": "可搭配任何代理使用。如有需要可儲值。隨時取消。",
@@ -224,7 +224,7 @@ export const dict = {
 
   "go.problem.title": "Go 正在解決什麼問題？",
   "go.problem.body":
-    "我們致力於將 MOD 體驗帶給盡可能多的人。MOD Go 是一款每月 $10 的低成本訂閱服務。它提供充裕的額度，並讓您能可靠地使用最強大的開源模型。",
+    "我們致力於將 MOD 體驗帶給盡可能多的人。OpenCode Go 是一款每月 $10 的低成本訂閱服務。它提供充裕的額度，並讓您能可靠地使用最強大的開源模型。",
   "go.problem.item1": "低成本訂閱定價",
   "go.problem.item2": "寬裕的限額與穩定存取",
   "go.problem.item3": "專為盡可能多的程式設計師打造",
@@ -239,7 +239,7 @@ export const dict = {
   "go.how.step2.afterLink": "額度充裕",
   "go.how.step3.title": "開始編碼",
   "go.how.step3.body": "穩定存取開源模型",
-  "go.faq.q1": "什麼是 MOD Go？",
+  "go.faq.q1": "什麼是 OpenCode Go？",
   "go.faq.a1": "Go 是一個低成本訂閱方案，讓你穩定存取強大的開源模型以進行代理編碼。",
   "go.faq.q2": "Go 包含哪些模型？",
   "go.faq.a2": "Go 包含下方列出的模型，提供充足的額度與穩定的存取。",
@@ -344,16 +344,16 @@ export const dict = {
   "enterprise.form.error.internalServer": "內部伺服器錯誤。",
   "enterprise.form.error.captcha": "驗證碼驗證失敗，請再試一次。",
   "enterprise.faq.title": "常見問題",
-  "enterprise.faq.q1": "什麼是 MOD Enterprise？",
+  "enterprise.faq.q1": "什麼是 OpenCode Enterprise？",
   "enterprise.faq.a1":
-    "MOD Enterprise 適用於希望確保程式碼與資料絕不離開自己基礎設施的組織。透過中央化設定，它可與你的 SSO 與內部 AI 閘道器整合，以達成此目標。",
-  "enterprise.faq.q2": "如何開始使用 MOD Enterprise？",
+    "OpenCode Enterprise 適用於希望確保程式碼與資料絕不離開自己基礎設施的組織。透過中央化設定，它可與你的 SSO 與內部 AI 閘道器整合，以達成此目標。",
+  "enterprise.faq.q2": "如何開始使用 OpenCode Enterprise？",
   "enterprise.faq.a2":
     "只要先以團隊的內部試用開始。MOD 預設不會儲存你的程式碼或上下文資料，所以上手非常容易。之後聯絡我們，討論定價與完整實作方案。",
   "enterprise.faq.q3": "企業定價是如何進行的？",
   "enterprise.faq.a3":
     "如果你有自己的 LLM 閘道器，我們不會對使用的 token 另外收費。更多詳情，請聯絡我們以獲得依據組織需求的客製報價。",
-  "enterprise.faq.q4": "我的資料在 MOD Enterprise 中是安全的嗎？",
+  "enterprise.faq.q4": "我的資料在 OpenCode Enterprise 中是安全的嗎？",
   "enterprise.faq.a4":
     "是的。MOD 不會儲存你的程式碼或上下文資料。所有處理都會在本地或透過直接呼叫你的 AI 供應商 API 完成。透過中央化設定與 SSO 整合，你的資料會安全保留在組織的基礎設施內部。",
 

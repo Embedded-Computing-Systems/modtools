@@ -179,7 +179,7 @@ export function provider(...models: ModelSeed[]) {
       },
     ],
     connected: ["mod"],
-    default: { providerID: "mod", modelID: all[0]!.id },
+    default: { providerID: "opencode", modelID: all[0]!.id },
   }
 }
 

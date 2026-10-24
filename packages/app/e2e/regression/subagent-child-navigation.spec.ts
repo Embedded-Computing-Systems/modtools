@@ -398,7 +398,7 @@ function parentMessages(): SessionMessageInfo[] {
       id: assistantID,
       type: "assistant",
       time: { created: 1700000001000, completed: 1700000002000 },
-      model: { id: "claude-opus-4-6", providerID: "mod" },
+      model: { id: "claude-opus-4-6", providerID: "opencode" },
       agent: "build",
       cost: 0.01,
       tokens: { input: 100, output: 200, reasoning: 0, cache: { read: 0, write: 0 } },

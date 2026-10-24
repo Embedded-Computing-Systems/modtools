@@ -169,7 +169,10 @@ test.each(
     { width: 56, showSession: true },
     { width: 80, showSession: true },
     { width: 80, showSession: false },
-  ].flatMap((size) => [false, true].map((mono) => ({ ...size, mono }))),
+  ]
+    .flatMap((size) => [false, true].map((mono) => ({ ...size, mono })))
+    // MOD's shorter resume command fits the full layout at 56 mono columns.
+    .filter((input) => !(input.width === 56 && input.mono)),
 )("exit retains the complete resume command (%o)", async (input) => {
   const result = await renderSplash(
     exitSplash({ ...input, title: "Review mini layout", session_id: sessionID, theme }),

@@ -236,7 +236,7 @@ test("an open session moves to the controller a new SSH sign-in creates", async 
     id: "ses_ssh",
     directory,
     title: "SSH session",
-    model: { id: model.id, providerID: "mod" },
+    model: { id: model.id, providerID: "opencode" },
   })
 
   const remote = { password: "ssh-1" }

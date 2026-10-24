@@ -170,7 +170,7 @@ async function openQueue(
       {
         id: sessionID,
         title: "Session queue regression",
-        model: { id: model.id, providerID: "mod" },
+        model: { id: model.id, providerID: "opencode" },
         revert: revert ? { messageID: revert } : undefined,
       },
     ],
@@ -266,7 +266,7 @@ test("a steer into an idle session leaves the finished turn finished until deliv
         id: "msg_queue_finished_assistant",
         type: "assistant",
         agent: "build",
-        model: { id: "queue-model", providerID: "mod" },
+        model: { id: "queue-model", providerID: "opencode" },
         content: [{ type: "text", text: "The queue is fine." }],
         finish: "stop",
         time: { created: 1700000000001, completed: 1700000000002 },
@@ -802,7 +802,7 @@ test("/compact runs with the composer model and shows a queued compaction, as in
   await expect(page.locator('[data-timeline-row="CompactionQueued"]')).toHaveText("Session compaction queued")
   // The row is optimistic; the model switch still precedes the admission.
   await expect.poll(() => mock.log).toEqual(["model", "compact"])
-  expect(models).toMatchObject([{ model: { id: "queue-model", providerID: "mod" } }])
+  expect(models).toMatchObject([{ model: { id: "queue-model", providerID: "opencode" } }])
 })
 
 for (const [action, status] of [
@@ -893,7 +893,7 @@ for (const delivery of ["steer", "queue"] as const) {
   test(`keeps finished tools above a pending ${delivery === "queue" ? "queue-to-steer" : "steer"} follow-up`, async ({
     page,
   }, testInfo) => {
-    const model = { id: "queue-model", providerID: "mod" }
+    const model = { id: "queue-model", providerID: "opencode" }
     const userID = "msg_queue_initial_user"
     const assistantID = "msg_queue_continued_assistant"
     const followUp = "U2: Also check the retry path."

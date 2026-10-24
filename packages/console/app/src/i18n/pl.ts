@@ -135,12 +135,12 @@ export const dict = {
     "Zen daje dostęp do wyselekcjonowanego zestawu modeli AI, które MOD przetestował i sprawdził (benchmark) specjalnie dla agentów kodujących. Nie musisz martwić się o niespójną wydajność i jakość u różnych dostawców, używaj sprawdzonych modeli, które działają.",
   "home.zenCta.link": "Dowiedz się więcej o Zen",
 
-  "zen.title": "MOD Zen | Wyselekcjonowany zestaw niezawodnych, zoptymalizowanych modeli dla agentów kodujących",
+  "zen.title": "OpenCode Zen | Wyselekcjonowany zestaw niezawodnych, zoptymalizowanych modeli dla agentów kodujących",
   "zen.hero.title": "Niezawodne, zoptymalizowane modele dla agentów kodujących",
   "zen.hero.body":
     "Zen daje dostęp do wyselekcjonowanego zestawu modeli AI, które MOD przetestował i sprawdził (benchmark) specjalnie dla agentów kodujących. Nie musisz martwić się o niespójną wydajność i jakość, używaj sprawdzonych modeli, które działają.",
 
-  "zen.faq.q1": "Czym jest MOD Zen?",
+  "zen.faq.q1": "Czym jest OpenCode Zen?",
   "zen.faq.a1":
     "Zen to wyselekcjonowany zestaw modeli AI przetestowanych i sprawdzonych pod kątem agentów kodujących, stworzony przez zespół stojący za MOD.",
   "zen.faq.q2": "Co sprawia, że Zen jest bardziej precyzyjny?",
@@ -199,7 +199,7 @@ export const dict = {
     "Wszystkie modele Zen są hostowane w USA i UE. Dostawcy stosują politykę zerowej retencji i nie wykorzystują Twoich danych do trenowania modeli, z",
   "zen.privacy.exceptionsLink": "następującymi wyjątkami",
 
-  "go.title": "MOD Go | Niskokosztowe modele do kodowania dla każdego",
+  "go.title": "OpenCode Go | Niskokosztowe modele do kodowania dla każdego",
   "go.meta.description":
     "Go kosztuje $10/miesiąc, oferując hojne limity użycia i niezawodny dostęp do wiodących modeli do kodowania.",
   "go.hero.title": "Niskokosztowe modele do kodowania dla każdego",
@@ -235,7 +235,7 @@ export const dict = {
 
   "go.problem.title": "Jaki problem rozwiązuje Go?",
   "go.problem.body":
-    "Skupiamy się na udostępnieniu doświadczenia MOD jak największej liczbie osób. MOD Go to tania subskrypcja za $10/miesiąc. Zapewnia hojne limity i niezawodny dostęp do najbardziej wydajnych modeli open source.",
+    "Skupiamy się na udostępnieniu doświadczenia MOD jak największej liczbie osób. OpenCode Go to tania subskrypcja za $10/miesiąc. Zapewnia hojne limity i niezawodny dostęp do najbardziej wydajnych modeli open source.",
   "go.problem.item1": "Niskokosztowa cena subskrypcji",
   "go.problem.item2": "Hojne limity i niezawodny dostęp",
   "go.problem.item3": "Stworzony dla jak największej liczby programistów",
@@ -250,7 +250,7 @@ export const dict = {
   "go.how.step2.afterLink": "z hojnymi limitami",
   "go.how.step3.title": "Zacznij kodować",
   "go.how.step3.body": "z niezawodnym dostępem do modeli open source",
-  "go.faq.q1": "Czym jest MOD Go?",
+  "go.faq.q1": "Czym jest OpenCode Go?",
   "go.faq.a1":
     "Go to niskokosztowa subskrypcja, która daje niezawodny dostęp do zdolnych modeli open source dla agentów kodujących.",
   "go.faq.q2": "Jakie modele zawiera Go?",
@@ -364,16 +364,16 @@ export const dict = {
   "enterprise.form.error.internalServer": "Wewnętrzny błąd serwera.",
   "enterprise.form.error.captcha": "Weryfikacja captcha nie powiodła się. Spróbuj ponownie.",
   "enterprise.faq.title": "FAQ",
-  "enterprise.faq.q1": "Czym jest MOD Enterprise?",
+  "enterprise.faq.q1": "Czym jest OpenCode Enterprise?",
   "enterprise.faq.a1":
-    "MOD Enterprise jest dla organizacji, które chcą mieć pewność, że ich kod i dane nigdy nie opuszczą ich infrastruktury. Można to osiągnąć dzięki scentralizowanej konfiguracji, która integruje się z Twoim SSO i wewnętrzną bramą AI.",
-  "enterprise.faq.q2": "Jak zacząć z MOD Enterprise?",
+    "OpenCode Enterprise jest dla organizacji, które chcą mieć pewność, że ich kod i dane nigdy nie opuszczą ich infrastruktury. Można to osiągnąć dzięki scentralizowanej konfiguracji, która integruje się z Twoim SSO i wewnętrzną bramą AI.",
+  "enterprise.faq.q2": "Jak zacząć z OpenCode Enterprise?",
   "enterprise.faq.a2":
     "Po prostu rozpocznij wewnętrzny okres próbny ze swoim zespołem. MOD domyślnie nie przechowuje Twojego kodu ani danych kontekstowych, co ułatwia start. Następnie skontaktuj się z nami, aby omówić opcje cenowe i wdrożeniowe.",
   "enterprise.faq.q3": "Jak działa cennik enterprise?",
   "enterprise.faq.a3":
     "Jeśli masz własną bramę LLM, nie pobieramy opłat za wykorzystane tokeny. Aby uzyskać więcej szczegółów, skontaktuj się z nami w celu uzyskania wyceny dostosowanej do potrzeb Twojej organizacji.",
-  "enterprise.faq.q4": "Czy moje dane są bezpieczne z MOD Enterprise?",
+  "enterprise.faq.q4": "Czy moje dane są bezpieczne z OpenCode Enterprise?",
   "enterprise.faq.a4":
     "Tak. MOD nie przechowuje Twojego kodu ani danych kontekstowych. Całe przetwarzanie odbywa się lokalnie lub poprzez bezpośrednie wywołania API do Twojego dostawcy AI. Dzięki centralnej konfiguracji i integracji SSO, Twoje dane pozostają bezpieczne w infrastrukturze Twojej organizacji.",
 

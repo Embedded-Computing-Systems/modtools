@@ -19,7 +19,7 @@ import {
 
 const integrationPriority = new Map([
   ["opencode-go", 0],
-  ["mod", 1],
+  ["opencode", 1],
   ["openai", 2],
   ["github-copilot", 3],
   ["anthropic", 4],

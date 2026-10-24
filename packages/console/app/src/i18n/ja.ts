@@ -135,12 +135,12 @@ export const dict = {
     "Zenは、MODがコーディングエージェント向けにテスト・ベンチマーク済みのAIモデルを厳選して提供します。プロバイダー間の性能・品質のブレを気にせず、検証済みのモデルを利用できます。",
   "home.zenCta.link": "Zenについて知る",
 
-  "zen.title": "MOD Zen | コーディングエージェント向けの信頼できる最適化モデル",
+  "zen.title": "OpenCode Zen | コーディングエージェント向けの信頼できる最適化モデル",
   "zen.hero.title": "コーディングエージェント向けの信頼できる最適化モデル",
   "zen.hero.body":
     "Zenは、MODがコーディングエージェント向けにテスト・ベンチマーク済みのAIモデルを厳選して提供します。プロバイダー間の性能・品質のブレを気にせず、検証済みのモデルを利用できます。",
 
-  "zen.faq.q1": "MOD Zenとは？",
+  "zen.faq.q1": "OpenCode Zenとは？",
   "zen.faq.a1":
     "Zenは、MODのチームが作成した、コーディングエージェント向けにテスト・ベンチマークされたAIモデルの厳選セットです。",
   "zen.faq.q2": "Zenはなぜ精度が高いのですか？",
@@ -198,7 +198,7 @@ export const dict = {
     "すべてのZenモデルは米国とEUでホストされています。プロバイダーはゼロ保持ポリシーに従い、モデルのトレーニングにデータを使用しません（",
   "zen.privacy.exceptionsLink": "以下の例外",
 
-  "go.title": "MOD Go | すべての人のための低価格なコーディングモデル",
+  "go.title": "OpenCode Go | すべての人のための低価格なコーディングモデル",
   "go.meta.description":
     "Goは月額$10で、主要なコーディングモデルへのゆとりある利用上限と安定したアクセスを提供します。",
   "go.hero.title": "すべての人のための低価格なコーディングモデル",
@@ -234,7 +234,7 @@ export const dict = {
 
   "go.problem.title": "Goはどのような問題を解決していますか？",
   "go.problem.body":
-    "私たちはMODの体験をできるだけ多くの人に届けることに注力しています。MOD Goは月額$10の低価格なサブスクリプションです。ゆとりある上限と、最も高性能なオープンソースモデルへの信頼できるアクセスを提供します。",
+    "私たちはMODの体験をできるだけ多くの人に届けることに注力しています。OpenCode Goは月額$10の低価格なサブスクリプションです。ゆとりある上限と、最も高性能なオープンソースモデルへの信頼できるアクセスを提供します。",
   "go.problem.item1": "低価格なサブスクリプション料金",
   "go.problem.item2": "十分な制限と安定したアクセス",
   "go.problem.item3": "できるだけ多くのプログラマーのために構築",
@@ -249,7 +249,7 @@ export const dict = {
   "go.how.step2.afterLink": "ゆとりある上限付き",
   "go.how.step3.title": "コーディングを開始",
   "go.how.step3.body": "オープンソースモデルへの安定したアクセスで",
-  "go.faq.q1": "MOD Goとは？",
+  "go.faq.q1": "OpenCode Goとは？",
   "go.faq.a1":
     "Goは、エージェント型コーディングのための有能なオープンソースモデルへの安定したアクセスを提供する低価格なサブスクリプションです。",
   "go.faq.q2": "Goにはどのモデルが含まれますか？",
@@ -360,16 +360,16 @@ export const dict = {
   "enterprise.form.error.internalServer": "内部サーバーエラー。",
   "enterprise.form.error.captcha": "CAPTCHA認証に失敗しました。もう一度お試しください。",
   "enterprise.faq.title": "FAQ",
-  "enterprise.faq.q1": "MOD Enterpriseとは？",
+  "enterprise.faq.q1": "OpenCode Enterpriseとは？",
   "enterprise.faq.a1":
-    "MOD Enterpriseは、コードとデータが決してインフラの外に出ないことを保証したい組織向けです。SSOや社内AIゲートウェイと統合する集中設定を使用することでこれを実現します。",
-  "enterprise.faq.q2": "MOD Enterpriseを始めるには？",
+    "OpenCode Enterpriseは、コードとデータが決してインフラの外に出ないことを保証したい組織向けです。SSOや社内AIゲートウェイと統合する集中設定を使用することでこれを実現します。",
+  "enterprise.faq.q2": "OpenCode Enterpriseを始めるには？",
   "enterprise.faq.a2":
     "まずはチームでの社内トライアルから始めてください。MODはデフォルトでコードやコンテキストデータを保存しないため、簡単に始められます。その後、価格や導入オプションについてお問い合わせください。",
   "enterprise.faq.q3": "エンタープライズ価格の仕組みは？",
   "enterprise.faq.a3":
     "独自のLLMゲートウェイをお持ちの場合、使用トークンに対する課金はありません。詳細は、組織の要件に基づいた見積もりのためにお問い合わせください。",
-  "enterprise.faq.q4": "MOD Enterpriseでデータは安全ですか？",
+  "enterprise.faq.q4": "OpenCode Enterpriseでデータは安全ですか？",
   "enterprise.faq.a4":
     "はい。MODはコードやコンテキストデータを保存しません。すべての処理はローカル、またはAIプロバイダーへの直接API呼び出しを通じて行われます。集中設定とSSO統合により、データは組織のインフラ内で安全に保たれます。",
 

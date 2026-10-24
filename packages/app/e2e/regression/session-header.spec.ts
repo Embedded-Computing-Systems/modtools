@@ -262,7 +262,7 @@ test.describe("revert", () => {
       id: "msg_first_reply",
       type: "assistant",
       agent: "build",
-      model: { id: "test", providerID: "mod" },
+      model: { id: "test", providerID: "opencode" },
       content: [{ type: "text", text: "First reply" }],
       time: { created: 2, completed: 3 },
     },

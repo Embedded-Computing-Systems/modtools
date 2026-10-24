@@ -49,7 +49,7 @@ export interface InstructInput {
 
 /**
  * An integration that runs sessions for some models on its own account instead of a stored provider key, such as
- * the MOD Console's hosted GPT-Live. Its sessions' backend instructions change through it.
+ * the OpenCode Console's hosted GPT-Live. Its sessions' backend instructions change through it.
  */
 export interface Host {
   readonly integration: string

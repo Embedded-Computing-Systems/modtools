@@ -180,7 +180,7 @@ async function openPickerSession(page: Page, direction: "ltr" | "rtl", paid: boo
     ...fixture,
     sessions: fixture.sessions.map((session) => ({
       ...session,
-      model: { id: "mobile-a", providerID: "mod", variant: "balanced" },
+      model: { id: "mobile-a", providerID: "opencode", variant: "balanced" },
     })),
     provider: {
       all: [
@@ -202,7 +202,7 @@ async function openPickerSession(page: Page, direction: "ltr" | "rtl", paid: boo
         },
       ],
       connected: ["mod"],
-      default: { providerID: "mod", modelID: "mobile-a" },
+      default: { providerID: "opencode", modelID: "mobile-a" },
     },
     pageMessages: () => ({ items: [] }),
   })
@@ -212,7 +212,7 @@ async function openPickerSession(page: Page, direction: "ltr" | "rtl", paid: boo
     localStorage.setItem(
       "mod.global.dat:model",
       JSON.stringify({
-        user: ["a", "b"].map((id) => ({ providerID: "mod", modelID: `mobile-${id}`, visibility: "show" })),
+        user: ["a", "b"].map((id) => ({ providerID: "opencode", modelID: `mobile-${id}`, visibility: "show" })),
         recent: [],
         variant: {},
       }),

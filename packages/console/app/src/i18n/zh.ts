@@ -130,12 +130,12 @@ export const dict = {
     "Zen 为您提供一组精选的 AI 模型，这些模型经过 MOD 专门针对编程代理的测试和基准测试。无需担心不同提供商之间不稳定的性能和质量，直接使用行之有效的验证模型。",
   "home.zenCta.link": "了解 Zen",
 
-  "zen.title": "MOD Zen | 为编程代理精选的可靠、优化模型",
+  "zen.title": "OpenCode Zen | 为编程代理精选的可靠、优化模型",
   "zen.hero.title": "为编程代理打造的可靠、优化模型",
   "zen.hero.body":
     "Zen 为您提供一组精选的 AI 模型，这些模型经过 MOD 专门针对编程代理的测试和基准测试。无需担心不稳定的性能和质量，直接使用行之有效的验证模型。",
 
-  "zen.faq.q1": "什么是 MOD Zen？",
+  "zen.faq.q1": "什么是 OpenCode Zen？",
   "zen.faq.a1": "Zen 是一组由 MOD 团队创建的，专门针对编程代理进行测试和基准测试的 AI 模型精选集。",
   "zen.faq.q2": "为什么 Zen 更准确？",
   "zen.faq.a2":
@@ -188,7 +188,7 @@ export const dict = {
   "zen.privacy.beforeExceptions": "所有 Zen 模型均托管在美国和欧盟。提供商遵循零留存政策，不使用您的数据进行模型训练，",
   "zen.privacy.exceptionsLink": "以下例外情况除外",
 
-  "go.title": "MOD Go | 人人可用的低成本编程模型",
+  "go.title": "OpenCode Go | 人人可用的低成本编程模型",
   "go.meta.description": "Go 每月 $10，提供充裕的使用限额，并可可靠访问领先的编程模型。",
   "go.hero.title": "人人可用的低成本编程模型",
   "go.hero.tagline": "可配合任何代理使用。如有需要可充值。随时取消。",
@@ -223,7 +223,7 @@ export const dict = {
 
   "go.problem.title": "Go 解决了什么问题？",
   "go.problem.body":
-    "我们致力于将 MOD 体验带给尽可能多的人。MOD Go 是一款每月 $10 的低成本订阅服务。它提供充裕的额度，并让您能可靠地使用最强大的开源模型。",
+    "我们致力于将 MOD 体验带给尽可能多的人。OpenCode Go 是一款每月 $10 的低成本订阅服务。它提供充裕的额度，并让您能可靠地使用最强大的开源模型。",
   "go.problem.item1": "低成本订阅定价",
   "go.problem.item2": "充裕的限额和可靠的访问",
   "go.problem.item3": "为尽可能多的程序员打造",
@@ -238,7 +238,7 @@ export const dict = {
   "go.how.step2.afterLink": "额度充裕",
   "go.how.step3.title": "开始编程",
   "go.how.step3.body": "可靠访问开源模型",
-  "go.faq.q1": "什么是 MOD Go？",
+  "go.faq.q1": "什么是 OpenCode Go？",
   "go.faq.a1": "Go 是一项低成本订阅服务，为您提供对强大的开源模型的可靠访问，用于代理编程。",
   "go.faq.q2": "Go 包含哪些模型？",
   "go.faq.a2": "Go 包含下方列出的模型，提供充足的限额和可靠的访问。",

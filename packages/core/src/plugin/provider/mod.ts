@@ -107,9 +107,9 @@ const LiveSession = Schema.fromJsonString(
 const InferenceError = Schema.fromJsonString(Schema.Struct({ error: Schema.Struct({ message: Schema.String }) }))
 // Console's 401 when the session behind the access token was revoked or expired.
 const Unauthorized = Schema.Struct({ _tag: Schema.Literal("Unauthorized") })
-const signedOutMessage = "Reconnect MOD Console to continue"
+const signedOutMessage = "Reconnect OpenCode Console to continue"
 const ssoMessage = (organization: string | undefined) =>
-  `Sign in with SSO again to use ${organization ?? "your MOD Console organization"}`
+  `Sign in with SSO again to use ${organization ?? "your OpenCode Console organization"}`
 
 class SsoRequiredError extends Schema.TaggedError<SsoRequiredError>()("ModConsole.SsoRequired", {
   organization: Schema.optional(Schema.String),
@@ -133,7 +133,7 @@ function oauth(http: HttpClient.HttpClient) {
     method: {
       id: methodID,
       type: "oauth",
-      label: "MOD Console account",
+      label: "OpenCode Console account",
       form: [
         {
           key: "server",
@@ -281,10 +281,10 @@ export const ModPlugin = define<
     const resolveActive = Effect.fnUntraced(function* (connection: NonNullable<ActiveConnection>) {
       const active = yield* ctx.integration.connection.active("opencode")
       if (!active || IntegrationConnection.key(active) !== IntegrationConnection.key(connection))
-        return yield* Effect.fail(new Error("MOD Console connection changed"))
+        return yield* Effect.fail(new Error("OpenCode Console connection changed"))
       const credential = yield* ctx.integration.connection.resolve(active)
       if (!credential || credential.type === "external")
-        return yield* Effect.fail(new Error("MOD Console is not connected"))
+        return yield* Effect.fail(new Error("OpenCode Console is not connected"))
       return credential
     })
 
@@ -310,7 +310,7 @@ export const ModPlugin = define<
           Effect.scoped,
           Effect.timeoutOrElse({
             duration: Duration.seconds(20),
-            orElse: () => Effect.fail(new Error("MOD Console didn't answer in time")),
+            orElse: () => Effect.fail(new Error("OpenCode Console didn't answer in time")),
           }),
           Effect.mapError(
             (cause) =>
@@ -325,7 +325,7 @@ export const ModPlugin = define<
               return Effect.fail(new Voice.UnavailableError({ service: "opencode", message: `${signedOutMessage}.` }))
             const message =
               Option.getOrUndefined(Schema.decodeUnknownOption(InferenceError)(reply.text))?.error.message ??
-              `MOD Console refused the voice request (HTTP ${reply.status})`
+              `OpenCode Console refused the voice request (HTTP ${reply.status})`
             return Effect.fail(
               reply.status === 400 || reply.status === 404
                 ? new Voice.InvalidRequestError({ message })
@@ -345,7 +345,7 @@ export const ModPlugin = define<
                   () =>
                     new Voice.UnavailableError({
                       service: "opencode",
-                      message: "MOD Console returned an invalid voice session",
+                      message: "OpenCode Console returned an invalid voice session",
                     }),
                 ),
               ),
@@ -379,7 +379,7 @@ export const ModPlugin = define<
 
     yield* ctx.integration.transform((editor) => {
       editor.update("opencode", (integration) => {
-        integration.name = "MOD Console"
+        integration.name = "OpenCode Console"
       })
       editor.method.update(oauth(http))
       editor.method.update({ integrationID: "opencode", method: { type: "key", label: "API key (service account)" } })

@@ -4,7 +4,7 @@ Status: **Implemented.**
 
 ## Purpose
 
-Policies control whether an operation on a named resource is allowed. Statements are authored in configuration files or delivered by the connected MOD Console, and applied by a terminal plugin.
+Policies control whether an operation on a named resource is allowed. Statements are authored in configuration files or delivered by the connected OpenCode Console, and applied by a terminal plugin.
 
 The supported actions are:
 
@@ -209,7 +209,7 @@ repository policy -> user-global policy -> organization-managed policy
 
 ### Delivery
 
-The MOD Console compiles a workspace's Providers and Tools policies into statements for the authenticated caller and returns them from `GET /api/v2/config` alongside managed providers:
+The OpenCode Console compiles a workspace's Providers and Tools policies into statements for the authenticated caller and returns them from `GET /api/v2/config` alongside managed providers:
 
 ```jsonc
 {

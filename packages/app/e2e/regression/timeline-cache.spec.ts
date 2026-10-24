@@ -202,7 +202,7 @@ test("disposes the old workspace's shell while destination history is loading", 
                   id: "msg_workspace_shell",
                   type: "assistant",
                   agent: "build",
-                  model: { id: "claude-opus-4-6", providerID: "mod" },
+                  model: { id: "claude-opus-4-6", providerID: "opencode" },
                   time: { created: 2 },
                   content: [
                     {
@@ -332,7 +332,7 @@ for (const grouped of [true, false]) {
             id: `msg_assistant_${id}`,
             type: "assistant",
             agent: "build",
-            model: { id: "claude-opus-4-6", providerID: "mod" },
+            model: { id: "claude-opus-4-6", providerID: "opencode" },
             time: { created: 2, completed: 3 },
             content: [
               {

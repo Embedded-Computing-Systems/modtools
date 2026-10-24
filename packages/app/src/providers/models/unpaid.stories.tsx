@@ -19,7 +19,7 @@ function SelectModelWithoutProviders() {
   const models = names.map((name, index) => ({
     id: name.toLowerCase().replaceAll(" ", "-"),
     name,
-    provider: { id: "mod", name: "MOD" },
+    provider: { id: "opencode", name: "MOD" },
     cost: { input: 0, output: 0 },
     limit: { context: 128_000 },
     capabilities: {

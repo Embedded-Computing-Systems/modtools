@@ -438,7 +438,7 @@ for (const row of [
         {
           id: "ses_workspace_accent",
           title: "Workspace accent",
-          model: { id: "accent-model", providerID: "mod" },
+          model: { id: "accent-model", providerID: "opencode" },
         },
       ],
       pageMessages: () => ({

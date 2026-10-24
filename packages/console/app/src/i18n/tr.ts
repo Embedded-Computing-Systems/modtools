@@ -134,12 +134,12 @@ export const dict = {
     "Zen, MOD'un kodlama ajanları için özel olarak test edip benchmark ettiği seçilmiş AI modellerine erişim sağlar. Sağlayıcılar arasında tutarsız performans ve kalite konusunda endişelenmeyin; çalışan, doğrulanmış modelleri kullanın.",
   "home.zenCta.link": "Zen hakkında",
 
-  "zen.title": "MOD Zen | Kodlama ajanları için güvenilir, optimize edilmiş modellerin seçilmiş seti",
+  "zen.title": "OpenCode Zen | Kodlama ajanları için güvenilir, optimize edilmiş modellerin seçilmiş seti",
   "zen.hero.title": "Kodlama ajanları için güvenilir, optimize modeller",
   "zen.hero.body":
     "Zen, MOD'un kodlama ajanları için özel olarak test edip benchmark ettiği seçilmiş AI modellerine erişim sağlar. Sağlayıcılar arasında tutarsız performans ve kalite konusunda endişelenmeyin; çalışan, doğrulanmış modelleri kullanın.",
 
-  "zen.faq.q1": "MOD Zen nedir?",
+  "zen.faq.q1": "OpenCode Zen nedir?",
   "zen.faq.a1":
     "Zen, MOD ekibi tarafından oluşturulan ve kodlama ajanları için test edilip benchmark edilen seçilmiş bir AI model setidir.",
   "zen.faq.q2": "Zen'i daha doğru yapan nedir?",
@@ -200,7 +200,7 @@ export const dict = {
     "Tüm Zen modelleri ABD'de ve AB'de barındırılmaktadır. Sağlayıcılar sıfır saklama politikası izler ve verilerinizi model eğitimi için kullanmaz; şu",
   "zen.privacy.exceptionsLink": "aşağıdaki istisnalar",
 
-  "go.title": "MOD Go | Herkes için düşük maliyetli kodlama modelleri",
+  "go.title": "OpenCode Go | Herkes için düşük maliyetli kodlama modelleri",
   "go.meta.description":
     "Go ayda 10$'dır; cömert kullanım limitleri ve önde gelen kodlama modellerine güvenilir erişim sunar.",
   "go.hero.title": "Herkes için düşük maliyetli kodlama modelleri",
@@ -236,7 +236,7 @@ export const dict = {
 
   "go.problem.title": "Go hangi sorunu çözüyor?",
   "go.problem.body":
-    "MOD deneyimini mümkün olduğunca çok kişiye ulaştırmaya odaklandık. MOD Go, ayda 10$ olan düşük maliyetli bir aboneliktir. Cömert limitler ve en yetenekli açık kaynak modellere güvenilir erişim sağlar.",
+    "MOD deneyimini mümkün olduğunca çok kişiye ulaştırmaya odaklandık. OpenCode Go, ayda 10$ olan düşük maliyetli bir aboneliktir. Cömert limitler ve en yetenekli açık kaynak modellere güvenilir erişim sağlar.",
   "go.problem.item1": "Düşük maliyetli abonelik fiyatlandırması",
   "go.problem.item2": "Cömert limitler ve güvenilir erişim",
   "go.problem.item3": "Mümkün olduğunca çok programcı için geliştirildi",
@@ -251,7 +251,7 @@ export const dict = {
   "go.how.step2.afterLink": "cömert limitlerle",
   "go.how.step3.title": "Kodlamaya başlayın",
   "go.how.step3.body": "açık kaynaklı modellere güvenilir erişimle",
-  "go.faq.q1": "MOD Go nedir?",
+  "go.faq.q1": "OpenCode Go nedir?",
   "go.faq.a1":
     "Go, ajan tabanlı kodlama için yetenekli açık kaynaklı modellere güvenilir erişim sağlayan düşük maliyetli bir aboneliktir.",
   "go.faq.q2": "Go hangi modelleri içerir?",
@@ -366,16 +366,16 @@ export const dict = {
   "enterprise.form.error.internalServer": "İç sunucu hatası.",
   "enterprise.form.error.captcha": "Captcha doğrulaması başarısız oldu. Lütfen tekrar deneyin.",
   "enterprise.faq.title": "SSS",
-  "enterprise.faq.q1": "MOD Enterprise nedir?",
+  "enterprise.faq.q1": "OpenCode Enterprise nedir?",
   "enterprise.faq.a1":
-    "MOD Enterprise, kodunuzun ve verilerinizin asla altyapınızı terk etmemesini sağlamak isteyen kurumlar içindir. Bunu, SSO'nuz ve dahili AI geçidiniz ile entegre olan merkezileştirilmiş bir konfigürasyonla sağlar.",
-  "enterprise.faq.q2": "MOD Enterprise'a nasıl başlarım?",
+    "OpenCode Enterprise, kodunuzun ve verilerinizin asla altyapınızı terk etmemesini sağlamak isteyen kurumlar içindir. Bunu, SSO'nuz ve dahili AI geçidiniz ile entegre olan merkezileştirilmiş bir konfigürasyonla sağlar.",
+  "enterprise.faq.q2": "OpenCode Enterprise'a nasıl başlarım?",
   "enterprise.faq.a2":
     "Ekibinizle dahili bir deneme ile başlayın. MOD varsayılan olarak kodunuzu veya bağlam verilerinizi saklamaz, bu da başlamayı kolaylaştırır. Ardından fiyatlandırma ve uygulama seçeneklerini görüşmek için bize ulaşın.",
   "enterprise.faq.q3": "Kurumsal fiyatlandırma nasıl çalışır?",
   "enterprise.faq.a3":
     "Kendi LLM geçidiniz varsa, kullanılan tokenlar için ücret almıyoruz. Daha fazla bilgi için, kurumunuzun ihtiyaçlarına göre özel bir teklif için bize ulaşın.",
-  "enterprise.faq.q4": "MOD Enterprise ile verilerim güvende mi?",
+  "enterprise.faq.q4": "OpenCode Enterprise ile verilerim güvende mi?",
   "enterprise.faq.a4":
     "Evet. MOD kodunuzu veya bağlam verilerinizi saklamaz. Tüm işleme yerel olarak ya da AI sağlayıcınıza doğrudan API çağrıları ile gerçekleştirilir. Merkezileştirilmiş konfigürasyon ve SSO entegrasyonu ile verileriniz kurumunuzun altyapısı içinde güvende kalır.",
 

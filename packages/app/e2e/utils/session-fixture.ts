@@ -40,7 +40,7 @@ const directory = "C:/OpenCode/SmokeProject"
 
 const projectID = "proj_smoke_timeline"
 
-const model = { providerID: "mod", modelID: "claude-opus-4-6", variant: "max" }
+const model = { providerID: "opencode", modelID: "claude-opus-4-6", variant: "max" }
 
 type MessagePart =
   | { id: string; type: "text"; text: string }
@@ -353,7 +353,7 @@ export const fixture = {
       },
     ],
     connected: ["mod"],
-    default: { providerID: "mod", modelID: "claude-opus-4-6" },
+    default: { providerID: "opencode", modelID: "claude-opus-4-6" },
   },
   sessions: [
     {

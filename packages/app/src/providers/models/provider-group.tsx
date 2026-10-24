@@ -52,7 +52,7 @@ export function consoleModelGroup<T extends ModelItem>(items: readonly T[]) {
   return consoleProviderGroup([...new Map(items.map((item) => [item.provider.id, item.provider])).values()])
 }
 
-/** Provider sections for a model list, with Console workspace providers nested under one MOD Console section. */
+/** Provider sections for a model list, with Console workspace providers nested under one OpenCode Console section. */
 export function ProviderModelSections<T extends ModelItem>(props: {
   groups: ModelGroup<T>[]
   managed: ReturnType<typeof consoleModelGroup<T>>
@@ -91,7 +91,7 @@ export function ProviderModelSections<T extends ModelItem>(props: {
 
   // Only the keyless catalog is free; a Zen key or Console account keeps the provider's own name.
   const name = (group: ModelGroup<T>) =>
-    group.category === "mod" && group.items.every((item) => !item.cost?.input)
+    group.category === "opencode" && group.items.every((item) => !item.cost?.input)
       ? language.t("provider.connect.mod.freeName")
       : group.items[0].provider.name
 

@@ -7,7 +7,7 @@
 ## Do Not Translate (Locale Additions)
 
 - `MOD` (preserve casing in prose; keep `MOD` only when it is part of commands, package names, paths, or code)
-- `MOD Zen`
+- `OpenCode Zen`
 - `MOD CLI`
 - `CLI`, `TUI`, `MCP`, `OAuth`
 - `Model Context Protocol` (prefer the English expansion when introducing `MCP`)

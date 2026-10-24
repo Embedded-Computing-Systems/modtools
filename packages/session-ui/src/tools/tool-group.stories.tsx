@@ -79,7 +79,7 @@ export const MixedReasoning = {
         id: "reasoning_first",
         text: "The renderer groups adjacent tools. Check the relevant skills before changing it.",
       },
-      storyTool("reasoning_skill_first", "skill", "completed", { id: "mod" }),
+      storyTool("reasoning_skill_first", "skill", "completed", { id: "opencode" }),
       storyTool("reasoning_skill_second", "skill", "completed", { id: "frontend-design" }),
       {
         type: "reasoning",

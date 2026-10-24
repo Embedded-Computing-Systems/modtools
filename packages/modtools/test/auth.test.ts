@@ -75,15 +75,15 @@ describe("auth command", () => {
     expect(requests.indexOf("/api/model/default")).toBeLessThan(requests.indexOf("/api/integration"))
   })
 
-  test("lists MOD Go before Zen and preserves the remaining integration order", async () => {
+  test("lists OpenCode Go before Zen and preserves the remaining integration order", async () => {
     using server = authServer((request, url) => {
       if (url.pathname === "/api/integration") {
         return Response.json(
           located(
             [
-              { id: "mod", name: "MOD Zen" },
+              { id: "opencode", name: "OpenCode Zen" },
               { id: "anthropic", name: "Anthropic" },
-              { id: "opencode-go", name: "MOD Go" },
+              { id: "opencode-go", name: "OpenCode Go" },
             ].map((integration) => ({
               ...integration,
               methods: [],
@@ -102,7 +102,7 @@ describe("auth command", () => {
         .trim()
         .split("\n")
         .map((line) => line.split(/\s{2,}/)[0]),
-    ).toEqual(["MOD Go", "MOD Zen", "Anthropic"])
+    ).toEqual(["OpenCode Go", "OpenCode Zen", "Anthropic"])
   })
 
   test("runs command authentication without interactive input", async () => {

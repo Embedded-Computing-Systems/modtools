@@ -11,7 +11,7 @@ test("the free usage limit opens the Go dialog once, leaves a readable notice, a
   await page.clock.setFixedTime(T0)
   await context.route("https://**", (route) => route.fulfill({ body: "Sign in" }))
   const sessionID = "ses_free_limit"
-  const model = { id: "big-pickle", providerID: "mod" }
+  const model = { id: "big-pickle", providerID: "opencode" }
   const state = { authorized: false }
 
   const view = await openSession(page, {
@@ -32,7 +32,7 @@ test("the free usage limit opens the Go dialog once, leaves a readable notice, a
               {
                 id: "opencode-go",
                 integrationID: "opencode-go",
-                name: "MOD Go",
+                name: "OpenCode Go",
                 models: {
                   "glm-5-go": { id: "glm-5-go", name: "GLM-5 Go", cost: { input: 1, output: 1 }, limit: { context: 200_000 } },
                 },
@@ -46,13 +46,13 @@ test("the free usage limit opens the Go dialog once, leaves a readable notice, a
     integrations: () => [
       {
         id: "mod",
-        name: "MOD Console",
-        methods: [{ id: "device", type: "oauth", label: "MOD Console account" }],
+        name: "OpenCode Console",
+        methods: [{ id: "device", type: "oauth", label: "OpenCode Console account" }],
         connections: state.authorized ? [{ type: "credential", id: "cred_console", label: "Anomaly", method: "oauth" }] : [],
       },
       {
         id: "opencode-go",
-        name: "MOD Go",
+        name: "OpenCode Go",
         methods: [{ type: "key" }],
         connections: state.authorized ? [{ type: "credential", id: "cred_go", label: "Anomaly", method: "oauth" }] : [],
       },
@@ -104,7 +104,7 @@ test("the free usage limit opens the Go dialog once, leaves a readable notice, a
   await upsell.getByRole("button", { name: "Subscribe", exact: true }).click()
   const connect = page.getByRole("dialog")
   await connect.getByRole("button", { name: "Continue in the browser", exact: true }).click()
-  const connected = page.getByRole("dialog", { name: "Connected to MOD Go" })
+  const connected = page.getByRole("dialog", { name: "Connected to OpenCode Go" })
   await expect(connected.getByRole("radio", { name: "GLM-5 Go", exact: true })).toHaveAttribute("aria-checked", "true")
   await connected.getByRole("button", { name: "Continue", exact: true }).click()
   await expect(page.getByRole("dialog")).toHaveCount(0)
@@ -190,10 +190,10 @@ test("a catalog refresh cannot replace an existing session's model", async ({ pa
 
   const view = await openSession(page, {
     name: "CatalogSelection",
-    sessions: [{ id: sessionID, agent: "build", model: { id: "alpha", providerID: "mod", variant: "high" } }],
+    sessions: [{ id: sessionID, agent: "build", model: { id: "alpha", providerID: "opencode", variant: "high" } }],
     provider: () => catalog.current,
     onPrompt: (input) => void prompts.push(input.body),
-    seed: { storage: { "mod.global.dat:model": { recent: [{ providerID: "mod", modelID: "beta" }] } } },
+    seed: { storage: { "mod.global.dat:model": { recent: [{ providerID: "opencode", modelID: "beta" }] } } },
   })
 
   const control = page.locator('[data-action="composer-model"]')
@@ -231,7 +231,7 @@ test("a catalog refresh cannot replace an existing session's model", async ({ pa
   await expect(page.getByRole("button", { name: "Choose model variant", exact: true })).toHaveText("high")
   await view.editor.press("Enter")
   await expect.poll(() => prompts.length).toBe(1)
-  expect(switches).toEqual([{ model: { id: "alpha", providerID: "mod", variant: "high" } }])
+  expect(switches).toEqual([{ model: { id: "alpha", providerID: "opencode", variant: "high" } }])
 
   catalog.current = provider(beta)
   await view.push([
@@ -254,8 +254,8 @@ test("a catalog refresh cannot replace an existing session's model", async ({ pa
   await view.editor.press("Enter")
   await expect.poll(() => prompts.length).toBe(2)
   expect(switches).toEqual([
-    { model: { id: "alpha", providerID: "mod", variant: "high" } },
-    { model: { id: "beta", providerID: "mod" } },
+    { model: { id: "alpha", providerID: "opencode", variant: "high" } },
+    { model: { id: "beta", providerID: "opencode" } },
   ])
 })
 
@@ -597,7 +597,7 @@ test("marks a Console provider with its workspace only when it is also connected
         { id: "google", canonical: "google", name: "Google", models: model("direct-gemini", "Direct Gemini") },
       ],
       connected: ["mod", "console-google", "console-openai", "google"],
-      default: { providerID: "mod", modelID: "console-model" },
+      default: { providerID: "opencode", modelID: "console-model" },
     },
     seed: {
       storage: {

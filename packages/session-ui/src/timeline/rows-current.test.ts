@@ -1459,7 +1459,7 @@ describe("current session timeline rows", () => {
       id: "msg_assistant",
       type: "assistant",
       agent: "build",
-      model: { id: "big-pickle", providerID: "mod" },
+      model: { id: "big-pickle", providerID: "opencode" },
       content: [],
       finish: "error",
       error,

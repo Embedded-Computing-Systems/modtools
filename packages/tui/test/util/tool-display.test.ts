@@ -25,7 +25,7 @@ describe("webSearchProviderLabel", () => {
     expect(webSearchProviderLabel("exa")).toBe("Web Search via Exa")
     expect(webSearchProviderLabel("firecrawl")).toBe("Web Search via Firecrawl")
     expect(webSearchProviderLabel("tavily")).toBe("Web Search via Tavily")
-    expect(webSearchProviderLabel("mod")).toBe("Web Search via MOD")
+    expect(webSearchProviderLabel("opencode")).toBe("Web Search via OpenCode")
   })
 
   test("labels providers dynamically", () => {

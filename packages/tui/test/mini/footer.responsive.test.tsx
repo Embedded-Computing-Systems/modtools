@@ -103,13 +103,13 @@ test.each([false, true])(
       app.footer.event({
         type: "models",
         providers: [
-          { id: "mod", name: "Anomaly / MOD", models: { "gpt-5.6-sol": { name: "GPT-5.6 Sol (50% Off)" } } },
+          { id: "opencode", name: "Anomaly / MOD", models: { "gpt-5.6-sol": { name: "GPT-5.6 Sol (50% Off)" } } },
         ],
       })
       app.footer.event({
         type: "model",
         model: "GPT-5.6 Sol (50% Off)",
-        selection: { providerID: "mod", modelID: "gpt-5.6-sol" },
+        selection: { providerID: "opencode", modelID: "gpt-5.6-sol" },
       })
       app.footer.event({ type: "variants", variants: ["max"], current: "max" })
       app.footer.event({ type: "stream.patch", patch: { usage: { tokens: 14100, percent: 1, cost: 0.04 } } })

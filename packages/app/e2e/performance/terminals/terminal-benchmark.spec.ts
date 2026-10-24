@@ -123,7 +123,7 @@ for (const scenario of ["visible-output", "hidden-output", "full-scrollback-tear
             },
           ],
           connected: ["mod"],
-          default: { providerID: "mod", modelID: "test" },
+          default: { providerID: "opencode", modelID: "test" },
         },
         sessions: [
           {

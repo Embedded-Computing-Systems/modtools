@@ -139,7 +139,7 @@ describe("ModPlugin", () => {
         {
           id: Integration.MethodID.make("device"),
           type: "oauth",
-          label: "MOD Console account",
+          label: "OpenCode Console account",
           form: [
             { key: "server", type: "string", format: "uri", hidden: true, default: "https://opencode.ai/console" },
           ],
@@ -1368,7 +1368,7 @@ describe("ModPlugin", () => {
 
           expect((yield* integrations.get(Integration.ID.make("opencode")))?.connections[0]?.status).toEqual({
             status: "needs_auth",
-            message: "Reconnect MOD Console to continue",
+            message: "Reconnect OpenCode Console to continue",
           })
           expect((yield* credentials.get(credential.id))?.value).toMatchObject({ refresh: "revoked" })
         }),
@@ -1411,7 +1411,7 @@ describe("ModPlugin", () => {
           yield* addPlugin().pipe(inProcess(server))
           yield* drain
 
-          expect(yield* status()).toEqual({ status: "needs_auth", message: "Reconnect MOD Console to continue" })
+          expect(yield* status()).toEqual({ status: "needs_auth", message: "Reconnect OpenCode Console to continue" })
           expect((yield* credentials.get(credential.id))?.value).toMatchObject({ access: "revoked" })
 
           state.revoked = false
@@ -2156,7 +2156,7 @@ describe("ModPlugin hosted voice", () => {
     {
       name: "a rejected credential as a reconnect",
       reply: () => Response.json({ error: { message: "Invalid credential" } }, { status: 401 }),
-      expected: { _tag: "Voice.UnavailableError", message: "Reconnect MOD Console to continue." },
+      expected: { _tag: "Voice.UnavailableError", message: "Reconnect OpenCode Console to continue." },
     },
   ])
     it.effect(`reports ${item.name}`, () =>

@@ -8,7 +8,7 @@ Release notes for MOD V2, newest first.
 
 - **Bun 1.4.4 Security Fixes**: MOD now runs on Bun 1.4.4, which includes security fixes for Brotli, TLS, HTTP/3, WebSocket, and more, along with updated root certificates. ([#58087](https://github.com/Embedded-Computing-Systems/modtools/pull/58087))
 - **Faster Code Display**: Code blocks, file views, and review diffs in Desktop now use Pierre Highlights, reducing highlighting time and memory use for large files and diffs. ([#57937](https://github.com/Embedded-Computing-Systems/modtools/pull/57937))
-- **Discover and Start Voice Models**: SDK clients can call `client.voice.models()` to find available experimental voice models and supported transports. Connected MOD Console workspaces can also host GPT-Live sessions through `client.voice.session()`. ([#57194](https://github.com/Embedded-Computing-Systems/modtools/pull/57194), [#57735](https://github.com/Embedded-Computing-Systems/modtools/pull/57735))
+- **Discover and Start Voice Models**: SDK clients can call `client.voice.models()` to find available experimental voice models and supported transports. Connected OpenCode Console workspaces can also host GPT-Live sessions through `client.voice.session()`. ([#57194](https://github.com/Embedded-Computing-Systems/modtools/pull/57194), [#57735](https://github.com/Embedded-Computing-Systems/modtools/pull/57735))
 
 ### Core
 
@@ -49,7 +49,7 @@ Release notes for MOD V2, newest first.
 #### Improvements
 
 - Added `client.voice.models()` to list experimental voice models, availability, and supported WebRTC or WebSocket transports. ([#57194](https://github.com/Embedded-Computing-Systems/modtools/pull/57194))
-- Voice sessions can now use GPT-Live hosted by a connected MOD Console workspace. Hosted sessions expose an ID and support instruction updates through `client.voice.instructions()`. ([#57735](https://github.com/Embedded-Computing-Systems/modtools/pull/57735))
+- Voice sessions can now use GPT-Live hosted by a connected OpenCode Console workspace. Hosted sessions expose an ID and support instruction updates through `client.voice.instructions()`. ([#57735](https://github.com/Embedded-Computing-Systems/modtools/pull/57735))
 
 ### Extensions
 
@@ -63,7 +63,7 @@ Release notes for MOD V2, newest first.
 ### Highlights
 
 - **Clear Free-Limit Recovery**: When your free messages run out, Desktop and the TUI now show the reset time, restore your submitted prompt, and offer direct upgrade or model-switching actions instead of a generic error. ([#57466](https://github.com/Embedded-Computing-Systems/modtools/pull/57466), [#57467](https://github.com/Embedded-Computing-Systems/modtools/pull/57467), [#57471](https://github.com/Embedded-Computing-Systems/modtools/pull/57471))
-- **Hide Free Models**: Set `MODTOOLS_DISABLE_FREE_MODELS=1` or `true` to remove zero-cost models from MOD and MOD Go catalogs, defaults, and fallbacks. ([#57478](https://github.com/Embedded-Computing-Systems/modtools/pull/57478))
+- **Hide Free Models**: Set `MODTOOLS_DISABLE_FREE_MODELS=1` or `true` to remove zero-cost models from MOD and OpenCode Go catalogs, defaults, and fallbacks. ([#57478](https://github.com/Embedded-Computing-Systems/modtools/pull/57478))
 - **Configurable Location Unloading**: Set `experimental.location_idle_timeout` to a duration such as `"4 hours"`, or to `false`, to control when inactive location services unload. ([#57476](https://github.com/Embedded-Computing-Systems/modtools/pull/57476))
 - **Reliable Fresh Installs**: The installer now creates `~/.zshrc` or Fish’s `config.fish` when missing, adds MOD to `PATH`, and tells you to run `exec $SHELL`. ([#57348](https://github.com/Embedded-Computing-Systems/modtools/pull/57348))
 
@@ -71,7 +71,7 @@ Release notes for MOD V2, newest first.
 
 #### Improvements
 
-- Added `MODTOOLS_DISABLE_FREE_MODELS` for hiding free MOD and MOD Go models. ([#57478](https://github.com/Embedded-Computing-Systems/modtools/pull/57478))
+- Added `MODTOOLS_DISABLE_FREE_MODELS` for hiding free MOD and OpenCode Go models. ([#57478](https://github.com/Embedded-Computing-Systems/modtools/pull/57478))
 - Added `experimental.location_idle_timeout`, accepting a duration string or `false`. ([#57476](https://github.com/Embedded-Computing-Systems/modtools/pull/57476))
 
 #### Bug fixes
@@ -86,7 +86,7 @@ Release notes for MOD V2, newest first.
 #### Improvements
 
 - Added an inline free-limit notice with the reset time and `/connect` and `/models` actions, while restoring the submitted prompt when the composer is empty. ([#57467](https://github.com/Embedded-Computing-Systems/modtools/pull/57467))
-- Restored the animated “Free limit reached” MOD Go dialog with **Subscribe**, **Dismiss**, and **Don’t show again** actions. ([#57471](https://github.com/Embedded-Computing-Systems/modtools/pull/57471))
+- Restored the animated “Free limit reached” OpenCode Go dialog with **Subscribe**, **Dismiss**, and **Don’t show again** actions. ([#57471](https://github.com/Embedded-Computing-Systems/modtools/pull/57471))
 
 #### Bug fixes
 
@@ -97,7 +97,7 @@ Release notes for MOD V2, newest first.
 
 #### Bug fixes
 
-- Restored the free-limit dialog, reset-time timeline notice, and submitted prompt after free usage is exhausted. Subscribing to MOD Go now updates the current session’s model instead of opening another draft. ([#57466](https://github.com/Embedded-Computing-Systems/modtools/pull/57466))
+- Restored the free-limit dialog, reset-time timeline notice, and submitted prompt after free usage is exhausted. Subscribing to OpenCode Go now updates the current session’s model instead of opening another draft. ([#57466](https://github.com/Embedded-Computing-Systems/modtools/pull/57466))
 
 ### SDK
 

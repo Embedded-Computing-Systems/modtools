@@ -134,12 +134,12 @@ export const dict = {
     "Zen은 MOD가 코딩 에이전트를 위해 특별히 테스트하고 벤치마킹한 엄선된 AI 모델 세트에 대한 액세스를 제공합니다. 제공자 간의 일관되지 않은 성능과 품질에 대해 걱정할 필요 없이, 검증된 모델을 사용하세요.",
   "home.zenCta.link": "Zen 알아보기",
 
-  "zen.title": "MOD Zen | 코딩 에이전트를 위한 신뢰할 수 있고 최적화된 모델 세트",
+  "zen.title": "OpenCode Zen | 코딩 에이전트를 위한 신뢰할 수 있고 최적화된 모델 세트",
   "zen.hero.title": "코딩 에이전트를 위한 신뢰할 수 있고 최적화된 모델",
   "zen.hero.body":
     "Zen은 MOD가 코딩 에이전트를 위해 특별히 테스트하고 벤치마킹한 엄선된 AI 모델 세트에 대한 액세스를 제공합니다. 일관되지 않은 성능과 품질에 대해 걱정할 필요 없이, 검증된 모델을 사용하세요.",
 
-  "zen.faq.q1": "MOD Zen이란 무엇인가요?",
+  "zen.faq.q1": "OpenCode Zen이란 무엇인가요?",
   "zen.faq.a1": "Zen은 MOD 팀이 코딩 에이전트를 위해 테스트하고 벤치마킹한 엄선된 AI 모델 세트입니다.",
   "zen.faq.q2": "Zen은 왜 더 정확한가요?",
   "zen.faq.a2":
@@ -195,7 +195,7 @@ export const dict = {
     "모든 Zen 모델은 미국과 EU에서 호스팅됩니다. 제공자들은 데이터 보존 금지 정책을 따르며 모델 학습에 데이터를 사용하지 않습니다. 단,",
   "zen.privacy.exceptionsLink": "다음 예외",
 
-  "go.title": "MOD Go | 모두를 위한 저비용 코딩 모델",
+  "go.title": "OpenCode Go | 모두를 위한 저비용 코딩 모델",
   "go.meta.description": "Go는 월 $10이며, 넉넉한 사용 한도와 주요 코딩 모델에 대한 안정적인 액세스를 제공합니다.",
   "go.hero.title": "모두를 위한 저비용 코딩 모델",
   "go.hero.tagline": "어떤 에이전트와도 사용할 수 있습니다. 필요하면 크레딧을 충전하세요. 언제든지 취소할 수 있습니다.",
@@ -230,7 +230,7 @@ export const dict = {
 
   "go.problem.title": "Go는 어떤 문제를 해결하나요?",
   "go.problem.body":
-    "우리는 가능한 많은 사람들에게 MOD 경험을 제공하는 데 집중하고 있습니다. MOD Go는 월 $10의 저렴한 구독 서비스입니다. 넉넉한 한도와 가장 뛰어난 오픈 소스 모델에 대한 안정적인 액세스를 제공합니다.",
+    "우리는 가능한 많은 사람들에게 MOD 경험을 제공하는 데 집중하고 있습니다. OpenCode Go는 월 $10의 저렴한 구독 서비스입니다. 넉넉한 한도와 가장 뛰어난 오픈 소스 모델에 대한 안정적인 액세스를 제공합니다.",
   "go.problem.item1": "저렴한 구독 가격",
   "go.problem.item2": "넉넉한 한도와 안정적인 액세스",
   "go.problem.item3": "가능한 한 많은 프로그래머를 위해 제작됨",
@@ -245,7 +245,7 @@ export const dict = {
   "go.how.step2.afterLink": "넉넉한 한도 포함",
   "go.how.step3.title": "코딩 시작",
   "go.how.step3.body": "오픈 소스 모델에 대한 안정적인 액세스와 함께",
-  "go.faq.q1": "MOD Go란 무엇인가요?",
+  "go.faq.q1": "OpenCode Go란 무엇인가요?",
   "go.faq.a1": "Go는 에이전트 코딩을 위한 유능한 오픈 소스 모델에 대해 안정적인 액세스를 제공하는 저비용 구독입니다.",
   "go.faq.q2": "Go에는 어떤 모델이 포함되나요?",
   "go.faq.a2": "Go에는 넉넉한 한도와 안정적인 액세스를 제공하는 아래 모델이 포함됩니다.",

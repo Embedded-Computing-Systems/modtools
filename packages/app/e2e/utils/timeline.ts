@@ -30,7 +30,7 @@ export const assistantID = "msg_1001_timeline_assistant"
 
 export const title = "Timeline visual stability"
 
-export const model = { providerID: "mod", modelID: "claude-opus-4-6", variant: "max" }
+export const model = { providerID: "opencode", modelID: "claude-opus-4-6", variant: "max" }
 
 const tokens = { input: 100, output: 200, reasoning: 0, cache: { read: 0, write: 0 } }
 
@@ -1106,6 +1106,6 @@ function provider() {
       },
     ],
     connected: ["mod", "company-gateway"],
-    default: { providerID: "mod", modelID: "claude-opus-4-6" },
+    default: { providerID: "opencode", modelID: "claude-opus-4-6" },
   }
 }
