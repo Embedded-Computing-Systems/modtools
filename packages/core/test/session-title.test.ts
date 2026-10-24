@@ -213,14 +213,12 @@ it.effect("generates a title from the sole user message and renames the session"
     yield* title.generate(sessionID)
 
     expect(requests).toHaveLength(1)
+    // The x-opencode-* headers are OpenCode's routing contract and go only to its providers;
+    // every other provider sees the generic affinity headers.
     expect(requests[0]?.http?.headers).toEqual({
-      "x-opencode-session-id": sessionID,
       "x-session-affinity": sessionID,
       "X-Session-Id": sessionID,
       "User-Agent": App.useragent(App.make()),
-      "x-opencode-project": Project.ID.global,
-      "x-opencode-session": sessionID,
-      "x-opencode-client": "mod",
     })
     expect(requests[0]?.promptCacheKey).toBe(sessionID)
     expect(requests[0]?.tools).toEqual([])
