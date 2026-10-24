@@ -273,6 +273,23 @@ function normalizeMessages(
           }
           return part
         })
+        // A turn that ended on reasoning alone (no answer, no tool call) is serialised
+        // with empty content and no tool_calls, which Mistral rejects outright ("Assistant
+        // message must have either content or tool_calls"), poisoning every later request
+        // in the session. Other providers accept it, so the failure surfaces only when a
+        // session returns to a Mistral model. Keep the reasoning as text, the same form
+        // cross-model replay already gives it.
+        const answered = msg.content.some(
+          (part) => (part.type === "text" && part.text.trim().length > 0) || part.type === "tool-call",
+        )
+        if (!answered) {
+          const text = msg.content
+            .flatMap((part) => (part.type === "reasoning" ? [part.text] : []))
+            .join("\n")
+            .trim()
+          if (!text) continue
+          msg.content = [{ type: "text", text }]
+        }
       }
       if (msg.role === "tool" && Array.isArray(msg.content)) {
         msg.content = msg.content.map((part) => {

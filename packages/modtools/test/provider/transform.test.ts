@@ -2265,6 +2265,65 @@ describe("ProviderTransform.message - Mistral tool call IDs", () => {
   )
 })
 
+describe("ProviderTransform.message - Mistral unanswered turns", () => {
+  const mistral = {
+    id: "ollama-cloud/mistral-large-4",
+    providerID: "ollama-cloud",
+    api: { id: "mistral-large-4", url: "https://ollama.com/v1", npm: "@ai-sdk/openai-compatible" },
+  } as any
+
+  test("a reasoning-only turn is replayed as text instead of an empty assistant message", () => {
+    const result = ProviderTransform.message(
+      [
+        { role: "user", content: [{ type: "text", text: "check this" }] },
+        { role: "assistant", content: [{ type: "reasoning", text: "thinking it through" }] },
+        { role: "user", content: [{ type: "text", text: "and now?" }] },
+      ] as any,
+      mistral,
+      {},
+    )
+
+    expect(result[1]).toEqual({ role: "assistant", content: [{ type: "text", text: "thinking it through" }] })
+  })
+
+  test("a turn with an answer or a tool call is left as it is", () => {
+    const msgs = [
+      {
+        role: "assistant",
+        content: [
+          { type: "reasoning", text: "plan" },
+          { type: "text", text: "Here is the answer." },
+        ],
+      },
+      {
+        role: "assistant",
+        content: [
+          { type: "reasoning", text: "plan" },
+          { type: "tool-call", toolCallId: "abcdefghij", toolName: "bash", input: {} },
+        ],
+      },
+    ] as any
+
+    const result = ProviderTransform.message(msgs, mistral, {})
+
+    expect(result[0].content).toHaveLength(2)
+    expect(result[1].content).toMatchObject([{ type: "reasoning" }, { type: "tool-call", toolCallId: "abcdefghi" }])
+  })
+
+  test("a turn with nothing to say is dropped", () => {
+    const result = ProviderTransform.message(
+      [
+        { role: "user", content: [{ type: "text", text: "hi" }] },
+        { role: "assistant", content: [{ type: "reasoning", text: "   " }] },
+      ] as any,
+      mistral,
+      {},
+    )
+
+    expect(result).toEqual([{ role: "user", content: [{ type: "text", text: "hi" }] }])
+  })
+})
+
 describe("ProviderTransform.message - DeepSeek reasoning content", () => {
   test("DeepSeek with tool calls includes reasoning_content in providerOptions", () => {
     const msgs = [
