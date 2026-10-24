@@ -1,6 +1,6 @@
 ---
 name: sample-skill
-description: Use when the user says sample skill, skill demo, or asks how an MOD SKILL.md should be structured; demonstrates a tiny project-local skill with practical assistant workflow guidance.
+description: Use when the user says sample skill, skill demo, or asks how a MOD SKILL.md should be structured; demonstrates a tiny project-local skill with practical assistant workflow guidance.
 ---
 
 # Sample Skill
