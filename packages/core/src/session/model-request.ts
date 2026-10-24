@@ -269,19 +269,28 @@ export const layer = Layer.effect(
       const generation = Object.fromEntries(entries.filter(([k]) => GENERATION_KEYS.has(k))) as GenerationOptionsFields
       const providerOptions = Object.fromEntries(entries.filter(([k]) => !GENERATION_KEYS.has(k)))
       const affinity = SessionAffinity.get(session)
+      // The x-opencode-* headers are OpenCode's own routing contract, read by OpenCode Zen
+      // and Go for routing and prompt caching. Every other provider gets the generic
+      // affinity headers only, as in v1; a session id is not something to hand to a
+      // third-party gateway that never asked for it.
+      const opencodeProvider = model.model.provider === "opencode" || model.model.provider === "opencode-go"
       const base = LLM.request({
         model: model.model,
         http: {
           headers: {
-            "x-opencode-session-id": session.id,
-            ...(session.parentID ? { "x-opencode-parent-session-id": session.parentID } : {}),
             "x-session-affinity": affinity,
             "X-Session-Id": affinity,
             ...(session.parentID ? { "x-parent-session-id": session.parentID } : {}),
             "User-Agent": App.useragent(app),
-            "x-opencode-project": session.projectID,
-            "x-opencode-session": affinity,
-            "x-opencode-client": app.name,
+            ...(opencodeProvider
+              ? {
+                  "x-opencode-session-id": session.id,
+                  ...(session.parentID ? { "x-opencode-parent-session-id": session.parentID } : {}),
+                  "x-opencode-project": session.projectID,
+                  "x-opencode-session": affinity,
+                  "x-opencode-client": app.name,
+                }
+              : {}),
           },
         },
         // TODO: Persist cache lineage so nested forks reuse the root session's cache key.
