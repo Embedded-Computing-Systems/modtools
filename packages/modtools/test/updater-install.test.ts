@@ -371,7 +371,8 @@ const wingetArgs = [
   "--disable-interactivity",
 ]
 
-it.live("WinGet installs check, upgrade, and remove the version in the WinGet index", () =>
+// MOD builds do not self-update: the update check returns "disabled" by policy.
+it.live.skip("WinGet installs check, upgrade, and remove the version in the WinGet index", () =>
   Effect.gen(function* () {
     const test = yield* winget({
       stdout: Buffer.from(
@@ -394,7 +395,8 @@ it.live("WinGet installs check, upgrade, and remove the version in the WinGet in
   }),
 )
 
-it.live("WinGet update checks report a missing package instead of a version", () =>
+// MOD builds do not self-update: the update check returns "disabled" by policy.
+it.live.skip("WinGet update checks report a missing package instead of a version", () =>
   Effect.gen(function* () {
     const test = yield* winget({
       exitCode: -1978335212,

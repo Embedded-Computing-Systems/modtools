@@ -5,7 +5,7 @@ import { Dialog } from "@modtools-ai/ui/dialog"
 import { useExtension, type DialogHandle, type SetupContext } from "../sdk"
 import type definition from "./index"
 
-const CHANGELOG_URL = "https://opencode.ai/changelog.json"
+const CHANGELOG_URL = ""
 
 type Highlight = {
   title: string

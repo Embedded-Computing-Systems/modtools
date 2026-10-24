@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=OpenCode
-Exec=/opt/OpenCode/ai.mod %U
+Name=MOD
+Exec=/opt/MOD/ai.mod %U
 Terminal=false
 Type=Application
 Icon=ai.mod

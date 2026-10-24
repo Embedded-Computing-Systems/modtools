@@ -150,7 +150,7 @@ const make = Effect.gen(function* () {
       .readFileString(path.join(directory, "package.json"))
       .pipe(Effect.flatMap((text) => Effect.try(() => JSON.parse(text))))
     // Source invocations run inside Bun or Node, which may themselves be npm packages.
-    if (!/^@mod(?:-ai)?\/cli(?:-node)?$/.test(manifest.name)) return
+    if (!/^@modtools-ai\/(?:cli|cli-node)$/.test(manifest.name)) return
     if (Object.values(manifest.bin ?? {}).some((bin) => path.resolve(directory, bin) === executable))
       return manifest.name
   }).pipe(Effect.orElseSucceed(() => undefined))
@@ -583,6 +583,13 @@ const make = Effect.gen(function* () {
   })
 
   const check = Effect.fn("cli.updater.check")(function* () {
+    // The feeds are OpenCode's and this build does not self-update.
+    if ((yield* readPolicy()) === "disable")
+      return { type: "unavailable" as const, message: "MOD builds do not self-update." }
+    // The update feeds are OpenCode's, and this build does not self-update; the /update
+    // dialog must not offer, or reach for, a release it did not make.
+    if ((yield* readPolicy()) === "disable")
+      return { type: "unavailable" as const, message: "MOD builds do not self-update." }
     if (MODTOOLS_LOCAL)
       return {
         type: "unavailable" as const,

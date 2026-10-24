@@ -12,6 +12,10 @@ export default Runtime.handler(
   Effect.fn("cli.upgrade")(
     function* (input) {
       intro("Upgrade")
+      // The upgrade feed is OpenCode's and its artifacts are upstream builds. The escape
+      // hatch exists so the machinery stays testable; it is not a switch to document.
+      if (process.env.MODTOOLS_ALLOW_UPGRADE !== "1")
+        return yield* Effect.fail(new Error("MOD builds do not self-update. Install a MOD release instead."))
       const updater = yield* Updater.Service
       const method = Option.getOrUndefined(input.method) ?? (yield* updater.method())
       if (!method)
