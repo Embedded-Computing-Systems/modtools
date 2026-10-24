@@ -586,6 +586,9 @@ const make = Effect.gen(function* () {
     // The feeds are OpenCode's and this build does not self-update.
     if ((yield* readPolicy()) === "disable")
       return { type: "unavailable" as const, message: "MOD builds do not self-update." }
+    // The feeds are OpenCode's and this build does not self-update.
+    if ((yield* readPolicy()) === "disable")
+      return { type: "unavailable" as const, message: "MOD builds do not self-update." }
     // The update feeds are OpenCode's, and this build does not self-update; the /update
     // dialog must not offer, or reach for, a release it did not make.
     if ((yield* readPolicy()) === "disable")
