@@ -1,6 +1,6 @@
-import { OpenCode, type OpenCodeEvent } from "@opencode/client"
+import { OpenCode, type OpenCodeEvent } from "@modtools-ai/client"
 
-export const worktree = "/tmp/opencode"
+export const worktree = "/tmp/mod"
 export const directory = `${worktree}/packages/tui`
 
 export function json(data: unknown, init?: ResponseInit) {

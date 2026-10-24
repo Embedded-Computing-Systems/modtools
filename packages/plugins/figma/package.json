@@ -1,13 +1,13 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "@opencode/plugin-figma",
+  "name": "@modtools-ai/plugin-figma",
   "version": "2.1.4",
-  "description": "Figma MCP integration and official Figma skills for OpenCode",
+  "description": "Figma MCP integration and official Figma skills for MOD",
   "type": "module",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/anomalyco/opencode.git",
+    "url": "git+https://github.com/Embedded-Computing-Systems/modtools.git",
     "directory": "packages/plugins/figma"
   },
   "publishConfig": {
@@ -31,7 +31,7 @@
     "gray-matter": "4.0.3"
   },
   "peerDependencies": {
-    "@opencode/plugin": "^2.0.27 || ^0.0.0-dev"
+    "@modtools-ai/plugin": "^2.0.27 || ^0.0.0-dev"
   },
   "devDependencies": {
     "@tsconfig/bun": "1.0.9",

@@ -3,15 +3,15 @@
     <picture>
       <source srcset="packages/console/app/src/asset/logo-ornate-dark.svg" media="(prefers-color-scheme: dark)">
       <source srcset="packages/console/app/src/asset/logo-ornate-light.svg" media="(prefers-color-scheme: light)">
-      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="OpenCode logo">
+      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="MOD logo">
     </picture>
   </a>
 </p>
 <p align="center">ওপেন সোর্স এআই কোডিং এজেন্ট।</p>
 <p align="center">
   <a href="https://opencode.ai/discord"><img alt="Discord" src="https://img.shields.io/discord/1391832426048651334?style=flat-square&label=discord" /></a>
-  <a href="https://www.npmjs.com/package/@opencode/cli"><img alt="npm" src="https://img.shields.io/npm/v/@opencode/cli?style=flat-square" /></a>
-  <a href="https://github.com/anomalyco/opencode/actions/workflows/publish.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/anomalyco/opencode/publish.yml?style=flat-square&branch=dev" /></a>
+  <a href="https://www.npmjs.com/package/@modtools-ai/cli"><img alt="npm" src="https://img.shields.io/npm/v/@modtools-ai/cli?style=flat-square" /></a>
+  <a href="https://github.com/Embedded-Computing-Systems/modtools/actions/workflows/publish.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/Embedded-Computing-Systems/modtools/publish.yml?style=flat-square&branch=dev" /></a>
 </p>
 
 <p align="center">
@@ -39,7 +39,7 @@
   <a href="README.vi.md">Tiếng Việt</a>
 </p>
 
-[![OpenCode Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://opencode.ai)
+[![MOD Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://opencode.ai)
 
 ---
 
@@ -50,13 +50,13 @@
 curl -fsSL https://opencode.ai/v2/install | bash
 
 # Package managers
-npm i -g @opencode/cli@latest      # or bun/pnpm/yarn
-brew install anomalyco/tap/opencode-v2 # macOS and Linux (recommended, always up to date)
-brew install opencode              # macOS and Linux (official brew formula, updated less)
-sudo pacman -S opencode            # Arch Linux (Stable)
-paru -S opencode-beta              # Arch Linux (Latest from AUR)
-mise use -g opencode               # Any OS
-nix run github:anomalyco/opencode  # Nix
+npm i -g @modtools-ai/cli@latest      # or bun/pnpm/yarn
+brew install anomalyco/tap/MOD-v2 # macOS and Linux (recommended, always up to date)
+brew install MOD              # macOS and Linux (official brew formula, updated less)
+sudo pacman -S MOD            # Arch Linux (Stable)
+paru -S MOD-beta              # Arch Linux (Latest from AUR)
+mise use -g MOD               # Any OS
+nix run github:anomalyco/MOD  # Nix
 ```
 
 > [!TIP]
@@ -64,27 +64,27 @@ nix run github:anomalyco/opencode  # Nix
 
 ### ডেস্কটপ অ্যাপ (BETA)
 
-OpenCode ডেস্কটপ অ্যাপ্লিকেশন হিসেবেও উপলব্ধ। [opencode.ai/download](https://opencode.ai/download) থেকে ডাউনলোড করুন।
+MOD ডেস্কটপ অ্যাপ্লিকেশন হিসেবেও উপলব্ধ। [opencode.ai/download](https://opencode.ai/download) থেকে ডাউনলোড করুন।
 
 | প্ল্যাটফর্ম           | ডাউনলোড                            |
 | --------------------- | ---------------------------------- |
-| macOS (Apple Silicon) | `opencode-desktop-mac-arm64.dmg`   |
-| macOS (Intel)         | `opencode-desktop-mac-x64.dmg`     |
-| Windows               | `opencode-desktop-win-x64.exe`     |
+| macOS (Apple Silicon) | `MOD-desktop-mac-arm64.dmg`   |
+| macOS (Intel)         | `MOD-desktop-mac-x64.dmg`     |
+| Windows               | `MOD-desktop-win-x64.exe`     |
 | Linux                 | `.deb`, `.rpm`, or `.AppImage`     |
 
 ```bash
 # macOS (Homebrew)
-brew install --cask opencode-desktop
+brew install --cask MOD-desktop
 ```
 
 #### ইনস্টলেশন ডিরেক্টরি (Installation Directory)
 
-ইনস্টল স্ক্রিপ্টটি `$HOME/.opencode/bin`-এ OpenCode ইনস্টল করে।
+ইনস্টল স্ক্রিপ্টটি `$HOME/.mod/bin`-এ MOD ইনস্টল করে।
 
 ### এজেন্টস (Agents)
 
-OpenCode এ দুটি বিল্ট-ইন এজেন্ট রয়েছে যা আপনি `Tab` কি(key) দিয়ে পরিবর্তন করতে পারবেন।
+MOD এ দুটি বিল্ট-ইন এজেন্ট রয়েছে যা আপনি `Tab` কি(key) দিয়ে পরিবর্তন করতে পারবেন।
 
 - **build** - ডিফল্ট, ডেভেলপমেন্টের কাজের জন্য সম্পূর্ণ অ্যাক্সেসযুক্ত এজেন্ট
 - **plan** - বিশ্লেষণ এবং কোড এক্সপ্লোরেশনের জন্য রিড-ওনলি এজেন্ট
@@ -99,16 +99,16 @@ OpenCode এ দুটি বিল্ট-ইন এজেন্ট রয়ে
 
 ### ডকুমেন্টেশন (Documentation)
 
-কিভাবে OpenCode কনফিগার করবেন সে সম্পর্কে আরও তথ্যের জন্য, [**আমাদের ডকস দেখুন**](https://opencode.ai/v2/docs)।
+কিভাবে MOD কনফিগার করবেন সে সম্পর্কে আরও তথ্যের জন্য, [**আমাদের ডকস দেখুন**](https://opencode.ai/v2/docs)।
 
 ### অবদান (Contributing)
 
-আপনি যদি OpenCode এ অবদান রাখতে চান, অনুগ্রহ করে একটি পুল রিকোয়েস্ট সাবমিট করার আগে আমাদের [কন্ট্রিবিউটিং ডকস](./CONTRIBUTING.md) পড়ে নিন।
+আপনি যদি MOD এ অবদান রাখতে চান, অনুগ্রহ করে একটি পুল রিকোয়েস্ট সাবমিট করার আগে আমাদের [কন্ট্রিবিউটিং ডকস](./CONTRIBUTING.md) পড়ে নিন।
 
-### OpenCode এর উপর বিল্ডিং (Building on OpenCode)
+### MOD এর উপর বিল্ডিং (Building on MOD)
 
-আপনি যদি এমন প্রজেক্টে কাজ করেন যা OpenCode এর সাথে সম্পর্কিত এবং প্রজেক্টের নামের অংশ হিসেবে "opencode" ব্যবহার করেন, উদাহরণস্বরূপ "opencode-dashboard" বা "opencode-mobile", তবে দয়া করে আপনার README তে একটি নোট যোগ করে স্পষ্ট করুন যে এই প্রজেক্টটি OpenCode দল দ্বারা তৈরি হয়নি এবং আমাদের সাথে এর কোনো সরাসরি সম্পর্ক নেই।
+আপনি যদি এমন প্রজেক্টে কাজ করেন যা MOD এর সাথে সম্পর্কিত এবং প্রজেক্টের নামের অংশ হিসেবে "MOD" ব্যবহার করেন, উদাহরণস্বরূপ "MOD-dashboard" বা "MOD-mobile", তবে দয়া করে আপনার README তে একটি নোট যোগ করে স্পষ্ট করুন যে এই প্রজেক্টটি MOD দল দ্বারা তৈরি হয়নি এবং আমাদের সাথে এর কোনো সরাসরি সম্পর্ক নেই।
 
 ---
 
-**আমাদের কমিউনিটিতে যুক্ত হোন** [Discord](https://discord.gg/opencode) | [X.com](https://x.com/opencode)
+**আমাদের কমিউনিটিতে যুক্ত হোন** [Discord](https://discord.gg/MOD) | [X.com](https://x.com/MOD)

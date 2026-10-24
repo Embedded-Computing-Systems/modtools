@@ -28,7 +28,7 @@ function compile<Id extends string, Groups extends HttpApiGroup.Constraint>(sour
 }
 
 async function emittedModule(output: Output) {
-  const directory = await mkdtemp(join(tmpdir(), "opencode-httpapi-codegen-"))
+  const directory = await mkdtemp(join(tmpdir(), "mod-httpapi-codegen-"))
   const dispose = () => rm(directory, { recursive: true, force: true })
 
   try {
@@ -1080,9 +1080,9 @@ describe("HttpApiCodegen.generate", () => {
       },
     })
 
-    await client.session.configure({ payload: { type: "local", command: ["opencode"] } })
+    await client.session.configure({ payload: { type: "local", command: ["mod"] } })
 
-    expect(await request?.json()).toEqual({ type: "local", command: ["opencode"] })
+    expect(await request?.json()).toEqual({ type: "local", command: ["mod"] })
   })
 
   test("serializes explicit null query values", async () => {

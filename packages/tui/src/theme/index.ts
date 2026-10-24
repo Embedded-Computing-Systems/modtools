@@ -1,8 +1,8 @@
-import { migrateV1, parseThemeDocument, type ThemeDocument, type ModeDefinition } from "@opencode/theme/tui"
+import { migrateV1, parseThemeDocument, type ThemeDocument, type ModeDefinition } from "@modtools-ai/theme/tui"
 import { resolveThemeColors } from "./resolve"
 import { DEFAULT_THEMES, type Theme, type ThemeV1Json } from "./v1"
-import opencode from "./assets/v2/opencode.json" with { type: "json" }
-import opencode2 from "./assets/v2/opencode2.json" with { type: "json" }
+import mod from "./assets/v2/MOD.json" with { type: "json" }
+import mod2 from "./assets/v2/mod2.json" with { type: "json" }
 
 export { DEFAULT_THEMES, type Theme, type ThemeV1Json } from "./v1"
 
@@ -12,37 +12,37 @@ let customThemes: Record<string, ThemeDocumentSource> = {}
 let systemTheme: ThemeDocumentSource | undefined
 const listeners = new Set<(themes: Record<string, ThemeDocumentSource>) => void>()
 const parsed = new WeakMap<object, ThemeDocument>()
-let opencodeTheme: (ThemeDocument & {
+let modTheme: (ThemeDocument & {
   readonly light: ModeDefinition
   readonly dark: ModeDefinition
 }) | undefined
 
 export function getOpenCodeTheme() {
-  if (opencodeTheme) return opencodeTheme
-  const document = parseThemeDocument(opencode, "opencode") as NonNullable<typeof opencodeTheme>
-  opencodeTheme = document
+  if (modTheme) return modTheme
+  const document = parseThemeDocument(mod, "mod") as NonNullable<typeof modTheme>
+  modTheme = document
   return document
 }
 
-let opencode2Theme: ThemeDocument | undefined
+let mod2Theme: ThemeDocument | undefined
 
 // Temporary theme for the "new-designs" experiment. It is not part of allThemes(), so only the
 // TUI theme context offers it, and only while the experiment is enabled.
 export function getOpenCode2Theme() {
-  opencode2Theme ??= parseThemeDocument(opencode2, "opencode2")
-  return opencode2Theme
+  mod2Theme ??= parseThemeDocument(mod2, "mod2")
+  return mod2Theme
 }
 
 function listThemes(): Record<string, ThemeDocumentSource> {
   // Priority: defaults < custom files < generated system.
   const themes: Record<string, ThemeDocumentSource> = {
     ...DEFAULT_THEMES,
-    opencode: getOpenCodeTheme(),
+    mod: getOpenCodeTheme(),
     ...customThemes,
   }
   return {
     ...themes,
-    system: systemTheme ?? themes.system ?? themes.opencode,
+    system: systemTheme ?? themes.system ?? themes.mod,
   }
 }
 

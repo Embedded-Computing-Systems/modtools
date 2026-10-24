@@ -1,4 +1,4 @@
-import type { McpServer } from "@opencode/client/promise"
+import type { McpServer } from "@modtools-ai/client/promise"
 
 export async function toggleMcp(input: {
   status: McpServer["status"]["status"]

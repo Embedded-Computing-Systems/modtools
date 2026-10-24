@@ -1,8 +1,8 @@
-import type { ConnectionInfo } from "@opencode/client"
-import type { IntegrationApi } from "@opencode/client/promise/api"
-import { Connection } from "@opencode/schema/connection"
-import { Credential } from "@opencode/schema/credential"
-import { Form } from "@opencode/schema/form"
+import type { ConnectionInfo } from "@modtools-ai/client"
+import type { IntegrationApi } from "@modtools-ai/client/promise/api"
+import { Connection } from "@modtools-ai/schema/connection"
+import { Credential } from "@modtools-ai/schema/credential"
+import { Form } from "@modtools-ai/schema/form"
 import type { Transform } from "./registration.js"
 
 type IntegrationRef = { id: string; name: string }

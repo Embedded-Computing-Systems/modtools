@@ -1,13 +1,13 @@
 import { expect } from "bun:test"
 import path from "path"
-import { LanguageModel, LLMClient } from "@opencode/ai"
-import { OpenAIChat } from "@opencode/ai/protocols"
-import { TestLLM } from "@opencode/ai/testing"
-import { llmClient } from "@opencode/core/effect/app-node-platform"
-import { makeMemoryDriver } from "@opencode/core/environment/index"
-import { SessionRunnerModel } from "@opencode/core/session/runner/model"
-import { WorkspaceDriver } from "@opencode/core/workspace/driver"
-import { Plugin } from "@opencode/plugin/effect"
+import { LanguageModel, LLMClient } from "@modtools-ai/ai"
+import { OpenAIChat } from "@modtools-ai/ai/protocols"
+import { TestLLM } from "@modtools-ai/ai/testing"
+import { llmClient } from "@modtools-ai/core/effect/app-node-platform"
+import { makeMemoryDriver } from "@modtools-ai/core/environment/index"
+import { SessionRunnerModel } from "@modtools-ai/core/session/runner/model"
+import { WorkspaceDriver } from "@modtools-ai/core/workspace/driver"
+import { Plugin } from "@modtools-ai/plugin/effect"
 import { Context, Deferred, Effect, Exit, Layer, Schema, Scope } from "effect"
 import { tmpdirScoped } from "../../core/test/fixture/tmpdir"
 import { testEffect } from "../../core/test/lib/effect"
@@ -159,7 +159,7 @@ it.live(
         suspendForIdle: () => Effect.void,
         destroy: () => Effect.void,
       })
-      const opencode = yield* OpenCode.create(
+      const mod = yield* OpenCode.create(
         {
           config: { directory: directory.path, project: false, content: "{}" },
           models: { fetch: false },
@@ -198,37 +198,37 @@ it.live(
           ],
         },
       )
-      const firstWorkspace = yield* opencode.workspace.create({ provider: "memory" })
-      const secondWorkspace = yield* opencode.workspace.create({ provider: "memory" })
-      const first = yield* opencode.sessions.create({
+      const firstWorkspace = yield* mod.workspace.create({ provider: "memory" })
+      const secondWorkspace = yield* mod.workspace.create({ provider: "memory" })
+      const first = yield* mod.sessions.create({
         title: "First placement",
         location: Location.Ref.make({ directory: AbsolutePath.make(directory.path), workspaceID: firstWorkspace }),
         model: model.ref,
         metadata: { threadID: "same-thread" },
       })
-      const second = yield* opencode.sessions.create({
+      const second = yield* mod.sessions.create({
         title: "Second placement",
         location: Location.Ref.make({ directory: AbsolutePath.make(directory.path), workspaceID: secondWorkspace }),
         model: model.ref,
         metadata: { threadID: "same-thread" },
       })
       for (const session of [first, second]) {
-        const admitted = yield* opencode.sessions.prompt({ sessionID: session.id, text: "Hello" })
+        const admitted = yield* mod.sessions.prompt({ sessionID: session.id, text: "Hello" })
         expect(admitted.payload.text).toBe(`Hello:${session.location.workspaceID}`)
-        yield* opencode.sessions.wait({ sessionID: session.id })
+        yield* mod.sessions.wait({ sessionID: session.id })
       }
       expect(configured).toEqual(["same-thread", "same-thread"])
       expect(placements.map((location) => location.workspaceID)).toEqual([firstWorkspace, secondWorkspace])
 
-      yield* opencode.sessions.move({
+      yield* mod.sessions.move({
         sessionID: first.id,
         directory: AbsolutePath.make(directory.path),
         workspaceID: secondWorkspace,
       })
-      yield* opencode.sessions.wait({ sessionID: first.id })
-      const moved = yield* opencode.sessions.get({ sessionID: first.id })
+      yield* mod.sessions.wait({ sessionID: first.id })
+      const moved = yield* mod.sessions.get({ sessionID: first.id })
       expect(moved.location.workspaceID).toBe(secondWorkspace)
-      const admitted = yield* opencode.sessions.prompt({ sessionID: first.id, text: "Moved", resume: false })
+      const admitted = yield* mod.sessions.prompt({ sessionID: first.id, text: "Moved", resume: false })
       expect(admitted.payload.text).toBe(`Moved:${secondWorkspace}`)
       expect(configured).toEqual(["same-thread", "same-thread"])
     }),
@@ -276,8 +276,8 @@ it.live(
             }),
         },
       }).pipe(Layer.provide(Layer.succeed(Personas, { of: (threadID) => Effect.succeed(`persona-for-${threadID}`) })))
-      const opencode = Context.get(yield* Layer.build(layer).pipe(Scope.provide(hostScope)), OpenCode.Service)
-      const session = yield* opencode.sessions.create({
+      const mod = Context.get(yield* Layer.build(layer).pipe(Scope.provide(hostScope)), OpenCode.Service)
+      const session = yield* mod.sessions.create({
         title: "Service-configured fixture",
         location: Location.Ref.make({ directory: AbsolutePath.make(directory.path) }),
         metadata: { threadID: "thread-7" },
@@ -285,13 +285,13 @@ it.live(
 
       // A failed construction is discarded with what `configure` acquired, while the host lives on. Resources
       // bound to the Scope captured alongside the services would instead linger until the host closes.
-      const failed = yield* opencode.sessions
+      const failed = yield* mod.sessions
         .prompt({ sessionID: session.id, text: "Hello", resume: false })
         .pipe(Effect.exit)
       expect(Exit.isFailure(failed)).toBe(true)
       expect(released).toEqual(["thread-7:1"])
 
-      const admitted = yield* opencode.sessions.prompt({ sessionID: session.id, text: "Hello", resume: false })
+      const admitted = yield* mod.sessions.prompt({ sessionID: session.id, text: "Hello", resume: false })
       expect(admitted.payload.text).toBe("Hello:persona-for-thread-7")
       expect(attempts).toEqual(["thread-7", "thread-7"])
       expect(released).toEqual(["thread-7:1"])

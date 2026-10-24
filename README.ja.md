@@ -3,15 +3,15 @@
     <picture>
       <source srcset="packages/console/app/src/asset/logo-ornate-dark.svg" media="(prefers-color-scheme: dark)">
       <source srcset="packages/console/app/src/asset/logo-ornate-light.svg" media="(prefers-color-scheme: light)">
-      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="OpenCode logo">
+      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="MOD logo">
     </picture>
   </a>
 </p>
 <p align="center">オープンソースのAIコーディングエージェント。</p>
 <p align="center">
   <a href="https://opencode.ai/discord"><img alt="Discord" src="https://img.shields.io/discord/1391832426048651334?style=flat-square&label=discord" /></a>
-  <a href="https://www.npmjs.com/package/@opencode/cli"><img alt="npm" src="https://img.shields.io/npm/v/@opencode/cli?style=flat-square" /></a>
-  <a href="https://github.com/anomalyco/opencode/actions/workflows/publish.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/anomalyco/opencode/publish.yml?style=flat-square&branch=dev" /></a>
+  <a href="https://www.npmjs.com/package/@modtools-ai/cli"><img alt="npm" src="https://img.shields.io/npm/v/@modtools-ai/cli?style=flat-square" /></a>
+  <a href="https://github.com/Embedded-Computing-Systems/modtools/actions/workflows/publish.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/Embedded-Computing-Systems/modtools/publish.yml?style=flat-square&branch=dev" /></a>
 </p>
 
 <p align="center">
@@ -39,7 +39,7 @@
   <a href="README.vi.md">Tiếng Việt</a>
 </p>
 
-[![OpenCode Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://opencode.ai)
+[![MOD Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://opencode.ai)
 
 ---
 
@@ -50,13 +50,13 @@
 curl -fsSL https://opencode.ai/v2/install | bash
 
 # パッケージマネージャー
-npm i -g @opencode/cli@latest      # bun/pnpm/yarn でもOK
-brew install anomalyco/tap/opencode-v2 # macOS と Linux（推奨。常に最新）
-brew install opencode              # macOS と Linux（公式 brew formula。更新頻度は低め）
-sudo pacman -S opencode            # Arch Linux (Stable)
-paru -S opencode-beta              # Arch Linux (Latest from AUR)
-mise use -g opencode               # どのOSでも
-nix run github:anomalyco/opencode  # Nix
+npm i -g @modtools-ai/cli@latest      # bun/pnpm/yarn でもOK
+brew install anomalyco/tap/MOD-v2 # macOS と Linux（推奨。常に最新）
+brew install MOD              # macOS と Linux（公式 brew formula。更新頻度は低め）
+sudo pacman -S MOD            # Arch Linux (Stable)
+paru -S MOD-beta              # Arch Linux (Latest from AUR)
+mise use -g MOD               # どのOSでも
+nix run github:anomalyco/MOD  # Nix
 ```
 
 > [!TIP]
@@ -64,27 +64,27 @@ nix run github:anomalyco/opencode  # Nix
 
 ### デスクトップアプリ (BETA)
 
-OpenCode はデスクトップアプリとしても利用できます。[opencode.ai/download](https://opencode.ai/download) からダウンロードしてください。
+MOD はデスクトップアプリとしても利用できます。[opencode.ai/download](https://opencode.ai/download) からダウンロードしてください。
 
 | プラットフォーム      | ダウンロード                       |
 | --------------------- | ---------------------------------- |
-| macOS (Apple Silicon) | `opencode-desktop-mac-arm64.dmg`   |
-| macOS (Intel)         | `opencode-desktop-mac-x64.dmg`     |
-| Windows               | `opencode-desktop-win-x64.exe`     |
+| macOS (Apple Silicon) | `MOD-desktop-mac-arm64.dmg`   |
+| macOS (Intel)         | `MOD-desktop-mac-x64.dmg`     |
+| Windows               | `MOD-desktop-win-x64.exe`     |
 | Linux                 | `.deb`、`.rpm`、または AppImage    |
 
 ```bash
 # macOS (Homebrew)
-brew install --cask opencode-desktop
+brew install --cask MOD-desktop
 ```
 
 #### インストールディレクトリ
 
-インストールスクリプトは、OpenCode を `$HOME/.opencode/bin` にインストールします。
+インストールスクリプトは、MOD を `$HOME/.mod/bin` にインストールします。
 
 ### Agents
 
-OpenCode には組み込みの Agent が2つあり、`Tab` キーで切り替えられます。
+MOD には組み込みの Agent が2つあり、`Tab` キーで切り替えられます。
 
 - **build** - デフォルト。開発向けのフルアクセス Agent
 - **plan** - 分析とコード探索向けの読み取り専用 Agent
@@ -99,16 +99,16 @@ OpenCode には組み込みの Agent が2つあり、`Tab` キーで切り替え
 
 ### ドキュメント
 
-OpenCode の設定については [**ドキュメント**](https://opencode.ai/v2/docs) を参照してください。
+MOD の設定については [**ドキュメント**](https://opencode.ai/v2/docs) を参照してください。
 
 ### コントリビュート
 
-OpenCode に貢献したい場合は、Pull Request を送る前に [contributing docs](./CONTRIBUTING.md) を読んでください。
+MOD に貢献したい場合は、Pull Request を送る前に [contributing docs](./CONTRIBUTING.md) を読んでください。
 
-### OpenCode の上に構築する
+### MOD の上に構築する
 
-OpenCode に関連するプロジェクトで、名前に "opencode"（例: "opencode-dashboard" や "opencode-mobile"）を含める場合は、そのプロジェクトが OpenCode チームによって作られたものではなく、いかなる形でも関係がないことを README に明記してください。
+MOD に関連するプロジェクトで、名前に "MOD"（例: "MOD-dashboard" や "MOD-mobile"）を含める場合は、そのプロジェクトが MOD チームによって作られたものではなく、いかなる形でも関係がないことを README に明記してください。
 
 ---
 
-**コミュニティに参加** [Discord](https://discord.gg/opencode) | [X.com](https://x.com/opencode)
+**コミュニティに参加** [Discord](https://discord.gg/MOD) | [X.com](https://x.com/MOD)

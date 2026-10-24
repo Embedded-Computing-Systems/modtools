@@ -1,34 +1,34 @@
 import { expect, test } from "bun:test"
-import { EnvironmentDriver } from "@opencode/core/environment/driver"
-import { EnvironmentFiles } from "@opencode/core/environment/files"
-import { Location as CoreLocation } from "@opencode/core/location"
-import { WorkspaceDriver } from "@opencode/core/workspace/driver"
-import { SessionInbox as CoreSessionInbox } from "@opencode/core/session/inbox"
-import { SessionMessage as CoreSessionMessage } from "@opencode/core/session/message"
-import { Agent } from "@opencode/schema/agent"
-import { Config } from "@opencode/schema/config"
-import { Event } from "@opencode/schema/event"
-import { Location } from "@opencode/schema/location"
-import { Model } from "@opencode/schema/model"
-import { Project } from "@opencode/schema/project"
-import { Provider } from "@opencode/schema/provider"
-import { WebSearch } from "@opencode/schema/websearch"
-import { Session } from "@opencode/schema/session"
-import { SessionInbox } from "@opencode/schema/session-inbox"
-import { SessionMessage } from "@opencode/schema/session-message"
-import { Workspace } from "@opencode/schema/workspace"
-import { Worktree } from "@opencode/schema/worktree"
-import { Api } from "@opencode/server/api"
-import { ClientApi, groupNames, promiseOmitEndpoints } from "@opencode/protocol/client"
-import { compile, emitPromise } from "@opencode/httpapi-codegen"
+import { EnvironmentDriver } from "@modtools-ai/core/environment/driver"
+import { EnvironmentFiles } from "@modtools-ai/core/environment/files"
+import { Location as CoreLocation } from "@modtools-ai/core/location"
+import { WorkspaceDriver } from "@modtools-ai/core/workspace/driver"
+import { SessionInbox as CoreSessionInbox } from "@modtools-ai/core/session/inbox"
+import { SessionMessage as CoreSessionMessage } from "@modtools-ai/core/session/message"
+import { Agent } from "@modtools-ai/schema/agent"
+import { Config } from "@modtools-ai/schema/config"
+import { Event } from "@modtools-ai/schema/event"
+import { Location } from "@modtools-ai/schema/location"
+import { Model } from "@modtools-ai/schema/model"
+import { Project } from "@modtools-ai/schema/project"
+import { Provider } from "@modtools-ai/schema/provider"
+import { WebSearch } from "@modtools-ai/schema/websearch"
+import { Session } from "@modtools-ai/schema/session"
+import { SessionInbox } from "@modtools-ai/schema/session-inbox"
+import { SessionMessage } from "@modtools-ai/schema/session-message"
+import { Workspace } from "@modtools-ai/schema/workspace"
+import { Worktree } from "@modtools-ai/schema/worktree"
+import { Api } from "@modtools-ai/server/api"
+import { ClientApi, groupNames, promiseOmitEndpoints } from "@modtools-ai/protocol/client"
+import { compile, emitPromise } from "@modtools-ai/httpapi-codegen"
 
 const SDK = await import("../src/index")
 const SDKEffect = await import("../src/effect")
-const CoreAgent = await import("@opencode/core/agent")
-const CoreModel = await import("@opencode/core/model")
-const CoreProject = await import("@opencode/core/project")
-const CoreSession = await import("@opencode/core/session")
-const CoreWorktree = await import("@opencode/core/worktree")
+const CoreAgent = await import("@modtools-ai/core/agent")
+const CoreModel = await import("@modtools-ai/core/model")
+const CoreProject = await import("@modtools-ai/core/project")
+const CoreSession = await import("@modtools-ai/core/session")
+const CoreWorktree = await import("@modtools-ai/core/worktree")
 
 test("re-exports canonical contracts directly from Schema", () => {
   expect(SDK.Agent).toBe(Agent)
@@ -51,7 +51,7 @@ test("re-exports canonical contracts directly from Schema", () => {
     "Integration",
     "Location",
     "Model",
-    "OpenCode",
+    "MOD",
     "Permission",
     "PermissionSaved",
     "Project",
@@ -103,7 +103,7 @@ test("client and Server contracts generate identically", () => {
   expect(emitPromise(client)).toEqual(emitPromise(server))
 })
 
-test("re-exports workspace and environment driver contracts from @opencode/sdk/effect", () => {
+test("re-exports workspace and environment driver contracts from @modtools-ai/sdk/effect", () => {
   expect(SDKEffect.WorkspaceDriver).toBe(WorkspaceDriver)
   expect(SDKEffect.EnvironmentDriver).toBe(EnvironmentDriver)
   expect(SDKEffect.EnvironmentFiles).toBe(EnvironmentFiles)

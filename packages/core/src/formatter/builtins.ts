@@ -1,9 +1,9 @@
 import { Effect } from "effect"
 import { ChildProcess } from "effect/process"
-import { isRecord } from "@opencode/ai/utils/record"
-import { FSUtil } from "@opencode/util/fs-util"
-import { Npm } from "@opencode/util/npm"
-import { AppProcess } from "@opencode/util/process"
+import { isRecord } from "@modtools-ai/ai/utils/record"
+import { FSUtil } from "@modtools-ai/util/fs-util"
+import { Npm } from "@modtools-ai/util/npm"
+import { AppProcess } from "@modtools-ai/util/process"
 import { which } from "../util/which.js"
 
 export interface Info {

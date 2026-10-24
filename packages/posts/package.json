@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "@opencode/posts",
+  "name": "@modtools-ai/posts",
   "private": true,
   "type": "module",
   "scripts": {
@@ -16,8 +16,8 @@
     "astro": "7.1.3"
   },
   "devDependencies": {
-    "@astrojs/cloudflare": "14.1.4",
     "@astrojs/check": "0.9.6",
+    "@astrojs/cloudflare": "14.1.4",
     "@types/bun": "catalog:",
     "typescript": "catalog:",
     "wrangler": "4.110.0"

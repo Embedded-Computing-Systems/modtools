@@ -1,38 +1,38 @@
-import { Database } from "@opencode/core/database/database"
-import { V1Migration } from "@opencode/core/database/v1-migration"
-import { App } from "@opencode/core/app"
-import { LayerNode } from "@opencode/util/effect/layer-node"
-import { Node } from "@opencode/util/effect/app-node"
-import { httpClient } from "@opencode/util/effect/app-node-platform"
-import { AppNodeBuilder } from "@opencode/core/effect/app-node-builder"
-import { Bus } from "@opencode/core/bus"
-import { EventLogger } from "@opencode/core/event-logger"
-import { FileSystemSearch } from "@opencode/core/filesystem/search"
-import { Credential } from "@opencode/core/credential"
-import { Config } from "@opencode/core/config"
-import { PermissionSaved } from "@opencode/core/permission/saved"
-import { PtyTicket } from "@opencode/core/pty/ticket"
-import { PersistentPty } from "@opencode/core/persistent-pty"
-import { Project } from "@opencode/core/project"
-import { Worktree } from "@opencode/core/worktree"
-import { Session } from "@opencode/core/session"
-import { Instance } from "@opencode/core/instance/service"
-import { SessionTransfer } from "@opencode/core/session/transfer"
-import { ShellSelect } from "@opencode/core/shell/select"
-import { Job } from "@opencode/core/job"
-import { Mcp } from "@opencode/core/mcp/index"
-import { Global } from "@opencode/util/global"
-import { FSUtil } from "@opencode/util/fs-util"
-import { InstructionDiscovery } from "@opencode/core/instruction-discovery"
-import { LocationServiceMap } from "@opencode/core/location-service-map"
-import { LocationActivity } from "@opencode/core/location-activity"
-import { ModelsDev } from "@opencode/core/models-dev"
-import { SessionRestart } from "@opencode/core/session/execution/restart"
-import { PluginUpdate } from "@opencode/core/plugin/update"
-import { SdkPlugins } from "@opencode/core/plugin/sdk"
-import { WellKnown } from "@opencode/core/wellknown"
-import { Workspace } from "@opencode/core/workspace"
-import { Watcher } from "@opencode/core/filesystem/watcher"
+import { Database } from "@modtools-ai/core/database/database"
+import { V1Migration } from "@modtools-ai/core/database/v1-migration"
+import { App } from "@modtools-ai/core/app"
+import { LayerNode } from "@modtools-ai/util/effect/layer-node"
+import { Node } from "@modtools-ai/util/effect/app-node"
+import { httpClient } from "@modtools-ai/util/effect/app-node-platform"
+import { AppNodeBuilder } from "@modtools-ai/core/effect/app-node-builder"
+import { Bus } from "@modtools-ai/core/bus"
+import { EventLogger } from "@modtools-ai/core/event-logger"
+import { FileSystemSearch } from "@modtools-ai/core/filesystem/search"
+import { Credential } from "@modtools-ai/core/credential"
+import { Config } from "@modtools-ai/core/config"
+import { PermissionSaved } from "@modtools-ai/core/permission/saved"
+import { PtyTicket } from "@modtools-ai/core/pty/ticket"
+import { PersistentPty } from "@modtools-ai/core/persistent-pty"
+import { Project } from "@modtools-ai/core/project"
+import { Worktree } from "@modtools-ai/core/worktree"
+import { Session } from "@modtools-ai/core/session"
+import { Instance } from "@modtools-ai/core/instance/service"
+import { SessionTransfer } from "@modtools-ai/core/session/transfer"
+import { ShellSelect } from "@modtools-ai/core/shell/select"
+import { Job } from "@modtools-ai/core/job"
+import { Mcp } from "@modtools-ai/core/mcp/index"
+import { Global } from "@modtools-ai/util/global"
+import { FSUtil } from "@modtools-ai/util/fs-util"
+import { InstructionDiscovery } from "@modtools-ai/core/instruction-discovery"
+import { LocationServiceMap } from "@modtools-ai/core/location-service-map"
+import { LocationActivity } from "@modtools-ai/core/location-activity"
+import { ModelsDev } from "@modtools-ai/core/models-dev"
+import { SessionRestart } from "@modtools-ai/core/session/execution/restart"
+import { PluginUpdate } from "@modtools-ai/core/plugin/update"
+import { SdkPlugins } from "@modtools-ai/core/plugin/sdk"
+import { WellKnown } from "@modtools-ai/core/wellknown"
+import { Workspace } from "@modtools-ai/core/workspace"
+import { Watcher } from "@modtools-ai/core/filesystem/watcher"
 import { HttpRouter } from "effect/http"
 import { HttpApiBuilder } from "effect/http-api"
 import { Context, Effect, Layer, Option } from "effect"
@@ -135,7 +135,7 @@ function makeRoutes<AuthError, AuthServices>(
     Mcp.node.replace(
       Mcp.configured({
         clientInfo: {
-          name: "opencode",
+          name: "mod",
           version: options.app?.version ?? "unknown",
         },
       }),
@@ -153,7 +153,7 @@ function makeRoutes<AuthError, AuthServices>(
   const serviceLayer = options.simulation
     ? Layer.unwrap(
         Effect.gen(function* () {
-          const { simulationReplacements } = yield* Effect.promise(() => import("@opencode/simulation/backend"))
+          const { simulationReplacements } = yield* Effect.promise(() => import("@modtools-ai/simulation/backend"))
           const simulation = yield* simulationReplacements({ version: App.make(options.app).version })
           return build([...overrides, ...simulation])
         }),

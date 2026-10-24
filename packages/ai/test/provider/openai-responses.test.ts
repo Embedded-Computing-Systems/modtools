@@ -1215,7 +1215,7 @@ describe("OpenAI Responses route", () => {
           webSocket: {
             execute: (exchange) =>
               Effect.gen(function* () {
-                expect(exchange.connect.url).toBe("wss://opencode-test.openai.azure.com/openai/v1/responses")
+                expect(exchange.connect.url).toBe("wss://mod-test.openai.azure.com/openai/v1/responses")
                 expect(exchange.connect.rotateAfterMs).toBe(55 * 60 * 1000)
                 expect(exchange.connect.headers.authorization).toBe(item.headers.authorization)
                 expect(exchange.connect.headers["api-key"]).toBe(item.headers["api-key"])
@@ -1248,7 +1248,7 @@ describe("OpenAI Responses route", () => {
             apiKey: "azure-key",
             apiVersion: "2025-04-01-preview",
           }).responses("deployment"),
-          url: "https://opencode-test.openai.azure.com/openai/v1/responses?api-version=2025-04-01-preview",
+          url: "https://mod-test.openai.azure.com/openai/v1/responses?api-version=2025-04-01-preview",
         },
         {
           model: Azure.configure({
@@ -1256,7 +1256,7 @@ describe("OpenAI Responses route", () => {
             apiKey: "azure-key",
             useDeploymentBasedUrls: true,
           }).responses("deployment"),
-          url: "https://opencode-test.openai.azure.com/openai/deployments/deployment/responses?api-version=v1",
+          url: "https://mod-test.openai.azure.com/openai/deployments/deployment/responses?api-version=v1",
         },
         {
           model: Azure.configure({ baseURL: "https://gateway.example/azure", apiKey: "azure-key" }).responses(
@@ -1504,7 +1504,7 @@ describe("OpenAI Responses route", () => {
       yield* LLMClient.generate(
         LLMRequest.update(request, {
           model: Azure.configure({
-            baseURL: "https://opencode-test.openai.azure.com/openai/",
+            baseURL: "https://mod-test.openai.azure.com/openai/",
             apiKey: "azure-key",
             headers: { authorization: "Bearer stale" },
           }).responses("gpt-4.1-mini"),
@@ -1514,7 +1514,7 @@ describe("OpenAI Responses route", () => {
           dynamicResponse((input) =>
             Effect.gen(function* () {
               const web = yield* HttpClientRequest.toWeb(input.request).pipe(Effect.orDie)
-              expect(web.url).toBe("https://opencode-test.openai.azure.com/openai/v1/responses?api-version=v1")
+              expect(web.url).toBe("https://mod-test.openai.azure.com/openai/v1/responses?api-version=v1")
               expect(web.headers.get("api-key")).toBe("azure-key")
               expect(web.headers.get("authorization")).toBeNull()
               return input.respond(sseEvents({ type: "response.completed", response: {} }), {

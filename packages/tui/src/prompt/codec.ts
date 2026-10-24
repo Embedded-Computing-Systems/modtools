@@ -1,5 +1,5 @@
-import type { Prompt, PromptInput } from "@opencode/schema"
-import { Skill } from "@opencode/schema/skill"
+import type { Prompt, PromptInput } from "@modtools-ai/schema"
+import { Skill } from "@modtools-ai/schema/skill"
 import type { Types } from "effect"
 
 export type EditablePromptInput = Types.DeepMutable<PromptInput.Prompt>

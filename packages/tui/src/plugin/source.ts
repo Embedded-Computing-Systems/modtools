@@ -1,1 +1,1 @@
-export { createPluginSources } from "@opencode/plugin/source"
+export { createPluginSources } from "@modtools-ai/plugin/source"

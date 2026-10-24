@@ -1,12 +1,12 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "@opencode/simulation",
+  "name": "@modtools-ai/simulation",
   "version": "2.1.4",
   "type": "module",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/anomalyco/opencode.git",
+    "url": "git+https://github.com/Embedded-Computing-Systems/modtools.git",
     "directory": "packages/simulation"
   },
   "publishConfig": {
@@ -30,11 +30,11 @@
     "typecheck:tsc": "tsc -b"
   },
   "dependencies": {
-    "@opencode/core": "workspace:*",
-    "@opencode/ai": "workspace:*",
-    "@opencode/plugin": "workspace:*",
-    "@opencode/protocol": "workspace:*",
-    "@opencode/util": "workspace:*",
+    "@modtools-ai/ai": "workspace:*",
+    "@modtools-ai/core": "workspace:*",
+    "@modtools-ai/plugin": "workspace:*",
+    "@modtools-ai/protocol": "workspace:*",
+    "@modtools-ai/util": "workspace:*",
     "@opentui/core": "catalog:",
     "effect": "catalog:",
     "ws": "8.21.0"

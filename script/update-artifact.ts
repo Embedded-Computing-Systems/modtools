@@ -21,7 +21,7 @@ export namespace UpdateArtifact {
     if (!requestURL || !requestToken) throw new Error("GitHub Actions OIDC is unavailable")
 
     const url = new URL(requestURL)
-    url.searchParams.set("audience", "https://update.opencode.ai")
+    url.searchParams.set("audience", "https://update.mod.ai")
     const tokenResponse = await fetch(url, { headers: { Authorization: `Bearer ${requestToken}` } })
     if (!tokenResponse.ok) throw new Error(`Failed to request GitHub OIDC token: ${tokenResponse.status}`)
     const token: unknown = await tokenResponse.json()
@@ -68,7 +68,7 @@ export namespace UpdateArtifact {
             if (client) {
               await client.send(
                 new PutObjectCommand({
-                  Bucket: "opencode-production-files",
+                  Bucket: "mod-production-files",
                   Key: `${prefix}${name}`,
                   Body: createReadStream(filepath),
                   ContentLength: file.size,

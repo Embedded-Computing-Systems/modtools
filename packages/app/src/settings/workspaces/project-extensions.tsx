@@ -1,7 +1,7 @@
-import { Icon } from "@opencode/ui/icon"
-import { Switch } from "@opencode/ui/switch"
-import { Tabs } from "@opencode/ui/tabs"
-import { Button } from "@opencode/ui/button"
+import { Icon } from "@modtools-ai/ui/icon"
+import { Switch } from "@modtools-ai/ui/switch"
+import { Tabs } from "@modtools-ai/ui/tabs"
+import { Button } from "@modtools-ai/ui/button"
 import { useQuery } from "@tanstack/solid-query"
 import {
   type Component,

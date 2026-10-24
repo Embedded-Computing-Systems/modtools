@@ -31,7 +31,7 @@ Your app is ready to be deployed!
 
 ## E2E Testing
 
-Locally, Playwright starts the Vite dev server automatically via `webServer`, or reuses one already running at the configured address. The browser suite uses isolated API fixtures rather than a live opencode backend.
+Locally, Playwright starts the Vite dev server automatically via `webServer`, or reuses one already running at the configured address. The browser suite uses isolated API fixtures rather than a live MOD backend.
 
 ```bash
 bunx playwright install chromium
@@ -60,7 +60,7 @@ PLAYWRIGHT_BUILD=1 PLAYWRIGHT_BASE_URL=http://127.0.0.1:4444 bun run test:e2e
 
 External targets must use HTTP because fixture URLs use HTTP. `PLAYWRIGHT_BASE_URL` skips server startup and building in either mode.
 
-Compiled CLI startup and service lifecycle coverage runs separately in CI via `packages/cli/script/service-smoke.ts`.
+Compiled CLI startup and service lifecycle coverage runs separately in CI via `packages/modtools/script/service-smoke.ts`.
 
 Environment options:
 
@@ -71,30 +71,30 @@ Environment options:
 
 ## Deployment
 
-The `deploy` GitHub Actions workflow uses SST to deploy the web app to `beta.opencode.ai` on every push to the
-`beta` branch in `anomalyco/opencode`. The `dev` and `production` stages do not deploy the web app.
+The `deploy` GitHub Actions workflow uses SST to deploy the web app to `beta.mod.ai` on every push to the
+`beta` branch in `anomalyco/MOD`. The `dev` and `production` stages do not deploy the web app.
 
 `beta` is the team's dogfooding branch: `dev` merged in by hand, plus commits pushed directly to it. Do not rebase or
-force-push it. Each push also runs the `publish` workflow, which ships the same commit as the OpenCode Beta desktop app
+force-push it. Each push also runs the `publish` workflow, which ships the same commit as the MOD Beta desktop app
 (see `packages/desktop/README.md`).
 
 The beta SST stage deploys only the web app, using the `WebApp` StaticSite definition in `infra/webapp.ts`. It sets
 the build channel and Sentry environment to `beta` without deploying the API, console, database, or billing
 infrastructure.
 
-`VITE_OPENCODE_SERVER_MODE` controls which server the web build provides at startup:
+`VITE_MODTOOLS_SERVER_MODE` controls which server the web build provides at startup:
 
 | Mode               | Initial server                                                                       |
 | ------------------ | ------------------------------------------------------------------------------------ |
 | `none`             | No initial server. The beta deployment uses this mode.                               |
-| `origin` (default) | The current page's origin. CLI builds explicitly use this mode for `opencode serve`. |
+| `origin` (default) | The current page's origin. CLI builds explicitly use this mode for `MOD serve`. |
 
-In Vite development mode, `origin` uses `VITE_OPENCODE_SERVER_HOST` / `VITE_OPENCODE_SERVER_PORT`
+In Vite development mode, `origin` uses `VITE_MODTOOLS_SERVER_HOST` / `VITE_MODTOOLS_SERVER_PORT`
 (default: `http://localhost:4096`) instead of the frontend origin. Both modes restore user-added servers
 from storage. Desktop provides the local server it discovers or starts through native initialization.
 
 With no configured servers, or when the only server rejects the saved credentials, the app shows a full-screen
-connection form. Enter a server address and password, paste a link from `opencode pair`, or choose
+connection form. Enter a server address and password, paste a link from `MOD pair`, or choose
 **Scan QR code** to read its QR code. Pairing links are single-use; the app exchanges them for a session token
 and immediately attempts to connect. Failed connections leave the details available
 to edit and retry with **Connect**. Credentials are checked before saving the server. Camera access requires
@@ -103,11 +103,11 @@ HTTPS (or localhost) and browser permission. Saved offline servers continue to u
 When the service is exposed through an HTTPS reverse proxy, advertise its external address at runtime:
 
 ```bash
-opencode pair --url https://opencode.example.com
+MOD pair --url https://MOD.example.com
 ```
 
 This replaces the addresses in the printed links and QR code.
-The proxy URL must reach the OpenCode API, not just the frontend. For separate frontend and API processes,
+The proxy URL must reach the MOD API, not just the frontend. For separate frontend and API processes,
 route `/api` to the service while preserving the `/api` prefix. No machine-specific app or CLI build is required.
 
 When an HTTPS page fails to connect to a non-loopback HTTP server, the connection forms show a specific
@@ -123,4 +123,4 @@ owns `opencode.ai`. The beta GitHub environment must allow deployments from the 
 need AWS credentials.
 
 SST manages the beta site's custom domain. The first deployment creates its DNS record and TLS certificate.
-Do not create a CNAME for `beta.opencode.ai` first, because it would conflict with the Workers custom domain.
+Do not create a CNAME for `beta.mod.ai` first, because it would conflict with the Workers custom domain.

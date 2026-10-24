@@ -116,9 +116,9 @@ describe("experimental Evaluation", () => {
     ),
   )
 
-  it.effect("configures the OpenCode System One endpoint", () =>
+  it.effect("configures the MOD System One endpoint", () =>
     Evaluation.run({
-      model: OpenCode.configure({ apiKey: "opencode-key", baseURL: "https://opencode.test/v1" }).experimental.evaluation(
+      model: OpenCode.configure({ apiKey: "mod-key", baseURL: "https://mod.test/v1" }).experimental.evaluation(
         "jev-1.13",
       ),
       state: "hello",
@@ -128,7 +128,7 @@ describe("experimental Evaluation", () => {
         Effect.sync(() => {
           expect(response.answers.greeting.probability).toBe(0.99)
           expect(response.usage?.providerMetadata).toEqual({
-            opencode: { input_tokens: 10, output_tokens: 2 },
+            mod: { input_tokens: 10, output_tokens: 2 },
           })
         }),
       ),
@@ -136,8 +136,8 @@ describe("experimental Evaluation", () => {
         EvaluationClient.layer.pipe(
           Layer.provide(
             dynamicResponse((input) => {
-              expect(input.request.url).toBe("https://opencode.test/v1/systemone")
-              expect(input.request.headers.authorization).toBe("Bearer opencode-key")
+              expect(input.request.url).toBe("https://mod.test/v1/systemone")
+              expect(input.request.headers.authorization).toBe("Bearer mod-key")
               return Effect.succeed(
                 input.respond(
                   JSON.stringify({

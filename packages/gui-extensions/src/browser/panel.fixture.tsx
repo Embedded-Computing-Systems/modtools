@@ -1,5 +1,5 @@
-import { Browser } from "@opencode/plugin-browser/rpc"
-import { DialogProvider } from "@opencode/ui/context/dialog"
+import { Browser } from "@modtools-ai/plugin-browser/rpc"
+import { DialogProvider } from "@modtools-ai/ui/context/dialog"
 import {
   batch,
   createSignal,

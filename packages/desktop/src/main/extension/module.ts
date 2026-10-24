@@ -1,5 +1,5 @@
 import { createRequire, isBuiltin } from "node:module"
-import type { MainSetup } from "@opencode/gui-extensions/sdk/main"
+import type { MainSetup } from "@modtools-ai/gui-extensions/sdk/main"
 import { Option, Predicate, Schema } from "effect"
 import { ExtensionError } from "./error"
 
@@ -9,10 +9,10 @@ const native = createRequire(import.meta.url)
 // same objects the host checks against.
 const shared = new Map<string, () => Promise<object>>([
   ["effect", () => import("effect")],
-  ["@opencode/gui-extensions/sdk/main", () => import("@opencode/gui-extensions/sdk/main")],
-  ["@opencode/schema/rpc", () => import("@opencode/schema/rpc")],
-  ["@opencode/client", () => import("@opencode/client")],
-  ["@opencode/client/effect", () => import("@opencode/client/effect")],
+  ["@modtools-ai/gui-extensions/sdk/main", () => import("@modtools-ai/gui-extensions/sdk/main")],
+  ["@modtools-ai/schema/rpc", () => import("@modtools-ai/schema/rpc")],
+  ["@modtools-ai/client", () => import("@modtools-ai/client")],
+  ["@modtools-ai/client/effect", () => import("@modtools-ai/client/effect")],
 ])
 
 // Installed catalogs ship every locale inline; only built-ins load locales lazily.

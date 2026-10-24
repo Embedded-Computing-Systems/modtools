@@ -1,5 +1,5 @@
 {
-  "name": "@opencode/web",
+  "name": "@modtools-ai/web",
   "type": "module",
   "license": "MIT",
   "version": "2.1.4",
@@ -35,8 +35,8 @@
     "vscode-languageserver-types": "3.17.5"
   },
   "devDependencies": {
-    "@types/node": "catalog:",
     "@astrojs/check": "0.9.6",
+    "@types/node": "catalog:",
     "typescript": "catalog:"
   }
 }

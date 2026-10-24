@@ -1,5 +1,5 @@
-import type { FileDiffInfo } from "@opencode/client/promise"
-import type { TurnDiffInput } from "@opencode/session-ui/context"
+import type { FileDiffInfo } from "@modtools-ai/client/promise"
+import type { TurnDiffInput } from "@modtools-ai/session-ui/context"
 import { createStore } from "solid-js/store"
 
 /**

@@ -2,7 +2,7 @@
 title: "Intro"
 ---
 
-OpenCode is an open source AI coding agent. It’s available as a terminal-based interface, desktop app, or web app.
+MOD is an open source AI coding agent. It’s available as a terminal-based interface, desktop app, or web app.
 
 
 ## CLI
@@ -12,48 +12,48 @@ OpenCode is an open source AI coding agent. It’s available as a terminal-based
   label="Install method"
   tabs={[
     { label: "curl", code: "curl -fsSL https://opencode.ai/v2/install | bash" },
-    { label: "homebrew", code: "brew install anomalyco/tap/opencode-v2" },
-    { label: "npm", code: "npm install -g @opencode/cli" },
-    { label: "bun", code: "bun install -g --trust @opencode/cli" },
-    { label: "pnpm", code: "pnpm add -g --allow-build=@opencode/cli @opencode/cli" },
-    { label: "yarn", code: "yarn global add @opencode/cli" },
-    { label: "vite+", code: "vp install -g @opencode/cli" },
-    { label: "aur", code: "paru -S opencode-beta" },
-    { label: "mise", code: "mise use -g opencode" },
+    { label: "homebrew", code: "brew install anomalyco/tap/MOD-v2" },
+    { label: "npm", code: "npm install -g @modtools-ai/cli" },
+    { label: "bun", code: "bun install -g --trust @modtools-ai/cli" },
+    { label: "pnpm", code: "pnpm add -g --allow-build=@modtools-ai/cli @modtools-ai/cli" },
+    { label: "yarn", code: "yarn global add @modtools-ai/cli" },
+    { label: "vite+", code: "vp install -g @modtools-ai/cli" },
+    { label: "aur", code: "paru -S MOD-beta" },
+    { label: "mise", code: "mise use -g MOD" },
   ]}
 />
 
-The npm package uses a postinstall script to select the native `opencode` binary for your platform. The Bun and pnpm commands
+The npm package uses a postinstall script to select the native `MOD` binary for your platform. The Bun and pnpm commands
 explicitly allow the required script; Vite+ requires no additional flag. The mise command requires mise 2026.10.9 or later;
-older versions install OpenCode 1.
+older versions install MOD 1.
 
 Windows package managers are not supported.
 
 
 Download a standalone CLI binary for your platform.
 
-- **macOS:** [Apple silicon](https://opencode.ai/update/api/latest/cli/opencode/opencode-darwin-arm64.zip) · [Intel](https://opencode.ai/update/api/latest/cli/opencode/opencode-darwin-x64.zip) · [Intel (baseline)](https://opencode.ai/update/api/latest/cli/opencode/opencode-darwin-x64-baseline.zip)
-- **Windows:** [ARM64](https://opencode.ai/update/api/latest/cli/opencode/opencode-windows-arm64.zip) · [x64](https://opencode.ai/update/api/latest/cli/opencode/opencode-windows-x64.zip) · [x64 (baseline)](https://opencode.ai/update/api/latest/cli/opencode/opencode-windows-x64-baseline.zip)
-- **Linux (glibc):** [ARM64](https://opencode.ai/update/api/latest/cli/opencode/opencode-linux-arm64.tar.gz) · [x64](https://opencode.ai/update/api/latest/cli/opencode/opencode-linux-x64.tar.gz) · [x64 (baseline)](https://opencode.ai/update/api/latest/cli/opencode/opencode-linux-x64-baseline.tar.gz)
-- **Linux (musl):** [ARM64](https://opencode.ai/update/api/latest/cli/opencode/opencode-linux-arm64-musl.tar.gz) · [x64](https://opencode.ai/update/api/latest/cli/opencode/opencode-linux-x64-musl.tar.gz) · [x64 (baseline)](https://opencode.ai/update/api/latest/cli/opencode/opencode-linux-x64-baseline-musl.tar.gz)
+- **macOS:** [Apple silicon](https://opencode.ai/update/api/latest/cli/MOD/MOD-darwin-arm64.zip) · [Intel](https://opencode.ai/update/api/latest/cli/MOD/MOD-darwin-x64.zip) · [Intel (baseline)](https://opencode.ai/update/api/latest/cli/MOD/MOD-darwin-x64-baseline.zip)
+- **Windows:** [ARM64](https://opencode.ai/update/api/latest/cli/MOD/MOD-windows-arm64.zip) · [x64](https://opencode.ai/update/api/latest/cli/MOD/MOD-windows-x64.zip) · [x64 (baseline)](https://opencode.ai/update/api/latest/cli/MOD/MOD-windows-x64-baseline.zip)
+- **Linux (glibc):** [ARM64](https://opencode.ai/update/api/latest/cli/MOD/MOD-linux-arm64.tar.gz) · [x64](https://opencode.ai/update/api/latest/cli/MOD/MOD-linux-x64.tar.gz) · [x64 (baseline)](https://opencode.ai/update/api/latest/cli/MOD/MOD-linux-x64-baseline.tar.gz)
+- **Linux (musl):** [ARM64](https://opencode.ai/update/api/latest/cli/MOD/MOD-linux-arm64-musl.tar.gz) · [x64](https://opencode.ai/update/api/latest/cli/MOD/MOD-linux-x64-musl.tar.gz) · [x64 (baseline)](https://opencode.ai/update/api/latest/cli/MOD/MOD-linux-x64-baseline-musl.tar.gz)
 
 ## Desktop
 
-Download the latest OpenCode Desktop build for your platform.
+Download the latest MOD Desktop build for your platform.
 
-- **macOS:** [Apple silicon](https://opencode.ai/update/api/latest/desktop/opencode/opencode-desktop-mac-arm64.dmg) · [Intel](https://opencode.ai/update/api/latest/desktop/opencode/opencode-desktop-mac-x64.dmg)
-- **Windows:** [x64](https://opencode.ai/update/api/latest/desktop/opencode/opencode-desktop-win-x64.exe) · [ARM64](https://opencode.ai/update/api/latest/desktop/opencode/opencode-desktop-win-arm64.exe)
-- **Linux (.deb):** [x64](https://opencode.ai/update/api/latest/desktop/opencode/opencode-desktop-linux-amd64.deb) · [ARM64](https://opencode.ai/update/api/latest/desktop/opencode/opencode-desktop-linux-arm64.deb)
-- **Linux (.rpm):** [x64](https://opencode.ai/update/api/latest/desktop/opencode/opencode-desktop-linux-x86_64.rpm) · [ARM64](https://opencode.ai/update/api/latest/desktop/opencode/opencode-desktop-linux-aarch64.rpm)
-- **Linux (AppImage):** [x64](https://opencode.ai/update/api/latest/desktop/opencode/opencode-desktop-linux-x86_64.AppImage) · [ARM64](https://opencode.ai/update/api/latest/desktop/opencode/opencode-desktop-linux-arm64.AppImage)
+- **macOS:** [Apple silicon](https://opencode.ai/update/api/latest/desktop/MOD/MOD-desktop-mac-arm64.dmg) · [Intel](https://opencode.ai/update/api/latest/desktop/MOD/MOD-desktop-mac-x64.dmg)
+- **Windows:** [x64](https://opencode.ai/update/api/latest/desktop/MOD/MOD-desktop-win-x64.exe) · [ARM64](https://opencode.ai/update/api/latest/desktop/MOD/MOD-desktop-win-arm64.exe)
+- **Linux (.deb):** [x64](https://opencode.ai/update/api/latest/desktop/MOD/MOD-desktop-linux-amd64.deb) · [ARM64](https://opencode.ai/update/api/latest/desktop/MOD/MOD-desktop-linux-arm64.deb)
+- **Linux (.rpm):** [x64](https://opencode.ai/update/api/latest/desktop/MOD/MOD-desktop-linux-x86_64.rpm) · [ARM64](https://opencode.ai/update/api/latest/desktop/MOD/MOD-desktop-linux-aarch64.rpm)
+- **Linux (AppImage):** [x64](https://opencode.ai/update/api/latest/desktop/MOD/MOD-desktop-linux-x86_64.AppImage) · [ARM64](https://opencode.ai/update/api/latest/desktop/MOD/MOD-desktop-linux-arm64.AppImage)
 
 
 ## Web
 
-Access the OpenCode web interface with the `opencode pair` command.
+Access the MOD web interface with the `MOD pair` command.
 
 ```bash
-$ opencode pair
+$ MOD pair
 
   Open a link to connect. Links work once and expire in 5 minutes.
 
@@ -62,28 +62,28 @@ $ opencode pair
 
 ## Docker
 
-Docker images use versioned tags, for example `ghcr.io/anomalyco/opencode:2.0.0`.
+Docker images use versioned tags, for example `ghcr.io/anomalyco/MOD:2.0.0`.
 
 ---
 
 ## Connect
 
-OpenCode has built-in support for many LLM providers. You can connect to them
+MOD has built-in support for many LLM providers. You can connect to them
 directly [in the TUI](/cli/providers) with `/connect`.
 
 See [Providers](/providers) to configure custom providers.
 
 If you'd like easy access to all the best coding models you can try out
-[OpenCode Console](/console).
+[MOD Console](/console).
 
-You can also try [OpenCode Go](/console/go), a $10/month subscription
+You can also try [MOD Go](/console/go), a $10/month subscription
 plan that grants you access to the best coding models.
 
 ---
 
 ## Customize
 
-Make OpenCode your own by editing the [OpenCode config](/config), [loading plugins](/plugins), [connecting MCP
+Make MOD your own by editing the [MOD config](/config), [loading plugins](/plugins), [connecting MCP
 servers](/mcp-servers), or [creating commands](/commands). For terminal interface themes and keybindings, see [CLI
 settings](/cli/config).
 
@@ -91,6 +91,6 @@ settings](/cli/config).
 
 ## Learn
 
-If you are interested in an indepth course on OpenCode Boot.dev has created an excellent [AI Coding with
-OpenCode](https://www.boot.dev/courses/learn-ai-coding) course in consultation with our team. All the information in the course is
+If you are interested in an indepth course on MOD Boot.dev has created an excellent [AI Coding with
+MOD](https://www.boot.dev/courses/learn-ai-coding) course in consultation with our team. All the information in the course is
 free to read and watch, though some interactive features may require payment.

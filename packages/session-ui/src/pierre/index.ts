@@ -5,7 +5,7 @@ import {
   registerCustomTheme,
   type SelectedLineRange,
 } from "@pierre/diffs"
-import { OpenCodeTheme } from "@opencode/ui/context/highlight-theme"
+import { OpenCodeTheme } from "@modtools-ai/ui/context/highlight-theme"
 import { ComponentProps } from "solid-js"
 import { lineCommentStyles } from "../components/line-comment-styles"
 
@@ -29,7 +29,7 @@ export type DiffProps<T = {}> = FileDiffOptions<T, undefined> & {
 
 const unsafeCSS = `
 :host {
-  --diffs-bg: var(--opencode-diffs-bg, var(--color-background-stronger));
+  --diffs-bg: var(--mod-diffs-bg, var(--color-background-stronger));
   /* Pierre mixes 15% in dark mode, which makes collapsed rows read as highlighted. */
   --diffs-bg-separator-override: light-dark(
     color-mix(in lab, var(--diffs-bg) 98%, var(--diffs-mixer)),
@@ -137,11 +137,11 @@ const unsafeCSS = `
   background-color: var(--diffs-bg-context-gutter);
 }
 
-::highlight(opencode-find) {
+::highlight(mod-find) {
   background-color: rgb(from var(--surface-warning-base) r g b / 0.35);
 }
 
-::highlight(opencode-find-current) {
+::highlight(mod-find-current) {
   background-color: rgb(from var(--surface-warning-strong) r g b / 0.55);
 }
 

@@ -5,7 +5,7 @@ import type {
   ModelListOutput,
   OpenCodeClient,
   ProviderListOutput,
-} from "@opencode/client/promise"
+} from "@modtools-ai/client/promise"
 import type { RunAgent, RunCommand, RunProvider, RunReference } from "./types"
 
 type CurrentAgent = AgentListOutput["data"][number]

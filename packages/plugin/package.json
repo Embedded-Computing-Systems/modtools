@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "@opencode/plugin",
+  "name": "@modtools-ai/plugin",
   "version": "2.1.4",
   "type": "module",
   "license": "MIT",
@@ -30,21 +30,21 @@
   ],
   "dependencies": {
     "@ai-sdk/provider": "3.0.8",
-    "@opencode/ai": "workspace:*",
-    "@opencode/client": "workspace:*",
-    "@opencode/protocol": "workspace:*",
-    "@opencode/schema": "workspace:*",
-    "@opencode/util": "workspace:*",
+    "@modtools-ai/ai": "workspace:*",
+    "@modtools-ai/client": "workspace:*",
+    "@modtools-ai/protocol": "workspace:*",
+    "@modtools-ai/schema": "workspace:*",
+    "@modtools-ai/util": "workspace:*",
     "effect": "catalog:"
   },
   "peerDependencies": {
-    "@opencode/theme": "workspace:*",
+    "@modtools-ai/theme": "workspace:*",
     "@opentui/core": ">=0.6.8",
     "@opentui/solid": ">=0.6.8",
     "solid-js": ">=1.9.0"
   },
   "peerDependenciesMeta": {
-    "@opencode/theme": {
+    "@modtools-ai/theme": {
       "optional": true
     },
     "@opentui/core": {
@@ -58,15 +58,15 @@
     }
   },
   "devDependencies": {
-    "@opencode/theme": "workspace:*",
+    "@modtools-ai/theme": "workspace:*",
     "@opentui/core": "catalog:",
     "@opentui/solid": "catalog:",
     "@tsconfig/bun": "catalog:",
     "@tsconfig/node22": "catalog:",
     "@types/bun": "catalog:",
     "@types/node": "catalog:",
+    "@typescript/native": "catalog:",
     "solid-js": "catalog:",
-    "typescript": "catalog:",
-    "@typescript/native": "catalog:"
+    "typescript": "catalog:"
   }
 }

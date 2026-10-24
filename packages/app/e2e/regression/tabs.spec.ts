@@ -1,5 +1,5 @@
 import { expect, test, type Page } from "@playwright/test"
-import type { OpenCodeEvent, SessionMessageInfo } from "@opencode/client/promise"
+import type { OpenCodeEvent, SessionMessageInfo } from "@modtools-ai/client/promise"
 import {
   NO_PROVIDER,
   REMOTE_SERVER,
@@ -670,7 +670,7 @@ test("inactive tabs load attention and inbox, but read the transcript only on se
           id: `msg_${id}_assistant`,
           type: "assistant",
           agent: "build",
-          model: { id: "claude-opus-4-6", providerID: "opencode" },
+          model: { id: "claude-opus-4-6", providerID: "mod" },
           content: [{ type: "text", text: state.text }],
           time: { created: 2, completed: 3 },
         },
@@ -741,7 +741,7 @@ test("five loaded workspace tabs stay rendered and reactive through repeated swi
           id: `msg_assistant_${id}`,
           type: "assistant",
           agent: "build",
-          model: { id: "claude-opus-4-6", providerID: "opencode" },
+          model: { id: "claude-opus-4-6", providerID: "mod" },
           time: { created: 2, completed: 3 },
           content: [{ type: "text", text: `Answer for ${id}` }],
         },
@@ -900,7 +900,7 @@ test("tab shortcuts cycle side-panel tabs when the side panel is focused with mu
 test("the Windows titlebar menu pastes through the desktop edit action", async ({ page }) => {
   await mockWorkspace(page, { name: "WindowsMenu", sessions: [] })
   await page.goto(`/e2e/utils/windows-menu.html?${new URLSearchParams({ server: SERVER })}`)
-  await page.getByRole("button", { name: "OpenCode menu", exact: true }).click()
+  await page.getByRole("button", { name: "MOD menu", exact: true }).click()
   await page.getByRole("menuitem", { name: "Edit", exact: true }).click()
   const paste = page.getByRole("menuitem", { name: /^Paste/ })
   await expect(paste).toHaveText("PasteCtrl+V")

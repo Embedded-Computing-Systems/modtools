@@ -1,4 +1,4 @@
-import { comparablePath } from "@opencode/util/path"
+import { comparablePath } from "@modtools-ai/util/path"
 
 export type PathKey = string & { _brand: "PathKey" }
 

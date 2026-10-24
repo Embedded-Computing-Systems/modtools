@@ -1,12 +1,12 @@
 {
-  "name": "@opencode/desktop",
+  "name": "@modtools-ai/desktop",
   "private": true,
   "version": "2.1.4",
   "type": "module",
   "license": "MIT",
   "homepage": "https://opencode.ai",
   "author": {
-    "name": "OpenCode",
+    "name": "MOD",
     "email": "hello@opencode.ai"
   },
   "scripts": {
@@ -33,14 +33,14 @@
     "lighthouse": "13.4.1"
   },
   "devDependencies": {
-    "@brendonovich/vite-plugin-opencode": "0.1.3",
+    "@brendonovich/vite-plugin-mod": "0.1.3",
     "@effect/platform-node": "catalog:",
     "@lydell/node-pty": "catalog:",
-    "@opencode/app": "workspace:*",
-    "@opencode/gui-extensions": "workspace:*",
-    "@opencode/client": "workspace:*",
-    "@opencode/schema": "workspace:*",
-    "@opencode/ui": "workspace:*",
+    "@modtools-ai/app": "workspace:*",
+    "@modtools-ai/client": "workspace:*",
+    "@modtools-ai/gui-extensions": "workspace:*",
+    "@modtools-ai/schema": "workspace:*",
+    "@modtools-ai/ui": "workspace:*",
     "@sentry/solid": "catalog:",
     "@sentry/vite-plugin": "catalog:",
     "@solidjs/router": "catalog:",

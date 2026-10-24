@@ -1,7 +1,7 @@
 import { beforeAll, expect, mock, setSystemTime, test, vi } from "bun:test"
 import { createEffect, createRoot } from "solid-js"
 import { createStore } from "solid-js/store"
-import type { OpenCodeEvent } from "@opencode/client/promise"
+import type { OpenCodeEvent } from "@modtools-ai/client/promise"
 import type { ServerConnection } from "@/runtime/server/registry"
 import { ServerScope } from "@/runtime/server/scope"
 import type { Tab } from "@/shell/tabs/tabs"
@@ -187,7 +187,7 @@ test("unread state and viewing follow the server's idle and viewed watermarks", 
 })
 
 test("unread state honours the old local list until its viewed state is carried to the server, then deletes it", async () => {
-  const key = "opencode.global.dat:notification"
+  const key = "mod.global.dat:notification"
   const lists: unknown[] = []
   const views: { sessionID: string; idle: number }[] = []
   const failures = { remaining: 1 }

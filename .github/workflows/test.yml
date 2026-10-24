@@ -50,7 +50,7 @@ jobs:
             exit 0
           fi
           # Storybook hosts the component tests, but no app package depends on it.
-          bun x turbo@2.10.2 ls --affected --filter=@opencode/app --filter=@opencode/storybook --output=json > affected.json
+          bun x turbo@2.10.2 ls --affected --filter=@modtools-ai/app --filter=@modtools-ai/storybook --output=json > affected.json
           bun -e 'const result = await Bun.file("affected.json").json(); console.log(`app=${result.packages.count > 0}`)' >> "$GITHUB_OUTPUT"
 
   unit:
@@ -94,7 +94,7 @@ jobs:
       - name: Configure git identity
         run: |
           git config --global user.email "bot@opencode.ai"
-          git config --global user.name "opencode"
+          git config --global user.name "mod"
 
       - name: Run unit tests
         timeout-minutes: 20
@@ -106,7 +106,7 @@ jobs:
           fi
           GITHUB_ACTIONS=false bun turbo test --affected --concurrency=3
         env:
-          OPENCODE_EXPERIMENTAL_DISABLE_FILEWATCHER: ${{ runner.os == 'Windows' && 'true' || 'false' }}
+          MODTOOLS_EXPERIMENTAL_DISABLE_FILEWATCHER: ${{ runner.os == 'Windows' && 'true' || 'false' }}
           TURBO_SCM_BASE: ${{ github.event_name == 'pull_request' && format('{0}^1', github.sha) || github.event.before }}
           TURBO_SCM_HEAD: ${{ github.sha }}
 
@@ -120,17 +120,17 @@ jobs:
         timeout-minutes: 15
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            bun turbo verify:package --filter=@opencode/sdk
+            bun turbo verify:package --filter=@modtools-ai/sdk
             exit 0
           fi
-          bun turbo verify:package --affected --filter=@opencode/sdk
+          bun turbo verify:package --affected --filter=@modtools-ai/sdk
         env:
           TURBO_SCM_BASE: ${{ github.event_name == 'pull_request' && format('{0}^1', github.sha) || github.event.before }}
           TURBO_SCM_HEAD: ${{ github.sha }}
 
       - name: Check generated client
         if: runner.os == 'Linux'
-        working-directory: packages/client
+        working-directory: packages/modtoolsent
         run: bun run check:generated
 
       - name: Check generated OpenAPI document
@@ -170,7 +170,7 @@ jobs:
 
       - name: Verify compiled service lifecycle
         timeout-minutes: 10
-        working-directory: packages/cli
+        working-directory: packages/modtools
         env:
           NODE_OPTIONS: ${{ runner.os == 'Windows' && '--max-old-space-size=4096' || '' }}
         run: |
@@ -185,10 +185,10 @@ jobs:
         timeout-minutes: 10
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            bun turbo build --concurrency=3 --filter='@opencode/cli^...' --filter='@opencode/app^...'
+            bun turbo build --concurrency=3 --filter='@modtools-ai/cli^...' --filter='@modtools-ai/app^...'
             exit 0
           fi
-          bun turbo build --affected --concurrency=3 --filter='@opencode/cli^...' --filter='@opencode/app^...'
+          bun turbo build --affected --concurrency=3 --filter='@modtools-ai/cli^...' --filter='@modtools-ai/app^...'
         env:
           TURBO_SCM_BASE: ${{ github.event_name == 'pull_request' && format('{0}^1', github.sha) || github.event.before }}
           TURBO_SCM_HEAD: ${{ github.sha }}
@@ -202,7 +202,7 @@ jobs:
       - name: Verify Node build
         if: ${{ !cancelled() }}
         timeout-minutes: 15
-        working-directory: packages/cli
+        working-directory: packages/modtools
         env:
           NODE_OPTIONS: ${{ runner.os == 'Windows' && '--max-old-space-size=4096' || '' }}
         run: |

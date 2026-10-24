@@ -1,5 +1,5 @@
-import { base64Encode } from "@opencode/util/encode"
-import type { JsonValue, OpenCodeEvent, SessionMessageAssistant, SessionMessageInfo } from "@opencode/client/promise"
+import { base64Encode } from "@modtools-ai/util/encode"
+import type { JsonValue, OpenCodeEvent, SessionMessageAssistant, SessionMessageInfo } from "@modtools-ai/client/promise"
 import type { Page } from "@playwright/test"
 import { mockOpenCodeServer } from "../../utils/mock-server"
 import { expectAppVisible, expectSessionTitle } from "../../utils/waits"
@@ -25,7 +25,7 @@ export const textPartID = `${assistantMessageID}:text:0`
 
 const title = "Timeline collapse state regression"
 
-const model = { providerID: "opencode", modelID: "claude-opus-4-6", variant: "max" }
+const model = { providerID: "mod", modelID: "claude-opus-4-6", variant: "max" }
 
 type EventPayload = OpenCodeEvent
 
@@ -550,12 +550,12 @@ function provider() {
   return {
     all: [
       {
-        id: "opencode",
-        name: "OpenCode",
+        id: "mod",
+        name: "MOD",
         models: { "claude-opus-4-6": { id: "claude-opus-4-6", name: "Claude Opus 4.6", limit: { context: 200_000 } } },
       },
     ],
-    connected: ["opencode"],
-    default: { providerID: "opencode", modelID: "claude-opus-4-6" },
+    connected: ["mod"],
+    default: { providerID: "mod", modelID: "claude-opus-4-6" },
   }
 }

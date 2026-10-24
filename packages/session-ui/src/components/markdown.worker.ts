@@ -1,8 +1,8 @@
 /// <reference lib="webworker" />
 
 import { codeToTokens, isSupportedLanguage, LiveTokenizer, type ThemedToken } from "@pierre/highlights"
-import { createMarkdownParser } from "@opencode/ui/context/marked-parser"
-import { OpenCodeTheme } from "@opencode/ui/context/highlight-theme"
+import { createMarkdownParser } from "@modtools-ai/ui/context/marked-parser"
+import { OpenCodeTheme } from "@modtools-ai/ui/context/highlight-theme"
 import type { MarkdownToken, MarkdownWorkerRequest, MarkdownWorkerResponse } from "./markdown-worker-protocol"
 import { createLatestWorkerQueue } from "./markdown-worker-queue"
 import { project, type Projection } from "./markdown-stream"

@@ -1,17 +1,17 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
   "version": "2.1.4",
-  "name": "@opencode/http-recorder",
+  "name": "@modtools-ai/http-recorder",
   "description": "Record and replay Effect HTTP and WebSocket traffic with deterministic cassettes",
   "type": "module",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/anomalyco/opencode.git",
+    "url": "git+https://github.com/Embedded-Computing-Systems/modtools.git",
     "directory": "packages/http-recorder"
   },
-  "homepage": "https://github.com/anomalyco/opencode/tree/dev/packages/http-recorder",
-  "bugs": "https://github.com/anomalyco/opencode/issues",
+  "homepage": "https://github.com/Embedded-Computing-Systems/modtools/tree/dev/packages/http-recorder",
+  "bugs": "https://github.com/Embedded-Computing-Systems/modtools/issues",
   "keywords": [
     "effect",
     "http",
@@ -44,11 +44,11 @@
     "LICENSE"
   ],
   "devDependencies": {
+    "@effect/platform-node": "catalog:",
     "@tsconfig/node22": "catalog:",
     "@types/bun": "catalog:",
     "@types/node": "catalog:",
     "@typescript/native": "catalog:",
-    "@effect/platform-node": "catalog:",
     "effect": "catalog:",
     "typescript": "catalog:"
   },

@@ -1,5 +1,5 @@
-import { getFilename } from "@opencode/util/path"
-import type { PromptFileAttachment } from "@opencode/client/promise"
+import { getFilename } from "@modtools-ai/util/path"
+import type { PromptFileAttachment } from "@modtools-ai/client/promise"
 
 export function attached(file: PromptFileAttachment) {
   if (file.mention) return false

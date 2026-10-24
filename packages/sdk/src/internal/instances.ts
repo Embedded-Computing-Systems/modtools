@@ -1,12 +1,12 @@
 export * as SdkInstances from "./instances"
 
-import { Instance } from "@opencode/core/instance"
-import { LocationServiceMap } from "@opencode/core/location-service-map"
-import { Plugin } from "@opencode/core/plugin"
-import type { InstancePlugins } from "@opencode/core/plugin/instance"
-import type { Session } from "@opencode/schema/session"
-import { makeGlobalNode } from "@opencode/util/effect/app-node"
-import type { LayerNode } from "@opencode/util/effect/layer-node"
+import { Instance } from "@modtools-ai/core/instance"
+import { LocationServiceMap } from "@modtools-ai/core/location-service-map"
+import { Plugin } from "@modtools-ai/core/plugin"
+import type { InstancePlugins } from "@modtools-ai/core/plugin/instance"
+import type { Session } from "@modtools-ai/schema/session"
+import { makeGlobalNode } from "@modtools-ai/util/effect/app-node"
+import type { LayerNode } from "@modtools-ai/util/effect/layer-node"
 import { Context, Duration, Effect, Layer, LayerMap, Scope } from "effect"
 
 export interface Configuration {

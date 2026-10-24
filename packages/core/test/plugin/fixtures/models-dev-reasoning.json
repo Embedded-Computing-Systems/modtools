@@ -115,8 +115,8 @@
   },
   "opencode-go": {
     "id": "opencode-go",
-    "name": "OpenCode Go",
-    "env": ["OPENCODE_API_KEY"],
+    "name": "MOD Go",
+    "env": ["MODTOOLS_API_KEY"],
     "npm": "@ai-sdk/openai-compatible",
     "models": {
       "minimax-m3": {

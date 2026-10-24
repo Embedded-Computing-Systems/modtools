@@ -1,16 +1,16 @@
 import { describe, expect } from "bun:test"
-import { Document, Event, Info, type Entry } from "@opencode/schema/config"
-import { ConfigPolicy } from "@opencode/schema/config/policy"
-import { Permission } from "@opencode/schema/permission"
-import { Config } from "@opencode/core/config"
-import { ConfigPolicyPlugin } from "@opencode/core/config/plugin/policy"
-import { Bus } from "@opencode/core/bus"
-import { ManagedPolicy } from "@opencode/core/managed-policy"
-import { Plugin } from "@opencode/core/plugin"
-import { PluginHooks } from "@opencode/core/plugin/hooks"
-import { PluginHost } from "@opencode/core/plugin/host"
-import { Provider } from "@opencode/core/provider"
-import { Session } from "@opencode/core/session"
+import { Document, Event, Info, type Entry } from "@modtools-ai/schema/config"
+import { ConfigPolicy } from "@modtools-ai/schema/config/policy"
+import { Permission } from "@modtools-ai/schema/permission"
+import { Config } from "@modtools-ai/core/config"
+import { ConfigPolicyPlugin } from "@modtools-ai/core/config/plugin/policy"
+import { Bus } from "@modtools-ai/core/bus"
+import { ManagedPolicy } from "@modtools-ai/core/managed-policy"
+import { Plugin } from "@modtools-ai/core/plugin"
+import { PluginHooks } from "@modtools-ai/core/plugin/hooks"
+import { PluginHost } from "@modtools-ai/core/plugin/host"
+import { Provider } from "@modtools-ai/core/provider"
+import { Session } from "@modtools-ai/core/session"
 import { Effect, Schema } from "effect"
 import { testEffect } from "../lib/effect"
 import { PluginTestLayer } from "../plugin/fixture"
@@ -172,7 +172,7 @@ describe("ConfigPolicyPlugin.Plugin", () => {
         catalog.update(Provider.ID.anthropic, () => {})
         catalog.update(Provider.ID.opencode, () => {})
       })
-      yield* managed.set({ statements: [provider("deny", "*"), provider("allow", "opencode")] })
+      yield* managed.set({ statements: [provider("deny", "*"), provider("allow", "mod")] })
       yield* addPlugin([document(provider("allow", "anthropic"))])
 
       expect(yield* catalog.get(Provider.ID.anthropic)).toBeUndefined()

@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 
-import { Script } from "@opencode/script"
+import { Script } from "@modtools-ai/script"
 import { $ } from "bun"
 import { fileURLToPath } from "url"
 
@@ -35,7 +35,7 @@ async function prepareReleaseFiles() {
 }
 
 async function writeChangelog() {
-  const notes = process.env["OPENCODE_RELEASE_NOTES"]?.trim()
+  const notes = process.env["MODTOOLS_RELEASE_NOTES"]?.trim()
   if (!notes) return
   const file = Bun.file("CHANGELOG.md")
   const text = await file.text()
@@ -76,10 +76,10 @@ console.log("\n=== protocol ===\n")
 await $`bun ./packages/protocol/script/publish.ts`
 
 console.log("\n=== client ===\n")
-await $`bun ./packages/client/script/publish.ts`
+await $`bun ./packages/modtoolsent/script/publish.ts`
 
 console.log("\n=== cli ===\n")
-await $`bun ./packages/cli/script/publish.ts`
+await $`bun ./packages/modtools/script/publish.ts`
 
 console.log("\n=== plugin ===\n")
 await $`bun ./packages/plugin/script/publish.ts`

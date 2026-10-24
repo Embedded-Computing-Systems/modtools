@@ -1,4 +1,4 @@
-import type { PromptFileAttachment } from "@opencode/client/promise"
+import type { PromptFileAttachment } from "@modtools-ai/client/promise"
 
 export type SessionUserComment =
   | {

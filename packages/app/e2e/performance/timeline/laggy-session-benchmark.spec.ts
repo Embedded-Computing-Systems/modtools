@@ -1,7 +1,7 @@
 import { readFileSync, mkdirSync, writeFileSync } from "node:fs"
-import type { SessionMessageInfo } from "@opencode/client/promise"
-import { base64Encode } from "@opencode/util/encode"
-import { timelineCategories, timelinePresets } from "@opencode/session-ui/timeline/detail"
+import type { SessionMessageInfo } from "@modtools-ai/client/promise"
+import { base64Encode } from "@modtools-ai/util/encode"
+import { timelineCategories, timelinePresets } from "@modtools-ai/session-ui/timeline/detail"
 import { mockOpenCodeServer } from "../../utils/mock-server"
 import { expectSessionTitle } from "../../utils/waits"
 import { benchmark, expect } from "../benchmark"
@@ -126,14 +126,14 @@ for (const mode of ["compact", "ungrouped"] as const) {
       ({ detail, directory, server, sessionIDs, dirBase64 }) => {
         localStorage.setItem("settings.v3", JSON.stringify({ general: { timelineDetail: detail } }))
         localStorage.setItem(
-          "opencode.global.dat:server",
+          "mod.global.dat:server",
           JSON.stringify({
             projects: { local: [{ worktree: directory, expanded: true }] },
             lastProject: { local: directory },
           }),
         )
         localStorage.setItem(
-          "opencode.window.browser.dat:tabs",
+          "mod.window.browser.dat:tabs",
           JSON.stringify(sessionIDs.map((sessionId) => ({ type: "session", server, dirBase64, sessionId }))),
         )
       },

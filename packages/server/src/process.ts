@@ -1,14 +1,14 @@
 export * as ServerProcess from "./process"
 
 import { NodeHttpServer } from "@effect/platform-node"
-import { Bus } from "@opencode/core/bus"
-import { SessionRestart } from "@opencode/core/session/execution/restart"
-import { InstallationEvent } from "@opencode/schema/installation-event"
-import { hasPtyConnectTicketURL } from "@opencode/protocol/groups/pty"
-import { hasPersistentPtyConnectTicketURL } from "@opencode/protocol/groups/persistent-pty"
-import { hasMcpClientTicketURL } from "@opencode/protocol/groups/mcp"
-import { isPairingConnectURL } from "@opencode/protocol/groups/server"
-import { Global } from "@opencode/util/global"
+import { Bus } from "@modtools-ai/core/bus"
+import { SessionRestart } from "@modtools-ai/core/session/execution/restart"
+import { InstallationEvent } from "@modtools-ai/schema/installation-event"
+import { hasPtyConnectTicketURL } from "@modtools-ai/protocol/groups/pty"
+import { hasPersistentPtyConnectTicketURL } from "@modtools-ai/protocol/groups/persistent-pty"
+import { hasMcpClientTicketURL } from "@modtools-ai/protocol/groups/mcp"
+import { isPairingConnectURL } from "@modtools-ai/protocol/groups/server"
+import { Global } from "@modtools-ai/util/global"
 import { Cause, Context, Effect, Exit, Latch, Layer, Option, Ref, Scope } from "effect"
 import { HttpMiddleware, HttpRouter, HttpServerRequest, HttpServerResponse } from "effect/http"
 import { NetAddress } from "effect/net"
@@ -179,7 +179,7 @@ function dispatch(
   urls: () => ReadonlyArray<string>,
   tmp: string,
 ): App {
-  const auth = ServerAuth.Config.of({ password: Option.some(password), username: "opencode" })
+  const auth = ServerAuth.Config.of({ password: Option.some(password), username: "mod" })
   return Effect.gen(function* () {
     const request = yield* HttpServerRequest.HttpServerRequest
     const url = new URL(request.url, "http://localhost")
@@ -224,7 +224,7 @@ function unavailable(status: Status.State) {
       {
         code: "service_failed",
         message: "The background service could not start.",
-        action: "Run `opencode service restart` after checking the service logs.",
+        action: "Run `mod service restart` after checking the service logs.",
       },
       { status: 503 },
     )

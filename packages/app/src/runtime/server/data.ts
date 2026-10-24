@@ -1,5 +1,5 @@
-import type { Data } from "@opencode/client/solid"
-import type { SessionInfo } from "@opencode/client/promise"
+import type { Data } from "@modtools-ai/client/solid"
+import type { SessionInfo } from "@modtools-ai/client/promise"
 import { onCleanup } from "solid-js"
 import { createStore } from "solid-js/store"
 import { uuid } from "@/runtime/persistence/uuid"

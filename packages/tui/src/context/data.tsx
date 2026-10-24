@@ -1,12 +1,12 @@
-import { createData } from "@opencode/client/solid"
-import type { LocationRef } from "@opencode/client"
-import type { Plugin } from "@opencode/plugin/tui"
+import { createData } from "@modtools-ai/client/solid"
+import type { LocationRef } from "@modtools-ai/client"
+import type { Plugin } from "@modtools-ai/plugin/tui"
 import { createStore } from "solid-js/store"
 import { createSimpleContext } from "./helper"
 import { useClient } from "./client"
 
-export { locationKey } from "@opencode/client/solid"
-export type { FormWithLocation } from "@opencode/client/solid"
+export { locationKey } from "@modtools-ai/client/solid"
+export type { FormWithLocation } from "@modtools-ai/client/solid"
 
 export const { use: useData, provider: DataProvider } = createSimpleContext({
   name: "Data",

@@ -63,7 +63,7 @@ test("config.get returns ordered config entries for a location", async () => {
   const entries = [
     {
       type: "document" as const,
-      path: "/tmp/project/opencode.json",
+      path: "/tmp/project/MOD.json",
       info: {
         permissions: [
           { action: "shell", resource: "*", effect: "ask" as const },
@@ -273,7 +273,7 @@ test("websearch.query uses the public HTTP contract", async () => {
   })
 
   const result = await client.websearch.query({
-    query: "opencode",
+    query: "mod",
     providerID: "exa",
     location: { directory: "/tmp/project" },
   })
@@ -284,7 +284,7 @@ test("websearch.query uses the public HTTP contract", async () => {
   })
   expect(request?.method).toBe("POST")
   expect(request?.url).toBe("http://localhost:3000/api/websearch?location%5Bdirectory%5D=%2Ftmp%2Fproject")
-  expect(await request?.json()).toEqual({ query: "opencode", providerID: "exa" })
+  expect(await request?.json()).toEqual({ query: "mod", providerID: "exa" })
 })
 
 test("server.info uses the public HTTP contract", async () => {
@@ -297,7 +297,7 @@ test("server.info uses the public HTTP contract", async () => {
         version: "2.0.0",
         pid: 1,
         urls: ["http://192.168.1.10:4096"],
-        paths: { tmp: "/tmp/opencode" },
+        paths: { tmp: "/tmp/mod" },
       })
     },
   })
@@ -306,7 +306,7 @@ test("server.info uses the public HTTP contract", async () => {
     version: "2.0.0",
     pid: 1,
     urls: ["http://192.168.1.10:4096"],
-    paths: { tmp: "/tmp/opencode" },
+    paths: { tmp: "/tmp/mod" },
   })
   expect(request?.method).toBe("GET")
   expect(request?.url).toBe("http://localhost:3000/api/info")
@@ -486,7 +486,7 @@ test("worktree operations use the explicit project even with default location he
   const requests: Request[] = []
   const client = OpenCode.make({
     baseUrl: "http://localhost:3000",
-    headers: { "x-opencode-directory": "/unrelated" },
+    headers: { "x-mod-directory": "/unrelated" },
     fetch: async (input, init) => {
       const request = new Request(input, init)
       requests.push(request)
@@ -524,7 +524,7 @@ test("shell list and remove use the public HTTP contract", async () => {
     command: "pwd",
     cwd: "/tmp/project",
     shell: "/bin/zsh",
-    file: "/tmp/opencode-shell",
+    file: "/tmp/mod-shell",
     metadata: { sessionID: "ses_test" },
     time: { started: 1_717_171_717_000 },
   }
@@ -808,7 +808,7 @@ test("event transport passes through ordinary info requests", async () => {
         version: "2.0.0",
         pid: 1,
         urls: ["http://localhost:3000"],
-        paths: { tmp: "/tmp/opencode" },
+        paths: { tmp: "/tmp/mod" },
       })
     },
   })
@@ -817,7 +817,7 @@ test("event transport passes through ordinary info requests", async () => {
     version: "2.0.0",
     pid: 1,
     urls: ["http://localhost:3000"],
-    paths: { tmp: "/tmp/opencode" },
+    paths: { tmp: "/tmp/mod" },
   })
   expect(requests).toEqual(["/api/event", "/api/info"])
 })

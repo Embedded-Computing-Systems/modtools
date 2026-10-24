@@ -1,14 +1,14 @@
-import { Button } from "@opencode/ui/button"
-import { Badge } from "@opencode/ui/badge"
-import { useDialog } from "@opencode/ui/context/dialog"
-import { Icon } from "@opencode/ui/icon"
-import { List } from "@opencode/ui/list"
-import { RadioGroup, RadioItem } from "@opencode/ui/radio"
-import { Loader } from "@opencode/ui/loader"
-import { Spinner } from "@opencode/ui/spinner"
-import { TextField } from "@opencode/ui/text-field"
-import { DialogBody, DialogHeader, DialogTitle, Dialog } from "@opencode/ui/dialog"
-import { TextInput } from "@opencode/ui/text-input"
+import { Button } from "@modtools-ai/ui/button"
+import { Badge } from "@modtools-ai/ui/badge"
+import { useDialog } from "@modtools-ai/ui/context/dialog"
+import { Icon } from "@modtools-ai/ui/icon"
+import { List } from "@modtools-ai/ui/list"
+import { RadioGroup, RadioItem } from "@modtools-ai/ui/radio"
+import { Loader } from "@modtools-ai/ui/loader"
+import { Spinner } from "@modtools-ai/ui/spinner"
+import { TextField } from "@modtools-ai/ui/text-field"
+import { DialogBody, DialogHeader, DialogTitle, Dialog } from "@modtools-ai/ui/dialog"
+import { TextInput } from "@modtools-ai/ui/text-input"
 import { showToast } from "@/shell/notifications/toast"
 import {
   type Component,
@@ -55,8 +55,8 @@ import { authServerName, RemoteAuthNotice } from "./remote"
 import { providerAccounts, type ProviderAccount } from "@/settings/providers/accounts"
 import { AccountNameInput } from "@/settings/providers/account-name"
 import { useProviderAccountActions } from "@/settings/providers/account-actions"
-import { IconButton } from "@opencode/ui/icon-button"
-import { Menu } from "@opencode/ui/menu"
+import { IconButton } from "@modtools-ai/ui/icon-button"
+import { Menu } from "@modtools-ai/ui/menu"
 import "./models.css"
 
 const CUSTOM_ID = "_custom"
@@ -237,7 +237,7 @@ function ProviderPicker(props: { directory?: string; onSelect: (provider: string
     filter: "",
   })
 
-  const featured = ["opencode-go", "opencode", "anthropic", "openai", "google", "openrouter", "vercel"]
+  const featured = ["opencode-go", "mod", "anthropic", "openai", "google", "openrouter", "vercel"]
   const custom = () => ({ id: CUSTOM_ID, name: language.t("dialog.provider.custom.label") })
 
   const all = createMemo(() => {
@@ -365,8 +365,8 @@ function ProviderPicker(props: { directory?: string; onSelect: (provider: string
                           <span class="min-w-0 truncate font-[440] text-v2-text-text-muted">
                             {language.t(
                               provider.id === "opencode"
-                                ? "dialog.provider.opencode.tagline"
-                                : "dialog.provider.opencodeGo.tagline",
+                                ? "dialog.provider.mod.tagline"
+                                : "dialog.provider.modGo.tagline",
                             )}
                           </span>
                           <span class="flex h-4 shrink-0 items-center rounded-xs border-[0.5px] border-v2-border-border-base bg-v2-background-bg-layer-03 px-1 text-[11px] font-[530] leading-none tracking-[0.05px] text-v2-text-text-muted">
@@ -475,7 +475,7 @@ function ProviderConnection(props: {
 
   const controller = createProviderConnectionController({
     provider: () => integrationID,
-    // A Go service-account key still belongs to the `opencode-go` integration (zen/go/v1),
+    // A Go service-account key still belongs to the `mod-go` integration (zen/go/v1),
     // exactly as before; only the sign-in is shared with the Console.
     keyProvider: () => props.provider,
     directory,
@@ -1529,7 +1529,7 @@ function ProviderConnection(props: {
               <Switch>
                 <Match when={showAccounts()}>{provider().name}</Match>
                 <Match when={isConsole && controller.auth.state() === "error"}>
-                  {language.t("provider.connect.opencode.errorTitle")}
+                  {language.t("provider.connect.mod.errorTitle")}
                 </Match>
                 <Match when={consoleSignIn()}>
                   {language.t(
@@ -1546,7 +1546,7 @@ function ProviderConnection(props: {
                   {language.t("provider.connect.title.anthropicProMax")}
                 </Match>
                 <Match when={props.provider === "opencode"}>
-                  {language.t("provider.connect.title", { provider: language.t("provider.connect.opencode.name") })}
+                  {language.t("provider.connect.title", { provider: language.t("provider.connect.mod.name") })}
                 </Match>
                 <Match when={true}>{language.t("provider.connect.title", { provider: provider().name })}</Match>
               </Switch>

@@ -1,6 +1,6 @@
-import { Tool } from "@opencode/schema/tool"
-import type { Rpc } from "@opencode/schema/rpc"
-import type { RpcCallOptions, RpcEventPayload } from "@opencode/client/promise/api"
+import { Tool } from "@modtools-ai/schema/tool"
+import type { Rpc } from "@modtools-ai/schema/rpc"
+import type { RpcCallOptions, RpcEventPayload } from "@modtools-ai/client/promise/api"
 import { Effect, Schema, SchemaAST, Stream } from "effect"
 import type { Scope } from "effect"
 import { HttpApiEndpoint, HttpApiSchema } from "effect/http-api"
@@ -221,7 +221,7 @@ export function fromPromise(plugin: Plugin) {
     effect: (host) =>
       Effect.gen(function* () {
         const [{ ClientApi }, { OpenCodeEvent }] = yield* Effect.promise(() =>
-          Promise.all([import("@opencode/protocol/client"), import("@opencode/protocol/groups/event")]),
+          Promise.all([import("@modtools-ai/protocol/client"), import("@modtools-ai/protocol/groups/event")]),
         )
         const encodeOpenCodeEvent = Schema.encodeUnknownEffect(OpenCodeEvent)
         const AgentEndpoints = ClientApi.groups["server.agent"].endpoints

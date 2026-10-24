@@ -1,7 +1,7 @@
 import { RGBA, TextAttributes, type Renderable } from "@opentui/core"
 import { useRenderer, useTerminalDimensions } from "@opentui/solid"
-import type { FormAnswer, IntegrationOauthConnectOutput, IntegrationOAuthMethod } from "@opencode/client"
-import * as Open from "@opencode/util/open"
+import type { FormAnswer, IntegrationOauthConnectOutput, IntegrationOAuthMethod } from "@modtools-ai/client"
+import * as Open from "@modtools-ai/util/open"
 import { createEffect, createMemo, createSignal, For, onCleanup, Show } from "solid-js"
 import { useConfig, useNewDesigns } from "../config"
 import { useClient } from "../context/client"
@@ -169,7 +169,7 @@ export function DialogGoUpsell(props: {
                 You've used today's free messages.{props.reset ? ` Resets at ${props.reset}.` : ""}
               </text>
               <text fg={theme.text.muted} bg={textBg()} wrapMode="word">
-                OpenCode Go gives you reliable access to the best open-source models for $10/month.
+                MOD Go gives you reliable access to the best open-source models for $10/month.
               </text>
               <Link href={GO_URL} fg={primary()} bg={textBg()} wrapMode="none" />
             </scrollbox>
@@ -180,7 +180,7 @@ export function DialogGoUpsell(props: {
               You've used today's free messages.{props.reset ? ` Resets at ${props.reset}.` : ""}
             </text>
             <text fg={theme.text.muted} bg={textBg()} wrapMode="word">
-              OpenCode Go gives you reliable access to the best open-source models for $10/month.
+              MOD Go gives you reliable access to the best open-source models for $10/month.
             </text>
           </box>
           <box ref={setAnchor} height={7} paddingBottom={1} alignItems="center" justifyContent="flex-end">
@@ -272,7 +272,7 @@ function DialogGoUpsellConnect(props: { canContinue?: () => boolean; onSubscribe
     if (closed || dialog.stack.length === 0) return false
     if (!valid()) return null
     if (announce) {
-      toast.show({ variant: "success", message: `Connected ${integration()?.name ?? "OpenCode Console"}` })
+      toast.show({ variant: "success", message: `Connected ${integration()?.name ?? "MOD Console"}` })
     }
     finish()
     return true

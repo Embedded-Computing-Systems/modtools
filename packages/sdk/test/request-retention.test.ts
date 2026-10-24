@@ -48,7 +48,7 @@ it.live("releases failed embedded requests while the host and caller signal stay
     for (let index = 0; index < 120; index++) {
       expect(
         await transport
-          .fetch(`http://opencode.local/${index}`, { signal: caller.signal })
+          .fetch(`http://mod.local/${index}`, { signal: caller.signal })
           .catch((cause: unknown) => cause),
       ).toMatchObject({
         message: "handler failed",
@@ -86,15 +86,15 @@ it.live("keeps caller abort and host shutdown wired to active requests", () =>
       },
     )
     const controller = new AbortController()
-    const first = transport.fetch("http://opencode.local/", { signal: controller.signal })
+    const first = transport.fetch("http://mod.local/", { signal: controller.signal })
     controller.abort("caller")
     expect(await first.catch((error: unknown) => error)).toBe("caller")
 
-    const second = transport.fetch("http://opencode.local/")
+    const second = transport.fetch("http://mod.local/")
     const closed = transport.close()
     const failure = await second.catch((error: unknown) => error)
     expect(failure).toBeInstanceOf(Error)
-    expect(failure).toMatchObject({ message: "OpenCode host is closed" })
+    expect(failure).toMatchObject({ message: "MOD host is closed" })
     await closed
     expect(disposed).toBe(true)
     expect(seen).toEqual(["caller", failure])
@@ -119,13 +119,13 @@ it.live("cancels an open response body on host shutdown before disposing the han
       },
     )
 
-    const response = await transport.fetch("http://opencode.local/stream")
+    const response = await transport.fetch("http://mod.local/stream")
     const reading = response.body!.getReader().read()
     const closing = transport.close()
     const reason = await cancelled.promise
 
     expect(reason).toBeInstanceOf(Error)
-    expect(reason).toMatchObject({ message: "OpenCode host is closed" })
+    expect(reason).toMatchObject({ message: "MOD host is closed" })
     expect(await reading.catch((cause: unknown) => cause)).toBe(reason)
     await closing
     expect(disposed).toBe(true)

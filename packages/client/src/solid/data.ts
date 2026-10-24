@@ -39,9 +39,9 @@ import type {
   OpenCodeClient,
   WebSearchProvider,
 } from "../promise"
-import { Worktree } from "@opencode/schema/worktree"
-import { SessionID } from "@opencode/schema/session-id"
-import { SessionMessage } from "@opencode/schema/session-message"
+import { Worktree } from "@modtools-ai/schema/worktree"
+import { SessionID } from "@modtools-ai/schema/session-id"
+import { SessionMessage } from "@modtools-ai/schema/session-message"
 import {
   isFormAlreadySettledError,
   isFormNotFoundError,
@@ -49,7 +49,7 @@ import {
   type SessionPromptInput,
 } from "../promise"
 import { createStore, produce, reconcile } from "solid-js/store"
-import type { SessionInbox } from "@opencode/schema/session-inbox"
+import type { SessionInbox } from "@modtools-ai/schema/session-inbox"
 import { batch, createEffect, createMemo, createSignal, onCleanup } from "solid-js"
 
 export type DataSessionStatus = "idle" | "running"
@@ -165,7 +165,7 @@ function formRequestOptions(sessionID: string, ref?: LocationRef) {
   if (sessionID !== "global" || !ref) return undefined
   return {
     headers: {
-      "x-opencode-directory": encodeURIComponent(ref.directory),
+      "x-mod-directory": encodeURIComponent(ref.directory),
     },
   }
 }

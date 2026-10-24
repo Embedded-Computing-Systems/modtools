@@ -1,9 +1,9 @@
-import type { FileSystem } from "@opencode/core/filesystem"
+import type { FileSystem } from "@modtools-ai/core/filesystem"
 import fs from "fs/promises"
 import path from "path"
 import { describe, expect } from "bun:test"
-import { Event } from "@opencode/schema/config"
-import { Money } from "@opencode/schema/money"
+import { Event } from "@modtools-ai/schema/config"
+import { Money } from "@modtools-ai/schema/money"
 import {
   DateTime,
   Deferred,
@@ -22,24 +22,24 @@ import {
   Stream,
 } from "effect"
 import { TestClock } from "effect/testing"
-import { Agent } from "@opencode/core/agent"
-import { AppNodeBuilder } from "@opencode/core/effect/app-node-builder"
-import { LayerNode } from "@opencode/util/effect/layer-node"
-import { Global } from "@opencode/util/global"
-import { LocationServiceMap, type LocationServices } from "@opencode/core/location-services"
-import { LocationActivity } from "@opencode/core/location-activity"
-import { Location } from "@opencode/core/location"
-import { Config } from "@opencode/core/config"
-import { LocationWatcher } from "@opencode/core/filesystem/location-watcher"
-import { Plugin } from "@opencode/core/plugin"
-import { Model } from "@opencode/core/model"
-import { Project } from "@opencode/core/project"
-import { Provider } from "@opencode/core/provider"
-import { AbsolutePath } from "@opencode/core/schema"
-import { Session } from "@opencode/core/session"
-import { Workspace } from "@opencode/core/workspace"
-import { SessionEvent } from "@opencode/core/session/event"
-import { SessionRunnerModel } from "@opencode/core/session/runner/model"
+import { Agent } from "@modtools-ai/core/agent"
+import { AppNodeBuilder } from "@modtools-ai/core/effect/app-node-builder"
+import { LayerNode } from "@modtools-ai/util/effect/layer-node"
+import { Global } from "@modtools-ai/util/global"
+import { LocationServiceMap, type LocationServices } from "@modtools-ai/core/location-services"
+import { LocationActivity } from "@modtools-ai/core/location-activity"
+import { Location } from "@modtools-ai/core/location"
+import { Config } from "@modtools-ai/core/config"
+import { LocationWatcher } from "@modtools-ai/core/filesystem/location-watcher"
+import { Plugin } from "@modtools-ai/core/plugin"
+import { Model } from "@modtools-ai/core/model"
+import { Project } from "@modtools-ai/core/project"
+import { Provider } from "@modtools-ai/core/provider"
+import { AbsolutePath } from "@modtools-ai/core/schema"
+import { Session } from "@modtools-ai/core/session"
+import { Workspace } from "@modtools-ai/core/workspace"
+import { SessionEvent } from "@modtools-ai/core/session/event"
+import { SessionRunnerModel } from "@modtools-ai/core/session/runner/model"
 import { tmpdir, tmpdirScoped } from "./fixture/tmpdir"
 import { tempGlobalLayer } from "./fixture/global"
 import { offlineModels } from "./fixture/models"
@@ -506,7 +506,7 @@ describe("LocationServiceMap", () => {
         Effect.gen(function* () {
           yield* Effect.promise(() =>
             fs.writeFile(
-              path.join(dir.path, "opencode.json"),
+              path.join(dir.path, "MOD.json"),
               JSON.stringify({ agents: { plan: { disabled: true } } }),
             ),
           )
@@ -535,7 +535,7 @@ describe("LocationServiceMap", () => {
           const location = Location.Ref.make({ directory: AbsolutePath.make(dir.path) })
           yield* Effect.promise(() =>
             fs.writeFile(
-              path.join(dir.path, "opencode.json"),
+              path.join(dir.path, "MOD.json"),
               JSON.stringify({
                 providers: {
                   unavailable: {
@@ -638,7 +638,7 @@ describe("LocationServiceMap", () => {
             const modelState = yield* Model.Service
             yield* providers.transform((editor) => {
               editor.update(Provider.ID.make("aliased"), (provider) => {
-                provider.package = "@opencode/ai/providers/openai"
+                provider.package = "@modtools-ai/ai/providers/openai"
               })
               editor.models.update(Provider.ID.make("aliased"), Model.ID.make("fast"), (model) => {
                 // Catalog id and package model id intentionally differ, like gpt-5.5-fast -> gpt-5.5.

@@ -16,15 +16,15 @@ import {
   UnknownProviderError,
   ToolFailure,
   HttpContext,
-} from "@opencode/ai"
-import { RequestExecutor } from "@opencode/ai/route"
-import { Permission } from "@opencode/core/permission"
-import { ID } from "@opencode/core/model"
-import { ModelResolver } from "@opencode/core/model-resolver"
-import { Provider } from "@opencode/core/provider"
-import { Tool } from "@opencode/schema/tool"
-import { toSessionError } from "@opencode/core/session/to-session-error"
-import { SessionRunnerRetry } from "@opencode/core/session/runner/retry"
+} from "@modtools-ai/ai"
+import { RequestExecutor } from "@modtools-ai/ai/route"
+import { Permission } from "@modtools-ai/core/permission"
+import { ID } from "@modtools-ai/core/model"
+import { ModelResolver } from "@modtools-ai/core/model-resolver"
+import { Provider } from "@modtools-ai/core/provider"
+import { Tool } from "@modtools-ai/schema/tool"
+import { toSessionError } from "@modtools-ai/core/session/to-session-error"
+import { SessionRunnerRetry } from "@modtools-ai/core/session/runner/retry"
 
 const llm = (reason: AIError["reason"]) => new AIError({ reason })
 
@@ -99,7 +99,7 @@ describe("toSessionError", () => {
     expect(SessionRunnerRetry.isRetryable(free)).toBe(false)
     expect(toSessionError(free)).toEqual({
       type: "provider.free-limit",
-      message: "Free usage limit reached. Connect a provider or subscribe to OpenCode Go to keep going, or switch models.",
+      message: "Free usage limit reached. Connect a provider or subscribe to MOD Go to keep going, or switch models.",
       status: 429,
       response: { body: JSON.stringify(freeBody) },
       retryAfterMs: 3_600_000,
@@ -236,7 +236,7 @@ describe("toSessionError", () => {
     const configuration = new ModelResolver.ModelConfigurationError({
       providerID: Provider.ID.make("azure"),
       modelID: ID.make("gpt-5.4-nano"),
-      package: "@opencode/ai/providers/azure/responses",
+      package: "@modtools-ai/ai/providers/azure/responses",
       detail: "Azure requires resourceName or baseURL",
     })
     expect(toSessionError(configuration)).toEqual({
@@ -246,13 +246,13 @@ describe("toSessionError", () => {
     const initialization = new ModelResolver.ModelInitializationError({
       providerID: Provider.ID.make("custom"),
       modelID: ID.make("model"),
-      package: "@opencode/ai/providers/custom",
+      package: "@modtools-ai/ai/providers/custom",
       phase: "load",
-      detail: "Provider package @opencode/ai/providers/custom is broken",
+      detail: "Provider package @modtools-ai/ai/providers/custom is broken",
     })
     expect(toSessionError(initialization)).toEqual({
       type: "provider.no-route",
-      message: "Cannot initialize custom/model: Provider package @opencode/ai/providers/custom is broken",
+      message: "Cannot initialize custom/model: Provider package @modtools-ai/ai/providers/custom is broken",
     })
   })
 

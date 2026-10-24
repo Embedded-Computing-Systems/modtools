@@ -1,5 +1,5 @@
-import type { SessionInfo } from "@opencode/client/promise"
-import { displayName } from "@opencode/ui/project-avatar"
+import type { SessionInfo } from "@modtools-ai/client/promise"
+import { displayName } from "@modtools-ai/ui/project-avatar"
 import { pathKey } from "@/workspaces/path-key"
 import { isProjectDirectory } from "@/workspaces/paths"
 import type { ServerConnection } from "@/runtime/server/registry"

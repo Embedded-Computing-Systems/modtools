@@ -1,6 +1,6 @@
 export const popularProviders = [
   "opencode-go",
-  "opencode",
+  "mod",
   "anthropic",
   "github-copilot",
   "openai",

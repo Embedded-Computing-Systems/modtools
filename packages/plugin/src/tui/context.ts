@@ -22,8 +22,8 @@ import type {
   ShellInfo,
   SkillInfo,
   VcsInfo,
-} from "@opencode/client"
-import type { ResolvedTheme } from "@opencode/theme/tui"
+} from "@modtools-ai/client"
+import type { ResolvedTheme } from "@modtools-ai/theme/tui"
 import type { CliRenderer, KeyEvent, MarkdownCodeBlockRenderer, Renderable } from "@opentui/core"
 import type { JSX } from "@opentui/solid"
 import type { Store } from "solid-js/store"
@@ -433,7 +433,7 @@ export interface KeymapCommand {
 }
 
 export interface KeymapLayer {
-  /** Limits the layer to one OpenCode input mode. Use global to opt out; defaults to base. */
+  /** Limits the layer to one MOD input mode. Use global to opt out; defaults to base. */
   readonly mode?: string
   /** Enables or disables the complete layer. */
   readonly enabled?: boolean | (() => boolean)
@@ -478,7 +478,7 @@ export interface Keymap {
   pending(): readonly KeymapPending[]
   /** Returns bindings reachable from the pending key sequence. Reactive when read in a Solid computation. */
   active(): readonly KeymapActive[]
-  /** Controls mutually exclusive OpenCode input modes. */
+  /** Controls mutually exclusive MOD input modes. */
   readonly mode: {
     /** Returns the active mode. */
     current(): string

@@ -1,12 +1,12 @@
 import { expect, test } from "bun:test"
 import { Schema } from "effect"
-import { Agent } from "@opencode/schema/agent"
-import { Config } from "@opencode/schema/config"
-import { Model } from "@opencode/schema/model"
-import { Prompt } from "@opencode/schema/prompt"
-import { Session } from "@opencode/schema/session"
-import { SessionMessage } from "@opencode/schema/session-message"
-import { Vcs } from "@opencode/schema/vcs"
+import { Agent } from "@modtools-ai/schema/agent"
+import { Config } from "@modtools-ai/schema/config"
+import { Model } from "@modtools-ai/schema/model"
+import { Prompt } from "@modtools-ai/schema/prompt"
+import { Session } from "@modtools-ai/schema/session"
+import { SessionMessage } from "@modtools-ai/schema/session-message"
+import { Vcs } from "@modtools-ai/schema/vcs"
 
 const Client = await import("../src/effect")
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 
-import { Script } from "@opencode/script"
+import { Script } from "@modtools-ai/script"
 
 const output = [`version=${Script.version}`]
 

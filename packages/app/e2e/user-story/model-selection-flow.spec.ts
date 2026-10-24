@@ -24,8 +24,8 @@ test("creates a session in a new project and selects its model", async ({ page }
     provider: () => ({
       all: [
         {
-          id: "opencode",
-          name: "OpenCode",
+          id: "mod",
+          name: "MOD",
           models: {
             "free-model": {
               id: "free-model",
@@ -37,7 +37,7 @@ test("creates a session in a new project and selects its model", async ({ page }
         },
         {
           id: "opencode-go",
-          name: "OpenCode Go",
+          name: "MOD Go",
           models: {
             "go-model-1": {
               id: "go-model-1",
@@ -49,7 +49,7 @@ test("creates a session in a new project and selects its model", async ({ page }
         },
       ],
       connected: ["opencode", "opencode-go"],
-      default: { providerID: "opencode", modelID: "free-model" },
+      default: { providerID: "mod", modelID: "free-model" },
     }),
     sessions: [],
     pageMessages: () => ({ items: [] }),
@@ -57,12 +57,12 @@ test("creates a session in a new project and selects its model", async ({ page }
     fileList: (path) => (path === "C:/OpenCode" ? [{ path: "./", type: "directory", ignored: false }] : []),
   })
   await page.addInitScript(() => {
-    localStorage.setItem("opencode.global.dat:server", JSON.stringify({ projects: { local: [] } }))
+    localStorage.setItem("mod.global.dat:server", JSON.stringify({ projects: { local: [] } }))
     localStorage.setItem(
-      "opencode.global.dat:model",
+      "mod.global.dat:model",
       JSON.stringify({
         user: [
-          { providerID: "opencode", modelID: "free-model", visibility: "show" },
+          { providerID: "mod", modelID: "free-model", visibility: "show" },
           { providerID: "opencode-go", modelID: "go-model-1", visibility: "show" },
         ],
         recent: [{ providerID: "opencode-go", modelID: "go-model-1" }],
@@ -76,7 +76,7 @@ test("creates a session in a new project and selects its model", async ({ page }
   await expectAppVisible(addProject)
   await addProject.click()
   const picker = page.getByRole("dialog", { name: "Open project", exact: true })
-  await expect(picker.getByRole("combobox")).toHaveValue("C:\\OpenCode\\NewProject")
+  await expect(picker.getByRole("combobox")).toHaveValue("C:\\MOD\\NewProject")
 
   const listing = page.waitForRequest((request) => {
     const url = new URL(request.url())
@@ -90,7 +90,7 @@ test("creates a session in a new project and selects its model", async ({ page }
   await expect(directoryItem).toBeVisible()
   await directoryItem.click()
   await expect(directoryItem).toHaveAttribute("aria-selected", "true")
-  await expect(picker.getByText("C:\\OpenCode\\NewProject", { exact: true })).toBeVisible()
+  await expect(picker.getByText("C:\\MOD\\NewProject", { exact: true })).toBeVisible()
   const selectFolder = picker.getByRole("button", { name: "Select folder", exact: true })
   await expect(selectFolder).toBeEnabled()
   await selectFolder.click()
@@ -120,7 +120,7 @@ test("restores each existing session's model and variant when switching tabs", a
   const sessions = ["A", "B"].map((name) => ({
     id: `ses_model_${name}`,
     title: `Model ${name}`,
-    model: { id: `model-${name}`, providerID: "opencode", variant: "balanced" },
+    model: { id: `model-${name}`, providerID: "mod", variant: "balanced" },
   }))
 
   await openSession(page, {

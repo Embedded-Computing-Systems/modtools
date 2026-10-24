@@ -117,13 +117,13 @@ for (const scenario of ["visible-output", "hidden-output", "full-scrollback-tear
         provider: {
           all: [
             {
-              id: "opencode",
-              name: "OpenCode",
+              id: "mod",
+              name: "MOD",
               models: { test: { id: "test", name: "Test", limit: { context: 200_000 } } },
             },
           ],
-          connected: ["opencode"],
-          default: { providerID: "opencode", modelID: "test" },
+          connected: ["mod"],
+          default: { providerID: "mod", modelID: "test" },
         },
         sessions: [
           {
@@ -170,7 +170,7 @@ for (const scenario of ["visible-output", "hidden-output", "full-scrollback-tear
         ({ server, sessionID }) => {
           localStorage.setItem("settings.v3", JSON.stringify({ general: { terminalPlacement: "bottom" } }))
           localStorage.setItem(
-            "opencode.window.browser.dat:tabs",
+            "mod.window.browser.dat:tabs",
             JSON.stringify([{ type: "session", server, sessionId: sessionID }]),
           )
         },

@@ -11,7 +11,7 @@ test("the free usage limit opens the Go dialog once, leaves a readable notice, a
   await page.clock.setFixedTime(T0)
   await context.route("https://**", (route) => route.fulfill({ body: "Sign in" }))
   const sessionID = "ses_free_limit"
-  const model = { id: "big-pickle", providerID: "opencode" }
+  const model = { id: "big-pickle", providerID: "mod" }
   const state = { authorized: false }
 
   const view = await openSession(page, {
@@ -21,8 +21,8 @@ test("the free usage limit opens the Go dialog once, leaves a readable notice, a
     provider: () => ({
       all: [
         {
-          id: "opencode",
-          name: "OpenCode",
+          id: "mod",
+          name: "MOD",
           models: {
             "big-pickle": { id: "big-pickle", name: "Big Pickle", cost: { input: 0, output: 0 }, limit: { context: 200_000 } },
           },
@@ -32,7 +32,7 @@ test("the free usage limit opens the Go dialog once, leaves a readable notice, a
               {
                 id: "opencode-go",
                 integrationID: "opencode-go",
-                name: "OpenCode Go",
+                name: "MOD Go",
                 models: {
                   "glm-5-go": { id: "glm-5-go", name: "GLM-5 Go", cost: { input: 1, output: 1 }, limit: { context: 200_000 } },
                 },
@@ -40,19 +40,19 @@ test("the free usage limit opens the Go dialog once, leaves a readable notice, a
             ]
           : []),
       ],
-      connected: state.authorized ? ["opencode", "opencode-go"] : ["opencode"],
-      default: { build: "opencode/big-pickle" },
+      connected: state.authorized ? ["opencode", "opencode-go"] : ["mod"],
+      default: { build: "mod/big-pickle" },
     }),
     integrations: () => [
       {
-        id: "opencode",
-        name: "OpenCode Console",
-        methods: [{ id: "device", type: "oauth", label: "OpenCode Console account" }],
+        id: "mod",
+        name: "MOD Console",
+        methods: [{ id: "device", type: "oauth", label: "MOD Console account" }],
         connections: state.authorized ? [{ type: "credential", id: "cred_console", label: "Anomaly", method: "oauth" }] : [],
       },
       {
         id: "opencode-go",
-        name: "OpenCode Go",
+        name: "MOD Go",
         methods: [{ type: "key" }],
         connections: state.authorized ? [{ type: "credential", id: "cred_go", label: "Anomaly", method: "oauth" }] : [],
       },
@@ -104,7 +104,7 @@ test("the free usage limit opens the Go dialog once, leaves a readable notice, a
   await upsell.getByRole("button", { name: "Subscribe", exact: true }).click()
   const connect = page.getByRole("dialog")
   await connect.getByRole("button", { name: "Continue in the browser", exact: true }).click()
-  const connected = page.getByRole("dialog", { name: "Connected to OpenCode Go" })
+  const connected = page.getByRole("dialog", { name: "Connected to MOD Go" })
   await expect(connected.getByRole("radio", { name: "GLM-5 Go", exact: true })).toHaveAttribute("aria-checked", "true")
   await connected.getByRole("button", { name: "Continue", exact: true }).click()
   await expect(page.getByRole("dialog")).toHaveCount(0)
@@ -190,10 +190,10 @@ test("a catalog refresh cannot replace an existing session's model", async ({ pa
 
   const view = await openSession(page, {
     name: "CatalogSelection",
-    sessions: [{ id: sessionID, agent: "build", model: { id: "alpha", providerID: "opencode", variant: "high" } }],
+    sessions: [{ id: sessionID, agent: "build", model: { id: "alpha", providerID: "mod", variant: "high" } }],
     provider: () => catalog.current,
     onPrompt: (input) => void prompts.push(input.body),
-    seed: { storage: { "opencode.global.dat:model": { recent: [{ providerID: "opencode", modelID: "beta" }] } } },
+    seed: { storage: { "mod.global.dat:model": { recent: [{ providerID: "mod", modelID: "beta" }] } } },
   })
 
   const control = page.locator('[data-action="composer-model"]')
@@ -231,7 +231,7 @@ test("a catalog refresh cannot replace an existing session's model", async ({ pa
   await expect(page.getByRole("button", { name: "Choose model variant", exact: true })).toHaveText("high")
   await view.editor.press("Enter")
   await expect.poll(() => prompts.length).toBe(1)
-  expect(switches).toEqual([{ model: { id: "alpha", providerID: "opencode", variant: "high" } }])
+  expect(switches).toEqual([{ model: { id: "alpha", providerID: "mod", variant: "high" } }])
 
   catalog.current = provider(beta)
   await view.push([
@@ -254,8 +254,8 @@ test("a catalog refresh cannot replace an existing session's model", async ({ pa
   await view.editor.press("Enter")
   await expect.poll(() => prompts.length).toBe(2)
   expect(switches).toEqual([
-    { model: { id: "alpha", providerID: "opencode", variant: "high" } },
-    { model: { id: "beta", providerID: "opencode" } },
+    { model: { id: "alpha", providerID: "mod", variant: "high" } },
+    { model: { id: "beta", providerID: "mod" } },
   ])
 })
 
@@ -591,19 +591,19 @@ test("marks a Console provider with its workspace only when it is also connected
     name: "ComposerConsoleProviders",
     provider: {
       all: [
-        managed("opencode", "opencode", "OpenCode", model("console-model", "Console Model")),
+        managed("mod", "mod", "MOD", model("console-model", "Console Model")),
         managed("console-google", "google", "Google", model("managed-gemini", "Managed Gemini")),
         managed("console-openai", "openai", "OpenAI", model("managed-gpt", "Managed GPT")),
         { id: "google", canonical: "google", name: "Google", models: model("direct-gemini", "Direct Gemini") },
       ],
-      connected: ["opencode", "console-google", "console-openai", "google"],
-      default: { providerID: "opencode", modelID: "console-model" },
+      connected: ["mod", "console-google", "console-openai", "google"],
+      default: { providerID: "mod", modelID: "console-model" },
     },
     seed: {
       storage: {
-        "opencode.global.dat:model": {
+        "mod.global.dat:model": {
           user: [
-            ["opencode", "console-model"],
+            ["mod", "console-model"],
             ["console-google", "managed-gemini"],
             ["console-openai", "managed-gpt"],
             ["google", "direct-gemini"],

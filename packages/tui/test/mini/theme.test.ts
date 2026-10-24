@@ -2,7 +2,7 @@ import { afterAll, beforeAll, expect, test } from "bun:test"
 import path from "node:path"
 import { RGBA, type CliRenderer, type TerminalColors } from "@opentui/core"
 import { createTestRenderer } from "@opentui/core/testing"
-import { resolveThemeDocument, selectTheme, type ResolvedTheme } from "@opencode/theme/tui"
+import { resolveThemeDocument, selectTheme, type ResolvedTheme } from "@modtools-ai/theme/tui"
 import {
   RUN_THEME_MONO,
   RUN_THEME_FALLBACK,
@@ -20,13 +20,13 @@ afterAll(async () => {
   resources.renderer.destroy()
   await resources.renderer.closed
 })
-const previousConfig = process.env.OPENCODE_CONFIG_DIR
+const previousConfig = process.env.MODTOOLS_CONFIG_DIR
 beforeAll(() => {
-  process.env.OPENCODE_CONFIG_DIR = tmp.path
+  process.env.MODTOOLS_CONFIG_DIR = tmp.path
 })
 afterAll(async () => {
-  if (previousConfig === undefined) delete process.env.OPENCODE_CONFIG_DIR
-  else process.env.OPENCODE_CONFIG_DIR = previousConfig
+  if (previousConfig === undefined) delete process.env.MODTOOLS_CONFIG_DIR
+  else process.env.MODTOOLS_CONFIG_DIR = previousConfig
   await tmp[Symbol.asyncDispose]()
 })
 
@@ -152,10 +152,10 @@ test.each(["light", "dark"] as const)("preserves %s monochrome terminal defaults
 
 test.each(["light", "dark"] as const)("uses shared %s defaults and named built-in themes", async (mode) => {
   const colors = terminalColors({}, mode)
-  for (const name of [undefined, "opencode", "tokyonight"] as const) {
+  for (const name of [undefined, "mod", "tokyonight"] as const) {
     const theme = await resolveRunTheme(renderer({ colors }), { name, mode })
     const expected = resolveThemeDocument(
-      name === undefined || name === "opencode" ? getOpenCodeTheme() : parseTheme(DEFAULT_THEMES[name]),
+      name === undefined || name === "mod" ? getOpenCodeTheme() : parseTheme(DEFAULT_THEMES[name]),
       mode,
     )
     try {
@@ -330,7 +330,7 @@ test.each(["light", "dark"] as const)("handles unavailable palettes in %s mode",
     expect(fallback).toBe(mode === "light" ? RUN_THEME_FALLBACK_LIGHT : RUN_THEME_FALLBACK)
     expectFooter(fallback, expected)
   }
-  const theme = await resolveRunTheme(renderer({ fail: true }), { name: "opencode", mode })
+  const theme = await resolveRunTheme(renderer({ fail: true }), { name: "mod", mode })
   try {
     expectFooter(theme, expected)
   } finally {
@@ -368,7 +368,7 @@ test.each(["light", "dark"] as const)("follows physical %s mode over opposite co
   }
 })
 
-test.each(["system", "opencode"])(
+test.each(["system", "mod"])(
   "prefers a new renderer mode over cached %s colors after failed probes",
   async (name) => {
     const colors = terminalColors()
@@ -414,7 +414,7 @@ test("retains a usable system palette after background-only and empty probes", a
   }
 })
 
-test.each(["system", "opencode"])(
+test.each(["system", "mod"])(
   "retains and refreshes the %s scrollback palette across probe failures",
   async (name) => {
     const input = { fail: false, colors: terminalColors() }

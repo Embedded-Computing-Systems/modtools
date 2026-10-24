@@ -1,4 +1,4 @@
-import opencodeWordmarkDark from "../asset/logo-ornate-dark.svg"
+import modWordmarkDark from "../asset/logo-ornate-dark.svg"
 import { query } from "@solidjs/router"
 import { createEffect, createMemo, createSignal, For, onCleanup, onMount, Show } from "solid-js"
 import { useI18n } from "../context/i18n"
@@ -8,12 +8,12 @@ import { route, type Locale } from "../lib/language"
 export type HeaderLink = { href: string; label: string }
 
 export const githubLink = {
-  href: "https://github.com/anomalyco/opencode",
-  apiHref: "https://api.github.com/repos/anomalyco/opencode",
+  href: "https://github.com/Embedded-Computing-Systems/modtools",
+  apiHref: "https://api.github.com/repos/anomalyco/mod",
   fallbackStars: "220K",
 }
 export const themePreferences = ["dark", "light", "system"] as const
-export const themeStorageKey = "opencode:stats-theme"
+export const themeStorageKey = "mod:stats-theme"
 export type ThemePreference = (typeof themePreferences)[number]
 
 const compactNumberFormatter = new Intl.NumberFormat("en", {
@@ -28,7 +28,7 @@ export const getGitHubStars = query(async () => {
     headers: {
       Accept: "application/vnd.github+json",
       "X-GitHub-Api-Version": "2022-11-28",
-      "User-Agent": "opencode-stats",
+      "User-Agent": "mod-stats",
     },
   })
     .then((response) => (response.ok ? response.json() : undefined))
@@ -206,7 +206,7 @@ function DataWordmark() {
 
 function OpenCodeMark() {
   return (
-    <svg data-slot="opencode-mark" width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+    <svg data-slot="mod-mark" width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
       <path d="M40 40H0V0H40V40Z" fill="var(--stats-logo-bg)" />
       <path d="M26 29H14V17H26V29Z" fill="var(--stats-logo-fill)" />
       <path d="M26 11H14V29H26V11ZM32 35H8V5H32V35Z" fill="var(--stats-logo-stroke)" />
@@ -241,7 +241,7 @@ export function Footer(props: {
   const connect = [
     { href: "mailto:hello@opencode.ai", label: i18n.t("footer.contact") },
     { href: "https://opencode.ai/discord", label: i18n.t("footer.community") },
-    { href: "https://x.com/opencode", label: "X" },
+    { href: "https://x.com/mod", label: "X" },
     { href: githubLink.href, label: i18n.t("header.github") },
     { href: "https://www.youtube.com/@anomalyco", label: i18n.t("footer.youtube") },
   ]
@@ -436,7 +436,7 @@ function SubscribeModal(props: { onClose: () => void }) {
       <div data-slot="modal-scrim" aria-hidden="true" onClick={props.onClose} />
       <div data-slot="modal-panel">
         <div data-slot="modal-brand">
-          <img data-slot="modal-logo" src={opencodeWordmarkDark} alt="OpenCode" />
+          <img data-slot="modal-logo" src={modWordmarkDark} alt="MOD" />
           <button
             data-slot="modal-close"
             type="button"

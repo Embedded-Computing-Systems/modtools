@@ -1,6 +1,6 @@
 import { expect, test, type Page } from "@playwright/test"
-import type { SessionMessageInfo } from "@opencode/client/promise"
-import { timelinePresets } from "@opencode/session-ui/timeline/detail"
+import type { SessionMessageInfo } from "@modtools-ai/client/promise"
+import { timelinePresets } from "@modtools-ai/session-ui/timeline/detail"
 import { expected, messages } from "../utils/markdown-sessions"
 import { expectPath, seed, sessionHref, type SeedInput } from "../utils/app"
 import type { MockServerConfig } from "../utils/mock-server"
@@ -202,7 +202,7 @@ test("disposes the old workspace's shell while destination history is loading", 
                   id: "msg_workspace_shell",
                   type: "assistant",
                   agent: "build",
-                  model: { id: "claude-opus-4-6", providerID: "opencode" },
+                  model: { id: "claude-opus-4-6", providerID: "mod" },
                   time: { created: 2 },
                   content: [
                     {
@@ -332,7 +332,7 @@ for (const grouped of [true, false]) {
             id: `msg_assistant_${id}`,
             type: "assistant",
             agent: "build",
-            model: { id: "claude-opus-4-6", providerID: "opencode" },
+            model: { id: "claude-opus-4-6", providerID: "mod" },
             time: { created: 2, completed: 3 },
             content: [
               {

@@ -1,8 +1,8 @@
-import type { EnableState } from "@opencode/gui-extensions/sdk/bridge"
+import type { EnableState } from "@modtools-ai/gui-extensions/sdk/bridge"
 
 export const IpcTransportPort = "desktop-rpc-port"
 
-export const DragCancelEvent = "opencode:drag-cancel"
+export const DragCancelEvent = "mod:drag-cancel"
 
 export const WindowSnapshotChannel = "desktop-window-snapshot"
 
@@ -34,9 +34,9 @@ export type WindowSnapshot = {
 // runs so the first render already has them; mirrors windowStorage() in
 // packages/app/src/runtime/persistence/storage.ts.
 export function storageSnapshotNames(windowID: string) {
-  return ["opencode.global.dat", "default.dat", windowDataFile(windowID)]
+  return ["mod.global.dat", "default.dat", windowDataFile(windowID)]
 }
 
 export function windowDataFile(id: string) {
-  return `opencode.window.${id.replace(/[^a-zA-Z0-9._-]/g, "-")}.dat`
+  return `mod.window.${id.replace(/[^a-zA-Z0-9._-]/g, "-")}.dat`
 }

@@ -38,7 +38,7 @@ const officeEmitted = /^(?:docx_\w+_bg|ooxml_opc_bg|pptx_wasm_bg|xlsx_wasm_bg|re
 
 /** @type {import("vite").Plugin} */
 const dropUnloadedOfficeFiles = {
-  name: "opencode-desktop:drop-unloaded-office-files",
+  name: "mod-desktop:drop-unloaded-office-files",
   apply: "build",
   generateBundle: {
     order: "post",
@@ -60,7 +60,7 @@ const dropUnloadedOfficeFiles = {
 
 /** @type {import("rolldown").Plugin} */
 const bundleNestedWorkerDeps = {
-  name: "opencode-desktop:bundle-nested-worker-deps",
+  name: "mod-desktop:bundle-nested-worker-deps",
   resolveId(id, importer) {
     if (!importer || !importer.includes("node_modules")) return
     if (!workerDeps.some((dep) => id === dep || id.startsWith(`${dep}/`))) return
@@ -74,11 +74,11 @@ const bundleNestedWorkerDeps = {
 }
 
 export const channel = (() => {
-  const raw = process.env.OPENCODE_CHANNEL
+  const raw = process.env.MODTOOLS_CHANNEL
 
   if (raw === "local" || raw === "dev" || raw === "beta" || raw === "prod") return raw
 
-  if (process.env.OPENCODE_CHANNEL === "latest") return "prod"
+  if (process.env.MODTOOLS_CHANNEL === "latest") return "prod"
 
   return "dev"
 })()
@@ -88,7 +88,7 @@ export const channel = (() => {
  */
 export default [
   {
-    name: "opencode-desktop:config",
+    name: "mod-desktop:config",
     config() {
       return {
         resolve: {
@@ -101,14 +101,14 @@ export default [
           },
         },
         define: {
-          "import.meta.env.VITE_OPENCODE_CHANNEL": JSON.stringify(channel),
+          "import.meta.env.VITE_MODTOOLS_CHANNEL": JSON.stringify(channel),
         },
         worker: {
           format: "es",
         },
         optimizeDeps: {
           exclude: [...workerDeps, ...officeDeps],
-          include: ["@opencode/session-ui > mermaid", "@opencode/session-ui > mermaid > katex"],
+          include: ["@modtools-ai/session-ui > mermaid", "@modtools-ai/session-ui > mermaid > katex"],
           rolldownOptions: { plugins: [bundleNestedWorkerDeps] },
         },
       }
@@ -116,7 +116,7 @@ export default [
   },
   dropUnloadedOfficeFiles,
   {
-    name: "opencode-desktop:theme-preload",
+    name: "mod-desktop:theme-preload",
     transformIndexHtml: {
       order: "pre",
       handler: inlineThemePreload,

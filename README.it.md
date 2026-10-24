@@ -3,15 +3,15 @@
     <picture>
       <source srcset="packages/console/app/src/asset/logo-ornate-dark.svg" media="(prefers-color-scheme: dark)">
       <source srcset="packages/console/app/src/asset/logo-ornate-light.svg" media="(prefers-color-scheme: light)">
-      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="Logo OpenCode">
+      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="Logo MOD">
     </picture>
   </a>
 </p>
 <p align="center">L’agente di coding AI open source.</p>
 <p align="center">
   <a href="https://opencode.ai/discord"><img alt="Discord" src="https://img.shields.io/discord/1391832426048651334?style=flat-square&label=discord" /></a>
-  <a href="https://www.npmjs.com/package/@opencode/cli"><img alt="npm" src="https://img.shields.io/npm/v/@opencode/cli?style=flat-square" /></a>
-  <a href="https://github.com/anomalyco/opencode/actions/workflows/publish.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/anomalyco/opencode/publish.yml?style=flat-square&branch=dev" /></a>
+  <a href="https://www.npmjs.com/package/@modtools-ai/cli"><img alt="npm" src="https://img.shields.io/npm/v/@modtools-ai/cli?style=flat-square" /></a>
+  <a href="https://github.com/Embedded-Computing-Systems/modtools/actions/workflows/publish.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/Embedded-Computing-Systems/modtools/publish.yml?style=flat-square&branch=dev" /></a>
 </p>
 
 <p align="center">
@@ -39,7 +39,7 @@
   <a href="README.vi.md">Tiếng Việt</a>
 </p>
 
-[![OpenCode Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://opencode.ai)
+[![MOD Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://opencode.ai)
 
 ---
 
@@ -50,13 +50,13 @@
 curl -fsSL https://opencode.ai/v2/install | bash
 
 # Package manager
-npm i -g @opencode/cli@latest      # oppure bun/pnpm/yarn
-brew install anomalyco/tap/opencode-v2 # macOS e Linux (consigliato, sempre aggiornato)
-brew install opencode              # macOS e Linux (formula brew ufficiale, aggiornata meno spesso)
-sudo pacman -S opencode            # Arch Linux (Stable)
-paru -S opencode-beta              # Arch Linux (Latest from AUR)
-mise use -g opencode               # Qualsiasi OS
-nix run github:anomalyco/opencode  # Nix
+npm i -g @modtools-ai/cli@latest      # oppure bun/pnpm/yarn
+brew install anomalyco/tap/MOD-v2 # macOS e Linux (consigliato, sempre aggiornato)
+brew install MOD              # macOS e Linux (formula brew ufficiale, aggiornata meno spesso)
+sudo pacman -S MOD            # Arch Linux (Stable)
+paru -S MOD-beta              # Arch Linux (Latest from AUR)
+mise use -g MOD               # Qualsiasi OS
+nix run github:anomalyco/MOD  # Nix
 ```
 
 > [!TIP]
@@ -64,27 +64,27 @@ nix run github:anomalyco/opencode  # Nix
 
 ### App Desktop (BETA)
 
-OpenCode è disponibile anche come applicazione desktop. Puoi scaricarla da [opencode.ai/download](https://opencode.ai/download).
+MOD è disponibile anche come applicazione desktop. Puoi scaricarla da [opencode.ai/download](https://opencode.ai/download).
 
 | Piattaforma           | Download                           |
 | --------------------- | ---------------------------------- |
-| macOS (Apple Silicon) | `opencode-desktop-mac-arm64.dmg`   |
-| macOS (Intel)         | `opencode-desktop-mac-x64.dmg`     |
-| Windows               | `opencode-desktop-win-x64.exe`     |
+| macOS (Apple Silicon) | `MOD-desktop-mac-arm64.dmg`   |
+| macOS (Intel)         | `MOD-desktop-mac-x64.dmg`     |
+| Windows               | `MOD-desktop-win-x64.exe`     |
 | Linux                 | `.deb`, `.rpm`, oppure AppImage    |
 
 ```bash
 # macOS (Homebrew)
-brew install --cask opencode-desktop
+brew install --cask MOD-desktop
 ```
 
 #### Directory di installazione
 
-Lo script di installazione installa OpenCode in `$HOME/.opencode/bin`.
+Lo script di installazione installa MOD in `$HOME/.mod/bin`.
 
 ### Agenti
 
-OpenCode include due agenti integrati tra cui puoi passare usando il tasto `Tab`.
+MOD include due agenti integrati tra cui puoi passare usando il tasto `Tab`.
 
 - **build** – Predefinito, agente con accesso completo per il lavoro di sviluppo
 - **plan** – Agente in sola lettura per analisi ed esplorazione del codice
@@ -99,16 +99,16 @@ Scopri di più sugli [agenti](https://opencode.ai/v2/docs/agents).
 
 ### Documentazione
 
-Per maggiori informazioni su come configurare OpenCode, [**consulta la nostra documentazione**](https://opencode.ai/v2/docs).
+Per maggiori informazioni su come configurare MOD, [**consulta la nostra documentazione**](https://opencode.ai/v2/docs).
 
 ### Contribuire
 
-Se sei interessato a contribuire a OpenCode, leggi la nostra [guida alla contribuzione](./CONTRIBUTING.md) prima di inviare una pull request.
+Se sei interessato a contribuire a MOD, leggi la nostra [guida alla contribuzione](./CONTRIBUTING.md) prima di inviare una pull request.
 
-### Costruire su OpenCode
+### Costruire su MOD
 
-Se stai lavorando a un progetto correlato a OpenCode e che utilizza “opencode” come parte del nome (ad esempio “opencode-dashboard” o “opencode-mobile”), aggiungi una nota nel tuo README per chiarire che non è sviluppato dal team OpenCode e che non è affiliato in alcun modo con noi.
+Se stai lavorando a un progetto correlato a MOD e che utilizza “MOD” come parte del nome (ad esempio “MOD-dashboard” o “MOD-mobile”), aggiungi una nota nel tuo README per chiarire che non è sviluppato dal team MOD e che non è affiliato in alcun modo con noi.
 
 ---
 
-**Unisciti alla nostra community** [Discord](https://discord.gg/opencode) | [X.com](https://x.com/opencode)
+**Unisciti alla nostra community** [Discord](https://discord.gg/MOD) | [X.com](https://x.com/MOD)

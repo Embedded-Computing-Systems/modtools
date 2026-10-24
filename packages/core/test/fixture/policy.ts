@@ -1,7 +1,7 @@
-import { ConfigPolicyPlugin } from "@opencode/core/config/plugin/policy"
-import { Mcp } from "@opencode/core/mcp/index"
-import { Skill } from "@opencode/core/skill"
-import { ID } from "@opencode/schema/event"
+import { ConfigPolicyPlugin } from "@modtools-ai/core/config/plugin/policy"
+import { Mcp } from "@modtools-ai/core/mcp/index"
+import { Skill } from "@modtools-ai/core/skill"
+import { ID } from "@modtools-ai/schema/event"
 import { Effect, Stream } from "effect"
 import { host } from "../plugin/host"
 

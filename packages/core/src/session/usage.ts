@@ -1,9 +1,9 @@
 export * as SessionUsage from "./usage.js"
 
-import type { Usage } from "@opencode/ai"
-import { Money } from "@opencode/schema/money"
-import type { TokenUsage } from "@opencode/schema/token-usage"
-import type { Model } from "@opencode/schema/model"
+import type { Usage } from "@modtools-ai/ai"
+import { Money } from "@modtools-ai/schema/money"
+import type { TokenUsage } from "@modtools-ai/schema/token-usage"
+import type { Model } from "@modtools-ai/schema/model"
 
 const finite = (value: number) => (Number.isFinite(value) ? value : 0)
 const safe = (value: number | undefined) => Math.max(0, finite(value ?? 0))

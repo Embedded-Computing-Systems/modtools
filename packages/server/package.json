@@ -1,12 +1,12 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "@opencode/server",
+  "name": "@modtools-ai/server",
   "version": "2.1.4",
   "type": "module",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/anomalyco/opencode.git",
+    "url": "git+https://github.com/Embedded-Computing-Systems/modtools.git",
     "directory": "packages/server"
   },
   "publishConfig": {
@@ -28,17 +28,17 @@
   "dependencies": {
     "@effect/platform-node": "catalog:",
     "@effect/platform-node-shared": "catalog:",
-    "@opencode/core": "workspace:*",
-    "@opencode/protocol": "workspace:*",
-    "@opencode/schema": "workspace:*",
-    "@opencode/simulation": "workspace:*",
-    "@opencode/util": "workspace:*",
+    "@modtools-ai/core": "workspace:*",
+    "@modtools-ai/protocol": "workspace:*",
+    "@modtools-ai/schema": "workspace:*",
+    "@modtools-ai/simulation": "workspace:*",
+    "@modtools-ai/util": "workspace:*",
     "effect": "catalog:"
   },
   "devDependencies": {
+    "@modtools-ai/client": "workspace:*",
+    "@modtools-ai/plugin": "workspace:*",
     "@opencode-ai/pty": "0.3.1",
-    "@opencode/client": "workspace:*",
-    "@opencode/plugin": "workspace:*",
     "@tsconfig/bun": "catalog:",
     "@types/bun": "catalog:",
     "@typescript/native": "catalog:",

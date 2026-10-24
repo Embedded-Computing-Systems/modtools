@@ -1,17 +1,17 @@
 export * as PatchTool from "./patch.js"
 
-import type { Context } from "@opencode/plugin/effect/plugin"
-import type { SessionHooks } from "@opencode/plugin/effect/session"
-import { ToolFailure } from "@opencode/ai"
-import { FileDiff } from "@opencode/schema/file-diff"
+import type { Context } from "@modtools-ai/plugin/effect/plugin"
+import type { SessionHooks } from "@modtools-ai/plugin/effect/session"
+import { ToolFailure } from "@modtools-ai/ai"
+import { FileDiff } from "@modtools-ai/schema/file-diff"
 import { Effect, Result, Schema } from "effect"
-import { Bom } from "@opencode/util/bom"
+import { Bom } from "@modtools-ai/util/bom"
 import { Environment } from "../../environment/index.js"
 import { Formatter } from "../../formatter.js"
 import { FileMutation } from "../../file-mutation.js"
 import { Location } from "../../location.js"
 import { FileAccess } from "../../file-access.js"
-import { Patch } from "@opencode/util/patch"
+import { Patch } from "@modtools-ai/util/patch"
 import { Permission } from "../../permission.js"
 import DESCRIPTION from "../patch.txt"
 import { fileDiff } from "./file-diff.js"
@@ -65,7 +65,7 @@ type Prepared =
     })
 
 export const Plugin = {
-  id: "opencode.tool.patch",
+  id: "mod.tool.patch",
   effect: Effect.fn("PatchTool.Plugin")(function* (ctx: Context) {
     const environment = yield* Environment.Service
     const access = yield* FileAccess.Service

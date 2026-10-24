@@ -7,10 +7,10 @@ import type {
   SessionMessageUser,
   SessionStatus,
   SessionStructuredError,
-} from "@opencode/client/promise"
-import { EventManifest } from "@opencode/schema/event-manifest"
-import { SessionMessage } from "@opencode/schema/session-message"
-import type { TimelineDetail } from "@opencode/session-ui/timeline/detail"
+} from "@modtools-ai/client/promise"
+import { EventManifest } from "@modtools-ai/schema/event-manifest"
+import { SessionMessage } from "@modtools-ai/schema/session-message"
+import type { TimelineDetail } from "@modtools-ai/session-ui/timeline/detail"
 import { expect, test, type Page, type TestInfo } from "@playwright/test"
 import { Schema } from "effect"
 import { SERVER, seed, sessionHref } from "./app"
@@ -30,7 +30,7 @@ export const assistantID = "msg_1001_timeline_assistant"
 
 export const title = "Timeline visual stability"
 
-export const model = { providerID: "opencode", modelID: "claude-opus-4-6", variant: "max" }
+export const model = { providerID: "mod", modelID: "claude-opus-4-6", variant: "max" }
 
 const tokens = { input: 100, output: 200, reasoning: 0, cache: { read: 0, write: 0 } }
 
@@ -277,7 +277,7 @@ export async function setupTimeline(
 
   if (input.locale) {
     await page.addInitScript((locale) => {
-      localStorage.setItem("opencode.global.dat:language", JSON.stringify({ locale }))
+      localStorage.setItem("mod.global.dat:language", JSON.stringify({ locale }))
     }, input.locale)
   }
 
@@ -1082,8 +1082,8 @@ function provider() {
   return {
     all: [
       {
-        id: "opencode",
-        name: "OpenCode",
+        id: "mod",
+        name: "MOD",
         models: { "claude-opus-4-6": { id: "claude-opus-4-6", name: "Claude Opus 4.6", limit: { context: 200_000 } } },
       },
       {
@@ -1105,7 +1105,7 @@ function provider() {
         },
       },
     ],
-    connected: ["opencode", "company-gateway"],
-    default: { providerID: "opencode", modelID: "claude-opus-4-6" },
+    connected: ["mod", "company-gateway"],
+    default: { providerID: "mod", modelID: "claude-opus-4-6" },
   }
 }

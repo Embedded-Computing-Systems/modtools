@@ -1,9 +1,9 @@
 export * as PluginModule from "./module.js"
 
-import type { Plugin } from "@opencode/plugin/effect/plugin"
-import { Host } from "@opencode/plugin/host"
-import { createPluginSources } from "@opencode/plugin/source"
-import { Npm } from "@opencode/util/npm"
+import type { Plugin } from "@modtools-ai/plugin/effect/plugin"
+import { Host } from "@modtools-ai/plugin/host"
+import { createPluginSources } from "@modtools-ai/plugin/source"
+import { Npm } from "@modtools-ai/util/npm"
 import { Deferred, Effect, FiberSet, PubSub, Schema, Stream } from "effect"
 import path from "path"
 import { stat } from "node:fs/promises"

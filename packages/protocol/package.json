@@ -1,12 +1,12 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "@opencode/protocol",
+  "name": "@modtools-ai/protocol",
   "version": "2.1.4",
   "type": "module",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/anomalyco/opencode.git",
+    "url": "git+https://github.com/Embedded-Computing-Systems/modtools.git",
     "directory": "packages/protocol"
   },
   "publishConfig": {
@@ -28,7 +28,7 @@
     "typecheck:tsc": "tsc --noEmit"
   },
   "dependencies": {
-    "@opencode/schema": "workspace:*",
+    "@modtools-ai/schema": "workspace:*",
     "effect": "catalog:"
   },
   "devDependencies": {

@@ -1,13 +1,13 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "@opencode/plugin-browser",
+  "name": "@modtools-ai/plugin-browser",
   "version": "2.1.4",
-  "description": "OpenCode's desktop browser plugin",
+  "description": "MOD's desktop browser plugin",
   "type": "module",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/anomalyco/opencode.git",
+    "url": "git+https://github.com/Embedded-Computing-Systems/modtools.git",
     "directory": "packages/plugin-browser"
   },
   "publishConfig": {
@@ -28,8 +28,8 @@
     "test": "bun test"
   },
   "dependencies": {
-    "@opencode/plugin": "workspace:*",
-    "@opencode/schema": "workspace:*",
+    "@modtools-ai/plugin": "workspace:*",
+    "@modtools-ai/schema": "workspace:*",
     "effect": "catalog:"
   },
   "devDependencies": {

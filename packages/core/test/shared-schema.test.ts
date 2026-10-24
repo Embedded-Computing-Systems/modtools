@@ -1,32 +1,32 @@
 import { expect, test } from "bun:test"
 import { Schema } from "effect"
-import { Agent } from "@opencode/core/agent"
-import { Session } from "@opencode/core/session"
-import { SessionStore } from "@opencode/core/session/store"
-import { Location } from "@opencode/schema/location"
-import { Model } from "@opencode/schema/model"
-import { Provider } from "@opencode/schema/provider"
-import { Project } from "@opencode/schema/project"
-import { Worktree } from "@opencode/schema/worktree"
-import { Prompt } from "@opencode/schema/prompt"
-import { SessionInbox } from "@opencode/schema/session-inbox"
-import { SessionMessage } from "@opencode/schema/session-message"
-import { Workspace } from "@opencode/schema/workspace"
-import { Command } from "@opencode/schema/command"
-import { Connection } from "@opencode/schema/connection"
-import { Credential } from "@opencode/schema/credential"
-import { FileSystem } from "@opencode/schema/filesystem"
-import { Integration } from "@opencode/schema/integration"
-import { LLM } from "@opencode/schema/llm"
-import { Permission } from "@opencode/schema/permission"
-import { Pty } from "@opencode/schema/pty"
-import { Reference } from "@opencode/schema/reference"
-import { Skill } from "@opencode/schema/skill"
-import { AbsolutePath, optional, statics } from "@opencode/schema/schema"
+import { Agent } from "@modtools-ai/core/agent"
+import { Session } from "@modtools-ai/core/session"
+import { SessionStore } from "@modtools-ai/core/session/store"
+import { Location } from "@modtools-ai/schema/location"
+import { Model } from "@modtools-ai/schema/model"
+import { Provider } from "@modtools-ai/schema/provider"
+import { Project } from "@modtools-ai/schema/project"
+import { Worktree } from "@modtools-ai/schema/worktree"
+import { Prompt } from "@modtools-ai/schema/prompt"
+import { SessionInbox } from "@modtools-ai/schema/session-inbox"
+import { SessionMessage } from "@modtools-ai/schema/session-message"
+import { Workspace } from "@modtools-ai/schema/workspace"
+import { Command } from "@modtools-ai/schema/command"
+import { Connection } from "@modtools-ai/schema/connection"
+import { Credential } from "@modtools-ai/schema/credential"
+import { FileSystem } from "@modtools-ai/schema/filesystem"
+import { Integration } from "@modtools-ai/schema/integration"
+import { LLM } from "@modtools-ai/schema/llm"
+import { Permission } from "@modtools-ai/schema/permission"
+import { Pty } from "@modtools-ai/schema/pty"
+import { Reference } from "@modtools-ai/schema/reference"
+import { Skill } from "@modtools-ai/schema/skill"
+import { AbsolutePath, optional, statics } from "@modtools-ai/schema/schema"
 
 test("Core reuses the canonical shared schemas", async () => {
-  const schemaAgent = await import("@opencode/schema/agent")
-  const schemaSession = await import("@opencode/schema/session")
+  const schemaAgent = await import("@modtools-ai/schema/agent")
+  const schemaSession = await import("@modtools-ai/schema/session")
   const [
     coreCommand,
     coreConnection,
@@ -48,25 +48,25 @@ test("Core reuses the canonical shared schemas", async () => {
     coreSchema,
     coreWorkspace,
   ] = await Promise.all([
-    import("@opencode/core/command"),
-    import("@opencode/core/integration/connection"),
-    import("@opencode/core/credential"),
-    import("@opencode/core/filesystem"),
-    import("@opencode/core/integration"),
-    import("@opencode/core/location"),
-    import("@opencode/ai"),
-    import("@opencode/core/model"),
-    import("@opencode/core/permission"),
-    import("@opencode/core/worktree"),
-    import("@opencode/core/pty"),
-    import("@opencode/core/project/schema"),
-    import("@opencode/core/provider"),
-    import("@opencode/core/reference"),
-    import("@opencode/core/session/inbox"),
-    import("@opencode/core/session/message"),
-    import("@opencode/core/skill"),
-    import("@opencode/core/schema"),
-    import("@opencode/core/workspace"),
+    import("@modtools-ai/core/command"),
+    import("@modtools-ai/core/integration/connection"),
+    import("@modtools-ai/core/credential"),
+    import("@modtools-ai/core/filesystem"),
+    import("@modtools-ai/core/integration"),
+    import("@modtools-ai/core/location"),
+    import("@modtools-ai/ai"),
+    import("@modtools-ai/core/model"),
+    import("@modtools-ai/core/permission"),
+    import("@modtools-ai/core/worktree"),
+    import("@modtools-ai/core/pty"),
+    import("@modtools-ai/core/project/schema"),
+    import("@modtools-ai/core/provider"),
+    import("@modtools-ai/core/reference"),
+    import("@modtools-ai/core/session/inbox"),
+    import("@modtools-ai/core/session/message"),
+    import("@modtools-ai/core/skill"),
+    import("@modtools-ai/core/schema"),
+    import("@modtools-ai/core/workspace"),
   ])
 
   const schemas = [

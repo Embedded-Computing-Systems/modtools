@@ -9,21 +9,21 @@ import {
   type Mode,
   type ResolvedTheme,
   type ThemeDefinition,
-} from "@opencode/theme/tui"
+} from "@modtools-ai/theme/tui"
 import { getOpenCodeTheme, parseTheme, type ThemeDocumentSource } from "../../../src/theme"
 
-const opencodeLight = selectTheme(getOpenCodeTheme(), "light")
-const opencodeDark = selectTheme(getOpenCodeTheme(), "dark")
+const modLight = selectTheme(getOpenCodeTheme(), "light")
+const modDark = selectTheme(getOpenCodeTheme(), "dark")
 const chromaticHues = ["gray", "red", "orange", "green", "cyan", "blue", "purple"] as const
 const light: ThemeDefinition = {
-  ...opencodeLight,
+  ...modLight,
   categorical: ["blue", "purple"],
-  hue: { ...opencodeLight.hue, accent: "$hue.blue", interactive: "$hue.blue", neutral: "$hue.gray" },
+  hue: { ...modLight.hue, accent: "$hue.blue", interactive: "$hue.blue", neutral: "$hue.gray" },
 }
 const dark: ThemeDefinition = {
-  ...opencodeDark,
+  ...modDark,
   categorical: ["blue", "purple"],
-  hue: { ...opencodeDark.hue, accent: "$hue.blue", interactive: "$hue.blue", neutral: "$hue.gray" },
+  hue: { ...modDark.hue, accent: "$hue.blue", interactive: "$hue.blue", neutral: "$hue.gray" },
 }
 
 test("orders light hues dark-to-light and dark hues light-to-dark", () => {

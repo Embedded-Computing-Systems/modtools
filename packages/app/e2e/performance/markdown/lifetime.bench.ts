@@ -1,4 +1,4 @@
-import type { SessionMessageInfo } from "@opencode/client/promise"
+import type { SessionMessageInfo } from "@modtools-ai/client/promise"
 import { benchmark, expect } from "../benchmark"
 import { mockOpenCodeServer } from "../../utils/mock-server"
 import { fixture, installStressSessionTabs, installTimelineSettings } from "../../utils/session-fixture"
@@ -26,7 +26,7 @@ for (const size of ["typical", "large"]) {
             id: `msg_2_${id}_assistant`,
             type: "assistant",
             time: { created: 1700000001000, completed: 1700000008000 },
-            model: { id: "claude-opus-4-6", providerID: "opencode" },
+            model: { id: "claude-opus-4-6", providerID: "mod" },
             agent: "build",
             cost: 0.01,
             tokens: { input: 100, output: 200, reasoning: 0, cache: { read: 0, write: 0 } },

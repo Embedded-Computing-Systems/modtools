@@ -1,5 +1,5 @@
-import type { OpenCodeEvent, SessionMessageInfo } from "@opencode/client/promise"
-import { timelinePresets } from "@opencode/session-ui/timeline/detail"
+import type { OpenCodeEvent, SessionMessageInfo } from "@modtools-ai/client/promise"
+import { timelinePresets } from "@modtools-ai/session-ui/timeline/detail"
 import { expect, test, type Locator, type Page } from "@playwright/test"
 import { expectPath, SERVER, sessionHref } from "../utils/app"
 import { currentSession } from "../utils/mock-server"
@@ -398,7 +398,7 @@ function parentMessages(): SessionMessageInfo[] {
       id: assistantID,
       type: "assistant",
       time: { created: 1700000001000, completed: 1700000002000 },
-      model: { id: "claude-opus-4-6", providerID: "opencode" },
+      model: { id: "claude-opus-4-6", providerID: "mod" },
       agent: "build",
       cost: 0.01,
       tokens: { input: 100, output: 200, reasoning: 0, cache: { read: 0, write: 0 } },

@@ -1,93 +1,93 @@
 import { NodeFileSystem } from "@effect/platform-node"
-import { compile, emitEffectImported, emitEffectShape, emitPromise, write } from "@opencode/httpapi-codegen"
-import { ClientApi, effectOmitEndpoints, groupNames, promiseOmitEndpoints } from "@opencode/protocol/client"
-import { Agent } from "@opencode/schema/agent"
-import { Command } from "@opencode/schema/command"
-import { Config } from "@opencode/schema/config"
-import { Credential } from "@opencode/schema/credential"
-import { Event } from "@opencode/schema/event"
-import { EventLog } from "@opencode/schema/event-log"
-import { FileDiff } from "@opencode/schema/file-diff"
-import { FileSystem } from "@opencode/schema/filesystem"
-import { Form } from "@opencode/schema/form"
-import { Instruction } from "@opencode/schema/instruction"
-import { InstructionEntry } from "@opencode/schema/instruction-entry"
-import { Integration } from "@opencode/schema/integration"
-import { Location } from "@opencode/schema/location"
-import { Mcp } from "@opencode/schema/mcp"
-import { Model } from "@opencode/schema/model"
-import { Money } from "@opencode/schema/money"
-import { Permission } from "@opencode/schema/permission"
-import { PermissionSaved } from "@opencode/schema/permission-saved"
-import { Plugin } from "@opencode/schema/plugin"
-import { Project } from "@opencode/schema/project"
-import { Worktree } from "@opencode/schema/worktree"
-import { AgentAttachment, FileAttachment, Prompt, PromptMention } from "@opencode/schema/prompt"
-import { PromptInput } from "@opencode/schema/prompt-input"
-import { Provider } from "@opencode/schema/provider"
-import { Pty } from "@opencode/schema/pty"
-import { PtyTicket } from "@opencode/schema/pty-ticket"
-import { Question } from "@opencode/schema/question"
-import { Reference } from "@opencode/schema/reference"
-import { AbsolutePath, RelativePath } from "@opencode/schema/schema"
-import { Session } from "@opencode/schema/session"
-import { SessionMessage } from "@opencode/schema/session-message"
-import { SessionInbox } from "@opencode/schema/session-inbox"
-import { Shell } from "@opencode/schema/shell"
-import { Skill } from "@opencode/schema/skill"
-import { Snapshot } from "@opencode/schema/snapshot"
-import { Vcs } from "@opencode/schema/vcs"
-import { WebSearch } from "@opencode/schema/websearch"
-import { Workspace } from "@opencode/schema/workspace"
+import { compile, emitEffectImported, emitEffectShape, emitPromise, write } from "@modtools-ai/httpapi-codegen"
+import { ClientApi, effectOmitEndpoints, groupNames, promiseOmitEndpoints } from "@modtools-ai/protocol/client"
+import { Agent } from "@modtools-ai/schema/agent"
+import { Command } from "@modtools-ai/schema/command"
+import { Config } from "@modtools-ai/schema/config"
+import { Credential } from "@modtools-ai/schema/credential"
+import { Event } from "@modtools-ai/schema/event"
+import { EventLog } from "@modtools-ai/schema/event-log"
+import { FileDiff } from "@modtools-ai/schema/file-diff"
+import { FileSystem } from "@modtools-ai/schema/filesystem"
+import { Form } from "@modtools-ai/schema/form"
+import { Instruction } from "@modtools-ai/schema/instruction"
+import { InstructionEntry } from "@modtools-ai/schema/instruction-entry"
+import { Integration } from "@modtools-ai/schema/integration"
+import { Location } from "@modtools-ai/schema/location"
+import { Mcp } from "@modtools-ai/schema/mcp"
+import { Model } from "@modtools-ai/schema/model"
+import { Money } from "@modtools-ai/schema/money"
+import { Permission } from "@modtools-ai/schema/permission"
+import { PermissionSaved } from "@modtools-ai/schema/permission-saved"
+import { Plugin } from "@modtools-ai/schema/plugin"
+import { Project } from "@modtools-ai/schema/project"
+import { Worktree } from "@modtools-ai/schema/worktree"
+import { AgentAttachment, FileAttachment, Prompt, PromptMention } from "@modtools-ai/schema/prompt"
+import { PromptInput } from "@modtools-ai/schema/prompt-input"
+import { Provider } from "@modtools-ai/schema/provider"
+import { Pty } from "@modtools-ai/schema/pty"
+import { PtyTicket } from "@modtools-ai/schema/pty-ticket"
+import { Question } from "@modtools-ai/schema/question"
+import { Reference } from "@modtools-ai/schema/reference"
+import { AbsolutePath, RelativePath } from "@modtools-ai/schema/schema"
+import { Session } from "@modtools-ai/schema/session"
+import { SessionMessage } from "@modtools-ai/schema/session-message"
+import { SessionInbox } from "@modtools-ai/schema/session-inbox"
+import { Shell } from "@modtools-ai/schema/shell"
+import { Skill } from "@modtools-ai/schema/skill"
+import { Snapshot } from "@modtools-ai/schema/snapshot"
+import { Vcs } from "@modtools-ai/schema/vcs"
+import { WebSearch } from "@modtools-ai/schema/websearch"
+import { Workspace } from "@modtools-ai/schema/workspace"
 import { Effect, Schema } from "effect"
 import { fileURLToPath } from "url"
 
 const promiseContract = compile(ClientApi, { groupNames, omitEndpoints: promiseOmitEndpoints })
 const effectContract = compile(ClientApi, { groupNames, omitEndpoints: effectOmitEndpoints })
 const effectTypeReferences = [
-  ...namespaceTypes("Agent", "@opencode/schema/agent", Agent),
-  ...namespaceTypes("Command", "@opencode/schema/command", Command),
-  ...namespaceTypes("Config", "@opencode/schema/config", Config),
-  ...namespaceTypes("Credential", "@opencode/schema/credential", Credential),
-  ...namespaceTypes("Event", "@opencode/schema/event", Event),
-  ...namespaceTypes("EventLog", "@opencode/schema/event-log", EventLog),
-  ...namespaceTypes("FileDiff", "@opencode/schema/file-diff", FileDiff),
-  ...namespaceTypes("FileSystem", "@opencode/schema/filesystem", FileSystem),
-  ...namespaceTypes("Form", "@opencode/schema/form", Form),
-  ...namespaceTypes("Instruction", "@opencode/schema/instruction", Instruction),
-  ...namespaceTypes("InstructionEntry", "@opencode/schema/instruction-entry", InstructionEntry),
-  ...namespaceTypes("Integration", "@opencode/schema/integration", Integration),
-  typeReference("Location.PublicRef", "@opencode/schema/location", Location.PublicRef),
-  typeReference("Location.PublicInfo", "@opencode/schema/location", Location.PublicInfo),
-  ...namespaceTypes("Mcp", "@opencode/schema/mcp", Mcp),
-  ...namespaceTypes("Model", "@opencode/schema/model", Model),
-  ...namespaceTypes("Money", "@opencode/schema/money", Money),
-  ...namespaceTypes("Permission", "@opencode/schema/permission", Permission),
-  ...namespaceTypes("PermissionSaved", "@opencode/schema/permission-saved", PermissionSaved),
-  ...namespaceTypes("Plugin", "@opencode/schema/plugin", Plugin),
-  ...namespaceTypes("Project", "@opencode/schema/project", Project),
-  ...namespaceTypes("Worktree", "@opencode/schema/worktree", Worktree),
-  ...namespaceTypes("PromptInput", "@opencode/schema/prompt-input", PromptInput),
-  ...namespaceTypes("Provider", "@opencode/schema/provider", Provider),
-  ...namespaceTypes("Pty", "@opencode/schema/pty", Pty),
-  ...namespaceTypes("PtyTicket", "@opencode/schema/pty-ticket", PtyTicket),
-  ...namespaceTypes("Question", "@opencode/schema/question", Question),
-  ...namespaceTypes("Reference", "@opencode/schema/reference", Reference),
-  ...namespaceTypes("Session", "@opencode/schema/session", Session),
-  ...namespaceTypes("SessionMessage", "@opencode/schema/session-message", SessionMessage),
-  ...namespaceTypes("SessionInbox", "@opencode/schema/session-inbox", SessionInbox),
-  ...namespaceTypes("Shell", "@opencode/schema/shell", Shell),
-  ...namespaceTypes("Skill", "@opencode/schema/skill", Skill),
-  ...namespaceTypes("Snapshot", "@opencode/schema/snapshot", Snapshot),
-  ...namespaceTypes("Vcs", "@opencode/schema/vcs", Vcs),
-  ...namespaceTypes("WebSearch", "@opencode/schema/websearch", WebSearch),
-  ...namespaceTypes("Workspace", "@opencode/schema/workspace", Workspace),
-  typeReference("Prompt", "@opencode/schema/prompt", Prompt),
-  typeReference("PromptMention", "@opencode/schema/prompt", PromptMention),
-  typeReference("FileAttachment", "@opencode/schema/prompt", FileAttachment),
-  typeReference("AgentAttachment", "@opencode/schema/prompt", AgentAttachment),
-  typeReference("AbsolutePath", "@opencode/schema/schema", AbsolutePath),
-  typeReference("RelativePath", "@opencode/schema/schema", RelativePath),
+  ...namespaceTypes("Agent", "@modtools-ai/schema/agent", Agent),
+  ...namespaceTypes("Command", "@modtools-ai/schema/command", Command),
+  ...namespaceTypes("Config", "@modtools-ai/schema/config", Config),
+  ...namespaceTypes("Credential", "@modtools-ai/schema/credential", Credential),
+  ...namespaceTypes("Event", "@modtools-ai/schema/event", Event),
+  ...namespaceTypes("EventLog", "@modtools-ai/schema/event-log", EventLog),
+  ...namespaceTypes("FileDiff", "@modtools-ai/schema/file-diff", FileDiff),
+  ...namespaceTypes("FileSystem", "@modtools-ai/schema/filesystem", FileSystem),
+  ...namespaceTypes("Form", "@modtools-ai/schema/form", Form),
+  ...namespaceTypes("Instruction", "@modtools-ai/schema/instruction", Instruction),
+  ...namespaceTypes("InstructionEntry", "@modtools-ai/schema/instruction-entry", InstructionEntry),
+  ...namespaceTypes("Integration", "@modtools-ai/schema/integration", Integration),
+  typeReference("Location.PublicRef", "@modtools-ai/schema/location", Location.PublicRef),
+  typeReference("Location.PublicInfo", "@modtools-ai/schema/location", Location.PublicInfo),
+  ...namespaceTypes("Mcp", "@modtools-ai/schema/mcp", Mcp),
+  ...namespaceTypes("Model", "@modtools-ai/schema/model", Model),
+  ...namespaceTypes("Money", "@modtools-ai/schema/money", Money),
+  ...namespaceTypes("Permission", "@modtools-ai/schema/permission", Permission),
+  ...namespaceTypes("PermissionSaved", "@modtools-ai/schema/permission-saved", PermissionSaved),
+  ...namespaceTypes("Plugin", "@modtools-ai/schema/plugin", Plugin),
+  ...namespaceTypes("Project", "@modtools-ai/schema/project", Project),
+  ...namespaceTypes("Worktree", "@modtools-ai/schema/worktree", Worktree),
+  ...namespaceTypes("PromptInput", "@modtools-ai/schema/prompt-input", PromptInput),
+  ...namespaceTypes("Provider", "@modtools-ai/schema/provider", Provider),
+  ...namespaceTypes("Pty", "@modtools-ai/schema/pty", Pty),
+  ...namespaceTypes("PtyTicket", "@modtools-ai/schema/pty-ticket", PtyTicket),
+  ...namespaceTypes("Question", "@modtools-ai/schema/question", Question),
+  ...namespaceTypes("Reference", "@modtools-ai/schema/reference", Reference),
+  ...namespaceTypes("Session", "@modtools-ai/schema/session", Session),
+  ...namespaceTypes("SessionMessage", "@modtools-ai/schema/session-message", SessionMessage),
+  ...namespaceTypes("SessionInbox", "@modtools-ai/schema/session-inbox", SessionInbox),
+  ...namespaceTypes("Shell", "@modtools-ai/schema/shell", Shell),
+  ...namespaceTypes("Skill", "@modtools-ai/schema/skill", Skill),
+  ...namespaceTypes("Snapshot", "@modtools-ai/schema/snapshot", Snapshot),
+  ...namespaceTypes("Vcs", "@modtools-ai/schema/vcs", Vcs),
+  ...namespaceTypes("WebSearch", "@modtools-ai/schema/websearch", WebSearch),
+  ...namespaceTypes("Workspace", "@modtools-ai/schema/workspace", Workspace),
+  typeReference("Prompt", "@modtools-ai/schema/prompt", Prompt),
+  typeReference("PromptMention", "@modtools-ai/schema/prompt", PromptMention),
+  typeReference("FileAttachment", "@modtools-ai/schema/prompt", FileAttachment),
+  typeReference("AgentAttachment", "@modtools-ai/schema/prompt", AgentAttachment),
+  typeReference("AbsolutePath", "@modtools-ai/schema/schema", AbsolutePath),
+  typeReference("RelativePath", "@modtools-ai/schema/schema", RelativePath),
 ]
 
 await Effect.runPromise(
@@ -113,7 +113,7 @@ await Effect.runPromise(
           outputTypes: {
             "event.subscribe": {
               name: "OpenCodeEvent",
-              import: 'import type { OpenCodeEvent } from "@opencode/protocol/groups/event"',
+              import: 'import type { OpenCodeEvent } from "@modtools-ai/protocol/groups/event"',
             },
           },
         }),

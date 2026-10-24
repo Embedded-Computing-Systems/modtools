@@ -178,7 +178,7 @@ test("a server whose saved password changes works with the new password", async 
   // Saved with the password the server accepts until the test changes it.
   await seed(page, {
     storage: {
-      "opencode.global.dat:server": {
+      "mod.global.dat:server": {
         list: [{ type: "http", displayName: "Remote", http: { url: REMOTE_SERVER, password: "old-password" } }],
       },
     },
@@ -197,7 +197,7 @@ test("a server whose saved password changes works with the new password", async 
   await page.getByRole("menuitem", { name: "Edit", exact: true }).click()
   const editor = page.getByRole("dialog", { name: "Edit server" })
   await editor.getByPlaceholder("password").fill("new-password")
-  // The server now rejects the old password, as after `opencode service set password`.
+  // The server now rejects the old password, as after `mod service set password`.
   accepted.password = "new-password"
   await editor.getByRole("button", { name: "Save", exact: true }).click()
   await expect(editor).toHaveCount(0)
@@ -272,7 +272,7 @@ for (const state of [
         await expect(header.getByRole("button", { name: "More options", exact: true })).toBeVisible()
       }
 
-      await expect(trigger.locator("use")).toHaveAttribute("href", `#opencode-v2-icon-${state.icon}`)
+      await expect(trigger.locator("use")).toHaveAttribute("href", `#mod-v2-icon-${state.icon}`)
       await trigger.click()
       await expect(menu.getByRole("menuitem")).toHaveText([name, state.directory, "Edit project"])
       await expect(pathItem).toBeDisabled()
@@ -321,7 +321,7 @@ test("the project menu path arrow has a glyph when the page has an older icon sp
         response,
         body: (await response.text()).replace(
           '<div id="root"',
-          '<svg id="opencode-v2-icon-sprite" width="0" height="0" aria-hidden="true"><symbol id="opencode-v2-icon-monitor" viewBox="0 0 16 16"><path d="M1 1h14v14H1z"/></symbol></svg><div id="root"',
+          '<svg id="mod-v2-icon-sprite" width="0" height="0" aria-hidden="true"><symbol id="mod-v2-icon-monitor" viewBox="0 0 16 16"><path d="M1 1h14v14H1z"/></symbol></svg><div id="root"',
         ),
       })
     },
@@ -340,5 +340,5 @@ test("the project menu path arrow has a glyph when the page has an older icon sp
   await expect
     .poll(() => arrow.locator("svg").evaluate((element: SVGSVGElement) => element.getBBox().width))
     .toBeGreaterThan(0)
-  await expect(page.locator("#opencode-v2-icon-sprite")).toHaveCount(1)
+  await expect(page.locator("#mod-v2-icon-sprite")).toHaveCount(1)
 })

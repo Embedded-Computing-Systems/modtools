@@ -12,7 +12,7 @@ import {
   type PermissionRequest,
   type SessionInboxInfo,
   type ToolContent,
-} from "@opencode/client/promise"
+} from "@modtools-ai/client/promise"
 import { createSessionTransport } from "../../src/mini/stream-v2.transport"
 import { runPromptQueue } from "../../src/mini/runtime.queue"
 import { entryBody } from "../../src/mini/entry.body"
@@ -155,7 +155,7 @@ function sdk(input: {
   pending?: Record<string, Awaited<ReturnType<OpenCodeClient["session"]["inbox"]["list"]>>>
   wait?: () => Promise<void>
 }) {
-  const client = OpenCode.make({ baseUrl: "https://opencode.test" })
+  const client = OpenCode.make({ baseUrl: "https://mod.test" })
   let subscription = 0
   spyOn(client.event, "subscribe").mockImplementation(() => input.streams[subscription++]?.stream ?? feed().stream)
   spyOn(client.message, "list").mockImplementation((request) =>
@@ -3051,7 +3051,7 @@ describe("V2 mini transport", () => {
               command: "ls",
               cwd: "/tmp",
               shell: "/bin/sh",
-              file: "/tmp/opencode-shell",
+              file: "/tmp/mod-shell",
               metadata: {},
               time: { started: 0 },
             },
@@ -3070,7 +3070,7 @@ describe("V2 mini transport", () => {
               command: "ls",
               cwd: "/tmp",
               shell: "/bin/sh",
-              file: "/tmp/opencode-shell",
+              file: "/tmp/mod-shell",
               exit: 0,
               metadata: {},
               time: { started: 0, completed: 1 },
@@ -3315,7 +3315,7 @@ describe("V2 mini transport", () => {
           command: "ls",
           cwd: "/tmp",
           shell: "/bin/sh",
-          file: "/tmp/opencode-shell",
+          file: "/tmp/mod-shell",
           exit: 0,
           metadata: {},
           time: { started: 0, completed: 1 },

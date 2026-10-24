@@ -1,7 +1,7 @@
 import type { Page } from "@playwright/test"
-import type { OpenCodeEvent, SessionMessageInfo } from "@opencode/client/promise"
-import { Permission } from "@opencode/schema/permission"
-import { Worktree } from "@opencode/schema/worktree"
+import type { OpenCodeEvent, SessionMessageInfo } from "@modtools-ai/client/promise"
+import { Permission } from "@modtools-ai/schema/permission"
+import { Worktree } from "@modtools-ai/schema/worktree"
 import { Duration, Effect, Layer, Option, Predicate, Schema } from "effect"
 import { HttpRouter, HttpServer, HttpServerResponse } from "effect/http"
 import { HttpApiBuilder, HttpApiSchema } from "effect/http-api"
@@ -371,7 +371,7 @@ export async function mockOpenCodeServer(page: Page, config: MockServerConfig) {
 
     if (
       password !== undefined &&
-      (await route.request().headerValue("authorization")) !== `Basic ${btoa(`opencode:${password}`)}`
+      (await route.request().headerValue("authorization")) !== `Basic ${btoa(`mod:${password}`)}`
     ) {
       return route.fulfill({
         status: 401,
@@ -847,7 +847,7 @@ function mockHandlers(
             version: "2.0.0",
             pid: 1,
             urls: config.server ? [config.server] : [],
-            paths: { tmp: "/tmp/opencode" },
+            paths: { tmp: "/tmp/mod" },
           }),
         config: () => Effect.succeed(configEntries),
         reference: () => Effect.succeed({ location: location(config), data: [] }),

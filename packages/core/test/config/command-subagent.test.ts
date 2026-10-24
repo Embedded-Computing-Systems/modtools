@@ -1,21 +1,21 @@
 import { describe, expect } from "bun:test"
 import path from "path"
 import { Effect, Layer } from "effect"
-import { LanguageModel } from "@opencode/ai"
-import { OpenAIChat } from "@opencode/ai/protocols/openai-chat"
-import { TestLLM } from "@opencode/ai/testing"
-import { Agent } from "@opencode/core/agent"
-import { AppNodeBuilder } from "@opencode/core/effect/app-node-builder"
-import { LayerNodePlatform } from "@opencode/core/effect/app-node-platform"
-import { Watcher } from "@opencode/core/filesystem/watcher"
-import { LocationServiceMap } from "@opencode/core/location-service-map"
-import { Model } from "@opencode/core/model"
-import { Provider } from "@opencode/core/provider"
-import { AbsolutePath } from "@opencode/core/schema"
-import { Session } from "@opencode/core/session"
-import { SessionRunnerModel } from "@opencode/core/session/runner/model"
-import { LayerNode } from "@opencode/util/effect/layer-node"
-import { Global } from "@opencode/util/global"
+import { LanguageModel } from "@modtools-ai/ai"
+import { OpenAIChat } from "@modtools-ai/ai/protocols/openai-chat"
+import { TestLLM } from "@modtools-ai/ai/testing"
+import { Agent } from "@modtools-ai/core/agent"
+import { AppNodeBuilder } from "@modtools-ai/core/effect/app-node-builder"
+import { LayerNodePlatform } from "@modtools-ai/core/effect/app-node-platform"
+import { Watcher } from "@modtools-ai/core/filesystem/watcher"
+import { LocationServiceMap } from "@modtools-ai/core/location-service-map"
+import { Model } from "@modtools-ai/core/model"
+import { Provider } from "@modtools-ai/core/provider"
+import { AbsolutePath } from "@modtools-ai/core/schema"
+import { Session } from "@modtools-ai/core/session"
+import { SessionRunnerModel } from "@modtools-ai/core/session/runner/model"
+import { LayerNode } from "@modtools-ai/util/effect/layer-node"
+import { Global } from "@modtools-ai/util/global"
 import { tempGlobalLayer } from "../fixture/global"
 import { offlineModels } from "../fixture/models"
 import { tmpdirScoped } from "../fixture/tmpdir"
@@ -133,7 +133,7 @@ function project(
     const definition = { description: "Review code", template: "Review $ARGUMENTS: !`printf ready`", ...command }
     yield* Effect.promise(() =>
       Bun.write(
-        path.join(tmp.path, "opencode.json"),
+        path.join(tmp.path, "MOD.json"),
         JSON.stringify({
           agents: { reviewer: { mode: "subagent", model: "test/child" } },
           ...(format === "markdown" ? {} : { commands: { review: definition } }),
@@ -143,7 +143,7 @@ function project(
     if (format === "markdown")
       yield* Effect.promise(() =>
         Bun.write(
-          path.join(tmp.path, ".opencode/commands/review.md"),
+          path.join(tmp.path, ".mod/commands/review.md"),
           [
             "---",
             "description: Review code",

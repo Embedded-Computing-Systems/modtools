@@ -739,8 +739,8 @@ sequenceDiagram
 
     expect(output).toContain("POST connect-token")
     expect(output).toContain("· Basic (cached by browser)")
-    expect(output).toContain("· X-OpenCode-Ticket: 1")
-    expect(output.indexOf("· X-OpenCode-Ticket: 1")).toBeLessThan(output.indexOf("├"))
+    expect(output).toContain("· X-MOD-Ticket: 1")
+    expect(output.indexOf("· X-MOD-Ticket: 1")).toBeLessThan(output.indexOf("├"))
   })
 
   test("renders br-delimited notes as rows without source tags", () => {

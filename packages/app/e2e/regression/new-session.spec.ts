@@ -1,5 +1,5 @@
 import { expect, test, type Locator, type Page } from "@playwright/test"
-import type { OpenCodeEvent, WorktreeDirectory } from "@opencode/client/promise"
+import type { OpenCodeEvent, WorktreeDirectory } from "@modtools-ai/client/promise"
 import { draftHref, expectPath, provider, sessionHref } from "../utils/app"
 import type { MockAnswer } from "../utils/mock-server"
 import { openDraft, openSession, openWorktreeDraft, type WorkspaceInput } from "../utils/workspace"
@@ -414,7 +414,7 @@ for (const row of [
   { name: "a managed worktree", directory: accentWorkspace, accent: true },
   {
     name: "the main root written with Windows case and separators",
-    directory: "c:\\OPENCODE\\workspaceaccent\\",
+    directory: "c:\\MOD\\workspaceaccent\\",
     accent: false,
   },
 ]) {
@@ -438,7 +438,7 @@ for (const row of [
         {
           id: "ses_workspace_accent",
           title: "Workspace accent",
-          model: { id: "accent-model", providerID: "opencode" },
+          model: { id: "accent-model", providerID: "mod" },
         },
       ],
       pageMessages: () => ({

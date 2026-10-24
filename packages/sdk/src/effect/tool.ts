@@ -1,3 +1,3 @@
-export { RegistrationError } from "@opencode/core/tool"
-export { Error } from "@opencode/schema/tool"
-export type { Context, Info } from "@opencode/schema/tool"
+export { RegistrationError } from "@modtools-ai/core/tool"
+export { Error } from "@modtools-ai/schema/tool"
+export type { Context, Info } from "@modtools-ai/schema/tool"

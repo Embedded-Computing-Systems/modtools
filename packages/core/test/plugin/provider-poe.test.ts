@@ -1,14 +1,14 @@
-import { LLM } from "@opencode/ai"
-import { LLMClient, RequestExecutor } from "@opencode/ai/route"
-import { Credential } from "@opencode/core/credential"
-import { Integration } from "@opencode/core/integration"
-import { Model } from "@opencode/core/model"
-import { ModelResolver } from "@opencode/core/model-resolver"
-import { Plugin } from "@opencode/core/plugin"
-import { PluginHost } from "@opencode/core/plugin/host"
-import { ProviderPlugins } from "@opencode/core/plugin/provider"
-import { PoePlugin } from "@opencode/core/plugin/provider/poe"
-import { Provider } from "@opencode/core/provider"
+import { LLM } from "@modtools-ai/ai"
+import { LLMClient, RequestExecutor } from "@modtools-ai/ai/route"
+import { Credential } from "@modtools-ai/core/credential"
+import { Integration } from "@modtools-ai/core/integration"
+import { Model } from "@modtools-ai/core/model"
+import { ModelResolver } from "@modtools-ai/core/model-resolver"
+import { Plugin } from "@modtools-ai/core/plugin"
+import { PluginHost } from "@modtools-ai/core/plugin/host"
+import { ProviderPlugins } from "@modtools-ai/core/plugin/provider"
+import { PoePlugin } from "@modtools-ai/core/plugin/provider/poe"
+import { Provider } from "@modtools-ai/core/provider"
 import { expect } from "bun:test"
 import { Clock, Deferred, Effect, Fiber, Layer, Schedule, Stream } from "effect"
 import { TestClock } from "effect/testing"
@@ -42,7 +42,7 @@ const fixture = Effect.gen(function* () {
   })
   yield* providers.transform((editor) => {
     editor.update(providerID, (provider) => {
-      provider.package = "@opencode/ai/providers/openai-compatible"
+      provider.package = "@modtools-ai/ai/providers/openai-compatible"
       provider.settings = { baseURL: "https://api.poe.com/v1" }
     })
     editor.models.update(providerID, modelID, () => {})
