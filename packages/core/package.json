@@ -72,6 +72,11 @@
       "node": "./src/database/v1-migration.noop.ts",
       "workerd": "./src/database/v1-migration.noop.ts",
       "default": "./src/database/v1-migration.noop.ts"
+    },
+    "#legacy-bridge": {
+      "types": "./src/database/legacy-bridge.bun.ts",
+      "bun": "./src/database/legacy-bridge.bun.ts",
+      "default": "./src/database/legacy-bridge.noop.ts"
     }
   },
   "devDependencies": {
