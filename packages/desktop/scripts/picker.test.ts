@@ -63,13 +63,13 @@ test.each([true, false])(
 
         expect(scripts.length).toBeGreaterThan(0)
 
-        if (bundledDev) expect(scripts.join("\n")).toContain("modPickerUi")
+        if (bundledDev) expect(scripts.join("\n")).toContain("opencodePickerUi")
         expect([html, ...scripts].join("\n")).not.toMatch(/\bimport(?:\s*\(\s*|\s*)["']virtual:/)
       }
 
       const direct = await fetch(new URL("/__vite_mod_picker_client.js", url))
       expect(direct.ok).toBe(true)
-      expect(await direct.text()).toContain("modPickerUi")
+      expect(await direct.text()).toContain("opencodePickerUi")
     } finally {
       socket?.close()
       await server.close()
