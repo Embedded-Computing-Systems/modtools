@@ -32,7 +32,7 @@ import { Mcp } from "@modtools-ai/schema/mcp"
 import { Money } from "@modtools-ai/schema/money"
 
 const defaultServer = "https://opencode.ai/console"
-const clientID = "mod-cli"
+const clientID = "opencode-cli"
 const methodID = Integration.MethodID.make("device")
 // Drop statements whose action or effect is a value this version does not know, so a newer Console can
 // extend either enum. Malformed statements still fail validation.
@@ -239,7 +239,7 @@ export const ModPlugin = define<
 
     const load = Effect.fn("ModPlugin.load")(function* () {
       checked = yield* Clock.currentTimeMillis
-      const connection = yield* ctx.integration.connection.active("mod")
+      const connection = yield* ctx.integration.connection.active("opencode")
       if (!connection) {
         reported = undefined
         return { config: undefined, connection, organization: undefined, mcp: undefined }
@@ -279,7 +279,7 @@ export const ModPlugin = define<
     })
     // The credential of the connection a snapshot was built from, while it is still the active one.
     const resolveActive = Effect.fnUntraced(function* (connection: NonNullable<ActiveConnection>) {
-      const active = yield* ctx.integration.connection.active("mod")
+      const active = yield* ctx.integration.connection.active("opencode")
       if (!active || IntegrationConnection.key(active) !== IntegrationConnection.key(connection))
         return yield* Effect.fail(new Error("MOD Console connection changed"))
       const credential = yield* ctx.integration.connection.resolve(active)
@@ -315,26 +315,26 @@ export const ModPlugin = define<
           Effect.mapError(
             (cause) =>
               new Voice.UnavailableError({
-                service: "mod",
+                service: "opencode",
                 message: cause instanceof Error ? cause.message : String(cause),
               }),
           ),
           Effect.flatMap((reply): Effect.Effect<string, Voice.Error> => {
             if (reply.status >= 200 && reply.status < 300) return Effect.succeed(reply.text)
             if (reply.status === 401)
-              return Effect.fail(new Voice.UnavailableError({ service: "mod", message: `${signedOutMessage}.` }))
+              return Effect.fail(new Voice.UnavailableError({ service: "opencode", message: `${signedOutMessage}.` }))
             const message =
               Option.getOrUndefined(Schema.decodeUnknownOption(InferenceError)(reply.text))?.error.message ??
               `MOD Console refused the voice request (HTTP ${reply.status})`
             return Effect.fail(
               reply.status === 400 || reply.status === 404
                 ? new Voice.InvalidRequestError({ message })
-                : new Voice.UnavailableError({ service: "mod", message }),
+                : new Voice.UnavailableError({ service: "opencode", message }),
             )
           }),
         )
       return {
-        integration: "mod",
+        integration: "opencode",
         models: offer.models,
         workspace: offer.workspace,
         session: (input) =>
@@ -344,7 +344,7 @@ export const ModPlugin = define<
                 Effect.mapError(
                   () =>
                     new Voice.UnavailableError({
-                      service: "mod",
+                      service: "opencode",
                       message: "MOD Console returned an invalid voice session",
                     }),
                 ),
@@ -378,7 +378,7 @@ export const ModPlugin = define<
       )
 
     yield* ctx.integration.transform((editor) => {
-      editor.update("mod", (integration) => {
+      editor.update("opencode", (integration) => {
         integration.name = "MOD Console"
       })
       editor.method.update(oauth(http))

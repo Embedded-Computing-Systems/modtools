@@ -67,7 +67,7 @@ function consoleServer(orgID: string | null | undefined, unavailable = false) {
       requests.push(path)
       agents.push(request.headers.get("user-agent"))
       if (path === "/auth/device/code") {
-        expect(await request.json()).toEqual({ client_id: "mod-cli", supports_org_scope: true })
+        expect(await request.json()).toEqual({ client_id: "opencode-cli", supports_org_scope: true })
         return Response.json({
           device_code: "device",
           user_code: "user",
@@ -692,7 +692,7 @@ describe("ModPlugin", () => {
             if (state.failing) return new Response("Unavailable", { status: 502 })
             return Response.json({
               providers: {},
-              ...(state.advertised ? { websearch: { providerID: "mod" } } : {}),
+              ...(state.advertised ? { websearch: { providerID: "opencode" } } : {}),
             })
           },
         })
@@ -775,7 +775,7 @@ describe("ModPlugin", () => {
                         mod_console: {
                           type: "remote",
                           url: `${new URL(request.url).origin}/console/mcp`,
-                          headers: { "x-client": "mod", authorization: "Bearer forged" },
+                          headers: { "x-client": "opencode", authorization: "Bearer forged" },
                           oauth: false,
                           auth: "console",
                         },
@@ -843,7 +843,7 @@ describe("ModPlugin", () => {
             mod_console: {
               type: "remote",
               url: `${server.url.origin}/console/mcp`,
-              headers: { "x-client": "mod", authorization: "Bearer secret", "x-org-id": "org-a" },
+              headers: { "x-client": "opencode", authorization: "Bearer secret", "x-org-id": "org-a" },
               oauth: false,
             },
             mod_console_oauth: {
@@ -876,7 +876,7 @@ describe("ModPlugin", () => {
                 policies: [
                   { action: "future.use", resource: { names: ["anything"] }, effect: "future-effect", future: true },
                   { action: "provider.use", resource: "*", effect: "deny" },
-                  { action: "provider.use", resource: "mod", effect: "allow" },
+                  { action: "provider.use", resource: "opencode", effect: "allow" },
                   { action: "tool.use", resource: "shell:*", effect: "deny" },
                   { action: "tool.use", resource: "shell:git *", effect: "allow" },
                   { action: "tool.use", resource: "shell:git status", effect: "future-effect" },
@@ -912,7 +912,7 @@ describe("ModPlugin", () => {
           expect(managed.current()).toEqual({
             statements: [
               { action: "provider.use", resource: "*", effect: "deny" },
-              { action: "provider.use", resource: "mod", effect: "allow" },
+              { action: "provider.use", resource: "opencode", effect: "allow" },
               { action: "tool.use", resource: "shell:*", effect: "deny" },
               { action: "tool.use", resource: "shell:git *", effect: "allow" },
               { action: "tool.use", resource: "shell:sudo *", effect: "deny" },
@@ -1435,7 +1435,7 @@ describe("ModPlugin", () => {
           body?: unknown
         }> = []
         const gate = Promise.withResolvers<void>()
-        const state = { advertised: true, providerID: "mod", waitForConfig: false }
+        const state = { advertised: true, providerID: "opencode", waitForConfig: false }
         const server = Bun.serve({
           port: 0,
           fetch: async (request) => {
@@ -1455,7 +1455,7 @@ describe("ModPlugin", () => {
                 ...(state.advertised
                   ? {
                       websearch: {
-                        providerID: "mod",
+                        providerID: "opencode",
                       },
                     }
                   : {}),
@@ -1528,7 +1528,7 @@ describe("ModPlugin", () => {
               path: "/api/websearch",
               authorization: "Bearer secret",
               orgID: "org_test",
-              body: { query: "effect web search", providerID: "mod" },
+              body: { query: "effect web search", providerID: "opencode" },
             },
           ])
 
@@ -1539,7 +1539,7 @@ describe("ModPlugin", () => {
           expect(requests.at(-1)).toMatchObject({
             method: "POST",
             authorization: "Bearer replacement",
-            body: { query: "fresh credential", providerID: "mod" },
+            body: { query: "fresh credential", providerID: "opencode" },
           })
 
           yield* credentials.update(initial.id, {
@@ -1551,7 +1551,7 @@ describe("ModPlugin", () => {
             path: "/other/api/websearch",
             authorization: "Bearer moved",
             orgID: "org_test",
-            body: { query: "updated server", providerID: "mod" },
+            body: { query: "updated server", providerID: "opencode" },
           })
           yield* credentials.update(initial.id, {
             value: account("replacement"),
@@ -1662,7 +1662,7 @@ describe("ModPlugin", () => {
               return Response.json({
                 providers: {},
                 websearch: {
-                  providerID: "mod",
+                  providerID: "opencode",
                 },
               })
             }
@@ -1670,7 +1670,7 @@ describe("ModPlugin", () => {
               if (state.crossOrigin) url.hostname = "127.0.0.1"
               return Response.redirect(`${url.origin}/outside-console`, 307)
             }
-            return Response.json({ providerID: "mod", results: [] })
+            return Response.json({ providerID: "opencode", results: [] })
           },
         })
         return { requests, server, state }
@@ -1712,7 +1712,7 @@ describe("ModPlugin", () => {
               return Response.json({
                 providers: {},
                 websearch: {
-                  providerID: "mod",
+                  providerID: "opencode",
                 },
               })
             }
@@ -2097,7 +2097,7 @@ describe("ModPlugin hosted voice", () => {
           yield* connect(server)
           const live = Effect.map(voice.models(), (list) => list.models.find((item) => item.model === "gpt-live-1"))
 
-          expect(yield* live).toMatchObject({ integration: "mod", workspace: "Anomaly" })
+          expect(yield* live).toMatchObject({ integration: "opencode", workspace: "Anomaly" })
           expect(yield* voice.session(offer)).toEqual({
             transport: { type: "webrtc", sdp: "answer:console" },
             id: "sess_console",
@@ -2140,7 +2140,7 @@ describe("ModPlugin hosted voice", () => {
         ),
       expected: {
         _tag: "Voice.UnavailableError",
-        service: "mod",
+        service: "opencode",
         message: "GPT-Live isn't enabled for this workspace",
       },
     },

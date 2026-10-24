@@ -257,7 +257,7 @@ export function getConfig() {
         appId,
         productName: "MOD Beta",
         protocols: { name: "MOD Beta", schemes: ["mod"] },
-        publish: {
+        publish: none && {
           provider: "generic",
           url: "https://opencode.ai/update/api/beta/desktop/mod/",
           channel: "latest",
@@ -273,7 +273,7 @@ export function getConfig() {
         appId,
         productName: "MOD",
         protocols: { name: "MOD", schemes: ["mod"] },
-        publish: {
+        publish: none && {
           provider: "generic",
           url: "https://opencode.ai/update/api/latest/desktop/mod/",
           channel: "latest",

@@ -659,7 +659,7 @@ export const dict = {
   "settings.general.row.colorScheme.title": "Färgschema",
   "settings.general.row.colorScheme.description": "Välj om MOD följer system-, ljus- eller mörktemat",
   "settings.general.row.theme.title": "Tema",
-  "settings.general.row.theme.description": "Anpassa OpenCodes tema.",
+  "settings.general.row.theme.description": "Anpassa MOD:s tema.",
   "settings.general.row.font.title": "Kodtypsnitt",
   "settings.general.row.font.description": "Anpassa teckensnittet som används i kodblock",
   "settings.general.row.terminalFont.title": "Terminaltypsnitt",

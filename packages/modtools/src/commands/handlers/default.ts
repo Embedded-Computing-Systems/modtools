@@ -38,7 +38,9 @@ export default Runtime.handler(Commands, (input) =>
       mismatch: "replace",
       onStart: (reason, previousVersion) => {
         Queue.offerUnsafe(serviceStarts, { reason, previousVersion })
-        if (reason === "version-mismatch" && preflight.begin(previousVersion)) return
+        // MOD does not self-update through this path; a packaged build is unsigned.
+        // Retained so the machinery can be re-enabled once a signed feed exists.
+        if (false && reason === "version-mismatch" && preflight.begin(previousVersion)) return
         process.stderr.write(
           reason === "version-mismatch"
             ? "Restarting background server (version mismatch)...\n"

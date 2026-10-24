@@ -1,4 +1,4 @@
-import picker from "@brendonovich/vite-plugin-mod"
+import picker from "@brendonovich/vite-plugin-opencode"
 import MagicString from "magic-string"
 import { existsSync } from "node:fs"
 import { dirname, join, relative, resolve, sep } from "node:path"
