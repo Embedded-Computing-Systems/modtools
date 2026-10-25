@@ -55,6 +55,14 @@ const Root = Spec.make(typeof MODTOOLS_CLI_NAME === "string" ? MODTOOLS_CLI_NAME
       Flag.optional,
     ),
     prompt: Flag.String("prompt").pipe(Flag.withDescription("Prompt to use"), Flag.optional),
+    fork: Flag.Boolean("fork").pipe(Flag.withDescription("Fork the session when continuing"), Flag.withDefault(false)),
+    model: Flag.String("model").pipe(
+      Flag.withAlias("m"),
+      Flag.withDescription("Model to use in the format provider/model#variant"),
+      Flag.optional,
+    ),
+    variant: Flag.String("variant").pipe(Flag.withDescription("Model variant (reasoning effort) to use"), Flag.optional),
+    agent: Flag.String("agent").pipe(Flag.withDescription("Agent to use"), Flag.optional),
   },
   commands: [
     Spec.make("upgrade", {
@@ -411,6 +419,10 @@ const Root = Spec.make(typeof MODTOOLS_CLI_NAME === "string" ? MODTOOLS_CLI_NAME
         model: Flag.String("model").pipe(
           Flag.withAlias("m"),
           Flag.withDescription("Model to use in the format provider/model#variant"),
+          Flag.optional,
+        ),
+        variant: Flag.String("variant").pipe(
+          Flag.withDescription("Model variant (reasoning effort) to use"),
           Flag.optional,
         ),
         agent: Flag.String("agent").pipe(Flag.withDescription("Agent to use"), Flag.optional),

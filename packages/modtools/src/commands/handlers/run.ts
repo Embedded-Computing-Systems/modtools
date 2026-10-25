@@ -18,7 +18,7 @@ export default Runtime.handler(Commands.commands.run, (input) =>
         continue: input.continue,
         session: Option.getOrUndefined(input.session),
         fork: input.fork,
-        model: Option.getOrUndefined(input.model),
+        model: withVariant(Option.getOrUndefined(input.model), Option.getOrUndefined(input.variant)),
         agent: Option.getOrUndefined(input.agent),
         format: input.format,
         file: [...input.file],
@@ -29,3 +29,9 @@ export default Runtime.handler(Commands.commands.run, (input) =>
     )
   }),
 )
+
+// A separate --variant is kept for v1 command lines; an explicit #variant in the model wins.
+function withVariant(model: string | undefined, variant: string | undefined) {
+  if (!model || !variant || model.includes("#")) return model
+  return `${model}#${variant}`
+}

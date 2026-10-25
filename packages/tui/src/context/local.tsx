@@ -183,7 +183,7 @@ export const { use: useLocal, provider: LocalProvider } = createSimpleContext({
 
       const fallbackModel = createMemo(() => {
         if (args.model) {
-          const { providerID, modelID } = parse(args.model)
+          const { providerID, modelID } = parse(args.model.split("#")[0])
           if (isModelValid({ providerID, modelID })) {
             return {
               providerID,
