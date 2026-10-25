@@ -558,7 +558,10 @@ const layer: Layer.Layer<
       if (input?.roots) conditions.push(isNull(SessionTable.parent_id))
       if (input?.start) conditions.push(gte(SessionTable.time_updated, input.start))
       if (input?.cursor) conditions.push(lt(SessionTable.time_updated, input.cursor))
-      if (input?.search) conditions.push(like(SessionTable.title, `%${input.search}%`))
+      if (input?.search)
+        conditions.push(
+          or(like(SessionTable.title, `%${input.search}%`), like(SessionTable.directory, `%${input.search}%`))!,
+        )
       if (!input?.archived) conditions.push(isNull(SessionTable.time_archived))
 
       const query =
@@ -989,7 +992,7 @@ function listByProject(
     conditions.push(gte(SessionTable.time_updated, input.start))
   }
   if (input.search) {
-    conditions.push(like(SessionTable.title, `%${input.search}%`))
+    conditions.push(or(like(SessionTable.title, `%${input.search}%`), like(SessionTable.directory, `%${input.search}%`))!)
   }
 
   const limit = input.limit ?? 100

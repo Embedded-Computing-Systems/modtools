@@ -13,7 +13,14 @@ type HomeSessionSearchSource = Pick<HomeSessionsController, "data" | "session">
 export function createHomeSessionSearchController(home: HomeController, sessions: HomeSessionSearchSource) {
   const command = useCommand()
   const language = useLanguage()
-  const [state, setState] = createStore({ value: "", focused: false, highlighted: "" })
+  const [state, setState] = createStore({
+    value: "",
+    focused: false,
+    highlighted: "",
+    remote: [] as HomeSessionRecord[],
+    searching: false,
+  })
+  let remote: AbortController | undefined
   let root: HTMLDivElement | undefined
   let input: HTMLInputElement | undefined
   let list: HTMLDivElement | undefined
@@ -21,9 +28,12 @@ export function createHomeSessionSearchController(home: HomeController, sessions
   const results = createMemo(() => {
     const value = query().toLowerCase()
     if (!value) return []
-    return sessions.data
-      .searchRecords()
-      .filter((record) => `${record.session.title} ${record.projectName}`.toLowerCase().includes(value))
+    const matches = (record: HomeSessionRecord) =>
+      `${record.session.title} ${record.projectName} ${record.session.directory}`.toLowerCase().includes(value)
+    const local = sessions.data.searchRecords().filter(matches)
+    const known = new Set(local.map((record) => record.session.id))
+    // Results from the previous query stay visible until the next response, so they pass the same filter.
+    return [...local, ...state.remote.filter((record) => !known.has(record.session.id) && matches(record))]
   })
   const active = createMemo(() => {
     const records = results()
@@ -50,6 +60,8 @@ export function createHomeSessionSearchController(home: HomeController, sessions
     }),
   )
 
+  onCleanup(() => remote?.abort())
+
   command.register("home.search", () => [
     {
       id: "home.sessions.search.focus",
@@ -66,7 +78,33 @@ export function createHomeSessionSearchController(home: HomeController, sessions
   }
 
   function close() {
-    setState({ value: "", focused: false })
+    remote?.abort()
+    setState({ value: "", focused: false, remote: [], searching: false })
+  }
+
+  // Typed searches wait for a pause before asking the server; local matches show at once.
+  function searchServer(text: string) {
+    remote?.abort()
+    const controller = new AbortController()
+    remote = controller
+    if (!text) {
+      setState({ remote: [], searching: false })
+      return
+    }
+    setState("searching", true)
+    const timer = setTimeout(() => {
+      void sessions.session.search(text, controller.signal).then(
+        (records) => {
+          if (controller.signal.aborted) return
+          setState({ remote: records, searching: false })
+        },
+        () => {
+          if (controller.signal.aborted) return
+          setState({ remote: [], searching: false })
+        },
+      )
+    }, 150)
+    controller.signal.addEventListener("abort", () => clearTimeout(timer), { once: true })
   }
 
   function select(record: HomeSessionRecord, options?: { background?: boolean }) {
@@ -80,11 +118,14 @@ export function createHomeSessionSearchController(home: HomeController, sessions
       placeholder,
       open,
       focus,
-      input: (value: string) => setState({ value, highlighted: "" }),
+      input: (value: string) => {
+        setState({ value, highlighted: "" })
+        searchServer(value.trim())
+      },
       close,
     },
     result: {
-      loading: sessions.data.loading,
+      loading: () => sessions.data.loading() || (state.searching && results().length === 0),
       list: results,
       active,
       noResultsLabel: () => language.t("home.sessions.search.noResults", { query: query() }),

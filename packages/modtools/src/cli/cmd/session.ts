@@ -77,6 +77,17 @@ export const SessionListCommand = effectCmd({
         describe: "limit to N most recent sessions",
         type: "number",
       })
+      .option("all", {
+        alias: "a",
+        describe: "list sessions from every project and directory",
+        type: "boolean",
+        default: false,
+      })
+      .option("search", {
+        alias: "s",
+        describe: "only sessions whose title or directory contains this text",
+        type: "string",
+      })
       .option("format", {
         describe: "output format",
         type: "string",
@@ -84,11 +95,12 @@ export const SessionListCommand = effectCmd({
         default: "table",
       }),
   handler: Effect.fn("Cli.session.list")(function* (args) {
-    const sessions = yield* Session.Service.use((svc) => svc.list({ roots: true, limit: args.maxCount }))
+    const query = { roots: true, limit: args.maxCount, ...(args.search ? { search: args.search } : {}) }
+    const sessions = yield* Session.Service.use((svc) => (args.all ? svc.listGlobal(query) : svc.list(query)))
 
     if (sessions.length === 0) return
 
-    const output = args.format === "json" ? formatSessionJSON(sessions) : formatSessionTable(sessions)
+    const output = args.format === "json" ? formatSessionJSON(sessions) : formatSessionTable(sessions, args.all)
 
     const shouldPaginate = process.stdout.isTTY && !args.maxCount && args.format === "table"
 
@@ -115,19 +127,26 @@ export const SessionListCommand = effectCmd({
   }),
 })
 
-function formatSessionTable(sessions: Session.Info[]): string {
+function formatSessionTable(sessions: Session.Info[], directory: boolean): string {
   const lines: string[] = []
 
   const maxIdWidth = Math.max(20, ...sessions.map((s) => s.id.length))
   const maxTitleWidth = Math.max(25, ...sessions.map((s) => s.title.length))
 
-  const header = `Session ID${" ".repeat(maxIdWidth - 10)}  Title${" ".repeat(maxTitleWidth - 5)}  Updated`
+  const times = sessions.map((s) => Locale.todayTimeOrDateTime(s.time.updated))
+  const maxTimeWidth = Math.max(7, ...times.map((time) => time.length))
+
+  const header =
+    `Session ID${" ".repeat(maxIdWidth - 10)}  Title${" ".repeat(maxTitleWidth - 5)}  ` +
+    (directory ? `${"Updated".padEnd(maxTimeWidth)}  Directory` : "Updated")
   lines.push(header)
   lines.push("─".repeat(header.length))
-  for (const session of sessions) {
+  for (const [index, session] of sessions.entries()) {
     const truncatedTitle = Locale.truncate(session.title, maxTitleWidth)
-    const timeStr = Locale.todayTimeOrDateTime(session.time.updated)
-    const line = `${session.id.padEnd(maxIdWidth)}  ${truncatedTitle.padEnd(maxTitleWidth)}  ${timeStr}`
+    const timeStr = times[index]
+    const line =
+      `${session.id.padEnd(maxIdWidth)}  ${truncatedTitle.padEnd(maxTitleWidth)}  ` +
+      (directory ? `${timeStr.padEnd(maxTimeWidth)}  ${session.directory}` : timeStr)
     lines.push(line)
   }
 

@@ -8,6 +8,7 @@ import { produce } from "solid-js/store"
 import { useCommand } from "@/context/command"
 import {
   loadHomeSessionIndex,
+  parseHomeSessionIndex,
   retainHomeSessions,
   type HomeSessionEvents,
 } from "@/context/global-sync/home-session-index"
@@ -24,6 +25,8 @@ import { archiveHomeSession } from "../home-session-archive"
 import type { HomeController } from "./home-controller"
 
 const HOME_SESSION_LIMIT = 64
+// Rows requested per typed search; the server matches title and directory over the whole store.
+const HOME_SEARCH_LIMIT = 200
 export type HomeSessionRecord = {
   session: Session
   project: LocalProject
@@ -177,6 +180,29 @@ export function createHomeSessionsController(home: HomeController) {
       showProjectName: () => !home.project.selected(),
       server: () => home.selection.value().server,
       canCreate: () => !!home.project.newSession(),
+      // The Home index holds only the newest sessions of opened projects, so typed searches also
+      // query the server, which covers every session in the store across all directories.
+      search: async (search: string, signal: AbortSignal) => {
+        const ctx = home.server.focusedContext()
+        if (!ctx) return []
+        const response = await ctx.sdk.client.v2.session.list(
+          { limit: HOME_SEARCH_LIMIT, order: "desc", search },
+          { signal },
+        )
+        const selected = home.project.selected()
+        const scope = selected ? new Set(directories(selected).map(pathKey)) : undefined
+        return parseHomeSessionIndex(response.data?.data ?? [])
+          .filter((session) => !scope || scope.has(pathKey(session.directory)))
+          .sort(compareSessionTime)
+          .map((session) => {
+            const project = projectForSession(session, home.project.list(), projectByID()) ?? {
+              id: session.projectID,
+              worktree: session.directory,
+              expanded: false,
+            }
+            return { session, project, projectName: displayName(project) }
+          })
+      },
       create: home.project.openNewSession,
       open: (session: Session, options?: OpenSessionOptions) => {
         const directoryKey = pathKey(session.directory)
