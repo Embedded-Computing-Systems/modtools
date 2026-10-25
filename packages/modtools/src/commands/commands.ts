@@ -435,6 +435,16 @@ const Root = Spec.make(typeof MODTOOLS_CLI_NAME === "string" ? MODTOOLS_CLI_NAME
           description: "List top-level sessions in the current project, newest first",
           params: {
             ...ServerParams,
+            all: Flag.Boolean("all").pipe(
+              Flag.withAlias("a"),
+              Flag.withDescription("List sessions from every project and directory"),
+              Flag.withDefault(false),
+            ),
+            search: Flag.String("search").pipe(
+              Flag.withAlias("s"),
+              Flag.withDescription("Only sessions whose title or directory contains this text"),
+              Flag.optional,
+            ),
             maxCount: Flag.Int("max-count").pipe(
               Flag.withAlias("n"),
               Flag.withSchema(Schema.Int.check(Schema.isGreaterThanOrEqualTo(1))),

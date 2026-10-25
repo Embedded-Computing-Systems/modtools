@@ -24,15 +24,20 @@ export function createHomeSessionSearchController(home: HomeController, sessions
     highlighted: string
     exact: HomeSessionRecord | undefined
     lookingUp: boolean
+    remote: HomeSessionRecord[]
+    searching: boolean
   }>({
     value: "",
     focused: false,
     highlighted: "",
     exact: undefined,
     lookingUp: false,
+    remote: [],
+    searching: false,
   })
 
   let lookup = 0
+  let remote: AbortController | undefined
   let root: HTMLDivElement | undefined
   let input: HTMLInputElement | undefined
   let list: HTMLDivElement | undefined
@@ -43,9 +48,14 @@ export function createHomeSessionSearchController(home: HomeController, sessions
 
     if (!value) return []
 
-    const records = sessions.data
-      .searchRecords()
-      .filter((record) => `${sessionLabel(record.session)} ${record.projectName}`.toLowerCase().includes(value))
+    const matches = (record: HomeSessionRecord) =>
+      `${sessionLabel(record.session)} ${record.session.title ?? ""} ${record.projectName} ${record.session.location.directory}`
+        .toLowerCase()
+        .includes(value)
+    const local = sessions.data.searchRecords().filter(matches)
+    const known = new Set(local.map((record) => record.session.id))
+    // Results from the previous query stay visible until the next response, so they pass the same filter.
+    const records = [...local, ...state.remote.filter((record) => !known.has(record.session.id) && matches(record))]
 
     if (!state.exact || records.some((record) => record.session.id === state.exact?.session.id)) return records
 
@@ -85,7 +95,10 @@ export function createHomeSessionSearchController(home: HomeController, sessions
       close()
     }),
   )
-  onCleanup(() => lookup++)
+  onCleanup(() => {
+    lookup++
+    remote?.abort()
+  })
   onMount(() => {
     if (layout.home.searchFocus.take()) focus()
   })
@@ -107,13 +120,15 @@ export function createHomeSessionSearchController(home: HomeController, sessions
 
   function close() {
     lookup++
-    setState({ value: "", focused: false, exact: undefined, lookingUp: false })
+    remote?.abort()
+    setState({ value: "", focused: false, exact: undefined, lookingUp: false, remote: [], searching: false })
   }
 
   function update(value: string) {
     const current = ++lookup
     const sessionID = value.trim()
     setState({ value, highlighted: "", exact: undefined, lookingUp: false })
+    searchServer(sessionID)
 
     if (!looksLikeSessionID(sessionID)) return
     setState("lookingUp", true)
@@ -127,6 +142,32 @@ export function createHomeSessionSearchController(home: HomeController, sessions
         setState("lookingUp", false)
       },
     )
+  }
+
+  // Typed searches wait for a pause before asking the server; local matches show at once.
+  function searchServer(text: string) {
+    remote?.abort()
+    const controller = new AbortController()
+    remote = controller
+
+    if (!text) {
+      setState({ remote: [], searching: false })
+      return
+    }
+    setState("searching", true)
+    const timer = setTimeout(() => {
+      void sessions.session.search(text, controller.signal).then(
+        (records) => {
+          if (controller.signal.aborted) return
+          setState({ remote: records, searching: false })
+        },
+        () => {
+          if (controller.signal.aborted) return
+          setState({ remote: [], searching: false })
+        },
+      )
+    }, 150)
+    controller.signal.addEventListener("abort", () => clearTimeout(timer), { once: true })
   }
 
   function select(record: HomeSessionRecord, options?: { background?: boolean }) {
@@ -145,7 +186,7 @@ export function createHomeSessionSearchController(home: HomeController, sessions
       close,
     },
     result: {
-      loading: () => sessions.data.loading() || state.lookingUp,
+      loading: () => sessions.data.loading() || state.lookingUp || (state.searching && results().length === 0),
       list: results,
       active,
       noResultsLabel: () => language.t("home.sessions.search.noResults", { query: query() }),

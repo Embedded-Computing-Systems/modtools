@@ -15,15 +15,19 @@ const handler = Effect.fn("cli.session.list")(function* (
     standalone: input.standalone,
   })
   const client = OpenCode.make({ baseUrl: server.endpoint.url, headers: Service.headers(server.endpoint) })
-  const location = yield* Effect.tryPromise({
-    try: (signal) => client.location.get({ location: { directory: process.cwd() } }, { signal }),
-    catch: (cause) => cause,
-  })
+  const location = input.all
+    ? undefined
+    : yield* Effect.tryPromise({
+        try: (signal) => client.location.get({ location: { directory: process.cwd() } }, { signal }),
+        catch: (cause) => cause,
+      })
+  const search = Option.getOrUndefined(input.search)
   const page = yield* Effect.tryPromise({
     try: (signal) =>
       client.session.list(
         {
-          project: location.project.id,
+          ...(location ? { project: location.project.id } : {}),
+          ...(search ? { search } : {}),
           parentID: null,
           order: "desc",
           limit: Option.getOrElse(input.maxCount, () => 100),
@@ -47,7 +51,7 @@ const handler = Effect.fn("cli.session.list")(function* (
           null,
           2,
         )
-      : formatList(page.data)) + EOL
+      : formatList(page.data, input.all)) + EOL
   const write = Effect.tryPromise(
     () =>
       new Promise<void>((resolve, reject) => {
@@ -96,13 +100,14 @@ export default Runtime.handler(Commands.commands.session.commands.list, (input) 
   ),
 )
 
-function formatList(sessions: ReadonlyArray<SessionInfo>) {
+function formatList(sessions: ReadonlyArray<SessionInfo>, directory: boolean) {
   return sessions
     .map((session) =>
       [
         session.id,
         (session.title ?? "Untitled session").replace(/[\r\n\t]/g, " "),
         new Date(session.time.updated).toLocaleString(),
+        ...(directory ? [session.location.directory] : []),
       ].join("\t"),
     )
     .join(EOL)

@@ -107,7 +107,10 @@ const layer = Layer.effect(
         if (input.workspaceID) conditions.push(eq(SessionTable.workspace_id, input.workspaceID))
         if ("project" in input) conditions.push(eq(SessionTable.project_id, input.project))
         if ("project" in input && input.subpath !== undefined) conditions.push(eq(SessionTable.path, input.subpath))
-        if (input.search) conditions.push(like(SessionTable.title, `%${input.search}%`))
+        if (input.search)
+          conditions.push(
+            or(like(SessionTable.title, `%${input.search}%`), like(SessionTable.directory, `%${input.search}%`))!,
+          )
         if (input.parentID !== undefined)
           conditions.push(
             input.parentID === null ? isNull(SessionTable.parent_id) : eq(SessionTable.parent_id, input.parentID),
