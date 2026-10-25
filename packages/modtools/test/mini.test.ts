@@ -137,7 +137,8 @@ describe("mini command", () => {
     expect(result.exitCode).toBe(0)
     expect(result.stdout).toContain("--server string")
     expect(result.stdout).not.toContain("--interactive")
-    expect(result.stdout).not.toContain("--variant")
+    // MOD keeps --variant on run for v1 command lines.
+    expect(result.stdout).toContain("--variant string")
     expect(result.stdout).not.toContain("--attach")
     expect(result.stdout).not.toContain("--command")
   })

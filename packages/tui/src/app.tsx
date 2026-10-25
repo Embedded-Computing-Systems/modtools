@@ -667,7 +667,8 @@ function App() {
     batch(() => {
       if (args.agent) local.agent.set(args.agent)
       if (args.model) {
-        const { providerID, modelID } = Model.parse(args.model)
+        const [ref, suffix] = args.model.split("#")
+        const { providerID, modelID } = Model.parse(ref)
         if (!providerID || !modelID)
           return toast.show({
             variant: "warning",
@@ -675,6 +676,9 @@ function App() {
             duration: 3000,
           })
         local.model.set({ providerID, modelID }, { recent: true })
+        const variant = suffix ?? args.variant
+        // The selection memo settles after the batch, so the variant lands on the new model.
+        if (variant) queueMicrotask(() => local.model.variant.set(variant))
       }
       if (args.sessionID && !args.fork) {
         route.navigate({
