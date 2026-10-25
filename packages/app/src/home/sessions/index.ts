@@ -6,6 +6,9 @@ export const HOME_V2_SESSION_PAGE_LIMIT = 5_000
 
 export const HOME_SESSION_LIMIT = 64
 
+// Rows requested per typed search; the server matches title and directory over the whole store.
+export const HOME_SEARCH_LIMIT = 200
+
 // Rows kept per directory from the fetched index: the visible limit plus the
 // recent-window search bucket. Merging locally known sessions and pending
 // removals into this subset resolves exactly like merging into the complete

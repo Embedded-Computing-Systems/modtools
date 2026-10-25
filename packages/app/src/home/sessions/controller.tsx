@@ -6,7 +6,13 @@ import { useQuery, useQueryClient } from "@tanstack/solid-query"
 import { type Accessor, createEffect, createMemo, type JSX, startTransition, untrack } from "solid-js"
 import { notifySessionTabsRemoved } from "@/shell/titlebar/session-events"
 import { useCommand } from "@/shell/commands/command"
-import { HOME_SESSION_LIMIT, mergeHomeSessionIndex, retainHomeSessions } from "@/home/sessions/index"
+import {
+  HOME_SEARCH_LIMIT,
+  HOME_SESSION_LIMIT,
+  mergeHomeSessionIndex,
+  parseHomeSessionIndex,
+  retainHomeSessions,
+} from "@/home/sessions/index"
 import type { LocalProject } from "@/shell/state/layout"
 import { useLanguage } from "@/runtime/i18n/language"
 import { ServerConnection } from "@/runtime/server/registry"
@@ -326,6 +332,24 @@ export function createHomeSessionsController(home: HomeController) {
           projects: home.project.list,
           resolveProject: ctx.projects.forSession,
         })[0]
+      },
+      // The Home index keeps only the newest sessions per directory, so typed searches also
+      // query the server, which covers the whole store across every directory.
+      search: async (search: string, signal: AbortSignal) => {
+        const ctx = home.server.focusedContext()
+
+        if (!ctx) return []
+        const result = await ctx.sdk.api.session.list(
+          { parentID: null, search, limit: HOME_SEARCH_LIMIT, order: "desc" },
+          { signal },
+        )
+
+        return buildHomeSessionRecords({
+          sessions: () => parseHomeSessionIndex(result.data),
+          projectDirectories,
+          projects: home.project.list,
+          resolveProject: ctx.projects.forSession,
+        })
       },
       create: home.project.openNewSession,
       open: (session: SessionInfo, options?: OpenSessionOptions) => {

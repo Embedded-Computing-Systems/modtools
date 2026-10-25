@@ -52,6 +52,19 @@ describe("Session.list", () => {
     }),
   )
 
+  it.effect("searches titles and directories across every project", () =>
+    Effect.gen(function* () {
+      const session = yield* Session.Service
+      const titled = yield* session.create({ location: project, title: "fix the other parser" })
+      const located = yield* session.create({ location: other, title: "unrelated" })
+      yield* session.create({ location: project, title: "unrelated" })
+
+      const found = (yield* session.list({ parentID: null, search: "other" })).data.map((item) => item.id)
+
+      expect(found.toSorted()).toEqual([titled.id, located.id].toSorted())
+    }),
+  )
+
   it.effect("returns 50 sessions when no limit is given", () =>
     Effect.gen(function* () {
       const session = yield* Session.Service
