@@ -187,6 +187,9 @@ if [ "$INSTALL_GUI" = true ] && [ "$PLATFORM" = darwin ]; then
     fi
   fi
   cp -R "$APP_SRC" /Applications/
+  # The desktop stages its bundled CLI per version and reuses that copy, so a rebuild with
+  # the same version number would keep running the old binary.
+  rm -rf "$HOME/Library/Application Support/ai.mod.desktop/cli/$VERSION-$ARCH"
   xattr -cr /Applications/MOD.app 2>/dev/null || true
   find /Applications/MOD.app -type f \( -perm -u=x -o -name "*.dylib" -o -name "*.so" \) \
     -exec codesign --force --sign - "{}" \; 2>/dev/null || true
