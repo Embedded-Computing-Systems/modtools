@@ -165,7 +165,7 @@ function migrateGoogleVertexAnthropicProvider(info: ConfigProviderV1.Info) {
 }
 
 // Built-in provider routes are already native package specifiers; only npm packages load through the AI SDK.
-function packageSpecifier(npm: string) {
+export function packageSpecifier(npm: string) {
   const name = Provider.packageName(npm)
   return name.startsWith("@modtools-ai/ai/") ? name : Provider.aisdk(npm)
 }

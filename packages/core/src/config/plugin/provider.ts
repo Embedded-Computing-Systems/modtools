@@ -9,6 +9,7 @@ import { Config } from "../../config.js"
 import { Model } from "../../model.js"
 import { Provider } from "../../provider.js"
 import { Variant } from "../../variant.js"
+import { ConfigMigrateV1 } from "../../v1/config/migrate.js"
 import { ConfigEntryObserver } from "./entry-observer.js"
 
 export const Plugin = define({
@@ -68,6 +69,10 @@ export const Plugin = define({
           if (item.canonical !== undefined) provider.canonical = item.canonical
           if (item.name) provider.name = item.name
           if (item.package !== undefined) provider.package = item.package
+          // MOD: like v1, a provider the catalogue does not know, with a baseURL and no package, speaks
+          // the OpenAI-compatible protocol.
+          if (!provider.package && !current && !source && item.settings?.baseURL !== undefined)
+            provider.package = ConfigMigrateV1.packageSpecifier("@ai-sdk/openai-compatible")
           if (item.compatibility !== undefined)
             provider.compatibility = { ...provider.compatibility, ...item.compatibility }
           if (item.settings !== undefined) provider.settings = Provider.mergeOverlay(provider.settings, item.settings)
