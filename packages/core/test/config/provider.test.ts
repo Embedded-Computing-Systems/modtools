@@ -198,6 +198,25 @@ describe("ConfigProviderPlugin.Plugin", () => {
     }),
   )
 
+  it.effect("treats an unknown provider with a baseURL and no package as OpenAI-compatible, like v1", () =>
+    Effect.gen(function* () {
+      const models = yield* Model.Service
+      yield* addPlugin([
+        new Document({
+          type: "document",
+          info: decode({
+            providers: {
+              selfhosted: { settings: { baseURL: "https://llm.test/v1" }, models: { "qwen-local": {} } },
+            },
+          }),
+        }),
+      ])
+
+      const model = required(yield* models.get(Provider.ID.make("selfhosted"), Model.ID.make("qwen-local")))
+      expect(model.package).toBe("@modtools-ai/ai/providers/openai-compatible")
+    }),
+  )
+
   it.effect("applies provider compatibility to every provider model with model overrides", () =>
     Effect.gen(function* () {
       const providers = yield* Provider.Service
