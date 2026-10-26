@@ -541,6 +541,24 @@ describe("Session.create", () => {
     }),
   )
 
+  it.effect("records a note marked record at once without queueing or waking the session", () =>
+    Effect.gen(function* () {
+      const session = yield* Session.Service
+      const { db } = yield* Database.Service
+      const created = yield* session.create({ location, title: "Notes" })
+      yield* session.synthetic({
+        sessionID: created.id,
+        text: "end note",
+        metadata: { record: true },
+        resume: false,
+      })
+
+      expect(yield* session.inbox(created.id)).toEqual([])
+      expect(yield* session.context(created.id)).toMatchObject([{ type: "synthetic", text: "end note" }])
+      expect(yield* SessionInbox.find(db, (yield* session.context(created.id))[0].id)).toBeUndefined()
+    }),
+  )
+
   it.effect("forks a session by replaying a durable fork event into copied projected rows", () =>
     Effect.gen(function* () {
       const session = yield* Session.Service

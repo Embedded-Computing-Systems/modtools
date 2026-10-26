@@ -296,6 +296,28 @@ export const make = Effect.fn("Session.make")(function* () {
         Effect.gen(function* () {
           yield* get(sessionID)
           const inputID = input.id ?? SessionMessage.ID.create()
+          // MOD: a note with metadata.record and resume:false is recorded at once instead of
+          // waiting in the inbox for the next run, the way instruction notices are published.
+          if (input.resume === false && input.metadata?.record === true) {
+            yield* bus.publish(SessionEvent.Synthetic, {
+              sessionID,
+              text: input.text,
+              description: input.description,
+              metadata: input.metadata,
+            })
+            return SessionInbox.Synthetic.make({
+              id: inputID,
+              sessionID,
+              time: { created: yield* DateTime.now },
+              type: "synthetic",
+              payload: SessionInbox.SyntheticPayload.make({
+                text: input.text,
+                description: input.description,
+                metadata: input.metadata,
+              }),
+              delivery: input.delivery ?? "steer",
+            })
+          }
           const admittedInput = {
             type: "synthetic",
             payload: SessionInbox.SyntheticPayload.make({
