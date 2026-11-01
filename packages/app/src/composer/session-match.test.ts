@@ -2,11 +2,11 @@ import { expect, test } from "bun:test"
 import { matchesSessionTitle } from "./session-match"
 
 test.each([
-  { title: "MOD CONSOLE", query: "open con", matches: true },
-  { title: "MOD CONSOLE", query: "MOD CONSOLE", matches: true },
-  { title: "MOD CONSOLE", query: "console", matches: true },
-  { title: "MOD CONSOLE", query: "MOD CONSOLE ", matches: false },
-  { title: "MOD CONSOLE", query: "MOD CONSOLE on", matches: false },
+  { title: "OPENCODE CONSOLE", query: "open con", matches: true },
+  { title: "OPENCODE CONSOLE", query: "OPENCODE CONSOLE", matches: true },
+  { title: "OPENCODE CONSOLE", query: "console", matches: true },
+  { title: "OPENCODE CONSOLE", query: "OPENCODE CONSOLE ", matches: false },
+  { title: "OPENCODE CONSOLE", query: "OPENCODE CONSOLE on", matches: false },
   { title: "HOME", query: "HOME ", matches: false },
   { title: "HOME", query: "home", matches: true },
   { title: "foobar", query: "foo bar", matches: false },
