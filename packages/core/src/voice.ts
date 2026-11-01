@@ -66,7 +66,7 @@ export const layer = Layer.effect(
         )
 
     // Where an engine's sessions start: its provider with the server's key or, for GPT-Live without an OpenAI key,
-    // MOD's hosted GPT-Live with the server's OpenCode Console connection, whose sign-in works as well as a key.
+    // OpenCode's hosted GPT-Live with the server's OpenCode Console connection, whose sign-in works as well as a key.
     const source = Effect.fnUntraced(function* (engine: (typeof Realtime.engines)[number]) {
       const connection = yield* findConnection(engine.provider)
       if (connection) return { provider: engine.provider, connection }
@@ -134,7 +134,7 @@ export const node = makeLocationNode({
 })
 
 /** MOD hosts GPT-Live on its OpenAI account, billed to the workspace whose credential starts a session. */
-const openCodeLive = { provider: "mod", baseURL: "https://opencode.ai/inference/openai/v1" } as const
+const openCodeLive = { provider: "opencode", baseURL: "https://opencode.ai/inference/openai/v1" } as const
 
 /**
  * What a credential starts a session with: a provider's API key on its own API, or an OpenCode Console API key or
