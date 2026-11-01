@@ -731,7 +731,7 @@ describe("OpenAI-compatible Chat route", () => {
     it.effect("replays the reasoning as content instead of an empty assistant message", () =>
       Effect.gen(function* () {
         const prepared = yield* compileRequest(
-          LLM.request({
+          ai.request({
             model: mistral,
             messages: [Message.assistant([{ type: "reasoning", text: "thinking it through" }])],
           }),
@@ -746,7 +746,7 @@ describe("OpenAI-compatible Chat route", () => {
     it.effect("leaves an answered turn alone", () =>
       Effect.gen(function* () {
         const prepared = yield* compileRequest(
-          LLM.request({
+          ai.request({
             model: mistral,
             messages: [
               Message.assistant([
