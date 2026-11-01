@@ -13,6 +13,7 @@ import { marks } from "./marks"
 import { initializeFirstLaunchOnboarding } from "./onboarding"
 import { Shutdown } from "./shutdown"
 import { consoleReturnWindow } from "./deep-link"
+import { takeEarlyDeepLinks } from "./early-deep-links"
 
 export interface Interface {
   readonly relaunch: () => void
@@ -138,6 +139,12 @@ const runtime = Layer.effect(
 
     app.on("second-instance", secondInstance)
     app.on("open-url", openUrl)
+    // Links that launched the app wait for the renderer's first read of the queue.
+    const launchLinks = takeEarlyDeepLinks()
+    if (launchLinks.length) {
+      runFork(Effect.logInfo("deep link received at launch", { urls: launchLinks }))
+      pendingDeepLinks.push(...launchLinks)
+    }
     app.on("before-quit", beforeQuit)
     app.on("will-quit", willQuit)
     app.on("child-process-gone", childProcessGone)
