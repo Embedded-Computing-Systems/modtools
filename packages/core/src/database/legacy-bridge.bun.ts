@@ -28,6 +28,7 @@ export type SyncResult = {
 }
 
 const NONE: SyncResult = { attached: false, sessions: 0, skipped: 0 }
+const reported = new Set<string>()
 
 /** The file backing the open connection, or undefined for an in-memory database. */
 export function mainFile(db: Database.Interface["db"]) {
@@ -154,9 +155,13 @@ export function sync(
       else delta.push(row)
     }
 
+    // The sync repeats while the service runs, so each conflict is reported once.
     yield* Effect.forEach(
-      conflicts,
-      (id) => Effect.logWarning("V1 session changed in both stores; keeping the v2 copy", { sessionID: id }),
+      conflicts.filter((id) => !reported.has(id)),
+      (id) =>
+        Effect.logWarning("V1 session changed in both stores; keeping the v2 copy", { sessionID: id }).pipe(
+          Effect.tap(() => Effect.sync(() => reported.add(id))),
+        ),
       { discard: true },
     )
 
