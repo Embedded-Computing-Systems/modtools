@@ -74,7 +74,7 @@ const readV1Count = (file: string, table: string) => {
 
 // The Database layer runs the migration chain and hands out the same handle the
 // production importer uses.
-const withDatabase = <A>(dir: string, effect: (db: Database.Interface["db"]) => Effect.Effect<A>): Promise<A> =>
+const withDatabase = <A, E>(dir: string, effect: (db: Database.Interface["db"]) => Effect.Effect<A, E>): Promise<A> =>
   Effect.runPromise(
     Effect.scoped(
       Effect.gen(function* () {
@@ -82,7 +82,7 @@ const withDatabase = <A>(dir: string, effect: (db: Database.Interface["db"]) => 
         return yield* Effect.gen(function* () {
           const service = yield* Database.Service
           yield* DatabaseMigration.apply(service.db)
-          return yield* effect(service.db)
+          return yield* effect(service.db).pipe(Effect.orDie)
         }).pipe(Effect.provide(layer))
       }).pipe(Effect.provideService(Global.Service, Global.make({ data: dir }))),
     ) as Effect.Effect<A>,
