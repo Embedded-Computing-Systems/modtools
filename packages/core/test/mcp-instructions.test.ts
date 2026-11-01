@@ -1,9 +1,9 @@
 import { describe, expect } from "bun:test"
 import { Effect, Layer } from "effect"
-import { AppNodeBuilder } from "@opencode/core/effect/app-node-builder"
-import { Mcp } from "@opencode/core/mcp/index"
-import { McpInstructions } from "@opencode/core/mcp/instructions"
-import { McpTool } from "@opencode/core/tool/mcp"
+import { AppNodeBuilder } from "@modtools-ai/core/effect/app-node-builder"
+import { Mcp } from "@modtools-ai/core/mcp/index"
+import { McpInstructions } from "@modtools-ai/core/mcp/instructions"
+import { McpTool } from "@modtools-ai/core/tool/mcp"
 import { it } from "./lib/effect"
 import { readInitial, readUpdate } from "./lib/instructions"
 

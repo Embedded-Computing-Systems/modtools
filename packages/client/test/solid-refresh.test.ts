@@ -9,7 +9,7 @@ test("config reads and update refreshes are opt-in", async () => {
   const location = { directory: "/project" }
   let model = "provider/first"
   const api = OpenCode.make({
-    baseUrl: "http://opencode.local",
+    baseUrl: "http://mod.local",
     fetch: async (input, init) => {
       const request = input instanceof Request ? input : new Request(input, init)
       const url = new URL(request.url)
@@ -67,7 +67,7 @@ test("event refreshes report failures, remain retryable, and preserve explicit r
     location: { directory: "/project" },
   }
   const api = OpenCode.make({
-    baseUrl: "http://opencode.local",
+    baseUrl: "http://mod.local",
     fetch: async () => {
       state.requests++
       if (state.offline) throw new TypeError("Failed to fetch")
@@ -124,7 +124,7 @@ test.each(["reconnecting", "disposed"] as const)("background reads respect %s ow
   const errors: unknown[] = []
   const state = { requests: 0, status: "connected" as "connected" | "reconnecting" }
   const api = OpenCode.make({
-    baseUrl: "http://opencode.local",
+    baseUrl: "http://mod.local",
     fetch: () => {
       if (state.requests++ === 0) return Promise.resolve(Response.json({ location: { directory: "/project" }, data: [] }))
       return pending.promise
@@ -173,7 +173,7 @@ test("a burst of mcp.status.changed events refetches the server list once it set
   const requests: string[] = []
   const location = { directory: "/project" }
   const api = OpenCode.make({
-    baseUrl: "http://opencode.local",
+    baseUrl: "http://mod.local",
     fetch: async (input, init) => {
       const request = input instanceof Request ? input : new Request(input, init)
       requests.push(new URL(request.url).pathname)
@@ -213,7 +213,7 @@ test("invalidations that land before a queued reload starts are absorbed by it",
   const pending: Array<PromiseWithResolvers<Response>> = []
   const location = { directory: "/project" }
   const api = OpenCode.make({
-    baseUrl: "http://opencode.local",
+    baseUrl: "http://mod.local",
     fetch: () => {
       const deferred = Promise.withResolvers<Response>()
       pending.push(deferred)
@@ -263,7 +263,7 @@ test("event-driven session reads evict missing sessions without reporting an err
     location: { directory: "/project" },
   }
   const api = OpenCode.make({
-    baseUrl: "http://opencode.local",
+    baseUrl: "http://mod.local",
     fetch: async () =>
       Response.json(
         { _tag: "SessionNotFoundError", sessionID: session.id, message: `Session not found: ${session.id}` },
@@ -334,7 +334,7 @@ test("delayed metadata and family reads do not resurrect sessions deleted while 
   const familyRelease = Promise.withResolvers<void>()
   const requests: string[] = []
   const api = OpenCode.make({
-    baseUrl: "http://opencode.local",
+    baseUrl: "http://mod.local",
     fetch: async (input, init) => {
       const url = new URL((input instanceof Request ? input : new Request(input, init)).url)
       requests.push(`${url.pathname}${url.search}`)

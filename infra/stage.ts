@@ -11,7 +11,7 @@ export const deployAws = $app.stage === awsStage
 if ($app.stage === "production") {
   new cloudflare.DnsRecord("TrustCenter", {
     zoneId: zoneID,
-    name: "trust.opencode.ai",
+    name: "trust.mod.ai",
     type: "CNAME",
     content: "3a69a5bb27875189.vercel-dns-016.com",
     proxied: false,

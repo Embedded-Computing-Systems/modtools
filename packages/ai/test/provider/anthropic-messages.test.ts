@@ -1059,7 +1059,7 @@ describe("Anthropic Messages route", () => {
         .model({ id: "kimi-k2.6" })
       const codingPrepared = yield* compileUnsignedReasoning(coding.model({ id: "k3" }))
       const moonshotPrepared = yield* compileUnsignedReasoning(moonshot)
-      const qwenPrepared = yield* compileUnsignedReasoning(coding.with({ provider: "opencode" }).model({ id: "qwen3.8-flash" }))
+      const qwenPrepared = yield* compileUnsignedReasoning(coding.with({ provider: "mod" }).model({ id: "qwen3.8-flash" }))
       const minimaxPrepared = yield* compileUnsignedReasoning(
         coding.with({ provider: "opencode-go" }).model({ id: "minimax-m3" }),
       )
@@ -1316,7 +1316,7 @@ describe("Anthropic Messages route", () => {
               {
                 type: "message_delta",
                 delta: { stop_reason: "end_turn" },
-                usage: { output_tokens: 2, cost: 0, opencode: { allowance: 0.0042 } },
+                usage: { output_tokens: 2, cost: 0, mod: { allowance: 0.0042 } },
               },
               { type: "message_stop" },
             ),

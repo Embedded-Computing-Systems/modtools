@@ -1,16 +1,51 @@
 import { type ComponentProps } from "solid-js"
 
+// The ECS microchip mark (.packages/identity/mark.svg), drawn in the theme's icon colours.
+const Chip = () => (
+  <>
+    <g stroke="var(--icon-strong-base)" stroke-width="10" stroke-linecap="round">
+      <line x1="224" y1="160" x2="224" y2="64" />
+      <line x1="224" y1="352" x2="224" y2="448" />
+      <line x1="160" y1="224" x2="64" y2="224" />
+      <line x1="352" y1="224" x2="448" y2="224" />
+      <line x1="256" y1="160" x2="256" y2="64" />
+      <line x1="256" y1="352" x2="256" y2="448" />
+      <line x1="160" y1="256" x2="64" y2="256" />
+      <line x1="352" y1="256" x2="448" y2="256" />
+      <line x1="288" y1="160" x2="288" y2="64" />
+      <line x1="288" y1="352" x2="288" y2="448" />
+      <line x1="160" y1="288" x2="64" y2="288" />
+      <line x1="352" y1="288" x2="448" y2="288" />
+    </g>
+    <g fill="var(--icon-strong-base)">
+      <circle cx="224" cy="48" r="13" />
+      <circle cx="224" cy="464" r="13" />
+      <circle cx="48" cy="224" r="13" />
+      <circle cx="464" cy="224" r="13" />
+      <circle cx="256" cy="48" r="13" />
+      <circle cx="256" cy="464" r="13" />
+      <circle cx="48" cy="256" r="13" />
+      <circle cx="464" cy="256" r="13" />
+      <circle cx="288" cy="48" r="13" />
+      <circle cx="288" cy="464" r="13" />
+      <circle cx="48" cy="288" r="13" />
+      <circle cx="464" cy="288" r="13" />
+      <rect x="160" y="160" width="192" height="192" rx="12" />
+    </g>
+    <rect x="192" y="192" width="128" height="128" rx="6" fill="var(--icon-weak-base)" />
+  </>
+)
+
 export const Mark = (props: { class?: string }) => {
   return (
     <svg
       data-component="logo-mark"
       classList={{ [props.class ?? ""]: !!props.class }}
-      viewBox="0 0 16 20"
+      viewBox="0 0 512 512"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path data-slot="logo-logo-mark-shadow" d="M12 16H4V8H12V16Z" fill="var(--icon-weak-base)" />
-      <path data-slot="logo-logo-mark-o" d="M12 4H4V16H12V4ZM16 20H0V0H16V20Z" fill="var(--icon-strong-base)" />
+      <Chip />
     </svg>
   )
 }
@@ -21,12 +56,11 @@ export const Splash = (props: Pick<ComponentProps<"svg">, "ref" | "class">) => {
       ref={props.ref}
       data-component="logo-splash"
       classList={{ [props.class ?? ""]: !!props.class }}
-      viewBox="0 0 80 100"
+      viewBox="0 0 512 512"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d="M60 80H20V40H60V80Z" fill="var(--icon-base)" />
-      <path d="M60 20H20V80H60V20ZM80 100H0V0H80V100Z" fill="var(--icon-strong-base)" />
+      <Chip />
     </svg>
   )
 }
@@ -35,27 +69,20 @@ export const Logo = (props: { class?: string }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 234 42"
+      viewBox="0 0 144 42"
       fill="none"
       classList={{ [props.class ?? ""]: !!props.class }}
     >
-      <g>
-        <path d="M18 30H6V18H18V30Z" fill="var(--icon-weak-base)" />
-        <path d="M18 12H6V30H18V12ZM24 36H0V6H24V36Z" fill="var(--icon-base)" />
-        <path d="M48 30H36V18H48V30Z" fill="var(--icon-weak-base)" />
-        <path d="M36 30H48V12H36V30ZM54 36H36V42H30V6H54V36Z" fill="var(--icon-base)" />
-        <path d="M84 24V30H66V24H84Z" fill="var(--icon-weak-base)" />
-        <path d="M84 24H66V30H84V36H60V6H84V24ZM66 18H78V12H66V18Z" fill="var(--icon-base)" />
-        <path d="M108 36H96V18H108V36Z" fill="var(--icon-weak-base)" />
-        <path d="M108 12H96V36H90V6H108V12ZM114 36H108V12H114V36Z" fill="var(--icon-base)" />
-        <path d="M144 30H126V18H144V30Z" fill="var(--icon-weak-base)" />
-        <path d="M144 12H126V30H144V36H120V6H144V12Z" fill="var(--icon-strong-base)" />
-        <path d="M168 30H156V18H168V30Z" fill="var(--icon-weak-base)" />
-        <path d="M168 12H156V30H168V12ZM174 36H150V6H174V36Z" fill="var(--icon-strong-base)" />
-        <path d="M198 30H186V18H198V30Z" fill="var(--icon-weak-base)" />
-        <path d="M198 12H186V30H198V12ZM204 36H180V6H198V0H204V36Z" fill="var(--icon-strong-base)" />
-        <path d="M234 24V30H216V24H234Z" fill="var(--icon-weak-base)" />
-        <path d="M216 12V18H228V12H216ZM234 24H216V30H234V36H210V6H234V24Z" fill="var(--icon-strong-base)" />
+      <g transform="scale(0.08203125)">
+        <Chip />
+      </g>
+      <g transform="translate(54 0)">
+        <path d="M12 36H6V24H12V36ZM24 36H18V24H24V36Z" fill="var(--icon-weak-base)" />
+        <path d="M0 6H30V36H24V12H18V24H12V12H6V36H0V6Z" fill="var(--icon-strong-base)" />
+        <path d="M54 30H42V18H54V30Z" fill="var(--icon-weak-base)" />
+        <path d="M54 12H42V30H54V12ZM60 36H36V6H60V36Z" fill="var(--icon-strong-base)" />
+        <path d="M84 30H72V18H84V30Z" fill="var(--icon-weak-base)" />
+        <path d="M84 12H72V30H84V12ZM66 6H84V12H90V30H84V36H66V6Z" fill="var(--icon-strong-base)" />
       </g>
     </svg>
   )

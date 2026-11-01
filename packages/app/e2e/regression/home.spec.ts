@@ -1,4 +1,4 @@
-import type { OpenCodeEvent } from "@opencode/client/promise"
+import type { OpenCodeEvent } from "@modtools-ai/client/promise"
 import { expect, test, type Page } from "@playwright/test"
 import { expectPath, holdRoute, NO_PROVIDER, project, REMOTE_SERVER, seed, sessionHref, T0 } from "../utils/app"
 import { mockOpenCodeServer } from "../utils/mock-server"
@@ -65,7 +65,7 @@ test("Home lists projects and sessions when stored state hides every server", as
   await mockStressTimeline(page)
   await seed(page, { usedProjects: { local: [fixture.project.id] } })
   // A second seed merges into the server entry the first one wrote.
-  await seed(page, { storage: { "opencode.global.dat:server": { hidden: { [fixture.serverKey]: true } } } })
+  await seed(page, { storage: { "mod.global.dat:server": { hidden: { [fixture.serverKey]: true } } } })
   await page.goto("/")
 
   await expect(
@@ -252,7 +252,7 @@ test("Home migrates the directories an older build listed to the server's curren
   await page.goto("/")
   await expect(view.rows).toHaveText(["api", "web"])
   await expect
-    .poll(() => page.evaluate(() => JSON.parse(localStorage.getItem("opencode.global.dat:server") ?? "{}")))
+    .poll(() => page.evaluate(() => JSON.parse(localStorage.getItem("mod.global.dat:server") ?? "{}")))
     .toMatchObject({ usedProjectIDs: { local: ["proj_api", "proj_web"] }, projects: {} })
 })
 
@@ -330,7 +330,7 @@ test("a server whose saved password changes works with the new password", async 
   // Saved with the password the server accepts until the test changes it.
   await seed(page, {
     storage: {
-      "opencode.global.dat:server": {
+      "mod.global.dat:server": {
         list: [{ type: "http", displayName: "Remote", http: { url: REMOTE_SERVER, password: "old-password" } }],
       },
     },
@@ -349,7 +349,7 @@ test("a server whose saved password changes works with the new password", async 
   await page.getByRole("menuitem", { name: "Edit", exact: true }).click()
   const editor = page.getByRole("dialog", { name: "Edit server" })
   await editor.getByPlaceholder("password").fill("new-password")
-  // The server now rejects the old password, as after `opencode service set password`.
+  // The server now rejects the old password, as after `mod service set password`.
   accepted.password = "new-password"
   await editor.getByRole("button", { name: "Save", exact: true }).click()
   await expect(editor).toHaveCount(0)

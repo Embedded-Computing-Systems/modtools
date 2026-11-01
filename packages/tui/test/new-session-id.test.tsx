@@ -5,8 +5,8 @@ import { json } from "./fixture/tui-client"
 type SessionInput = { id?: string; location?: { directory: string } }
 
 const location = {
-  directory: "/tmp/opencode/packages/tui",
-  project: { id: "project", directory: "/tmp/opencode", canonical: "/tmp/opencode" },
+  directory: "/tmp/mod/packages/tui",
+  project: { id: "project", directory: "/tmp/mod", canonical: "/tmp/mod" },
 }
 
 function sessionInfo(record: SessionInput) {

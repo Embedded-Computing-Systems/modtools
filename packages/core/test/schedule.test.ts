@@ -1,47 +1,47 @@
 import { describe, expect } from "bun:test"
-import { FileSystem } from "@opencode/core/filesystem"
+import { FileSystem } from "@modtools-ai/core/filesystem"
 import { Clock, DateTime, Effect, Fiber, Latch, Layer, LayerMap, Queue, Schema, Sink, Stream } from "effect"
 import { ChildProcessSpawner } from "effect/process"
 import { ExitCode, makeHandle, ProcessId } from "effect/process/ChildProcessSpawner"
 import { TestClock } from "effect/testing"
 import { eq } from "drizzle-orm"
-import { Agent } from "@opencode/core/agent"
-import { Database } from "@opencode/core/database/database"
-import { AppNodeBuilder } from "@opencode/core/effect/app-node-builder"
-import { Environment } from "@opencode/core/environment/index"
-import { FileAccess } from "@opencode/core/file-access"
-import { Image } from "@opencode/core/image"
-import { Instance } from "@opencode/core/instance/service"
-import { LayerNode } from "@opencode/util/effect/layer-node"
-import { makeGlobalNode } from "@opencode/util/effect/app-node"
-import { Bus } from "@opencode/core/bus"
-import { Location } from "@opencode/core/location"
-import { Permission } from "@opencode/core/permission"
-import { PermissionSaved } from "@opencode/core/permission/saved"
-import { Project } from "@opencode/core/project"
-import { ProjectTable } from "@opencode/core/project/sql"
-import { AbsolutePath } from "@opencode/core/schema"
-import { Schedule } from "@opencode/core/schedule"
-import { ScheduleTable } from "@opencode/core/schedule/sql"
-import { Session } from "@opencode/core/session"
-import { SessionMessage } from "@opencode/core/session/message"
-import { SessionProjector } from "@opencode/core/session/projector"
-import { SessionExecution } from "@opencode/core/session/execution"
-import { SessionInbox } from "@opencode/core/session/inbox"
-import { SessionInboxTable, SessionTable } from "@opencode/core/session/sql"
-import { SessionStore } from "@opencode/core/session/store"
-import { ShellSelect } from "@opencode/core/shell/select"
-import { Tool } from "@opencode/core/tool"
-import { McpTool } from "@opencode/core/tool/mcp"
-import { LocationServiceMap } from "@opencode/core/location-service-map"
-import type { LocationServices } from "@opencode/core/location-services"
-import { Plugin } from "@opencode/core/plugin"
-import { PluginHooks } from "@opencode/core/plugin/hooks"
-import { Snapshot } from "@opencode/core/snapshot"
-import { Skill } from "@opencode/core/skill"
-import { Config } from "@opencode/core/config"
-import { Document, Info } from "@opencode/schema/config"
-import { ConfigExperimental } from "@opencode/schema/config/experimental"
+import { Agent } from "@modtools-ai/core/agent"
+import { Database } from "@modtools-ai/core/database/database"
+import { AppNodeBuilder } from "@modtools-ai/core/effect/app-node-builder"
+import { Environment } from "@modtools-ai/core/environment/index"
+import { FileAccess } from "@modtools-ai/core/file-access"
+import { Image } from "@modtools-ai/core/image"
+import { Instance } from "@modtools-ai/core/instance/service"
+import { LayerNode } from "@modtools-ai/util/effect/layer-node"
+import { makeGlobalNode } from "@modtools-ai/util/effect/app-node"
+import { Bus } from "@modtools-ai/core/bus"
+import { Location } from "@modtools-ai/core/location"
+import { Permission } from "@modtools-ai/core/permission"
+import { PermissionSaved } from "@modtools-ai/core/permission/saved"
+import { Project } from "@modtools-ai/core/project"
+import { ProjectTable } from "@modtools-ai/core/project/sql"
+import { AbsolutePath } from "@modtools-ai/core/schema"
+import { Schedule } from "@modtools-ai/core/schedule"
+import { ScheduleTable } from "@modtools-ai/core/schedule/sql"
+import { Session } from "@modtools-ai/core/session"
+import { SessionMessage } from "@modtools-ai/core/session/message"
+import { SessionProjector } from "@modtools-ai/core/session/projector"
+import { SessionExecution } from "@modtools-ai/core/session/execution"
+import { SessionInbox } from "@modtools-ai/core/session/inbox"
+import { SessionInboxTable, SessionTable } from "@modtools-ai/core/session/sql"
+import { SessionStore } from "@modtools-ai/core/session/store"
+import { ShellSelect } from "@modtools-ai/core/shell/select"
+import { Tool } from "@modtools-ai/core/tool"
+import { McpTool } from "@modtools-ai/core/tool/mcp"
+import { LocationServiceMap } from "@modtools-ai/core/location-service-map"
+import type { LocationServices } from "@modtools-ai/core/location-services"
+import { Plugin } from "@modtools-ai/core/plugin"
+import { PluginHooks } from "@modtools-ai/core/plugin/hooks"
+import { Snapshot } from "@modtools-ai/core/snapshot"
+import { Skill } from "@modtools-ai/core/skill"
+import { Config } from "@modtools-ai/core/config"
+import { Document, Info } from "@modtools-ai/schema/config"
+import { ConfigExperimental } from "@modtools-ai/schema/config/experimental"
 import { location } from "./fixture/location"
 import { testEffect } from "./lib/effect"
 import { imagePassthrough } from "./lib/image"
@@ -1426,8 +1426,8 @@ describe("Schedule", () => {
         expect(yield* bad("return await tools.slack.dangerous_edit({})")).toMatchObject({
           reason: "Tool slack.dangerous_edit cannot be used inside a schedule check",
         })
-        expect(yield* bad("return await tools.opencode.schedule_create({})")).toMatchObject({
-          reason: "Tool opencode.schedule_create cannot be used inside a schedule check",
+        expect(yield* bad("return await tools.mod.schedule_create({})")).toMatchObject({
+          reason: "Tool mod.schedule_create cannot be used inside a schedule check",
         })
 
         agentRules = [{ action: "execute", resource: "*", effect: "deny" }]
@@ -1484,7 +1484,7 @@ describe("Schedule", () => {
         yield* Effect.repeat(Effect.yieldNow, { times: 5 })
 
         // Insert directly into SQLite (bypassing primary.create so primary's in-memory doorbell is never opened)
-        // to simulate a short-lived `opencode serve` / `--standalone` writing a schedule and exiting.
+        // to simulate a short-lived `mod serve` / `--standalone` writing a schedule and exiting.
         const now = yield* Clock.currentTimeMillis
         const externalID = Schedule.ID.create()
         yield* db

@@ -1,13 +1,13 @@
 import { For, Show, createMemo, createUniqueId, type JSX } from "solid-js"
 import { createStore } from "solid-js/store"
-import { FileIcon } from "@opencode/ui/file-icon"
-import { Icon } from "@opencode/ui/icon"
-import { IconButton } from "@opencode/ui/icon-button"
-import { Keybind } from "@opencode/ui/keybind"
-import { Menu } from "@opencode/ui/menu"
-import { Tooltip } from "@opencode/ui/tooltip"
-import { getDirectory, getFilename } from "@opencode/util/path"
-import { isIconName } from "@opencode/ui/icons/catalog"
+import { FileIcon } from "@modtools-ai/ui/file-icon"
+import { Icon } from "@modtools-ai/ui/icon"
+import { IconButton } from "@modtools-ai/ui/icon-button"
+import { Keybind } from "@modtools-ai/ui/keybind"
+import { Menu } from "@modtools-ai/ui/menu"
+import { Tooltip } from "@modtools-ai/ui/tooltip"
+import { getDirectory, getFilename } from "@modtools-ai/util/path"
+import { isIconName } from "@modtools-ai/ui/icons/catalog"
 import { useCommand } from "@/shell/commands/command"
 import { useLanguage } from "@/runtime/i18n/language"
 import {
@@ -149,7 +149,7 @@ const MODIFIER_LABEL = {
 } as const
 
 /**
- * Dev builds only, behind `opencode.dev.closedTabsModifier`: the tab strip's "+". Holding the modifier while pointing at it turns it into a chevron whose click lists the
+ * Dev builds only, behind `mod.dev.closedTabsModifier`: the tab strip's "+". Holding the modifier while pointing at it turns it into a chevron whose click lists the
  * recently closed tabs; a plain click still opens a new tab. Right-click and ↓ on the focused button open the list too.
  */
 export function NewTabButton(props: {

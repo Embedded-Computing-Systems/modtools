@@ -1,10 +1,10 @@
 import { createSignal, For, onCleanup, onMount, Show } from "solid-js"
 import { createResizeObserver } from "@solid-primitives/resize-observer"
 import { Option } from "effect"
-import { Button } from "@opencode/ui/button"
-import { Dialog, DialogBody, DialogFooter, DialogHeader, DialogTitleGroup } from "@opencode/ui/dialog"
-import { prefersReducedMotion } from "@opencode/ui/motion"
-import { usePlugin, type DialogHandle, type SetupContext } from "@opencode/plugin/gui"
+import { Button } from "@modtools-ai/ui/button"
+import { Dialog, DialogBody, DialogFooter, DialogHeader, DialogTitleGroup } from "@modtools-ai/ui/dialog"
+import { prefersReducedMotion } from "@modtools-ai/ui/motion"
+import { usePlugin, type DialogHandle, type SetupContext } from "@modtools-ai/plugin/gui"
 import {
   betaBuild,
   decodeEmbeddedNotes,
@@ -23,7 +23,7 @@ export function showBetaNotes(
   ctx: SetupContext<typeof definition>,
   input: { readonly previous: string; readonly previousCommit: string | undefined; readonly markSeen: () => void },
 ) {
-  const notes = Option.flatMap(decodeEmbeddedNotes(import.meta.env.OPENCODE_BETA_NOTES), (embedded) =>
+  const notes = Option.flatMap(decodeEmbeddedNotes(import.meta.env.MODTOOLS_BETA_NOTES), (embedded) =>
     sliceBetaNotes(embedded, input.previousCommit),
   )
 

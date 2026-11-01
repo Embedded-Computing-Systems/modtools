@@ -1,25 +1,25 @@
 import { describe, expect } from "bun:test"
 import fs from "fs/promises"
 import path from "path"
-import { Bus } from "@opencode/core/bus"
-import { Config } from "@opencode/core/config"
-import { Generate } from "@opencode/core/generate"
-import { Job } from "@opencode/core/job"
-import { Location } from "@opencode/core/location"
-import { Model } from "@opencode/core/model"
-import { Permission } from "@opencode/core/permission"
-import { Plugin } from "@opencode/core/plugin"
-import { PluginHost } from "@opencode/core/plugin/host"
-import { Provider } from "@opencode/core/provider"
-import { Session } from "@opencode/core/session"
-import { SessionEvent } from "@opencode/core/session/event"
-import { Tool } from "@opencode/core/tool"
-import { ImageGenerateTool } from "@opencode/core/tool/plugin/image-generate"
-import { OpenCodeTools } from "@opencode/core/tool/plugin/opencode"
-import { Document, Event, Info } from "@opencode/schema/config"
-import { ConfigExperimental } from "@opencode/schema/config/experimental"
-import type { ImageRequest, ImageResult } from "@opencode/schema/generate"
-import { Global } from "@opencode/util/global"
+import { Bus } from "@modtools-ai/core/bus"
+import { Config } from "@modtools-ai/core/config"
+import { Generate } from "@modtools-ai/core/generate"
+import { Job } from "@modtools-ai/core/job"
+import { Location } from "@modtools-ai/core/location"
+import { Model } from "@modtools-ai/core/model"
+import { Permission } from "@modtools-ai/core/permission"
+import { Plugin } from "@modtools-ai/core/plugin"
+import { PluginHost } from "@modtools-ai/core/plugin/host"
+import { Provider } from "@modtools-ai/core/provider"
+import { Session } from "@modtools-ai/core/session"
+import { SessionEvent } from "@modtools-ai/core/session/event"
+import { Tool } from "@modtools-ai/core/tool"
+import { ImageGenerateTool } from "@modtools-ai/core/tool/plugin/image-generate"
+import { OpenCodeTools } from "@modtools-ai/core/tool/plugin/mod"
+import { Document, Event, Info } from "@modtools-ai/schema/config"
+import { ConfigExperimental } from "@modtools-ai/schema/config/experimental"
+import type { ImageRequest, ImageResult } from "@modtools-ai/schema/generate"
+import { Global } from "@modtools-ai/util/global"
 import { Effect, Layer, Schedule, Stream } from "effect"
 import { testEffect } from "./lib/effect"
 import { permissionLayer } from "./lib/permission"
@@ -487,7 +487,7 @@ describe("experimental_image_generate", () => {
             type: "tool-call",
             id: `models-${JSON.stringify(input)}`,
             name: "execute",
-            input: { code: `return await tools.opencode.models(${JSON.stringify(input)})` },
+            input: { code: `return await tools.mod.models(${JSON.stringify(input)})` },
           },
         }).pipe(
           Effect.map((result) =>

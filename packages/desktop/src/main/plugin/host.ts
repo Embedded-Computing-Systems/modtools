@@ -1,5 +1,5 @@
 import { app, BrowserWindow } from "electron"
-import { builtins } from "@opencode/gui-plugins/main"
+import { builtins } from "@modtools-ai/gui-plugins/main"
 import {
   pluginIdAvailable,
   runsOn,
@@ -7,7 +7,7 @@ import {
   type BridgeLayout,
   type BridgeMenubarItem,
   type Entry,
-} from "@opencode/plugin/gui/host"
+} from "@modtools-ai/plugin/gui/host"
 import {
   MenubarItem,
   type Plugin,
@@ -31,9 +31,9 @@ import {
   type ServerEndpoint,
   type ServerEndpoints,
   type Windows,
-} from "@opencode/plugin/gui/main"
-import type { BuiltinCatalog, BuiltinMainContext, Lifecycle } from "@opencode/plugin/gui/builtin"
-import type { OpenCodeClient, PluginGuiBundle } from "@opencode/client"
+} from "@modtools-ai/plugin/gui/main"
+import type { BuiltinCatalog, BuiltinMainContext, Lifecycle } from "@modtools-ai/plugin/gui/builtin"
+import type { OpenCodeClient, PluginGuiBundle } from "@modtools-ai/client"
 import { Exit, Match, Predicate, Schema } from "effect"
 import type { PluginEndpoint, PluginInstalled } from "../../shared/ipc-rpc/plugins"
 import {
@@ -72,7 +72,7 @@ export type PluginHost = ReturnType<typeof createHost>
 type Loaded = {
   readonly setup: Plugin.MainSetup
   readonly i18n?: BuiltinCatalog
-  /** A plugin's options from `opencode.json`; built-ins have none. */
+  /** A plugin's options from `MOD.json`; built-ins have none. */
   readonly options?: PluginOptions
   /** The client of the server that runs a plugin, read each time; built-ins have none. */
   readonly client?: () => OpenCodeClient | undefined
@@ -109,7 +109,7 @@ type Inventory = {
   stop?: () => void
 }
 
-const loadClient = () => import("@opencode/client")
+const loadClient = () => import("@modtools-ai/client")
 
 /** The client of the app's own server, made once the client module loaded and again when the endpoint changes. */
 type SidecarClient = {
@@ -310,7 +310,7 @@ export function createHost(input: {
     if (!endpoint) return undefined
 
     const authorization = endpoint.password
-      ? `Basic ${Buffer.from(`opencode:${endpoint.password}`).toString("base64")}`
+      ? `Basic ${Buffer.from(`mod:${endpoint.password}`).toString("base64")}`
       : SidecarCredentials.authorization(sidecar, endpoint.url)
 
     return {
@@ -323,7 +323,7 @@ export function createHost(input: {
   }
 
   const about = {
-    name: "opencode",
+    name: "mod",
     version: VERSION,
     channel: CHANNEL,
     platform: "desktop",

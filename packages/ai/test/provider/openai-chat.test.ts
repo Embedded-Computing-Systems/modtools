@@ -1258,7 +1258,7 @@ describe("OpenAI Chat route", () => {
           fixedResponse(
             sseEvents(
               deltaChunk({ content: "Hello" }, "stop"),
-              usageChunk({ prompt_tokens: 5, completion_tokens: 2, cost: 0, opencode: { allowance: 0.0042 } }),
+              usageChunk({ prompt_tokens: 5, completion_tokens: 2, cost: 0, mod: { allowance: 0.0042 } }),
             ),
           ),
         ),
@@ -1275,7 +1275,7 @@ describe("OpenAI Chat route", () => {
           fixedResponse(
             sseEvents(
               deltaChunk({ content: "Hello" }, "stop"),
-              usageChunk({ prompt_tokens: 5, completion_tokens: 2, cost: -1, opencode: { allowance: "lots" } }),
+              usageChunk({ prompt_tokens: 5, completion_tokens: 2, cost: -1, mod: { allowance: "lots" } }),
             ),
           ),
         ),

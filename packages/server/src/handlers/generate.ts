@@ -1,17 +1,17 @@
-import { Generate } from "@opencode/core/generate"
-import { Location } from "@opencode/core/location"
-import { LocationServiceMap } from "@opencode/core/location-services"
-import { AbsolutePath } from "@opencode/core/schema"
+import { Generate } from "@modtools-ai/core/generate"
+import { Location } from "@modtools-ai/core/location"
+import { LocationServiceMap } from "@modtools-ai/core/location-services"
+import { AbsolutePath } from "@modtools-ai/core/schema"
 import {
   InvalidRequestError,
   ModelNotFoundError,
   ProviderRequestError,
   ServiceUnavailableError,
   UnsupportedModelError,
-} from "@opencode/protocol/errors"
-import type { DecisionRequest, ImageRequest } from "@opencode/schema/generate"
-import { Global } from "@opencode/util/global"
-import { Model } from "@opencode/schema/model"
+} from "@modtools-ai/protocol/errors"
+import type { DecisionRequest, ImageRequest } from "@modtools-ai/schema/generate"
+import { Global } from "@modtools-ai/util/global"
+import { Model } from "@modtools-ai/schema/model"
 import { Effect } from "effect"
 import { HttpApiBuilder } from "effect/http-api"
 import { Api } from "../api"

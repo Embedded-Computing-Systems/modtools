@@ -1,4 +1,4 @@
-import type { SessionMessageAssistant, SessionMessageInfo } from "@opencode/client/promise"
+import type { SessionMessageAssistant, SessionMessageInfo } from "@modtools-ai/client/promise"
 import { expect, test, type Page } from "@playwright/test"
 import { sessionHref } from "../utils/app"
 import { trackPageErrors } from "../utils/errors"

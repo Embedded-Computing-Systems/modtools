@@ -6,7 +6,7 @@ import { storyDocument, storyTool } from "../storybook/current-session-scenarios
 import { type ContextGroupPart, CurrentContextToolGroup } from "./tool-renderer"
 
 export default {
-  title: "OpenCode/Work/Tool group",
+  title: "MOD/Work/Tool group",
   id: "current-tool-group",
   component: CurrentContextToolGroup,
 }
@@ -192,7 +192,7 @@ const stickyParts: ContextGroupPart[] = [
             `sticky_grep_${index}`,
             "grep",
             "completed",
-            { path: "C:/tmp/opencode/stack/packages/plugin-review-desktop/", pattern: 'turn"|lastTurn|session\\.diff' },
+            { path: "C:/tmp/mod/stack/packages/plugin-review-desktop/", pattern: 'turn"|lastTurn|session\\.diff' },
             { metadata: { matches: 4 } },
           )
         : storyTool(

@@ -2333,7 +2333,7 @@ describe("OpenAI Responses route", () => {
           type: "response.completed",
           response: {
             id: "resp_1",
-            usage: { input_tokens: 5, output_tokens: 2, cost: 0, opencode: { allowance: 0.0042 } },
+            usage: { input_tokens: 5, output_tokens: 2, cost: 0, mod: { allowance: 0.0042 } },
           },
         },
       )

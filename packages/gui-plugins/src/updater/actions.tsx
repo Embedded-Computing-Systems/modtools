@@ -1,9 +1,9 @@
-import { Button } from "@opencode/ui/button"
-import { Dialog, DialogFooter, DialogHeader, DialogTitleGroup } from "@opencode/ui/dialog"
-import { Icon } from "@opencode/ui/icon"
-import { showToast, toaster } from "@opencode/ui/toast"
-import type { DialogHandle, IpcClient, SetupContext } from "@opencode/plugin/gui"
-import type { Updater } from "@opencode/plugin/gui/updater"
+import { Button } from "@modtools-ai/ui/button"
+import { Dialog, DialogFooter, DialogHeader, DialogTitleGroup } from "@modtools-ai/ui/dialog"
+import { Icon } from "@modtools-ai/ui/icon"
+import { showToast, toaster } from "@modtools-ai/ui/toast"
+import type { DialogHandle, IpcClient, SetupContext } from "@modtools-ai/plugin/gui"
+import type { Updater } from "@modtools-ai/plugin/gui/updater"
 import type definition from "./index"
 
 type Client = IpcClient<typeof Updater.spec>

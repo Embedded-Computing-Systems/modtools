@@ -1,9 +1,9 @@
 import fs from "node:fs/promises"
 import path from "node:path"
 import { expect } from "bun:test"
-import { UsageLimits } from "@opencode/core/usage-limits"
-import { Money } from "@opencode/schema/money"
-import { makeLocationNode } from "@opencode/util/effect/app-node"
+import { UsageLimits } from "@modtools-ai/core/usage-limits"
+import { Money } from "@modtools-ai/schema/money"
+import { makeLocationNode } from "@modtools-ai/util/effect/app-node"
 import { Effect, Layer } from "effect"
 import { tmpdir } from "../../core/test/fixture/tmpdir"
 import { it } from "../../core/test/lib/effect"
@@ -12,7 +12,7 @@ import { ServerFetch } from "../src/fetch"
 /** Requests a location's usage limits from a server whose UsageLimits answers with `get`. */
 const request = (get: UsageLimits.Interface["get"]) =>
   Effect.gen(function* () {
-    const tmp = yield* Effect.acquireDisposable(Effect.promise(() => tmpdir("opencode-usage-endpoint-")))
+    const tmp = yield* Effect.acquireDisposable(Effect.promise(() => tmpdir("mod-usage-endpoint-")))
     const global = path.join(tmp.path, "global")
     yield* Effect.promise(() => fs.mkdir(global))
     const handler = yield* ServerFetch.make(
@@ -34,7 +34,7 @@ const request = (get: UsageLimits.Interface["get"]) =>
         ],
       },
     )
-    const url = new URL("/api/experimental/usage/limits", "http://opencode.local")
+    const url = new URL("/api/experimental/usage/limits", "http://mod.local")
     url.searchParams.set("location[directory]", tmp.path)
     const response = yield* Effect.promise(() => handler(new Request(url)))
     return { status: response.status, body: yield* Effect.promise(() => response.json()) }
@@ -83,6 +83,6 @@ it.live("reports usage limits Console can't provide as unavailable", () =>
     )
 
     expect(result.status).toBe(503)
-    expect(result.body).toMatchObject({ message: "OpenCode Console budgets are unavailable", service: "opencode" })
+    expect(result.body).toMatchObject({ message: "OpenCode Console budgets are unavailable", service: "mod" })
   }),
 )

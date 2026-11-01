@@ -1,4 +1,4 @@
-import type { SessionMessageInfo } from "@opencode/client/promise"
+import type { SessionMessageInfo } from "@modtools-ai/client/promise"
 import { expect, test, type Page } from "@playwright/test"
 import { REMOTE_SERVER, seed, sessionHref } from "../utils/app"
 import { fixture, mockStressTimeline } from "../utils/session-fixture"
@@ -123,7 +123,7 @@ for (const direction of ["ltr", "rtl"] as const) {
     await expect(menu.getByRole("button", { name: "Plugins", exact: true })).toBeVisible()
     await expect(menu).not.toContainText(fixture.project.name)
     await expect(menu.getByText("No changes", { exact: true })).toHaveCount(0)
-    await expect(details.locator('use[href="#opencode-v2-icon-window-analytics"]')).toHaveCount(1)
+    await expect(details.locator('use[href="#mod-v2-icon-window-analytics"]')).toHaveCount(1)
 
     await page.keyboard.press("Escape")
     await expect(menu).toBeHidden()
@@ -359,7 +359,7 @@ test.describe("location", () => {
     await expect(trigger(page).locator('[data-slot="session-location-project"]')).toHaveText("Location")
     await expect(trigger(page).locator('[data-slot="session-location-worktree"]')).toHaveText("quiet-falcon")
     await expect(trigger(page)).not.toContainText("/")
-    await expect(trigger(page).locator('svg:has(use[href="#opencode-v2-icon-outline-worktree"])')).toBeVisible()
+    await expect(trigger(page).locator('svg:has(use[href="#mod-v2-icon-outline-worktree"])')).toBeVisible()
     await trigger(page).click()
     const card = page.locator('[data-slot="session-location-card"]')
     const path = card.getByRole("menuitem", { name: worktree, exact: true })
@@ -459,7 +459,7 @@ test.describe("location", () => {
         seed: {
           storage: {
             ...reviewTabs(worktree, "ses_location"),
-            "opencode.global.dat:plugin.file.app": { app: app.id },
+            "mod.global.dat:plugin.file.app": { app: app.id },
           },
         },
       })

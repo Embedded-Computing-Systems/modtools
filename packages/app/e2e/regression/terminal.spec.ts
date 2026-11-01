@@ -366,7 +366,7 @@ test("a server whose terminal service cannot rename yet keeps the old name and s
   await field.press("Enter")
 
   await expect(
-    page.getByText("Terminal renaming will be available after OpenCode's terminal service restarts", { exact: true }),
+    page.getByText("Terminal renaming will be available after MOD's terminal service restarts", { exact: true }),
   ).toBeVisible()
   await expect(strip.getByRole("tab", { name: "Terminal 1", exact: true })).toBeVisible()
   await expect(strip.getByRole("tab", { name: "Dev server", exact: true })).toHaveCount(0)

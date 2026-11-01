@@ -1,6 +1,6 @@
 import type { Page } from "@playwright/test"
-import type { JsonValue, SessionMessageAssistant, SessionMessageInfo } from "@opencode/client/promise"
-import { base64Encode } from "@opencode/util/encode"
+import type { JsonValue, SessionMessageAssistant, SessionMessageInfo } from "@modtools-ai/client/promise"
+import { base64Encode } from "@modtools-ai/util/encode"
 import { createTwoFilesPatch } from "diff"
 import { SERVER, pageMessagesFrom } from "./app"
 import { mockOpenCodeServer, type MockServerConfig } from "./mock-server"
@@ -347,12 +347,12 @@ export const fixture = {
   provider: {
     all: [
       {
-        id: "opencode",
-        name: "OpenCode",
+        id: "mod",
+        name: "MOD",
         models: { "claude-opus-4-6": { id: "claude-opus-4-6", name: "Claude Opus 4.6", limit: { context: 200_000 } } },
       },
     ],
-    connected: ["opencode"],
+    connected: ["mod"],
     default: { providerID: "opencode", modelID: "claude-opus-4-6" },
   },
   sessions: [
@@ -449,7 +449,7 @@ export async function installStressSessionTabs(page: Page, input?: { draftID?: s
   await page.addInitScript(
     ({ directory, sessionIDs, dirBase64, server, draftID }) => {
       localStorage.setItem(
-        "opencode.window.browser.dat:tabs",
+        "mod.window.browser.dat:tabs",
         JSON.stringify([
           ...sessionIDs.map((sessionId) => ({
             type: "session",

@@ -1,14 +1,14 @@
-import { Config } from "@opencode/core/config"
-import { ConfigIntegration } from "@opencode/core/config/integration"
-import { ConfigPolicyPlugin } from "@opencode/core/config/plugin/policy"
-import { Integration } from "@opencode/core/integration"
-import { Mcp } from "@opencode/core/mcp/index"
-import { Skill } from "@opencode/core/skill"
-import { Info } from "@opencode/schema/config"
-import { ConfigPolicy } from "@opencode/schema/config/policy"
-import { ID } from "@opencode/schema/event"
-import { Credential } from "@opencode/core/credential"
-import { WebSearch } from "@opencode/core/websearch"
+import { Config } from "@modtools-ai/core/config"
+import { ConfigIntegration } from "@modtools-ai/core/config/integration"
+import { ConfigPolicyPlugin } from "@modtools-ai/core/config/plugin/policy"
+import { Integration } from "@modtools-ai/core/integration"
+import { Mcp } from "@modtools-ai/core/mcp/index"
+import { Skill } from "@modtools-ai/core/skill"
+import { Info } from "@modtools-ai/schema/config"
+import { ConfigPolicy } from "@modtools-ai/schema/config/policy"
+import { ID } from "@modtools-ai/schema/event"
+import { Credential } from "@modtools-ai/core/credential"
+import { WebSearch } from "@modtools-ai/core/websearch"
 import { Effect, Schema, Stream } from "effect"
 import { host } from "../plugin/host"
 
@@ -17,7 +17,7 @@ export function organizationPolicy(policies: ConfigPolicy.Info[], organization?:
   return new ConfigIntegration.Document({
     type: "document",
     integrationID: Integration.ID.make("opencode"),
-    connection: { type: "env", name: "OPENCODE_API_KEY" },
+    connection: { type: "env", name: "MODTOOLS_API_KEY" },
     organization,
     info: Schema.decodeUnknownSync(Info)({ policies }),
   })

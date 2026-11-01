@@ -169,15 +169,18 @@ test.each(
     { width: 56, showSession: true },
     { width: 80, showSession: true },
     { width: 80, showSession: false },
-  ].flatMap((size) => [false, true].map((mono) => ({ ...size, mono }))),
+  ]
+    .flatMap((size) => [false, true].map((mono) => ({ ...size, mono })))
+    // MOD's shorter resume command fits the full layout at 56 mono columns.
+    .filter((input) => !(input.width === 56 && input.mono)),
 )("exit retains the complete resume command (%o)", async (input) => {
   const result = await renderSplash(
     exitSplash({ ...input, title: "Review mini layout", session_id: sessionID, theme }),
     input.width,
   )
-  const command = `opencode mini -s ${sessionID}`
+  const command = `mod mini -s ${sessionID}`
   const commandRows =
-    input.width >= 80 ? [result.rows[2].slice(result.rows[2].indexOf("opencode"))] : result.rows.slice(1)
+    input.width >= 80 ? [result.rows[2].slice(result.rows[2].indexOf("mod"))] : result.rows.slice(1)
   const reconstructed = commandRows
     .map((row, index) => (index < commandRows.length - 1 ? row.padEnd(input.width) : row))
     .join("")
@@ -191,6 +194,6 @@ test.each(
     expect(result.rows).toHaveLength(1 + Math.ceil(command.length / input.width))
   }
   if (input.mono) expect(result.rows.join("")).not.toMatch(/[^\x20-\x7e]/)
-  expect(result.spans.find((span) => span.text.includes("opencode"))?.fg.intent).toBe("default")
-  expect(result.spans.find((span) => span.text.includes("opencode"))?.fg.toInts()).toEqual(theme.right.toInts())
+  expect(result.spans.find((span) => span.text.includes("mod"))?.fg.intent).toBe("default")
+  expect(result.spans.find((span) => span.text.includes("mod"))?.fg.toInts()).toEqual(theme.right.toInts())
 })

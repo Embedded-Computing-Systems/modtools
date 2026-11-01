@@ -1,6 +1,6 @@
-import { Splash } from "@opencode/ui/logo"
-import { Wordmark } from "@opencode/ui/wordmark"
-import type { Platform } from "@opencode/app/desktop"
+import { Splash } from "@modtools-ai/ui/logo"
+import { Wordmark } from "@modtools-ai/ui/wordmark"
+import type { Platform } from "@modtools-ai/app/desktop"
 import { onCleanup, onMount, Show } from "solid-js"
 import { createStore } from "solid-js/store"
 import "./splash.css"
@@ -84,7 +84,7 @@ export function LoadingSplash(props: {
                 outline
                 fade={false}
                 muted={false}
-                class="mx-auto block h-auto w-4/5 text-v2-icon-icon-faint opacity-50"
+                class="mx-auto block h-auto w-[32%] text-v2-icon-icon-faint opacity-50"
               />
             </div>
           </div>

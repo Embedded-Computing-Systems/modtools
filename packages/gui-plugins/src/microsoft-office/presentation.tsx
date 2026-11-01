@@ -1,7 +1,7 @@
 import { onCleanup, Show } from "solid-js"
 import { createStore } from "solid-js/store"
-import { Loader } from "@opencode/ui/loader"
-import { createKeyed, usePlugin } from "@opencode/plugin/gui"
+import { Loader } from "@modtools-ai/ui/loader"
+import { createKeyed, usePlugin } from "@modtools-ai/plugin/gui"
 import { OfficePages, type PaintPage } from "./pages"
 import { paper } from "./paper"
 import {
@@ -13,7 +13,7 @@ import {
   type VectorRequest,
 } from "./slide-protocol"
 import { createWorkerClient, movableBuffer, SupersededError, WorkerClosedError } from "./worker-rpc"
-import type { FileViewerProps } from "@opencode/plugin/gui/file"
+import type { FileViewerProps } from "@modtools-ai/plugin/gui/file"
 
 type Opened = { readonly slides: readonly SlideSummary[]; readonly paint: PaintPage }
 

@@ -1,9 +1,9 @@
-import { resolveThemeVariant } from "@opencode/ui/theme/resolve"
-import type { DesktopTheme } from "@opencode/ui/theme/types"
-import { desktopZoomLevels } from "@opencode/app/desktop-menu"
+import { resolveThemeVariant } from "@modtools-ai/ui/theme/resolve"
+import type { DesktopTheme } from "@modtools-ai/ui/theme/types"
+import { desktopZoomLevels } from "@modtools-ai/app/desktop-menu"
 import { nativeTheme, type BrowserWindowConstructorOptions } from "electron"
 import { Predicate } from "effect"
-import oc2ThemeJson from "../../../../ui/src/theme/themes/oc-2.json"
+import mod2ThemeJson from "../../../../ui/src/theme/themes/oc-2.json"
 import { BACKGROUND_COLOR_KEY, ZOOM_LEVEL_KEY } from "../storage/keys"
 import { getStore } from "../storage/store"
 
@@ -11,7 +11,7 @@ import { getStore } from "../storage/store"
 // full window setup in appearance.ts, so both draw the same frame.
 
 // SAFETY: oc-2.json is the bundled default theme, which the UI package loads as a DesktopTheme too.
-const oc2Theme = oc2ThemeJson as DesktopTheme
+const mod2Theme = mod2ThemeJson as DesktopTheme
 
 // Match the renderer's 36px titlebar plus its former 8px content inset.
 export const titlebarHeight = 44
@@ -29,7 +29,7 @@ export function storedBackgroundColor() {
   if (saved !== undefined) return saved
   const dark = tone() === "dark"
 
-  return resolveThemeVariant(dark ? oc2Theme.dark : oc2Theme.light, dark)["background-base"]
+  return resolveThemeVariant(dark ? mod2Theme.dark : mod2Theme.light, dark)["background-base"]
 }
 
 // The colour the renderer reported on its last run, if it ever did.

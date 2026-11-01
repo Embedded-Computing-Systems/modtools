@@ -25,8 +25,8 @@ test("creates a session in a new project and selects its model", async ({ page }
     provider: () => ({
       all: [
         {
-          id: "opencode",
-          name: "OpenCode",
+          id: "mod",
+          name: "MOD",
           models: {
             "free-model": {
               id: "free-model",
@@ -59,7 +59,7 @@ test("creates a session in a new project and selects its model", async ({ page }
   })
   await page.addInitScript(() => {
     localStorage.setItem(
-      "opencode.global.dat:model",
+      "mod.global.dat:model",
       JSON.stringify({
         user: [
           { providerID: "opencode", modelID: "free-model", visibility: "show" },
@@ -90,7 +90,7 @@ test("creates a session in a new project and selects its model", async ({ page }
   await expect(directoryItem).toBeVisible()
   await directoryItem.click()
   await expect(directoryItem).toHaveAttribute("aria-selected", "true")
-  await expect(picker.getByText("C:\\OpenCode\\NewProject", { exact: true })).toBeVisible()
+  await expect(picker.getByText("C:\\MOD\\NewProject", { exact: true })).toBeVisible()
   const selectFolder = picker.getByRole("button", { name: "Select folder", exact: true })
   await expect(selectFolder).toBeEnabled()
   await selectFolder.click()

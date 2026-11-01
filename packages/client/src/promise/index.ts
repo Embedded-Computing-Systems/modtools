@@ -25,5 +25,5 @@ export type { EventSubscribeOutput as OpenCodeEvent } from "./generated/types.js
 export type {
   MediaFileAttachment as PromptMediaFileAttachment,
   Attachment as PromptAttachment,
-} from "@opencode/schema/prompt"
+} from "@modtools-ai/schema/prompt"
 export type OpenCodeClient = ReturnType<typeof OpenCode.make>

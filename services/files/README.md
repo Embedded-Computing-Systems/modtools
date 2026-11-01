@@ -4,15 +4,15 @@ Each environment has one R2 bucket, a Worker, and a `/files/*` route on its doma
 
 | Environment | Bucket and Worker           | Public URL                       |
 | ----------- | --------------------------- | -------------------------------- |
-| Development | `opencode-dev-files`        | `https://dev.opencode.ai/files/` |
-| Production  | `opencode-production-files` | `https://opencode.ai/files/`     |
+| Development | `MOD-dev-files`        | `https://dev.opencode.ai/files/` |
+| Production  | `MOD-production-files` | `https://opencode.ai/files/`     |
 
 The Worker removes `/files/` and URL-decodes the remaining path to obtain the R2
 object key. For example:
 
 ```text
-R2 key: releases/1.0.0/opencode-linux-x64.tar.gz
-URL:    https://opencode.ai/files/releases/1.0.0/opencode-linux-x64.tar.gz
+R2 key: releases/1.0.0/MOD-linux-x64.tar.gz
+URL:    https://opencode.ai/files/releases/1.0.0/MOD-linux-x64.tar.gz
 
 R2 key: videos/demo.mp4
 URL:    https://opencode.ai/files/videos/demo.mp4
@@ -33,7 +33,7 @@ bun run deploy --env production
 ```
 
 The existing buckets are reused. For a fresh environment, create its bucket once
-with `bunx wrangler r2 bucket create opencode-<stage>-files` and add the matching
+with `bunx wrangler r2 bucket create MOD-<stage>-files` and add the matching
 environment to `wrangler.jsonc`.
 
 `.github/workflows/deploy-files.yml` deploys development on every push to `dev`
@@ -74,11 +74,11 @@ check out only `.github/release/`, and never execute repository code:
 to the production bucket for every release channel:
 
 ```text
-R2 key: bin/0.0.0-dev-123/opencode-linux-x64.tar.gz
-URL:    https://opencode.ai/files/bin/0.0.0-dev-123/opencode-linux-x64.tar.gz
+R2 key: bin/0.0.0-dev-123/MOD-linux-x64.tar.gz
+URL:    https://opencode.ai/files/bin/0.0.0-dev-123/MOD-linux-x64.tar.gz
 
-R2 key: bin/2.0.0/opencode-desktop-mac-arm64.dmg
-URL:    https://opencode.ai/files/bin/2.0.0/opencode-desktop-mac-arm64.dmg
+R2 key: bin/2.0.0/MOD-desktop-mac-arm64.dmg
+URL:    https://opencode.ai/files/bin/2.0.0/MOD-desktop-mac-arm64.dmg
 ```
 
 CLI and Node CLI archives contain the standalone executable at their root.
@@ -89,7 +89,7 @@ The jobs derive S3 credentials from the `CLOUDFLARE_API_TOKEN` secret and set
 the content type, download filename, and immutable cache headers.
 
 They register `cli`, `cli-node` (dev builds), and `desktop` (beta and versioned
-releases) with distribution `opencode`, each only after all of its files have
+releases) with distribution `MOD`, each only after all of its files have
 uploaded. Every `metadata.files` entry contains the direct CDN `url`, SHA-256
 checksum, and byte size. Desktop `metadata.manifests` use those CDN URLs with
 SHA-512 checksums computed from the final signed files.

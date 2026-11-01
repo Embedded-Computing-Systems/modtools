@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test"
-import type { OpenCodeEvent } from "@opencode/client/promise"
+import type { OpenCodeEvent } from "@modtools-ai/client/promise"
 import { createRoot } from "solid-js"
 import { createOpenCodeEventSource, createServerTransport } from "./client"
 
@@ -98,7 +98,7 @@ test("rotates the HTTP client with the endpoint", async () => {
       version: "2.0.0-test",
       pid: 1,
       urls: [request.url],
-      paths: { tmp: "/tmp/opencode" },
+      paths: { tmp: "/tmp/mod" },
     })
   }) as typeof globalThis.fetch
 
@@ -121,11 +121,11 @@ test("rotates the HTTP client with the endpoint", async () => {
   expect(requests).toEqual([
     {
       url: "http://127.0.0.1:4100/api/info",
-      authorization: `Basic ${btoa("opencode:first")}`,
+      authorization: `Basic ${btoa("mod:first")}`,
     },
     {
       url: "http://127.0.0.1:4200/api/info",
-      authorization: `Basic ${btoa("opencode:second")}`,
+      authorization: `Basic ${btoa("mod:second")}`,
     },
   ])
 })

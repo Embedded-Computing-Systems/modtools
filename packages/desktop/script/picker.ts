@@ -4,11 +4,11 @@ import { existsSync } from "node:fs"
 import { dirname, join, relative, resolve, sep } from "node:path"
 import { parseSync, Visitor } from "vite"
 
-const attribute = "data-opencode-picker-source"
+const attribute = "data-mod-picker-source"
 
 export function pickerPlugin() {
   const plugin = picker()
-  const client = "/__vite_opencode_picker_client.js"
+  const client = "/__vite_mod_picker_client.js"
 
   let workspaceRoot = ""
 

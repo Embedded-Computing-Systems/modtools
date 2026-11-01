@@ -27,7 +27,7 @@ export const Go = Schema.Struct({
   monthly: Meter,
 }).annotate({ identifier: "UsageLimits.Go" })
 
-/** A model a budget covers, by the IDs OpenCode knows it by. */
+/** A model a budget covers, by the IDs MOD knows it by. */
 export interface BudgetModel extends Schema.Schema.Type<typeof BudgetModel> {}
 export const BudgetModel = Schema.Struct({
   providerID: Provider.ID,

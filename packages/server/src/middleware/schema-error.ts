@@ -1,9 +1,9 @@
 import { Effect } from "effect"
 import { HttpServerResponse } from "effect/http"
 import { HttpApiMiddleware } from "effect/http-api"
-import { InvalidRequestError, UnknownError } from "@opencode/protocol/errors"
-import { SchemaErrorMiddleware } from "@opencode/protocol/middleware/schema-error"
-export { SchemaErrorMiddleware } from "@opencode/protocol/middleware/schema-error"
+import { InvalidRequestError, UnknownError } from "@modtools-ai/protocol/errors"
+import { SchemaErrorMiddleware } from "@modtools-ai/protocol/middleware/schema-error"
+export { SchemaErrorMiddleware } from "@modtools-ai/protocol/middleware/schema-error"
 
 const REASON_LIMIT = 1024
 

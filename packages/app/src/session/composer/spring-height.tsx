@@ -16,8 +16,8 @@ import {
   prefersReducedMotion,
   Spring,
   type DurationOptions,
-} from "@opencode/ui/motion"
-import { motionTuning } from "@opencode/ui/motion-tuning"
+} from "@modtools-ai/ui/motion"
+import { motionTuning } from "@modtools-ai/ui/motion-tuning"
 
 const group = "Composer"
 

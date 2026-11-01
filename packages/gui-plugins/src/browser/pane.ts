@@ -1,12 +1,12 @@
 import { NodeHttpClient } from "@effect/platform-node"
-import { Browser } from "@opencode/plugin-browser/rpc"
-import { OpenCode } from "@opencode/client/effect"
-import { SessionID } from "@opencode/schema/session-id"
+import { Browser } from "@modtools-ai/plugin-browser/rpc"
+import { OpenCode } from "@modtools-ai/client/effect"
+import { SessionID } from "@modtools-ai/schema/session-id"
 import electron, { type BrowserWindow } from "electron"
 import { Deferred, Effect, ManagedRuntime, Predicate, Queue, Schedule, Schema, Stream } from "effect"
 import { HttpClient, HttpClientRequest } from "effect/http"
-import type { BuiltinMainStorage } from "@opencode/plugin/gui/builtin"
-import type { Embeds, Persisted, ServerEndpoints, Windows } from "@opencode/plugin/gui/main"
+import type { BuiltinMainStorage } from "@modtools-ai/plugin/gui/builtin"
+import type { Embeds, Persisted, ServerEndpoints, Windows } from "@modtools-ai/plugin/gui/main"
 import { createBrowserPage, type BrowserPage, type Shared } from "./chromium"
 import { browserFailure } from "./errors"
 import { createBrowserNetwork, type BrowserNetwork } from "./network"
@@ -106,7 +106,7 @@ export function createBrowserPane(input: {
           ]),
         ),
         focusedTabID: previous.focusedTabID,
-        partition: `opencode-browser-${crypto.randomUUID()}`,
+        partition: `mod-browser-${crypto.randomUUID()}`,
         storageKey,
         fileRoots: [],
       }

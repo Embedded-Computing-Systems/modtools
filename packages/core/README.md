@@ -1,3 +1,3 @@
-# @opencode/core
+# @modtools-ai/core
 
-Core runtime services for OpenCode.
+Core runtime services for MOD.

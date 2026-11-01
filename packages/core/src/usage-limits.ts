@@ -1,11 +1,11 @@
 export * as UsageLimits from "./usage-limits.js"
 
-import { Model } from "@opencode/schema/model"
-import { Money } from "@opencode/schema/money"
-import { Provider } from "@opencode/schema/provider"
-import { UsageLimits } from "@opencode/schema/usage-limits"
-import { makeLocationNode } from "@opencode/util/effect/app-node"
-import { httpClient } from "@opencode/util/effect/app-node-platform"
+import { Model } from "@modtools-ai/schema/model"
+import { Money } from "@modtools-ai/schema/money"
+import { Provider } from "@modtools-ai/schema/provider"
+import { UsageLimits } from "@modtools-ai/schema/usage-limits"
+import { makeLocationNode } from "@modtools-ai/util/effect/app-node"
+import { httpClient } from "@modtools-ai/util/effect/app-node-platform"
 import { Context, Duration, Effect, Layer, Schema } from "effect"
 import { HttpClient, HttpClientRequest, HttpClientResponse } from "effect/http"
 import { ConsoleAccess } from "./console-access.js"
@@ -24,7 +24,7 @@ export interface Interface {
   readonly get: () => Effect.Effect<Info | undefined, UnavailableError>
 }
 
-export class Service extends Context.Service<Service, Interface>()("@opencode/UsageLimits") {}
+export class Service extends Context.Service<Service, Interface>()("@modtools-ai/UsageLimits") {}
 
 export const layer = Layer.effect(
   Service,
@@ -164,7 +164,7 @@ function readGo(
       HttpClientRequest.get(`${new URL(server).origin}/zen/go/v1/usage`).pipe(
         HttpClientRequest.acceptJson,
         HttpClientRequest.bearerToken(credential.type === "oauth" ? credential.access : credential.key),
-        HttpClientRequest.setHeader("x-opencode-org-id", workspaceID),
+        HttpClientRequest.setHeader("x-mod-org-id", workspaceID),
       ),
     )
     .pipe(

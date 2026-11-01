@@ -1,6 +1,6 @@
 import { Effect } from "effect"
-import { define } from "@opencode/plugin/effect/plugin"
-import { Form } from "@opencode/schema/form"
+import { define } from "@modtools-ai/plugin/effect/plugin"
+import { Form } from "@modtools-ai/schema/form"
 import { Provider } from "../../provider.js"
 import { configuredSettings } from "./configured.js"
 import { credentialSettings, metadataSettings } from "./credential-settings.js"
@@ -8,7 +8,7 @@ import { credentialSettings, metadataSettings } from "./credential-settings.js"
 const providerID = Provider.ID.make("cloudflare-workers-ai")
 
 export const CloudflareWorkersAIPlugin = define({
-  id: "opencode.provider.cloudflare.workers.ai",
+  id: "mod.provider.cloudflare.workers.ai",
   effect: Effect.fn(function* (ctx) {
     const configured = yield* configuredSettings(providerID)
     const form =
@@ -49,7 +49,7 @@ export const CloudflareWorkersAIPlugin = define({
         const accountId = resolveAccountId({ ...provider.settings, ...login.settings })
         if (!accountId) return
         provider.settings =
-          provider.package === "@opencode/ai/providers/cloudflare-workers-ai"
+          provider.package === "@modtools-ai/ai/providers/cloudflare-workers-ai"
             ? { ...provider.settings, accountId }
             : { ...provider.settings, baseURL: workersEndpoint(accountId) }
       })

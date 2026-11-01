@@ -1,5 +1,5 @@
 import { expect, test, type Locator, type Page } from "@playwright/test"
-import type { OpenCodeEvent, WorktreeDirectory } from "@opencode/client/promise"
+import type { OpenCodeEvent, WorktreeDirectory } from "@modtools-ai/client/promise"
 import { draftHref, expectPath, NO_PROVIDER, project, provider, seed, sessionHref, T0 } from "../utils/app"
 import { mockOpenCodeServer } from "../utils/mock-server"
 import {
@@ -197,12 +197,12 @@ test("picker scrollbars overlay full-width rows and support dragging", async ({ 
 for (const row of [
   {
     name: "POSIX",
-    directory: "/Users/alice/.local/share/opencode/worktree/123456/my-project",
+    directory: "/Users/alice/.local/share/mod/worktree/123456/my-project",
     pattern: /^\/Users\/.*…\/123456\/my-project$/,
   },
   {
     name: "Windows",
-    directory: "C:\\Users\\alice\\Documents\\opencode\\worktree\\123456\\my-project",
+    directory: "C:\\Users\\alice\\Documents\\mod\\worktree\\123456\\my-project",
     pattern: /^C:\\.*…\\123456\\my-project$/,
   },
 ]) {
@@ -945,7 +945,7 @@ test("the location dialog separates added projects from server projects and tags
   const entry = (id: string, directory: string, active: number) =>
     project({ id, directory, time: { created: T0, updated: T0, active: T0 + active } })
 
-  const remote = entry("proj_apollo_opencode", "/home/dax/opencode", 4)
+  const remote = entry("proj_apollo_mod", "/home/dax/mod", 4)
   const files: string[] = []
   page.on("request", (request) => {
     const url = new URL(request.url())
@@ -957,7 +957,7 @@ test("the location dialog separates added projects from server projects and tags
     directory: remote.worktree,
     project: remote,
     projects: () => [remote, entry("proj_apollo_sst", "/home/dax/sst", 3)],
-    worktrees: () => [{ directory: remote.worktree }, { directory: "/home/dax/opencode-beta", strategy: "git" }],
+    worktrees: () => [{ directory: remote.worktree }, { directory: "/home/dax/mod-beta", strategy: "git" }],
     provider: NO_PROVIDER,
     sessions: [],
     pageMessages: () => ({ items: [] }),
@@ -971,9 +971,9 @@ test("the location dialog separates added projects from server projects and tags
     ],
     usedProjects: { [apollo]: [remote.id] },
   })
-  const local = entry("proj_opencode", "C:/work/opencode", 2)
+  const local = entry("proj_mod", "C:/work/mod", 2)
   await openDraft(page, {
-    name: "opencode",
+    name: "mod",
     hostname: "hailmary",
     directory: local.worktree,
     project: { time: local.time },
@@ -992,15 +992,15 @@ test("the location dialog separates added projects from server projects and tags
   const paths = options.locator(".command-palette-description")
   const back = dialog.getByRole("button", { name: "Back to projects", exact: true })
   // Only the projects added to this client open expanded; other ready-server projects remain discoverable.
-  await expect(names).toHaveText(["opencodeapollo", "opencode"])
-  await expect(paths).toHaveText(["/home/dax/opencode", "C:/work/opencode"])
+  await expect(names).toHaveText(["modapollo", "mod"])
+  await expect(paths).toHaveText(["/home/dax/mod", "C:/work/mod"])
   const others = options.filter({ hasText: "Other projects" })
   await expect(others).toBeVisible()
   await expect(others.locator(".new-session-location-count")).toHaveText("2")
   await expect(dialog.locator(".command-palette-group-title")).toHaveCount(0)
   await expect(options.locator(".command-palette-title")).toHaveText([
-    "opencode",
-    "opencode",
+    "mod",
+    "mod",
     "Other projects",
     "Add project",
   ])
@@ -1040,34 +1040,34 @@ test("the location dialog separates added projects from server projects and tags
   await search.fill("")
   await expect(names).toHaveText(["console", "sstapollo"])
   await search.press("ArrowLeft")
-  await expect(names).toHaveText(["opencodeapollo", "opencode"])
+  await expect(names).toHaveText(["modapollo", "mod"])
   await search.press("ArrowRight")
   await expect(names).toHaveText(["console", "sstapollo"])
   await search.press("Backspace")
   await search.press("Enter")
   await expect(names).toHaveText(["console", "sstapollo"])
   await search.press("Escape")
-  await expect(names).toHaveText(["opencodeapollo", "opencode"])
+  await expect(names).toHaveText(["modapollo", "mod"])
   await others.click()
   await back.click()
-  await expect(names).toHaveText(["opencodeapollo", "opencode"])
+  await expect(names).toHaveText(["modapollo", "mod"])
 
   await search.fill("apollo")
-  await expect(names).toHaveText(["opencodeapollo", "sstapollo"])
+  await expect(names).toHaveText(["modapollo", "sstapollo"])
   await expect(dialog.locator(".command-palette-group-title")).toHaveText("Other projects")
 
   // The worktree step keeps the project's avatar and server tag in its main-checkout row.
-  await search.fill("opencode")
-  await expect(paths).toHaveText(["/home/dax/opencode", "C:/work/opencode"])
+  await search.fill("mod")
+  await expect(paths).toHaveText(["/home/dax/mod", "C:/work/mod"])
   await expect(rows.nth(0)).toHaveAttribute("aria-selected", "true")
   await page.keyboard.press("ArrowRight")
   // The worktree step has no "Add project".
   await expect(add).toHaveCount(0)
   await expect(back).toHaveText("Run session in")
   await expect(options.nth(0).locator('[data-component="tag"]')).toHaveText("apollo")
-  await expect(options.locator(".command-palette-title")).toHaveText(["opencode", "New worktree", "opencode-beta"])
+  await expect(options.locator(".command-palette-title")).toHaveText(["mod", "New worktree", "mod-beta"])
   await expect(dialog.getByRole("separator")).toHaveCount(1)
-  await search.fill("opencode-beta")
+  await search.fill("mod-beta")
   await expect(options).toHaveCount(1)
   await expect(dialog.getByRole("separator")).toHaveCount(0)
   await search.fill("no-worktree-matches")
@@ -1076,7 +1076,7 @@ test("the location dialog separates added projects from server projects and tags
   await search.fill("")
   await expect(options.nth(0)).toHaveAttribute("aria-selected", "true")
   await page.keyboard.press("Backspace")
-  await expect(search).toHaveValue("opencode")
+  await expect(search).toHaveValue("mod")
   await expect(rows.nth(0)).toHaveAttribute("aria-selected", "true")
 
   // Adding a project picks one of the ready servers first, then browses that server.
@@ -1132,7 +1132,7 @@ for (const row of [
   { name: "a managed worktree", directory: accentWorkspace, accent: true },
   {
     name: "the main root written with Windows case and separators",
-    directory: "c:\\OPENCODE\\workspaceaccent\\",
+    directory: "c:\\MOD\\workspaceaccent\\",
     accent: false,
   },
 ]) {

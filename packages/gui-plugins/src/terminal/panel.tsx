@@ -1,11 +1,11 @@
 import { For, Show, createMemo, onCleanup } from "solid-js"
 import { createStore } from "solid-js/store"
-import { Tabs } from "@opencode/ui/tabs"
-import { IconButton } from "@opencode/ui/icon-button"
-import { Icon } from "@opencode/ui/icon"
-import { Tooltip } from "@opencode/ui/tooltip"
-import { Keybind } from "@opencode/ui/keybind"
-import { uuid } from "@opencode/util/uuid"
+import { Tabs } from "@modtools-ai/ui/tabs"
+import { IconButton } from "@modtools-ai/ui/icon-button"
+import { Icon } from "@modtools-ai/ui/icon"
+import { Tooltip } from "@modtools-ai/ui/tooltip"
+import { Keybind } from "@modtools-ai/ui/keybind"
+import { uuid } from "@modtools-ai/util/uuid"
 import {
   createKeyed,
   usePlugin,
@@ -13,7 +13,7 @@ import {
   type MountedSession,
   type ServerRef,
   type SessionScreen,
-} from "@opencode/plugin/gui"
+} from "@modtools-ai/plugin/gui"
 import type { TerminalModel } from "./model"
 import { TerminalTab } from "./tab"
 import { Terminal } from "./terminal"

@@ -1,6 +1,6 @@
-import type { UsageLimitsBudget, UsageLimitsInfo } from "@opencode/client"
+import type { UsageLimitsBudget, UsageLimitsInfo } from "@modtools-ai/client"
 
-/** A model as the usage limits read it: its OpenCode IDs, its price and context window, and its provider. */
+/** A model as the usage limits read it: its MOD IDs, its price and context window, and its provider. */
 export type LimitedModel = {
   readonly id: string
   readonly providerID: string

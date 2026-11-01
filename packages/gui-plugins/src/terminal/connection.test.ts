@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test"
-import { persistentPtyFrame } from "@opencode/client/solid"
+import { persistentPtyFrame } from "@modtools-ai/client/solid"
 import { terminalConnection, type TerminalFailure } from "./connection"
 
 const info = {

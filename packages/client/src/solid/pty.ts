@@ -1,4 +1,4 @@
-import { PersistentPty } from "@opencode/schema/persistent-pty"
+import { PersistentPty } from "@modtools-ai/schema/persistent-pty"
 import { Schema } from "effect"
 import type { ExperimentalPersistentPtyConnectTokenInput, OpenCodeClient } from "../promise"
 
@@ -64,7 +64,7 @@ export function createPersistentPtyClient(api: OpenCodeClient, options: PtyClien
     async connect(input: PersistentPtyConnectInput) {
       const token = await api.experimental.persistentPty.connectToken({
         ptyID: input.ptyID,
-        "x-opencode-ticket": "1",
+        "x-mod-ticket": "1",
       })
       const baseUrl = new URL(options.url)
       if (!baseUrl.pathname.endsWith("/")) baseUrl.pathname += "/"

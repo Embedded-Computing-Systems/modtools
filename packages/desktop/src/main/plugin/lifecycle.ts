@@ -1,5 +1,5 @@
-import { Scope } from "@opencode/plugin/gui/host"
-import type { Cleanup } from "@opencode/plugin/gui/main"
+import { Scope } from "@modtools-ai/plugin/gui/host"
+import type { Cleanup } from "@modtools-ai/plugin/gui/main"
 
 /** How long disposal waits for an instance's finalizers and a setup still running. */
 const CLEANUP_TIMEOUT_MS = 3_000

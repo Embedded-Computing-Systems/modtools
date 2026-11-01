@@ -1,11 +1,11 @@
 import { Effect } from "effect"
-import { define } from "@opencode/plugin/effect/plugin"
-import { Npm } from "@opencode/util/npm"
+import { define } from "@modtools-ai/plugin/effect/plugin"
+import { Npm } from "@modtools-ai/util/npm"
 import { Provider } from "../../provider.js"
 import { loadSDKFactory } from "./sdk-factory.js"
 
 export const SapAICorePlugin = define({
-  id: "opencode.provider.sap.ai.core",
+  id: "mod.provider.sap.ai.core",
   effect: Effect.fn(function* (ctx) {
     const npm = yield* Npm.Service
     yield* ctx.aisdk.hook(

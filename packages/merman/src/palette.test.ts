@@ -7,7 +7,7 @@ type Rgb = readonly [number, number, number]
 
 const rgb = (value: Rgb) => RGBA.fromInts(...value)
 
-describe("OpenCode diagram palette", () => {
+describe("MOD diagram palette", () => {
   test.each([
     {
       name: "dark theme",

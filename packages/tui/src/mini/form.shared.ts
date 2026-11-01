@@ -1,4 +1,4 @@
-import type { FormAnswer, FormField, FormInfo, FormValue } from "@opencode/client/promise"
+import type { FormAnswer, FormField, FormInfo, FormValue } from "@modtools-ai/client/promise"
 import {
   formCustom,
   formDisplayValue,

@@ -4,17 +4,17 @@ import { fileURLToPath } from "node:url"
 
 import { Arch, type Configuration } from "electron-builder"
 import { NativeArch } from "../../script/native-arch"
-import { DESKTOP_NATIVE_ENGLISH } from "@opencode/app/i18n/desktop-native"
+import { DESKTOP_NATIVE_ENGLISH } from "@modtools-ai/app/i18n/desktop-native"
 import { CLI_BINARIES, getCurrentCli, nodePtyPackage } from "./script/utils"
 
 const packageDir = path.dirname(fileURLToPath(import.meta.url))
 
 // The Electron 42 packaging update briefly installed Linux launchers/icons under
-// "opencode-desktop". Keep that hidden desktop entry around so existing GNOME/KDE
-// pins still resolve after the canonical app id changes back to ai.opencode.desktop.
-const legacyDesktopEntry = path.join(packageDir, "resources", "linux", "opencode-desktop.desktop")
+// "mod-desktop". Keep that hidden desktop entry around so existing GNOME/KDE
+// pins still resolve after the canonical app id changes back to ai.mod.desktop.
+const legacyDesktopEntry = path.join(packageDir, "resources", "linux", "mod-desktop.desktop")
 
-const legacyDesktopEntryFpm = `${legacyDesktopEntry}=/usr/share/applications/opencode-desktop.desktop`
+const legacyDesktopEntryFpm = `${legacyDesktopEntry}=/usr/share/applications/mod-desktop.desktop`
 
 // rpmbuild adds /usr/lib/.build-id links for every ELF file. The bundled Electron
 // binaries are byte-identical across apps on the same Electron version, so those
@@ -31,7 +31,7 @@ const metainfoFpm = (appId: string) =>
 const previewCompressionFpm = (target: "deb" | "rpm") => [`--${target}-compression-level`, "1"]
 
 function resolveChannel() {
-  const raw = process.env.OPENCODE_CHANNEL
+  const raw = process.env.MODTOOLS_CHANNEL
 
   if (raw === "dev" || raw === "beta" || raw === "prod") return raw
 
@@ -41,18 +41,18 @@ function resolveChannel() {
 }
 
 const APP_IDS = {
-  dev: "ai.opencode.desktop.dev",
-  beta: "ai.opencode.desktop.beta",
-  prod: "ai.opencode.desktop",
+  dev: "ai.mod.desktop.dev",
+  beta: "ai.mod.desktop.beta",
+  prod: "ai.mod.desktop",
 } as const
 
 // libappimage (used by AppImageLauncher) resolves the .desktop entry inside an
 // AppImage by globbing `*.desktop` at the squashfs root. If the main
-// executable itself ends in `.desktop` (prod appId `ai.opencode.desktop`), the
+// executable itself ends in `.desktop` (prod appId `ai.mod.desktop`), the
 // ELF binary matches the glob and is parsed as a desktop entry, so
 // integration fails with `Malformed desktop entry: Unexpected char '\x7f' at 0`
 // (0x7F is the first byte of the ELF magic).
-// https://github.com/anomalyco/opencode/issues/51867
+// https://github.com/Embedded-Computing-Systems/modtools/issues/51867
 // Strip a trailing `.desktop` so the executable can never collide with the
 // desktop-entry glob. Beta/dev appIds end in `.beta`/`.dev` and are unaffected.
 function linuxExecutableName(appId: string): string {
@@ -64,24 +64,24 @@ const getBase = (appId: string): Configuration => {
   const desktopName = `${appId}.desktop`
 
   return {
-    artifactName: "opencode-desktop-${os}-${arch}.${ext}",
+    artifactName: "mod-desktop-${os}-${arch}.${ext}",
     directories: {
       output: "dist",
       buildResources: "resources",
     },
     // Linux launchers are .desktop files, so this is the desktop file name,
-    // not just the app id. For prod, app id "ai.opencode.desktop" becomes
-    // "ai.opencode.desktop.desktop".
+    // not just the app id. For prod, app id "ai.mod.desktop" becomes
+    // "ai.mod.desktop.desktop".
     // https://developer.gnome.org/documentation/guidelines/maintainer/integrating.html
     // https://www.electron.build/docs/linux/
-    // Release builds take their version from OPENCODE_VERSION instead of rewriting package.json.
-    extraMetadata: process.env.OPENCODE_VERSION
-      ? { desktopName, version: process.env.OPENCODE_VERSION }
+    // Release builds take their version from MODTOOLS_VERSION instead of rewriting package.json.
+    extraMetadata: process.env.MODTOOLS_VERSION
+      ? { desktopName, version: process.env.MODTOOLS_VERSION }
       : { desktopName },
     files: [
       "out/**/*",
       "resources/**/*",
-      "!resources/opencode-cli*",
+      "!resources/mod-cli*",
       // Keep only the target platform's node-pty prebuild when cross-packaging with --cpu=*.
       ...CLI_BINARIES.filter((item) => item.os !== target.os || item.cpu !== target.cpu).map(
         (item) => `!**/node_modules/@lydell/node-pty-${item.os}-${item.cpu}{,/**/*}`,
@@ -105,24 +105,24 @@ const getBase = (appId: string): Configuration => {
       {
         from: "resources/",
         to: "",
-        filter: ["opencode-cli", "opencode-cli.exe", "opencode-cli.version"],
+        filter: ["mod-cli", "mod-cli.exe", "mod-cli.version"],
       },
     ],
     afterPack: async (context) => {
       const arch = Arch[context.arch]
 
-      // The --arm64 flag picks Electron while OPENCODE_TARGET picks the CLI and node-pty, so they can disagree.
+      // The --arm64 flag picks Electron while MODTOOLS_TARGET picks the CLI and node-pty, so they can disagree.
       if (arch !== "x64" && arch !== "arm64") throw new Error(`Unsupported desktop architecture: ${arch}`)
 
       if (arch !== target.cpu) throw new Error(`Packaging ${arch} Electron with the ${target.target} CLI`)
       const resources = context.packager.getResourcesDir(context.appOutDir)
-      const cli = path.join(resources, context.electronPlatformName === "win32" ? "opencode-cli.exe" : "opencode-cli")
+      const cli = path.join(resources, context.electronPlatformName === "win32" ? "mod-cli.exe" : "mod-cli")
 
       const file = await stat(cli)
 
       if (!file.isFile() || file.size === 0) throw new Error(`Bundled CLI must be a non-empty file: ${cli}`)
       await NativeArch.verify(cli, arch)
-      const version = path.join(path.dirname(cli), "opencode-cli.version")
+      const version = path.join(path.dirname(cli), "mod-cli.version")
 
       if ((await stat(version)).size === 0) throw new Error(`Bundled CLI version must be a non-empty file: ${version}`)
 
@@ -173,8 +173,8 @@ const getBase = (appId: string): Configuration => {
       target: ["dmg", "zip"],
     },
     protocols: {
-      name: "OpenCode",
-      schemes: ["opencode"],
+      name: "MOD",
+      schemes: ["mod"],
     },
     win: {
       icon: `resources/icons/icon.ico`,
@@ -193,7 +193,7 @@ const getBase = (appId: string): Configuration => {
       category: "Development",
       executableName: linuxExecutableName(appId),
       // Derive the installed `.desktop` filename from `desktopName`
-      // (`ai.opencode.desktop.desktop` for prod) instead of `executableName`,
+      // (`ai.mod.desktop.desktop` for prod) instead of `executableName`,
       // so window association is unaffected by the executable rename above.
       syncDesktopName: true,
       desktop: {
@@ -218,15 +218,15 @@ export function getConfig() {
       return {
         ...base,
         appId,
-        productName: "OpenCode Dev",
-        publish: {
+        productName: "MOD Dev",
+        publish: null && {
           provider: "generic",
-          url: "https://opencode.ai/update/api/dev/desktop/opencode/",
+          url: "https://opencode.ai/update/api/dev/desktop/mod/",
           channel: "latest",
         },
         deb: { fpm: [...previewCompressionFpm("deb"), metainfoFpm(appId)] },
         rpm: {
-          packageName: "opencode-dev",
+          packageName: "mod-dev",
           fpm: [rpmNoBuildIdLinksFpm, ...previewCompressionFpm("rpm"), metainfoFpm(appId)],
         },
       }
@@ -236,16 +236,16 @@ export function getConfig() {
       return {
         ...base,
         appId,
-        productName: "OpenCode Beta",
-        protocols: { name: "OpenCode Beta", schemes: ["opencode"] },
-        publish: {
+        productName: "MOD Beta",
+        protocols: { name: "MOD Beta", schemes: ["mod"] },
+        publish: null && {
           provider: "generic",
-          url: "https://opencode.ai/update/api/beta/desktop/opencode/",
+          url: "https://opencode.ai/update/api/beta/desktop/mod/",
           channel: "latest",
         },
         deb: { fpm: [...previewCompressionFpm("deb"), metainfoFpm(appId)] },
         rpm: {
-          packageName: "opencode-beta",
+          packageName: "mod-beta",
           fpm: [rpmNoBuildIdLinksFpm, ...previewCompressionFpm("rpm"), metainfoFpm(appId)],
         },
       }
@@ -255,20 +255,20 @@ export function getConfig() {
       return {
         ...base,
         appId,
-        productName: "OpenCode",
-        protocols: { name: "OpenCode", schemes: ["opencode"] },
+        productName: "MOD",
+        protocols: { name: "MOD", schemes: ["mod"] },
         // An Icon Composer package compiles to Assets.car, which macOS 26 and later draw the app icon from
         // (Dock, Finder, system dialogs and the system icon styles). Older macOS keeps using the ICNS.
         mac: { ...base.mac, icon: "resources/icons/icon.icon" },
         // The DMG volume icon would otherwise use the same actool-generated ICNS.
         dmg: { icon: "resources/icons/icon.icns" },
-        publish: {
+        publish: null && {
           provider: "generic",
-          url: "https://opencode.ai/update/api/latest/desktop/opencode/",
+          url: "https://opencode.ai/update/api/latest/desktop/mod/",
           channel: "latest",
         },
         deb: { fpm: [metainfoFpm(appId), legacyDesktopEntryFpm] },
-        rpm: { packageName: "opencode", fpm: [rpmNoBuildIdLinksFpm, metainfoFpm(appId), legacyDesktopEntryFpm] },
+        rpm: { packageName: "mod", fpm: [rpmNoBuildIdLinksFpm, metainfoFpm(appId), legacyDesktopEntryFpm] },
       }
     }
   }

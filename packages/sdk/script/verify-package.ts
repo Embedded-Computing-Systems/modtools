@@ -21,7 +21,7 @@ const names = [
   "server",
   "sdk",
 ]
-const temporary = await mkdtemp(join(tmpdir(), "opencode-sdk-package-"))
+const temporary = await mkdtemp(join(tmpdir(), "mod-sdk-package-"))
 const archives = new Map<string, string>()
 
 try {
@@ -85,29 +85,29 @@ try {
   const consumer = join(temporary, "consumer")
   await Bun.write(
     join(consumer, "package.json"),
-    JSON.stringify({ name: "opencode-sdk-consumer", private: true, type: "module" }),
+    JSON.stringify({ name: "mod-sdk-consumer", private: true, type: "module" }),
   )
   await Promise.all([
     Bun.write(
       join(consumer, "wrangler.jsonc"),
       JSON.stringify({
-        name: "opencode-sdk-packed-consumer",
+        name: "mod-sdk-packed-consumer",
         main: "worker.js",
         compatibility_date: "2026-07-15",
         compatibility_flags: ["nodejs_compat"],
-        durable_objects: { bindings: [{ name: "OPENCODE", class_name: "OpenCodeDO" }] },
+        durable_objects: { bindings: [{ name: "MOD", class_name: "OpenCodeDO" }] },
         migrations: [{ tag: "v1", new_sqlite_classes: ["OpenCodeDO"] }],
       }),
     ),
     Bun.write(
       join(consumer, "worker.js"),
-      `import { bodyDigest } from "@opencode/core/models-dev"
-import { OpenCodeWorkerd } from "@opencode/sdk/workerd"
+      `import { bodyDigest } from "@modtools-ai/core/models-dev"
+import { OpenCodeWorkerd } from "@modtools-ai/sdk/workerd"
 
 export class OpenCodeDO {
   constructor(state) {
     this.configurations = 0
-    this.opencode = state.blockConcurrencyWhile(() => OpenCodeWorkerd.create({
+    this.mod = state.blockConcurrencyWhile(() => OpenCodeWorkerd.create({
       storage: state.storage,
       app: { version: "packed-workerd" },
       models: { fetch: false },
@@ -137,12 +137,12 @@ export class OpenCodeDO {
     if (bodyDigest("packed-workerd") !== "5fc174bf63e8dd108ebb6c53d85e7bbc4525b2f4c1c43280364cdbfd9b37aaf5") {
       throw new Error("Packed workerd SHA-256 mismatch")
     }
-    const opencode = await this.opencode
-    const sessions = await Promise.all([1, 2].map(() => opencode.sessions.create({
+    const mod = await this.mod
+    const sessions = await Promise.all([1, 2].map(() => mod.sessions.create({
       location: { directory: "/workspace" },
       metadata: { thread: "packed-thread" },
     })))
-    const admitted = await Promise.all(sessions.map(session => opencode.sessions.prompt({
+    const admitted = await Promise.all(sessions.map(session => mod.sessions.prompt({
       sessionID: session.id,
       text: "Packed prompt",
       resume: false,
@@ -150,13 +150,13 @@ export class OpenCodeDO {
     if (this.configurations !== 1 || admitted.some(item => item.payload.text !== "Packed prompt:packed-thread")) {
       throw new Error("Packed instance configuration did not share or prepare prompts correctly")
     }
-    return Response.json(await opencode.server.info())
+    return Response.json(await mod.server.info())
   }
 }
 
 export default {
   fetch(request, env) {
-    return env.OPENCODE.get(env.OPENCODE.idFromName("packed-consumer")).fetch(request)
+    return env.MOD.get(env.MOD.idFromName("packed-consumer")).fetch(request)
   },
 }
 `,
@@ -171,11 +171,11 @@ const miniflare = new Miniflare({
   compatibilityFlags: ["nodejs_compat"],
   modules: true,
   scriptPath: fileURLToPath(new URL("./dist/worker.js", import.meta.url)),
-  durableObjects: { OPENCODE: { className: "OpenCodeDO", useSQLite: true } },
+  durableObjects: { MOD: { className: "OpenCodeDO", useSQLite: true } },
 })
 
 try {
-  const response = await miniflare.dispatchFetch("http://opencode.local/health")
+  const response = await miniflare.dispatchFetch("http://mod.local/health")
   if (response.status !== 200) throw new Error(
     "Packed workerd health returned " + response.status + ": " + await response.text(),
   )
@@ -191,10 +191,10 @@ try {
     Bun.write(
       join(consumer, "imports.mjs"),
       `const modules = await Promise.all([
-  import("@opencode/sdk"),
-  import("@opencode/sdk/effect"),
-  import("@opencode/sdk/workerd"),
-  import("@opencode/sdk/workerd/effect"),
+  import("@modtools-ai/sdk"),
+  import("@modtools-ai/sdk/effect"),
+  import("@modtools-ai/sdk/workerd"),
+  import("@modtools-ai/sdk/workerd/effect"),
 ])
 
 for (const module of modules) {
@@ -205,7 +205,7 @@ for (const module of modules) {
     ),
   ])
 
-  const sdk = archives.get("@opencode/sdk")
+  const sdk = archives.get("@modtools-ai/sdk")
   if (!sdk) throw new Error("Packed SDK archive was not created")
   await $`npm install --ignore-scripts --no-audit --no-fund --package-lock=false ${sdk} wrangler@4.110.0`.cwd(consumer)
   const runtimes = (await $`npm ls effect --all --parseable`.cwd(consumer).text()).trim().split("\n")

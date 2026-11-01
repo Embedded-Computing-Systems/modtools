@@ -1,10 +1,10 @@
 import { Popover } from "@kobalte/core/popover"
-import { Icon } from "@opencode/ui/icon"
-import { IconButton } from "@opencode/ui/icon-button"
-import { Keybind } from "@opencode/ui/keybind"
-import { Tooltip } from "@opencode/ui/tooltip"
+import { Icon } from "@modtools-ai/ui/icon"
+import { IconButton } from "@modtools-ai/ui/icon-button"
+import { Keybind } from "@modtools-ai/ui/keybind"
+import { Tooltip } from "@modtools-ai/ui/tooltip"
 import { onCleanup, Show, Suspense, type Component, type ParentProps } from "solid-js"
-import { Command, createVisitState, usePlugin, type MountedSession } from "@opencode/plugin/gui"
+import { Command, createVisitState, usePlugin, type MountedSession } from "@modtools-ai/plugin/gui"
 import type { DetailsPanelProps } from "./panel"
 
 /** Every mounted details popover, so a shortcut finds the one on screen. */

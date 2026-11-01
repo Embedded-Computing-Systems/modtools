@@ -1,15 +1,15 @@
-import { Instance } from "@opencode/core/instance/service"
-import { Session } from "@opencode/core/session"
-import { SessionStats } from "@opencode/core/session/stats"
-import { SessionTitle } from "@opencode/core/session/title"
-import { SessionTransfer } from "@opencode/core/session/transfer"
-import { InstructionEntry } from "@opencode/core/session/instruction-entry"
-import { Form } from "@opencode/core/form"
+import { Instance } from "@modtools-ai/core/instance/service"
+import { Session } from "@modtools-ai/core/session"
+import { SessionStats } from "@modtools-ai/core/session/stats"
+import { SessionTitle } from "@modtools-ai/core/session/title"
+import { SessionTransfer } from "@modtools-ai/core/session/transfer"
+import { InstructionEntry } from "@modtools-ai/core/session/instruction-entry"
+import { Form } from "@modtools-ai/core/form"
 import { DateTime, Effect, Stream } from "effect"
 import { HttpServerResponse } from "effect/http"
 import { HttpApiBuilder, HttpApiSchema } from "effect/http-api"
-import { SessionMediaMessageResponse } from "@opencode/protocol/groups/message"
-import { SessionMediaInboxResponse } from "@opencode/protocol/groups/session"
+import { SessionMediaMessageResponse } from "@modtools-ai/protocol/groups/message"
+import { SessionMediaInboxResponse } from "@modtools-ai/protocol/groups/session"
 import { Api } from "../api"
 import { wantsMediaRefs } from "../media-uri"
 import {
@@ -25,8 +25,8 @@ import {
   ServiceUnavailableError,
   SessionBusyError,
   SkillNotFoundError,
-} from "@opencode/protocol/errors"
-import { AbsolutePath } from "@opencode/core/schema"
+} from "@modtools-ai/protocol/errors"
+import { AbsolutePath } from "@modtools-ai/core/schema"
 import { locationErrors } from "../location"
 import { failedMessageDecode, failedSnapshot, missingMessage, missingSession } from "./session-error"
 

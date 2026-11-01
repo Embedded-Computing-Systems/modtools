@@ -1,8 +1,8 @@
 import { usePlatform } from "@/runtime/platform/platform"
 import { useLanguage } from "@/runtime/i18n/language"
-import { Button } from "@opencode/ui/button"
-import { useDialog } from "@opencode/ui/context/dialog"
-import { Dialog, DialogBody, DialogHeader, DialogTitleGroup } from "@opencode/ui/dialog"
+import { Button } from "@modtools-ai/ui/button"
+import { useDialog } from "@modtools-ai/ui/context/dialog"
+import { Dialog, DialogBody, DialogHeader, DialogTitleGroup } from "@modtools-ai/ui/dialog"
 import { children, JSX } from "solid-js"
 
 export type DialogGoUpsellProps = {

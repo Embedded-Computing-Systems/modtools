@@ -1,6 +1,6 @@
-import type { OpenCodeEvent, SessionMessageInfo } from "@opencode/client/promise"
+import type { OpenCodeEvent, SessionMessageInfo } from "@modtools-ai/client/promise"
 import { expect, test, type Locator, type Page } from "@playwright/test"
-import { base64Encode } from "@opencode/util/encode"
+import { base64Encode } from "@modtools-ai/util/encode"
 import { SERVER, holdRoute, project, provider, session } from "../utils/app"
 import { browseFiles, openFileLauncher, openReviewLauncher, reviewTabs } from "../utils/side-panel"
 import { mockOpenCodeServer } from "../utils/mock-server"
@@ -198,7 +198,7 @@ test("open file tab browses, searches, and tracks missing files", async ({ page 
       panes: { ses_reviewopenfile: { review: true } },
       storage: {
         ...reviewTabs("C:/OpenCode/ReviewOpenFile", "ses_reviewopenfile"),
-        "opencode.global.dat:review-panel-v2": { sidebarOpened: false },
+        "mod.global.dat:review-panel-v2": { sidebarOpened: false },
       },
     },
   })
@@ -370,7 +370,7 @@ test("context closes the side region only when its button opened it", async ({ p
     name: "ReviewContextOpener",
     seed: {
       storage: {
-        "opencode.global.dat:layout": {
+        "mod.global.dat:layout": {
           sessionTabs: {
             [`local\u0000${base64Encode("C:/OpenCode/ReviewContextOpener")}/ses_reviewcontextopener`]: {
               all: ["btw"],
@@ -547,7 +547,7 @@ test("file tree expands Windows paths and scrolls long names in both directions"
     fileContent: (path) => ({ type: "text", content: `contents:${path}` }),
     seed: {
       panes: { ses_openfileexpand: { review: true } },
-      storage: { "opencode.global.dat:review-panel-v2": { sidebarOpened: true } },
+      storage: { "mod.global.dat:review-panel-v2": { sidebarOpened: true } },
     },
   })
 
@@ -612,7 +612,7 @@ test("file tree expands Windows paths and scrolls long names in both directions"
     .toBeGreaterThan(0)
   await expect(status).toHaveText("A")
   await expect.poll(() => statusInset(status, "right")).toBeLessThanOrEqual(24)
-  const treeScroll = panel.locator(".opencode-pierre-file-tree")
+  const treeScroll = panel.locator(".mod-pierre-file-tree")
 
   const scrollTree = (position: { left?: number; top?: number }) =>
     treeScroll.evaluate((element, position) => {
@@ -918,7 +918,7 @@ test("Markdown and DOCX sheets stay aligned when switching at wide and narrow pr
         },
       ],
     }),
-    seed: { storage: { "opencode.global.dat:review-panel-v2": { sidebarOpened: false } } },
+    seed: { storage: { "mod.global.dat:review-panel-v2": { sidebarOpened: false } } },
   })
 
   const panel = page.locator("#review-panel")
@@ -1380,7 +1380,7 @@ test("review file navigation focuses the arrow for the keyboard direction", asyn
       panes: { ses_reviewarrowfocus: { review: true } },
       storage: {
         ...reviewTabs("C:/OpenCode/ReviewArrowFocus", "ses_reviewarrowfocus"),
-        "opencode.global.dat:review-panel-v2": { sidebarOpened: false },
+        "mod.global.dat:review-panel-v2": { sidebarOpened: false },
       },
     },
   })
@@ -1553,7 +1553,7 @@ test("keeps the review state a session stored before plugins", async ({ page }) 
       mode === "branch" ? [fileDiff("alpha.ts"), fileDiff("beta.ts")] : [fileDiff("alpha.ts"), fileDiff("gamma.ts")],
     seed: {
       storage: {
-        "opencode.global.dat:layout": {
+        "mod.global.dat:layout": {
           sessionView: {
             [`local\u0000${base64Encode(directory)}/ses_reviewlegacy`]: {
               scroll: {},
@@ -1738,7 +1738,7 @@ test("Review from a new tab keeps the file browser and preview open", async ({ p
     fileContent: (path) => ({ type: "text", content: `contents:${path}` }),
     seed: {
       panes: { ses_reviewnewtabfile: { review: true } },
-      storage: { "opencode.global.dat:review-panel-v2": { sidebarOpened: false } },
+      storage: { "mod.global.dat:review-panel-v2": { sidebarOpened: false } },
     },
   })
   const panel = page.locator("#review-panel")

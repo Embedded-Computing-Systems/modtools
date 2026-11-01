@@ -1,10 +1,10 @@
-import { DiffChanges } from "@opencode/ui/diff-changes"
-import { Icon } from "@opencode/ui/icon"
-import { Menu } from "@opencode/ui/menu"
+import { DiffChanges } from "@modtools-ai/ui/diff-changes"
+import { Icon } from "@modtools-ai/ui/icon"
+import { Menu } from "@modtools-ai/ui/menu"
 import { createMemo, onCleanup, Show } from "solid-js"
-import { createKeyed, usePlugin, type MountedSession, type SessionScreen } from "@opencode/plugin/gui"
+import { createKeyed, usePlugin, type MountedSession, type SessionScreen } from "@modtools-ai/plugin/gui"
 import type Details from "./index"
-import { Changes } from "@opencode/plugin/gui/review"
+import { Changes } from "@modtools-ai/plugin/gui/review"
 
 export default function SessionLocationMenu(props: { session: MountedSession; screen: SessionScreen; shown: boolean }) {
   const ctx = usePlugin<typeof Details>()

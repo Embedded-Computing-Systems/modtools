@@ -1,10 +1,10 @@
-import { Button } from "@opencode/ui/button"
-import { Badge } from "@opencode/ui/badge"
-import { useDialog } from "@opencode/ui/context/dialog"
-import { Icon } from "@opencode/ui/icon"
-import { IconButton } from "@opencode/ui/icon-button"
-import { Menu } from "@opencode/ui/menu"
-import { OpenCodeLogo } from "@/providers/opencode-logo"
+import { Button } from "@modtools-ai/ui/button"
+import { Badge } from "@modtools-ai/ui/badge"
+import { useDialog } from "@modtools-ai/ui/context/dialog"
+import { Icon } from "@modtools-ai/ui/icon"
+import { IconButton } from "@modtools-ai/ui/icon-button"
+import { Menu } from "@modtools-ai/ui/menu"
+import { OpenCodeLogo } from "@/providers/mod-logo"
 import { showToast } from "@/shell/notifications/toast"
 import { popularProviders, useProviders } from "@/providers/catalog/providers"
 import { consoleProviderGroup } from "@/providers/catalog/console"
@@ -28,8 +28,8 @@ type ProviderSource = "env" | "api" | "account" | "config" | "custom"
 type ProviderItem = ReturnType<ReturnType<typeof useProviders>["connected"]>[number]
 
 const PROVIDER_NOTES = [
-  { match: (id: string) => id === "opencode", key: "dialog.provider.opencode.note" },
-  { match: (id: string) => id === "opencode-go", key: "dialog.provider.opencodeGo.tagline" },
+  { match: (id: string) => id === "opencode", key: "dialog.provider.mod.note" },
+  { match: (id: string) => id === "opencode-go", key: "dialog.provider.modGo.tagline" },
   { match: (id: string) => id === "anthropic", key: "dialog.provider.anthropic.note" },
   { match: (id: string) => id === "claude-agent", key: "dialog.provider.claudeAgent.note" },
   { match: (id: string) => id.startsWith("github-copilot"), key: "dialog.provider.copilot.note" },
@@ -478,7 +478,7 @@ export const SettingsProviders: Component<{
                               <div class="settings-provider-console-summary">
                                 <div class="settings-provider-main">
                                   <span class="settings-provider-name truncate">
-                                    {language.t("provider.connect.opencode.name")}
+                                    {language.t("provider.connect.mod.name")}
                                   </span>
                                   <Badge>{group().workspace}</Badge>
                                 </div>
@@ -514,13 +514,13 @@ export const SettingsProviders: Component<{
                                 <Button
                                   size="normal"
                                   variant="ghost-muted"
-                                  onClick={() => void disconnect(item, language.t("provider.connect.opencode.name"))}
+                                  onClick={() => void disconnect(item, language.t("provider.connect.mod.name"))}
                                 >
                                   {language.t("common.disconnect")}
                                 </Button>
                               }
                             >
-                              <AccountMenu provider={item} name={language.t("provider.connect.opencode.name")} />
+                              <AccountMenu provider={item} name={language.t("provider.connect.mod.name")} />
                             </Show>
                           </div>
                           <Show when={state.consoleExpanded}>

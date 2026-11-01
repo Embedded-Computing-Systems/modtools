@@ -1,13 +1,13 @@
 import type { FileAttachmentPart, ImageAttachmentPart, PathAttachmentPart, Prompt } from "@/composer/state"
 import { createLegacyBlobReference } from "@/runtime/persistence/drafts"
-import type { PromptAttachment, SessionMessageUser } from "@opencode/client/promise"
+import type { PromptAttachment, SessionMessageUser } from "@modtools-ai/client/promise"
 import { commentContextItem, readPromptPresentation } from "./comment-note"
 import { buildPromptRequest } from "./request"
 import { contextItemKey, type FileContextItem } from "./schema"
 import { createPathHelpers, decodeFilePath, stripFileProtocol, stripQueryAndHash } from "@/workspaces/files/path"
-import { Skill } from "@opencode/schema/skill"
-import { Session } from "@opencode/schema/session"
-import { sessionMentions } from "@opencode/util/session-mention"
+import { Skill } from "@modtools-ai/schema/skill"
+import { Session } from "@modtools-ai/schema/session"
+import { sessionMentions } from "@modtools-ai/util/session-mention"
 
 type Inline =
   | { type: "session"; start: number; end: number; value: string; id: Session.ID; title?: string }

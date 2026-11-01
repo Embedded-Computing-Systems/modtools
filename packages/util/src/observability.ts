@@ -24,7 +24,7 @@ export function layer(
   },
 ) {
   const app = {
-    client: options.client ?? "opencode",
+    client: options.client ?? "mod",
     version: options.version ?? "unknown",
     channel: options.channel ?? "local",
   }

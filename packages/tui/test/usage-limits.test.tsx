@@ -97,7 +97,7 @@ test("shows what the workspace's limits leave and why a refused turn stopped", a
       if (url.pathname === "/api/agent")
         return json({ location, data: [{ id: "build", mode: "primary", hidden: false, permissions: [] }] })
       if (url.pathname === "/api/provider")
-        return json({ location, data: [{ id: "opencode", integrationID: "opencode", name: "OpenCode" }] })
+        return json({ location, data: [{ id: "opencode", integrationID: "opencode", name: "MOD" }] })
       if (url.pathname === "/api/model")
         return json({
           location,
@@ -108,7 +108,7 @@ test("shows what the workspace's limits leave and why a refused turn stopped", a
           location,
           data: [
             {
-              id: "opencode",
+              id: "mod",
               name: "OpenCode Console",
               methods: [],
               connections: [{ type: "credential", method: "oauth", id: "cred_console", label: "Acme" }],

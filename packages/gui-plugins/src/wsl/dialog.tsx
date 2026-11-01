@@ -1,14 +1,14 @@
-import { useDialog } from "@opencode/ui/context/dialog"
-import { Button } from "@opencode/ui/button"
-import { Dialog, DialogBody, DialogFooter, DialogHeader, DialogTitle } from "@opencode/ui/dialog"
-import { Divider } from "@opencode/ui/divider"
-import { Loader } from "@opencode/ui/loader"
-import { RadioGroup, RadioItem } from "@opencode/ui/radio"
-import { TextInput } from "@opencode/ui/text-input"
+import { useDialog } from "@modtools-ai/ui/context/dialog"
+import { Button } from "@modtools-ai/ui/button"
+import { Dialog, DialogBody, DialogFooter, DialogHeader, DialogTitle } from "@modtools-ai/ui/dialog"
+import { Divider } from "@modtools-ai/ui/divider"
+import { Loader } from "@modtools-ai/ui/loader"
+import { RadioGroup, RadioItem } from "@modtools-ai/ui/radio"
+import { TextInput } from "@modtools-ai/ui/text-input"
 import { createMemo, For, Show } from "solid-js"
 import { createStore } from "solid-js/store"
-import { showToast } from "@opencode/ui/toast"
-import { usePlugin, type Context, type IpcClient } from "@opencode/plugin/gui"
+import { showToast } from "@modtools-ai/ui/toast"
+import { usePlugin, type Context, type IpcClient } from "@modtools-ai/plugin/gui"
 import type { Wsl, WslServersState } from "./contract"
 import { useWslAddServerProbes } from "./probes"
 import { addServerViewModel, type AddServerText } from "./model"
@@ -357,8 +357,8 @@ function useWslAddServerController(props: DialogWslServerProps) {
 
     if (!distro || !action) return
 
-    if (action === "install-opencode") {
-      await run(() => api().installOpencode({ name: distro }))
+    if (action === "install-mod") {
+      await run(() => api().installMod({ name: distro }))
 
       return
     }
@@ -483,7 +483,7 @@ function unavailable(error: string): WslServersState {
     installed: [],
     online: [],
     distroProbes: {},
-    opencodeChecks: {},
+    modChecks: {},
     pendingRestart: false,
     servers: [],
     job: null,

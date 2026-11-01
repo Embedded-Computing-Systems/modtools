@@ -39,7 +39,7 @@ test("mention a session by title, send its stable token, and open its own tab", 
 })
 
 test("a bare @ lists sessions, and a multi-word title matches while file search is slow", async ({ page }) => {
-  const target = "ses_0123456789opencodeconsolex"
+  const target = "ses_0123456789modconsolex"
   const prompts: Parameters<NonNullable<MockServerConfig["onPrompt"]>>[0]["body"][] = []
 
   const view = await openSession(page, {
@@ -48,7 +48,7 @@ test("a bare @ lists sessions, and a multi-word title matches while file search 
     sessions: [
       { id: "ses_mention_search_source", title: "Review the plan" },
       { id: "ses_0123456789homesessionabcde", title: "HOME" },
-      { id: target, title: "OPENCODE CONSOLE" },
+      { id: target, title: "MOD CONSOLE" },
     ],
     seed: { tabs: ["ses_mention_search_source"] },
     onPrompt: (input) => void prompts.push(input.body),
@@ -59,15 +59,15 @@ test("a bare @ lists sessions, and a multi-word title matches while file search 
 
   await view.editor.pressSequentially("Compare with @")
   await expect(suggestions.getByRole("button", { name: /HOME/ })).toBeVisible()
-  await expect(suggestions.getByRole("button", { name: /OPENCODE CONSOLE/ })).toBeVisible()
+  await expect(suggestions.getByRole("button", { name: /MOD CONSOLE/ })).toBeVisible()
 
   await view.editor.pressSequentially("open")
   await files.arrived
   await view.editor.pressSequentially(" con")
   await expect(suggestions.getByRole("button", { name: /HOME/ })).toHaveCount(0)
-  await expect(suggestions.locator("[data-suggestion-id][data-active]")).toContainText("OPENCODE CONSOLE")
+  await expect(suggestions.locator("[data-suggestion-id][data-active]")).toContainText("MOD CONSOLE")
   await view.editor.press("Enter")
-  await expect(view.editor.locator('[data-mention="session"]')).toHaveText("@OPENCODE CONSOLE")
+  await expect(view.editor.locator('[data-mention="session"]')).toHaveText("@MOD CONSOLE")
   files.release()
 
   // Prose after a completed mention neither reopens the popover nor lets it take Enter.
@@ -104,8 +104,8 @@ test("the free usage limit opens the Go dialog once, leaves a readable notice, a
     provider: () => ({
       all: [
         {
-          id: "opencode",
-          name: "OpenCode",
+          id: "mod",
+          name: "MOD",
           models: {
             "big-pickle": {
               id: "big-pickle",
@@ -133,12 +133,12 @@ test("the free usage limit opens the Go dialog once, leaves a readable notice, a
             ]
           : []),
       ],
-      connected: state.authorized ? ["opencode", "opencode-go"] : ["opencode"],
-      default: { build: "opencode/big-pickle" },
+      connected: state.authorized ? ["opencode", "opencode-go"] : ["mod"],
+      default: { build: "mod/big-pickle" },
     }),
     integrations: () => [
       {
-        id: "opencode",
+        id: "mod",
         name: "OpenCode Console",
         methods: [{ id: "device", type: "oauth", label: "OpenCode Console account" }],
         connections: state.authorized
@@ -290,8 +290,8 @@ for (const action of ["tray", "picker"] as const) {
       provider: () => ({
         all: [
           {
-            id: "opencode",
-            name: "OpenCode",
+            id: "mod",
+            name: "MOD",
             models: {
               "big-pickle": {
                 id: "big-pickle",
@@ -315,7 +315,7 @@ for (const action of ["tray", "picker"] as const) {
           },
         ],
         connected: ["opencode", "opencode-go"],
-        default: { build: "opencode-go/glm-5-go" },
+        default: { build: "mod-go/glm-5-go" },
       }),
       pageMessages: () => ({
         items: [
@@ -449,7 +449,7 @@ test("a catalog refresh cannot replace an existing session's model", async ({ pa
     sessions: [{ id: sessionID, agent: "build", model: { id: "alpha", providerID: "opencode", variant: "high" } }],
     provider: () => catalog.current,
     onPrompt: (input) => void prompts.push(input.body),
-    seed: { storage: { "opencode.global.dat:model": { recent: [{ providerID: "opencode", modelID: "beta" }] } } },
+    seed: { storage: { "mod.global.dat:model": { recent: [{ providerID: "opencode", modelID: "beta" }] } } },
   })
 
   const control = page.locator('[data-action="composer-model"]')
@@ -519,7 +519,7 @@ test("an existing session's model never shows a fallback while its agent loads",
     name: "AgentPending",
     sessions: [{ id: sessionID, agent: "build", model: { id: "alpha", providerID: "opencode" } }],
     provider: provider({ id: "alpha", name: "Alpha" }, { id: "beta", name: "Beta" }),
-    seed: { storage: { "opencode.global.dat:model": { recent: [{ providerID: "opencode", modelID: "beta" }] } } },
+    seed: { storage: { "mod.global.dat:model": { recent: [{ providerID: "opencode", modelID: "beta" }] } } },
   })
   const agents = Promise.withResolvers<void>()
   await page.route(/\/api\/agent(\?|$)/, async (route) => {
@@ -690,9 +690,9 @@ test("a managed composer label follows direct connections, not picker filtering 
     provider: () => ({
       all: [
         {
-          id: "opencode",
+          id: "mod",
           integrationID: "opencode",
-          name: "Anomaly / OpenCode",
+          name: "Anomaly / MOD",
           models: {},
         },
         {
@@ -712,13 +712,13 @@ test("a managed composer label follows direct connections, not picker filtering 
             ]
           : []),
       ],
-      connected: ["opencode", "console-openai", ...(connected.direct ? ["openai"] : [])],
+      connected: ["mod", "console-openai", ...(connected.direct ? ["openai"] : [])],
       default: {},
     }),
     onPrompt: (input) => void prompts.push(input.body),
     seed: {
       storage: {
-        "opencode.global.dat:model": {
+        "mod.global.dat:model": {
           user: [
             { providerID: "console-openai", modelID: "gpt", visibility: "show" },
             { providerID: "openai", modelID: "direct-model", visibility: "show" },
@@ -750,15 +750,15 @@ test("a managed composer label follows direct connections, not picker filtering 
       data: {},
     },
   ])
-  await expect(control).toHaveText("OpenCode / OpenAI / GPT")
-  await expect(control).toHaveAccessibleName("OpenCode / OpenAI / GPT")
+  await expect(control).toHaveText("MOD / OpenAI / GPT")
+  await expect(control).toHaveAccessibleName("MOD / OpenAI / GPT")
   await control.click()
   const search = picker.getByRole("combobox", { name: "Search models", exact: true })
   await expect(picker.locator('[data-option-key="openai:direct-model"]')).toBeVisible()
   await search.fill("GPT")
   await expect(picker.locator('[data-option-key="openai:direct-model"]')).toHaveCount(0)
   await expect(selected).toHaveAttribute("aria-current", "true")
-  await expect(control).toHaveText("OpenCode / OpenAI / GPT")
+  await expect(control).toHaveText("MOD / OpenAI / GPT")
   await search.press("Escape")
   await expect(picker).toBeHidden()
 
@@ -1060,7 +1060,7 @@ test("keeps focus in a dialog that replaces the model dialog and returns it to t
   await expect(editor).toHaveText("keep, me")
 })
 
-test("lists OpenCode's free models in the model picker however old they are", async ({ page }) => {
+test("lists MOD's free models in the model picker however old they are", async ({ page }) => {
   await page.clock.setFixedTime(T0)
   const year = { released: T0 - 365 * 24 * 60 * 60 * 1000 }
   await openSession(page, {
@@ -1074,9 +1074,9 @@ test("lists OpenCode's free models in the model picker however old they are", as
 
   await page.locator('[data-component="composer"] [data-action="composer-model"]').click()
   const models = page.getByRole("dialog", { name: "Select model", exact: true })
-  await expect(models.locator('[data-option-key="opencode:new-paid"]')).toBeVisible()
-  await expect(models.locator('[data-option-key="opencode:big-pickle"]')).toBeVisible()
-  await expect(models.locator('[data-option-key="opencode:old-paid"]')).toHaveCount(0)
+  await expect(models.locator('[data-option-key="mod:new-paid"]')).toBeVisible()
+  await expect(models.locator('[data-option-key="mod:big-pickle"]')).toBeVisible()
+  await expect(models.locator('[data-option-key="mod:old-paid"]')).toHaveCount(0)
 })
 
 test("lists slash commands in their built-in order", async ({ page }) => {
@@ -1214,19 +1214,19 @@ test("marks a Console provider with its workspace only when it is also connected
     name: "ComposerConsoleProviders",
     provider: {
       all: [
-        managed("opencode", "opencode", "OpenCode", model("console-model", "Console Model")),
+        managed("mod", "mod", "MOD", model("console-model", "Console Model")),
         managed("console-google", "google", "Google", model("managed-gemini", "Managed Gemini")),
         managed("console-openai", "openai", "OpenAI", model("managed-gpt", "Managed GPT")),
         { id: "google", canonical: "google", name: "Google", models: model("direct-gemini", "Direct Gemini") },
       ],
-      connected: ["opencode", "console-google", "console-openai", "google"],
+      connected: ["mod", "console-google", "console-openai", "google"],
       default: { providerID: "opencode", modelID: "console-model" },
     },
     seed: {
       storage: {
-        "opencode.global.dat:model": {
+        "mod.global.dat:model": {
           user: [
-            ["opencode", "console-model"],
+            ["mod", "console-model"],
             ["console-google", "managed-gemini"],
             ["console-openai", "managed-gpt"],
             ["google", "direct-gemini"],

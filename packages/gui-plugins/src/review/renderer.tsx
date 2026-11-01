@@ -11,8 +11,8 @@ import {
   untrack,
 } from "solid-js"
 import { createStore } from "solid-js/store"
-import { Icon } from "@opencode/ui/icon"
-import type { FileDiffInfo } from "@opencode/client/promise"
+import { Icon } from "@modtools-ai/ui/icon"
+import type { FileDiffInfo } from "@modtools-ai/client/promise"
 import {
   Command,
   createKeyed,
@@ -25,9 +25,9 @@ import {
   type MountedSession,
   type Plugin,
   type ClosedPanelTab,
-} from "@opencode/plugin/gui"
-import { BuiltinPanel, onIdle, type BuiltinPanelTab } from "@opencode/plugin/gui/builtin"
-import { Changes, type ChangeKind } from "@opencode/plugin/gui/review"
+} from "@modtools-ai/plugin/gui"
+import { BuiltinPanel, onIdle, type BuiltinPanelTab } from "@modtools-ai/plugin/gui/builtin"
+import { Changes, type ChangeKind } from "@modtools-ai/plugin/gui/review"
 import type Review from "./index"
 import { createReviewModel, type Demand, type ReviewModel } from "./model"
 

@@ -1,16 +1,16 @@
 import { describe, expect } from "bun:test"
 import { DateTime, Effect, Layer, Stream } from "effect"
-import { AppNodeBuilder } from "@opencode/core/effect/app-node-builder"
-import { Config } from "@opencode/core/config"
-import { Image } from "@opencode/core/image"
-import { Permission } from "@opencode/core/permission"
-import { Schedule } from "@opencode/core/schedule"
-import { Session } from "@opencode/core/session"
-import { Tool } from "@opencode/core/tool"
-import { ScheduleTools } from "@opencode/core/tool/plugin/schedule"
-import { Document, Info, type Entry } from "@opencode/schema/config"
-import { ConfigExperimental } from "@opencode/schema/config/experimental"
-import type { CommandDefinition } from "@opencode/plugin/effect/command"
+import { AppNodeBuilder } from "@modtools-ai/core/effect/app-node-builder"
+import { Config } from "@modtools-ai/core/config"
+import { Image } from "@modtools-ai/core/image"
+import { Permission } from "@modtools-ai/core/permission"
+import { Schedule } from "@modtools-ai/core/schedule"
+import { Session } from "@modtools-ai/core/session"
+import { Tool } from "@modtools-ai/core/tool"
+import { ScheduleTools } from "@modtools-ai/core/tool/plugin/schedule"
+import { Document, Info, type Entry } from "@modtools-ai/schema/config"
+import { ConfigExperimental } from "@modtools-ai/schema/config/experimental"
+import type { CommandDefinition } from "@modtools-ai/plugin/effect/command"
 import { testEffect } from "./lib/effect"
 import { imagePassthrough } from "./lib/image"
 import { permissionLayer } from "./lib/permission"
@@ -20,7 +20,7 @@ const sessionID = Session.ID.make("ses_schedule_tool_test")
 const otherSessionID = Session.ID.make("ses_schedule_tool_other")
 const now = DateTime.makeUnsafe("2026-10-27T13:00:00Z")
 const names = ["schedule_create", "schedule_list", "schedule_pause", "schedule_resume", "schedule_delete"].map(
-  (name) => `opencode.${name}`,
+  (name) => `mod.${name}`,
 )
 
 const it = testEffect(
@@ -109,7 +109,7 @@ const call = (registry: Tool.Interface, name: string, input: unknown, session = 
       type: "tool-call",
       id: `call-${name}`,
       name: "execute",
-      input: { code: `return await tools.opencode.${name}(${JSON.stringify(input)})` },
+      input: { code: `return await tools.mod.${name}(${JSON.stringify(input)})` },
     },
   })
 const run = (registry: Tool.Interface, name: string, input: unknown, session = sessionID) =>
@@ -124,7 +124,7 @@ const direct = (registry: Tool.Interface, name: string, input: unknown) =>
       tools.execute({
         sessionID,
         ...toolIdentity,
-        call: { type: "tool-call", id: `call-direct-${name}`, name: `opencode_${name}`, input },
+        call: { type: "tool-call", id: `call-direct-${name}`, name: `mod_${name}`, input },
       }),
     ),
     Effect.map((result) => result.content?.map((part) => (part.type === "text" ? part.text : "")).join("")),

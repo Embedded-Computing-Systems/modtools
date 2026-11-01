@@ -1,12 +1,12 @@
 import { expect, test } from "bun:test"
-import { compile } from "@opencode/httpapi-codegen"
+import { compile } from "@modtools-ai/httpapi-codegen"
 import {
   ClientApi,
   clientNamespace,
   effectOmitEndpoints,
   groupNames,
   promiseOmitEndpoints,
-} from "@opencode/protocol/client"
+} from "@modtools-ai/protocol/client"
 import { Effect } from "effect"
 import { HttpClient } from "effect/http"
 import { OpenCode as EffectOpenCode } from "../src/effect/index"

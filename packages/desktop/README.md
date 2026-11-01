@@ -1,6 +1,6 @@
-# OpenCode Desktop
+# MOD Desktop
 
-The OpenCode Desktop app, built with Electron.
+The MOD Desktop app, built with Electron.
 
 ## Development
 
@@ -23,12 +23,12 @@ Both read the same environment as every other release package:
 
 | Variable           | Meaning                                                                                                         |
 | ------------------ | --------------------------------------------------------------------------------------------------------------- |
-| `OPENCODE_CHANNEL` | `dev` (default), `beta`, or `latest`/`prod`. Picks the app identity, icons and bundled CLI.                     |
-| `OPENCODE_VERSION` | Version stamped into the app and its packages.                                                                  |
-| `OPENCODE_TARGET`  | `darwin-arm64`, `darwin-x64`, `windows-arm64`, `windows-x64`, `linux-x64`, `linux-arm64`. Defaults to the host. |
+| `MODTOOLS_CHANNEL` | `dev` (default), `beta`, or `latest`/`prod`. Picks the app identity, icons and bundled CLI.                     |
+| `MODTOOLS_VERSION` | Version stamped into the app and its packages.                                                                  |
+| `MODTOOLS_TARGET`  | `darwin-arm64`, `darwin-x64`, `windows-arm64`, `windows-x64`, `linux-x64`, `linux-arm64`. Defaults to the host. |
 
 The CLI is placed outside `app.asar` in the application's resources directory, and packaging fails if it is missing.
-`bun run build` uses `packages/cli/dist` when that holds the target's CLI. Otherwise `dev` (and `local`, unset or unrecognized)
+`bun run build` uses `packages/modtools/dist` when that holds the target's CLI. Otherwise `dev` (and `local`, unset or unrecognized)
 downloads the published dev CLI, `beta` downloads the beta CLI, and `prod`/`latest` fail.
 
 `bun dev` is separate from packaging: it uses local renderer/server mode, the dev app identity, and the CLI source by
@@ -36,8 +36,8 @@ default. `bun dev --download-server <version>` instead downloads that CLI versio
 
 ## Beta channel
 
-Every push to the `beta` branch publishes OpenCode Beta (`ai.opencode.desktop.beta`) as version `0.0.0-beta-<run>` to
-the `beta` update channel. Beta publishes only the desktop app and `beta.opencode.ai`; the CLI and SDK packages ship
+Every push to the `beta` branch publishes MOD Beta (`ai.mod.desktop.beta`) as version `0.0.0-beta-<run>` to
+the `beta` update channel. Beta publishes only the desktop app and `beta.mod.ai`; the CLI and SDK packages ship
 from `dev`. Install it from `https://opencode.ai/download/beta/<platform>`, for example `darwin-aarch64-dmg` or
 `windows-x64-nsis`. Installed builds update in place on every platform.
 
@@ -52,17 +52,17 @@ unless release notes are turned off in Settings.
 renderer going idle, so dev-server and bundling costs are not part of the numbers.
 
 ```bash
-OPENCODE_CHANNEL=dev bun run build && bun run pack
+MODTOOLS_CHANNEL=dev bun run build && bun run pack
 bun run bench:startup -- --runs 5                                  # warm service (started once, reused by every launch)
-bun run bench:startup -- --runs 5 --compare dist/other/OpenCode\ Dev.exe   # A/B: alternate launches of two builds
+bun run bench:startup -- --runs 5 --compare dist/other/MOD\ Dev.exe   # A/B: alternate launches of two builds
 bun run bench:startup -- --service cold                            # each launch spawns the service
 bun run bench:startup -- --fresh                                   # first launch after an install (profile wiped each time)
 bun run bench:startup -- --profile-main --profile-renderer --trace # CPU profiles and a Chromium startup trace
-bun run bench:startup -- --seed "%APPDATA%\ai.opencode.desktop.dev"   # restore tabs and drafts from an existing profile
+bun run bench:startup -- --seed "%APPDATA%\ai.mod.desktop.dev"   # restore tabs and drafts from an existing profile
 ```
 
-The app runs in an isolated home (`%TEMP%\opencode-bench-startup`): its own `%APPDATA%`, XDG directories, OpenCode
-database, config and service registration, with the developer's `OPENCODE_*` and `OTEL_*` environment stripped
+The app runs in an isolated home (`%TEMP%\MOD-bench-startup`): its own `%APPDATA%`, XDG directories, MOD
+database, config and service registration, with the developer's `MODTOOLS_*` and `OTEL_*` environment stripped
 (an inherited OTLP endpoint alone adds a network round trip to every CLI exit). It never attaches to or restarts the
 developer's live service, and only ever kills the process tree it spawned. `--service cold` stops the service before
 each launch so the desktop has to spawn it; the isolated config directory gives that service a private port. One
@@ -78,6 +78,6 @@ log line. Renderer idle is the start of the first 500 ms window with under 10 % 
 for `--settle-ms`; `rendererTaskMs` is the renderer's total main-thread task time until then. Raw samples are
 written to `dist/bench-startup`.
 
-A packaged beta or prod build registers itself as the `opencode://` handler when it starts, even from the bench; the
+A packaged beta or prod build registers itself as the `mod://` handler when it starts, even from the bench; the
 installed app takes the registration back on its next launch. Those channels run with `HTTPS_PROXY` pointed at a
 closed port (`--offline` forces it for dev) so the updater's first check fails fast instead of reaching GitHub.

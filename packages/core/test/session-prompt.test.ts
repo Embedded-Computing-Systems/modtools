@@ -1,52 +1,52 @@
 import { describe, expect } from "bun:test"
-import type { FileSystem } from "@opencode/core/filesystem"
+import type { FileSystem } from "@modtools-ai/core/filesystem"
 import { DateTime, Effect, Fiber, Layer, LayerMap, Schema, Stream } from "effect"
 import path from "path"
 import { pathToFileURL } from "url"
 import { eq } from "drizzle-orm"
-import { Database } from "@opencode/core/database/database"
-import { Agent } from "@opencode/core/agent"
-import { AppNodeBuilder } from "@opencode/core/effect/app-node-builder"
-import { LayerNode } from "@opencode/util/effect/layer-node"
-import { makeGlobalNode } from "@opencode/util/effect/app-node"
-import { Bus } from "@opencode/core/bus"
-import { EventTable } from "@opencode/core/event/sql"
-import { Location } from "@opencode/schema/location"
-import { SessionEvent } from "@opencode/core/session/event"
-import { Model } from "@opencode/core/model"
-import { Provider } from "@opencode/core/provider"
-import { Project } from "@opencode/core/project"
-import { ProjectTable } from "@opencode/core/project/sql"
-import { AbsolutePath } from "@opencode/core/schema"
-import { Session } from "@opencode/core/session"
-import { SessionMessage } from "@opencode/core/session/message"
-import { SessionProjector } from "@opencode/core/session/projector"
-import { SessionExecution } from "@opencode/core/session/execution"
-import { SessionInbox } from "@opencode/core/session/inbox"
+import { Database } from "@modtools-ai/core/database/database"
+import { Agent } from "@modtools-ai/core/agent"
+import { AppNodeBuilder } from "@modtools-ai/core/effect/app-node-builder"
+import { LayerNode } from "@modtools-ai/util/effect/layer-node"
+import { makeGlobalNode } from "@modtools-ai/util/effect/app-node"
+import { Bus } from "@modtools-ai/core/bus"
+import { EventTable } from "@modtools-ai/core/event/sql"
+import { Location } from "@modtools-ai/schema/location"
+import { SessionEvent } from "@modtools-ai/core/session/event"
+import { Model } from "@modtools-ai/core/model"
+import { Provider } from "@modtools-ai/core/provider"
+import { Project } from "@modtools-ai/core/project"
+import { ProjectTable } from "@modtools-ai/core/project/sql"
+import { AbsolutePath } from "@modtools-ai/core/schema"
+import { Session } from "@modtools-ai/core/session"
+import { SessionMessage } from "@modtools-ai/core/session/message"
+import { SessionProjector } from "@modtools-ai/core/session/projector"
+import { SessionExecution } from "@modtools-ai/core/session/execution"
+import { SessionInbox } from "@modtools-ai/core/session/inbox"
 import {
   BlobRefTable,
   BlobTable,
   SessionInboxTable,
   SessionMessageTable,
   SessionTable,
-} from "@opencode/core/session/sql"
-import { SessionStore } from "@opencode/core/session/store"
-import { LocationServiceMap } from "@opencode/core/location-service-map"
-import type { LocationServices } from "@opencode/core/location-services"
-import { Image } from "@opencode/core/image"
-import { Plugin } from "@opencode/core/plugin"
-import { PluginHooks } from "@opencode/core/plugin/hooks"
-import { Snapshot } from "@opencode/core/snapshot"
-import { Skill } from "@opencode/core/skill"
+} from "@modtools-ai/core/session/sql"
+import { SessionStore } from "@modtools-ai/core/session/store"
+import { LocationServiceMap } from "@modtools-ai/core/location-service-map"
+import type { LocationServices } from "@modtools-ai/core/location-services"
+import { Image } from "@modtools-ai/core/image"
+import { Plugin } from "@modtools-ai/core/plugin"
+import { PluginHooks } from "@modtools-ai/core/plugin/hooks"
+import { Snapshot } from "@modtools-ai/core/snapshot"
+import { Skill } from "@modtools-ai/core/skill"
 import { tmpdirScoped } from "./fixture/tmpdir"
 import { testEffect } from "./lib/effect"
-import { Config } from "@opencode/core/config"
-import { Document, Info } from "@opencode/schema/config"
-import { ConfigExperimental } from "@opencode/schema/config/experimental"
-import { SessionStored } from "@opencode/core/session/stored"
-import { SessionBlob } from "@opencode/core/session/blob"
-import { SessionTransfer } from "@opencode/core/session/transfer"
-import { PromptInput } from "@opencode/schema/prompt-input"
+import { Config } from "@modtools-ai/core/config"
+import { Document, Info } from "@modtools-ai/schema/config"
+import { ConfigExperimental } from "@modtools-ai/schema/config/experimental"
+import { SessionStored } from "@modtools-ai/core/session/stored"
+import { SessionBlob } from "@modtools-ai/core/session/blob"
+import { SessionTransfer } from "@modtools-ai/core/session/transfer"
+import { PromptInput } from "@modtools-ai/schema/prompt-input"
 
 const executionCalls: Session.ID[] = []
 const interruptCalls: Session.ID[] = []
@@ -507,7 +507,7 @@ describe("Session.prompt", () => {
     Effect.gen(function* () {
       yield* setup
       const session = yield* Session.Service
-      const directory = yield* tmpdirScoped("opencode-session-prompt-")
+      const directory = yield* tmpdirScoped("mod-session-prompt-")
       const source = path.join(directory.path, "image.png")
       const bytes = Buffer.from(
         "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=",
@@ -539,7 +539,7 @@ describe("Session.prompt", () => {
     Effect.gen(function* () {
       yield* setup
       const session = yield* Session.Service
-      const directory = yield* tmpdirScoped("opencode-session-prompt-")
+      const directory = yield* tmpdirScoped("mod-session-prompt-")
       const source = path.join(directory.path, "screenshot.png")
       yield* Effect.promise(() => Bun.write(source, Buffer.from(pngBase64, "base64")))
       const bytes = yield* Effect.promise(() => Bun.file(source).arrayBuffer())

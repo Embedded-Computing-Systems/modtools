@@ -17,7 +17,7 @@ const session = (viewed: number): SessionInfo => ({
 test("uses the configured initial window and retains normal cursor page sizes", async () => {
   const requests: { limit: string | null; cursor: string | null }[] = []
   const api = OpenCode.make({
-    baseUrl: "http://opencode.local",
+    baseUrl: "http://mod.local",
     fetch: async (input, init) => {
       const url = new URL((input instanceof Request ? input : new Request(input, init)).url)
       const cursor = url.searchParams.get("cursor")
@@ -61,7 +61,7 @@ test("counts every subagent page in a root session's cost", async () => {
   })
   const requests: string[] = []
   const api = OpenCode.make({
-    baseUrl: "http://opencode.local",
+    baseUrl: "http://mod.local",
     fetch: async (input, init) => {
       const url = new URL((input instanceof Request ? input : new Request(input, init)).url)
       requests.push(`${url.pathname}?${url.searchParams}`)
@@ -106,7 +106,7 @@ test("keeps the previous model in a live variant notice until the projected mess
   const model = { providerID: "provider", id: "model" }
   const listeners = new Set<Parameters<CreateDataInput["event"]["listen"]>[0]>()
   const api = OpenCode.make({
-    baseUrl: "http://opencode.local",
+    baseUrl: "http://mod.local",
     fetch: async (input, init) => {
       const request = input instanceof Request ? input : new Request(input, init)
       const pathname = new URL(request.url).pathname
@@ -170,7 +170,7 @@ test("reconciles a stale running tool when execution settles", async () => {
   let completed = false
   let requests = 0
   const api = OpenCode.make({
-    baseUrl: "http://opencode.local",
+    baseUrl: "http://mod.local",
     fetch: async () => {
       requests++
       return Response.json({
@@ -250,7 +250,7 @@ test("omits inline tool-result file payloads from read and live tool results whe
     state,
   })
   const api = OpenCode.make({
-    baseUrl: "http://opencode.local",
+    baseUrl: "http://mod.local",
     fetch: async () =>
       Response.json({
         data: [
@@ -333,7 +333,7 @@ test("omits inline tool-result file payloads from read and live tool results whe
 test("refreshes a loaded session's execution start when it starts running", async () => {
   const listeners = new Set<Parameters<CreateDataInput["event"]["listen"]>[0]>()
   const api = OpenCode.make({
-    baseUrl: "http://opencode.local",
+    baseUrl: "http://mod.local",
     fetch: async (input, init) => {
       const request = input instanceof Request ? input : new Request(input, init)
       if (!request.url.endsWith("/api/session/ses_refresh")) throw new Error(`Unexpected request: ${request.url}`)
@@ -380,7 +380,7 @@ test("revalidates after an event overtakes an active session read", async () => 
   const listeners = new Set<Parameters<CreateDataInput["event"]["listen"]>[0]>()
   let requests = 0
   const api = OpenCode.make({
-    baseUrl: "http://opencode.local",
+    baseUrl: "http://mod.local",
     fetch: async (input, init) => {
       const request = input instanceof Request ? input : new Request(input, init)
       if (!request.url.endsWith("/api/session/ses_refresh")) throw new Error(`Unexpected request: ${request.url}`)
@@ -440,7 +440,7 @@ test("preserves a live session rename across concurrent session and family reads
   let requests = 0
   const stale = { ...session(0), title: undefined }
   const api = OpenCode.make({
-    baseUrl: "http://opencode.local",
+    baseUrl: "http://mod.local",
     fetch: async (input, init) => {
       const request = input instanceof Request ? input : new Request(input, init)
       if (!request.url.endsWith(`/api/session/${stale.id}`)) return Response.json({ data: [], cursor: {} })
@@ -508,7 +508,7 @@ test("updates authoritative cached project metadata from live events", async () 
   }
   let requests = 0
   const api = OpenCode.make({
-    baseUrl: "http://opencode.local",
+    baseUrl: "http://mod.local",
     fetch: async (input, init) => {
       const request = input instanceof Request ? input : new Request(input, init)
       if (!request.url.endsWith("/api/project")) throw new Error(`Unexpected request: ${request.url}`)
@@ -582,7 +582,7 @@ test("adopts cached directory-project sessions when their repository is resolved
     subpath: "app",
   }
   const api = OpenCode.make({
-    baseUrl: "http://opencode.local",
+    baseUrl: "http://mod.local",
     fetch: async (input, init) => {
       const request = input instanceof Request ? input : new Request(input, init)
       if (!request.url.endsWith("/api/session/ses_uncached")) throw new Error(`Unexpected request: ${request.url}`)
@@ -676,7 +676,7 @@ test("refreshes global credential events across every loaded location", async ()
   const listeners = new Set<Parameters<CreateDataInput["event"]["listen"]>[0]>()
   const requests: URL[] = []
   const api = OpenCode.make({
-    baseUrl: "http://opencode.local",
+    baseUrl: "http://mod.local",
     fetch: async (input, init) => {
       const request = input instanceof Request ? input : new Request(input, init)
       const url = new URL(request.url)
@@ -767,7 +767,7 @@ for (const resource of ["provider", "model"] as const) {
     const requests: URL[] = []
     const current = { name: "Before" }
     const api = OpenCode.make({
-      baseUrl: "http://opencode.local",
+      baseUrl: "http://mod.local",
       fetch: async (input, init) => {
         const request = input instanceof Request ? input : new Request(input, init)
         const url = new URL(request.url)
@@ -842,7 +842,7 @@ test("ignores catalog updates for unloaded locations while refreshing loaded loc
   const requests: Array<[string, string | null]> = []
   const current = { version: "v1" }
   const api = OpenCode.make({
-    baseUrl: "http://opencode.local",
+    baseUrl: "http://mod.local",
     fetch: async (input, init) => {
       const request = input instanceof Request ? input : new Request(input, init)
       const url = new URL(request.url)
@@ -945,7 +945,7 @@ test("revalidates model discovery when an update overtakes an in-flight model li
   const listeners = new Set<Parameters<CreateDataInput["event"]["listen"]>[0]>()
   let requests = 0
   const api = OpenCode.make({
-    baseUrl: "http://opencode.local",
+    baseUrl: "http://mod.local",
     fetch: async (input, init) => {
       const request = input instanceof Request ? input : new Request(input, init)
       if (new URL(request.url).pathname !== "/api/model") throw new Error(`Unexpected request: ${request.url}`)
@@ -1001,7 +1001,7 @@ test("refreshes references for the location an update names", async () => {
   const listeners = new Set<Parameters<CreateDataInput["event"]["listen"]>[0]>()
   const requests: URL[] = []
   const api = OpenCode.make({
-    baseUrl: "http://opencode.local",
+    baseUrl: "http://mod.local",
     fetch: async (input, init) => {
       const request = input instanceof Request ? input : new Request(input, init)
       const url = new URL(request.url)
@@ -1061,7 +1061,7 @@ test("reloads VCS info when the branch changes", async () => {
   // A location's first read can land before its VCS provider loads, and so has no branches.
   const responses = [{ branch: {} }, { provider: "git", branch: { current: "feature", default: "dev" } }]
   const api = OpenCode.make({
-    baseUrl: "http://opencode.local",
+    baseUrl: "http://mod.local",
     fetch: async () => Response.json({ location, data: responses.shift() }),
   })
   const setup = createRoot((dispose) => ({
@@ -1105,7 +1105,7 @@ test("preserves sibling catalogs through location preload, branch, shell, and we
   const requests: string[] = []
   let branch = "main"
   const api = OpenCode.make({
-    baseUrl: "http://opencode.local",
+    baseUrl: "http://mod.local",
     fetch: async (input, init) => {
       const pathname = new URL((input instanceof Request ? input : new Request(input, init)).url).pathname
       requests.push(pathname)
@@ -1200,7 +1200,7 @@ test("preserves sibling catalogs through location preload, branch, shell, and we
 test("reports optimistic sessions as creating until the request settles", async () => {
   const release = Promise.withResolvers<void>()
   const api = OpenCode.make({
-    baseUrl: "http://opencode.local",
+    baseUrl: "http://mod.local",
     fetch: async (input, init) => {
       const request = input instanceof Request ? input : new Request(input, init)
       if (!request.url.endsWith("/api/session")) throw new Error(`Unexpected request: ${request.url}`)
@@ -1231,7 +1231,7 @@ test("reports optimistic sessions as creating until the request settles", async 
 test("loads bounded message pages", async () => {
   const requests: URL[] = []
   const api = OpenCode.make({
-    baseUrl: "http://opencode.local",
+    baseUrl: "http://mod.local",
     fetch: async (input, init) => {
       const request = input instanceof Request ? input : new Request(input, init)
       const url = new URL(request.url)
@@ -1274,7 +1274,7 @@ test.each(["success", "failure", "cancel", "cancel-retry", "cancel-page", "join-
     const requests: URL[] = []
     const publications: string[][] = []
     const api = OpenCode.make({
-      baseUrl: "http://opencode.local",
+      baseUrl: "http://mod.local",
       fetch: async (input, init) => {
         const url = new URL(input instanceof Request ? input.url : String(input))
         requests.push(url)
@@ -1407,7 +1407,7 @@ test.each([
         sessionID: "ses_refresh",
         reason: "user",
         ...(type === "session.execution.failed"
-          ? { error: { type: "provider.no-route", message: "Model unavailable: opencode/gpt-5.2" } }
+          ? { error: { type: "provider.no-route", message: "Model unavailable: mod/gpt-5.2" } }
           : {}),
       },
     })
@@ -1417,7 +1417,7 @@ test.each([
         id: "msg_activity",
         type: "idle",
         outcome: "failed",
-        error: { type: "provider.no-route", message: "Model unavailable: opencode/gpt-5.2" },
+        error: { type: "provider.no-route", message: "Model unavailable: mod/gpt-5.2" },
         time: { created: 2 },
       })
     }
@@ -1519,7 +1519,7 @@ function modelInfo(name: string): ModelInfo {
 function activityFixture(read: () => Response | Promise<Response>, sessions: SessionInfo[] = []) {
   const listeners = new Set<Parameters<CreateDataInput["event"]["listen"]>[0]>()
   const api = OpenCode.make({
-    baseUrl: "http://opencode.local",
+    baseUrl: "http://mod.local",
     fetch: async (input, init) => {
       const request = input instanceof Request ? input : new Request(input, init)
       const path = new URL(request.url).pathname

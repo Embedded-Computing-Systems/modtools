@@ -1,4 +1,4 @@
-import { Plugin } from "@opencode/plugin/tui"
+import { Plugin } from "@modtools-ai/plugin/tui"
 
 // Reads messages through the plugin client, whose files must stay inline bytes.
 export default Plugin.define({

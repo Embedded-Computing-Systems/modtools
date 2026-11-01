@@ -1,11 +1,11 @@
 import { createSignal, Show } from "solid-js"
 import { render } from "solid-js/web"
-import { DialogProvider } from "@opencode/ui/context/dialog"
-import { I18nProvider, useI18n } from "@opencode/ui/context/i18n"
+import { DialogProvider } from "@modtools-ai/ui/context/dialog"
+import { I18nProvider, useI18n } from "@modtools-ai/ui/context/i18n"
 import { Markdown } from "../src/components/markdown"
 import { preloadMarkdown } from "../src/components/markdown-cache"
 import { MarkdownProvider, type MarkdownLocalFileExists } from "../src/context/markdown"
-import { OpenCode } from "@opencode/client/promise"
+import { OpenCode } from "@modtools-ai/client/promise"
 import { readLocalImage } from "../../app/src/runtime/server/image"
 
 export {
@@ -39,7 +39,7 @@ export async function mountMarkdown(options: {
   render(() => {
     const api = OpenCode.make({
       baseUrl: location.origin,
-      headers: { Authorization: `Basic ${btoa("opencode:fixture")}` },
+      headers: { Authorization: `Basic ${btoa("mod:fixture")}` },
     })
 
     const [text, setText] = createSignal(options.text)

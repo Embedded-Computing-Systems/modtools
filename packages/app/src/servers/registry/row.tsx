@@ -1,5 +1,5 @@
-import { Icon } from "@opencode/ui/icon"
-import { Loader } from "@opencode/ui/loader"
+import { Icon } from "@modtools-ai/ui/icon"
+import { Loader } from "@modtools-ai/ui/loader"
 import { useLanguage } from "@/runtime/i18n/language"
 import { Show } from "solid-js"
 import type { ServerHealth } from "@/runtime/server/health"

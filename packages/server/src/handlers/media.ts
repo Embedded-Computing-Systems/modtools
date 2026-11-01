@@ -1,6 +1,6 @@
-import { Database } from "@opencode/core/database/database"
-import { SessionBlob } from "@opencode/core/session/blob"
-import { FileNotFoundError } from "@opencode/protocol/errors"
+import { Database } from "@modtools-ai/core/database/database"
+import { SessionBlob } from "@modtools-ai/core/session/blob"
+import { FileNotFoundError } from "@modtools-ai/protocol/errors"
 import { Effect } from "effect"
 import { type HttpServerRequest, HttpServerResponse } from "effect/http"
 

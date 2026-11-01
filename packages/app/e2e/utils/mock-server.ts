@@ -1,8 +1,8 @@
 import type { Page } from "@playwright/test"
-import type { OpenCodeEvent, SessionMessageInfo } from "@opencode/client/promise"
-import { Permission } from "@opencode/schema/permission"
-import { Model } from "@opencode/schema/model"
-import { Worktree } from "@opencode/schema/worktree"
+import type { OpenCodeEvent, SessionMessageInfo } from "@modtools-ai/client/promise"
+import { Permission } from "@modtools-ai/schema/permission"
+import { Model } from "@modtools-ai/schema/model"
+import { Worktree } from "@modtools-ai/schema/worktree"
 import { Duration, Effect, Layer, Option, Predicate, Schema } from "effect"
 import { HttpRouter, HttpServer, HttpServerResponse } from "effect/http"
 import { HttpApiBuilder, HttpApiSchema } from "effect/http-api"
@@ -351,7 +351,7 @@ export async function mockOpenCodeServer(page: Page, config: MockServerConfig) {
 
     if (
       password !== undefined &&
-      (await route.request().headerValue("authorization")) !== `Basic ${btoa(`opencode:${password}`)}`
+      (await route.request().headerValue("authorization")) !== `Basic ${btoa(`mod:${password}`)}`
     ) {
       return route.fulfill({
         status: 401,
@@ -743,7 +743,7 @@ function mockHandlers(
             pid: 1,
             hostname: config.hostname,
             urls: config.server ? [config.server] : [],
-            paths: { tmp: "/tmp/opencode" },
+            paths: { tmp: "/tmp/mod" },
             capabilities:
               state.persistentPty.capability === undefined
                 ? undefined
@@ -1071,7 +1071,7 @@ function mockHandlers(
                 ? Effect.fail(
                     new MockPtyFeatureUnsupported({
                       feature: "rename",
-                      message: "Terminal renaming will be available after OpenCode's terminal service restarts",
+                      message: "Terminal renaming will be available after MOD's terminal service restarts",
                     }),
                   )
                 : Effect.sync(() => ({ data: state.persistentPty.update(found.id, ctx.payload) })),
@@ -1133,7 +1133,7 @@ function mockHandlers(
         },
         // The goal plugin's pill reads each routed session's goal; no scenario sets one.
         rpcCall: (ctx) =>
-          ctx.params.rpcID === "opencode.goal" && ctx.params.method === "get"
+          ctx.params.rpcID === "mod.goal" && ctx.params.method === "get"
             ? Effect.succeed({ output: null })
             : Effect.fail(
                 new MockUnsupported({

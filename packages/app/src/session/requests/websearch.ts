@@ -1,7 +1,7 @@
-import type { FormInfo, FormOption, SessionFormReplyInput, FormStringField } from "@opencode/client/promise"
+import type { FormInfo, FormOption, SessionFormReplyInput, FormStringField } from "@modtools-ai/client/promise"
 import { createEffect, createMemo, createResource, on, onCleanup } from "solid-js"
 import { createStore } from "solid-js/store"
-import { abort } from "@opencode/util/abort"
+import { abort } from "@modtools-ai/util/abort"
 import type { OpenCodeEventStream } from "@/runtime/server/client"
 
 function webSearchProviderField(form: FormInfo) {

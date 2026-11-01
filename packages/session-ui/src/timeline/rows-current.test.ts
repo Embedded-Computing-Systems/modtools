@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test"
 import { Predicate } from "effect"
-import type { SessionMessageAssistant, SessionMessageAssistantTool, SessionMessageInfo } from "@opencode/client/promise"
+import type { SessionMessageAssistant, SessionMessageAssistantTool, SessionMessageInfo } from "@modtools-ai/client/promise"
 import { storyDocument, storyTool } from "../storybook/current-session-scenarios"
 import { timelinePresets } from "./detail"
 import { createTimelineProjection, Timeline, TimelineRow } from "./projection"
@@ -886,9 +886,9 @@ describe("current session timeline rows", () => {
       name: "read",
       state: {
         status: "completed",
-        input: { path: "packages/cli/AGENTS.md" },
+        input: { path: "packages/modtools/AGENTS.md" },
         content: [{ type: "text", text: "instructions" }],
-        metadata: { loaded: ["packages/cli/AGENTS.md"] },
+        metadata: { loaded: ["packages/modtools/AGENTS.md"] },
       },
       time: { created: 2, ran: 3, completed: 4 },
     } satisfies SessionMessageAssistantTool
@@ -1512,7 +1512,7 @@ describe("current session timeline rows", () => {
         id: "msg_idle",
         type: "idle",
         outcome: "failed",
-        error: { type: "provider.no-route", message: "Model unavailable: opencode/gpt-5.2" },
+        error: { type: "provider.no-route", message: "Model unavailable: mod/gpt-5.2" },
         time: { created: 2 },
       },
       {
@@ -1526,7 +1526,7 @@ describe("current session timeline rows", () => {
     const preStepRows = Timeline.constructSessionMessageRows(preStep, true, { type: "idle" }).rows
     expect(preStepRows.map((row) => row._tag)).toEqual(["UserMessage", "Error", "Notice"])
     expect(preStepRows[1]).toEqual(
-      new TimelineRow.Error({ userMessageID: "msg_user", text: "Model unavailable: opencode/gpt-5.2" }),
+      new TimelineRow.Error({ userMessageID: "msg_user", text: "Model unavailable: mod/gpt-5.2" }),
     )
 
     const betweenSteps = [

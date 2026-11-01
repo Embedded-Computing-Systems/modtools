@@ -4,22 +4,22 @@ import {
   mainOnlyModule,
   type PluginModule,
   type Entry,
-} from "@opencode/plugin/gui/host"
+} from "@modtools-ai/plugin/gui/host"
 
 // Plugin bundles share the host's module instances, so tokens, contexts and schemas they import are the same objects
 // the host checks against. In a window, the main SDK's name resolves to the window SDK.
 const modules = {
   effect: () => import("effect"),
-  "@opencode/plugin/gui": () => import("@opencode/plugin/gui"),
-  "@opencode/plugin/gui/main": () => import("@opencode/plugin/gui"),
-  "@opencode/plugin/gui/file": () => import("@opencode/plugin/gui/file"),
-  "@opencode/plugin/gui/review": () => import("@opencode/plugin/gui/review"),
-  "@opencode/plugin/gui/browser": () => import("@opencode/plugin/gui/browser"),
-  "@opencode/plugin/rpc": () => import("@opencode/plugin/rpc"),
-  "@opencode/schema/rpc": () => import("@opencode/schema/rpc"),
-  "@opencode/client": () => import("@opencode/client"),
-  "@opencode/client/effect": () => import("@opencode/client/effect"),
-  "@opencode/client/solid": () => import("@opencode/client/solid"),
+  "@modtools-ai/plugin/gui": () => import("@modtools-ai/plugin/gui"),
+  "@modtools-ai/plugin/gui/main": () => import("@modtools-ai/plugin/gui"),
+  "@modtools-ai/plugin/gui/file": () => import("@modtools-ai/plugin/gui/file"),
+  "@modtools-ai/plugin/gui/review": () => import("@modtools-ai/plugin/gui/review"),
+  "@modtools-ai/plugin/gui/browser": () => import("@modtools-ai/plugin/gui/browser"),
+  "@modtools-ai/plugin/rpc": () => import("@modtools-ai/plugin/rpc"),
+  "@modtools-ai/schema/rpc": () => import("@modtools-ai/schema/rpc"),
+  "@modtools-ai/client": () => import("@modtools-ai/client"),
+  "@modtools-ai/client/effect": () => import("@modtools-ai/client/effect"),
+  "@modtools-ai/client/solid": () => import("@modtools-ai/client/solid"),
   "solid-js": () => import("solid-js"),
   "solid-js/web": () => import("solid-js/web"),
   "solid-js/store": () => import("solid-js/store"),

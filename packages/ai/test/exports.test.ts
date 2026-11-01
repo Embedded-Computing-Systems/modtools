@@ -10,9 +10,9 @@ import {
   LanguageModel,
   LLMClient,
   Media,
-} from "@opencode/ai/effect"
-import { Speech, SpeechClient, SpeechEvent, TranscriptionClient, Video, VideoClient } from "@opencode/ai/experimental"
-import { Route, Protocol, RequestExecutor, WebSocketTransport } from "@opencode/ai/route"
+} from "@modtools-ai/ai/effect"
+import { Speech, SpeechClient, SpeechEvent, TranscriptionClient, Video, VideoClient } from "@modtools-ai/ai/experimental"
+import { Route, Protocol, RequestExecutor, WebSocketTransport } from "@modtools-ai/ai/route"
 import {
   Alibaba,
   AssemblyAI,
@@ -37,7 +37,7 @@ import {
   VercelAIGateway,
   XAI,
   ZAI,
-} from "@opencode/ai/providers"
+} from "@modtools-ai/ai/providers"
 import {
   AnthropicMessages,
   OpenAIChat,
@@ -46,8 +46,8 @@ import {
   OpenAIResponses,
   OpenResponses,
   OpenResponsesChannel,
-} from "@opencode/ai/protocols"
-import { TestLLM } from "@opencode/ai/testing"
+} from "@modtools-ai/ai/protocols"
+import { TestLLM } from "@modtools-ai/ai/testing"
 
 describe("public exports", () => {
   test("modality, provider, and protocol entrypoints load first in a fresh process", async () => {
@@ -115,7 +115,7 @@ describe("public exports", () => {
   })
 
   test("provider barrels expose user-facing facades", async () => {
-    const { OpenAICompatibleResponses } = await import("@opencode/ai/providers")
+    const { OpenAICompatibleResponses } = await import("@modtools-ai/ai/providers")
 
     expect(OpenAI.model).toBeFunction()
     expect(OpenAI.provider.responses).toBe(OpenAI.responses)

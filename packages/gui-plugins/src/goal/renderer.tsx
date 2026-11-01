@@ -1,9 +1,9 @@
 import { onCleanup, Show } from "solid-js"
 import { createStore } from "solid-js/store"
-import { ComposerPill, createKeyed, type ComposerPillProps, type Plugin } from "@opencode/plugin/gui"
-import { Goal } from "@opencode/schema/goal"
-import { Button } from "@opencode/ui/button"
-import { showToast } from "@opencode/ui/toast"
+import { ComposerPill, createKeyed, type ComposerPillProps, type Plugin } from "@modtools-ai/plugin/gui"
+import { Goal } from "@modtools-ai/schema/goal"
+import { Button } from "@modtools-ai/ui/button"
+import { showToast } from "@modtools-ai/ui/toast"
 import type GoalDefinition from "./index"
 
 const status = {

@@ -12,11 +12,11 @@ import {
 } from "solid-js"
 import { createStore, produce, type Store } from "solid-js/store"
 import type { Schema } from "effect"
-import { useDialog } from "@opencode/ui/context/dialog"
-import { useTheme } from "@opencode/ui/theme/context"
-import { toaster } from "@opencode/ui/toast"
-import { base64Encode } from "@opencode/util/encode"
-import { uuid } from "@opencode/util/uuid"
+import { useDialog } from "@modtools-ai/ui/context/dialog"
+import { useTheme } from "@modtools-ai/ui/theme/context"
+import { toaster } from "@modtools-ai/ui/toast"
+import { base64Encode } from "@modtools-ai/util/encode"
+import { uuid } from "@modtools-ai/util/uuid"
 import {
   type App,
   type Layout,
@@ -33,8 +33,8 @@ import {
   type Storage,
   type StorageScope,
   type Tabs,
-} from "@opencode/plugin/gui"
-import { BuiltinPanel, type BuiltinStoreFrom, type BuiltinStoreOptions } from "@opencode/plugin/gui/builtin"
+} from "@modtools-ai/plugin/gui"
+import { BuiltinPanel, type BuiltinStoreFrom, type BuiltinStoreOptions } from "@modtools-ai/plugin/gui/builtin"
 import { usePlatform } from "@/runtime/platform/platform"
 import { same } from "@/runtime/persistence/equality"
 import { Persist, persisted, removePersisted } from "@/runtime/persistence/storage"
@@ -304,10 +304,10 @@ export function createHostApis() {
           }
         : undefined,
     app: () => ({
-      name: "opencode",
+      name: "mod",
       version: platform.version ?? "",
-      // SAFETY: the build sets VITE_OPENCODE_CHANNEL to one of the release channels, or leaves it unset locally.
-      channel: (import.meta.env.VITE_OPENCODE_CHANNEL ?? "local") as App["channel"],
+      // SAFETY: the build sets VITE_MODTOOLS_CHANNEL to one of the release channels, or leaves it unset locally.
+      channel: (import.meta.env.VITE_MODTOOLS_CHANNEL ?? "local") as App["channel"],
       platform: platform.platform,
       packaged: platform.plugins?.packaged ?? false,
     }),

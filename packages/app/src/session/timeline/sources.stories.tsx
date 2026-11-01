@@ -1,15 +1,15 @@
-import type { SessionMessageAssistant, SessionMessageAssistantTool, SessionMessageInfo } from "@opencode/client/promise"
-import { SourcesProvider } from "@opencode/session-ui/context/sources"
-import type { SessionDocument } from "@opencode/session-ui/document"
-import { turnMessages, turnSources } from "@opencode/session-ui/sources"
-import type { SiteIconMode } from "@opencode/session-ui/sources/experiment"
-import { SourcesPanel } from "@opencode/session-ui/sources/panel"
-import { SourcesTitle } from "@opencode/session-ui/sources/title"
-import { CURRENT_SESSION_ID, STORY_MODEL, STORY_TIME } from "@opencode/session-ui/storybook"
-import { timelinePresets } from "@opencode/session-ui/timeline/detail"
-import { Icon } from "@opencode/ui/icon"
-import { IconButton } from "@opencode/ui/icon-button"
-import { Tabs } from "@opencode/ui/tabs"
+import type { SessionMessageAssistant, SessionMessageAssistantTool, SessionMessageInfo } from "@modtools-ai/client/promise"
+import { SourcesProvider } from "@modtools-ai/session-ui/context/sources"
+import type { SessionDocument } from "@modtools-ai/session-ui/document"
+import { turnMessages, turnSources } from "@modtools-ai/session-ui/sources"
+import type { SiteIconMode } from "@modtools-ai/session-ui/sources/experiment"
+import { SourcesPanel } from "@modtools-ai/session-ui/sources/panel"
+import { SourcesTitle } from "@modtools-ai/session-ui/sources/title"
+import { CURRENT_SESSION_ID, STORY_MODEL, STORY_TIME } from "@modtools-ai/session-ui/storybook"
+import { timelinePresets } from "@modtools-ai/session-ui/timeline/detail"
+import { Icon } from "@modtools-ai/ui/icon"
+import { IconButton } from "@modtools-ai/ui/icon-button"
+import { Tabs } from "@modtools-ai/ui/tabs"
 import { createEffect, createMemo, on, onMount, Show, type ParentProps } from "solid-js"
 import { createStore } from "solid-js/store"
 import { useLanguage } from "@/runtime/i18n/language"
@@ -247,7 +247,7 @@ function Sources(props: SourcesArgs) {
     <SourcesProvider enabled icons={props.icons} onOpen={() => setState("panel", true)}>
       <SessionPreview
         title="Who makes the 10,000 checkboxes thing?"
-        description="opencode · sources"
+        description="mod · sources"
         document={value()}
         timelineDetail={timelineDetail}
         side={

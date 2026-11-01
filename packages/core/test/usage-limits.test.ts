@@ -1,10 +1,10 @@
 import { expect } from "bun:test"
-import { Credential } from "@opencode/core/credential"
-import { Integration } from "@opencode/core/integration"
-import { UsageLimits } from "@opencode/core/usage-limits"
-import { Model } from "@opencode/schema/model"
-import { Money } from "@opencode/schema/money"
-import { Provider } from "@opencode/schema/provider"
+import { Credential } from "@modtools-ai/core/credential"
+import { Integration } from "@modtools-ai/core/integration"
+import { UsageLimits } from "@modtools-ai/core/usage-limits"
+import { Model } from "@modtools-ai/schema/model"
+import { Money } from "@modtools-ai/schema/money"
+import { Provider } from "@modtools-ai/schema/provider"
 import { Effect, Exit, Layer } from "effect"
 import { HttpClient, type HttpClientRequest, HttpClientResponse } from "effect/http"
 import { testEffect } from "./lib/effect"
@@ -148,7 +148,7 @@ it.effect("reads the member's Go allowance and budgets from the Console they sig
         },
       ],
     })
-    // Console reads the workspace from x-org-id; inference, which serves Go, from x-opencode-org-id.
+    // Console reads the workspace from x-org-id; inference, which serves Go, from x-mod-org-id.
     expect(
       requests
         .map((request) => ({
@@ -166,7 +166,7 @@ it.effect("reads the member's Go allowance and budgets from the Console they sig
       {
         url: "https://dev.opencode.ai/zen/go/v1/usage",
         authorization: "Bearer console-access",
-        workspace: [["x-opencode-org-id", "wrk_anomaly"]],
+        workspace: [["x-mod-org-id", "wrk_anomaly"]],
       },
     ])
   }),

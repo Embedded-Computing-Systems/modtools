@@ -1,6 +1,6 @@
-import { OpenCode, type OpenCodeEvent } from "@opencode/client"
+import { OpenCode, type OpenCodeEvent } from "@modtools-ai/client"
 
-export const worktree = "/tmp/opencode"
+export const worktree = "/tmp/mod"
 export const directory = `${worktree}/packages/tui`
 
 export function json(data: unknown, init?: ResponseInit) {
@@ -173,7 +173,7 @@ export function createFetch(override?: FetchHandler, events?: ReturnType<typeof 
     if (url.pathname === "/vcs") return json({ branch: "main" })
     if (url.pathname === "/api/experimental/migration/v1") return json({ status: "completed" })
     // The prompt footer reads the routed session's goal from the goal plugin's RPC; no fixture sets one.
-    if (url.pathname === "/api/rpc/opencode.goal/get") return json({ output: null })
+    if (url.pathname === "/api/rpc/mod.goal/get") return json({ output: null })
     throw new Error(`unexpected request: ${url.pathname}`)
   }
   fetch.preconnect = () => {}

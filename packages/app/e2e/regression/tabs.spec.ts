@@ -1,5 +1,5 @@
 import { expect, test, type Page } from "@playwright/test"
-import type { OpenCodeEvent, SessionMessageInfo } from "@opencode/client/promise"
+import type { OpenCodeEvent, SessionMessageInfo } from "@modtools-ai/client/promise"
 import {
   NO_PROVIDER,
   REMOTE_SERVER,
@@ -41,7 +41,7 @@ test("recently closed shows ten sessions and searches older closures in close or
       servers: [SERVER],
       tabs: [sessions[0]!.id],
       storage: {
-        "opencode.window.browser.dat:tabs.closed": sessions.slice(1).map((session, index) => ({
+        "mod.window.browser.dat:tabs.closed": sessions.slice(1).map((session, index) => ({
           tab: { type: "session", server: SERVER, sessionId: session.id },
           index,
           info: { title: session.title, directory: "C:/OpenCode/ClosedTabs", prompted: true },
@@ -100,7 +100,7 @@ test("recently closed fills remaining slots in Home order without open or duplic
       servers: [SERVER],
       tabs: [sessions[0]!.id, sessions[2]!.id],
       storage: {
-        "opencode.window.browser.dat:tabs.closed": sessions.slice(10).map((session, index) => ({
+        "mod.window.browser.dat:tabs.closed": sessions.slice(10).map((session, index) => ({
           tab: { type: "session", server: SERVER, sessionId: session.id },
           index,
           info: { title: session.title, directory: "C:/OpenCode/OtherTabs", prompted: true },
@@ -230,16 +230,16 @@ test("inactive session attention dots share the close control without marking th
 test("the browser title names the open session and resets after leaving it", async ({ page }) => {
   await mockWorkspace(page, { name: "Tabs", sessions: [a, b] })
   await page.goto(sessionHref(a.id))
-  await expect(page).toHaveTitle(`${a.title} · OpenCode`)
+  await expect(page).toHaveTitle(`${a.title} · MOD`)
 
   const tabB = page.locator(`[data-titlebar-tab-slot]:has(a[href="${sessionHref(b.id)}"])`)
   await tabB.locator("[data-titlebar-tab-link]").click()
   await expectPath(page, sessionHref(b.id))
-  await expect(page).toHaveTitle(`${b.title} · OpenCode`)
+  await expect(page).toHaveTitle(`${b.title} · MOD`)
 
   await page.getByRole("button", { name: "Home", exact: true }).click()
   await expectPath(page, "/")
-  await expect(page).toHaveTitle("OpenCode")
+  await expect(page).toHaveTitle("MOD")
 })
 
 for (const tabLayout of ["horizontal", "vertical"] as const) {
@@ -1287,7 +1287,7 @@ test("⌘W in the side panel closes its last New tab with the panel, and only th
 test("the Windows titlebar menu pastes through the desktop edit action", async ({ page }) => {
   await mockWorkspace(page, { name: "WindowsMenu", sessions: [] })
   await page.goto(`/e2e/utils/windows-menu.html?${new URLSearchParams({ server: SERVER })}`)
-  await page.getByRole("button", { name: "OpenCode menu", exact: true }).click()
+  await page.getByRole("button", { name: "MOD menu", exact: true }).click()
   await page.getByRole("menuitem", { name: "Edit", exact: true }).click()
   const paste = page.getByRole("menuitem", { name: /^Paste/ })
   await expect(paste).toHaveText("PasteCtrl+V")
@@ -1443,7 +1443,7 @@ test("opening a session from the inbox keeps the list's scroll position and rows
       settings: { appearance: { tabLayout: "inbox" } },
       tabs: [],
       // Every seeded session finished a run after the inbox was first used, so Recent lists them all.
-      storage: { "opencode.global.dat:sidebar.inbox": { workingExpanded: true, since: 0 } },
+      storage: { "mod.global.dat:sidebar.inbox": { workingExpanded: true, since: 0 } },
     },
   })
   await page.goto("/")

@@ -7,7 +7,7 @@ const changelog = `# Changelog
 
 ### Highlights
 
-- **Built-In Worktree Tools**: Use \`worktree_create\`. ([#53981](https://github.com/anomalyco/opencode/pull/53981))
+- **Built-In Worktree Tools**: Use \`worktree_create\`. ([#53981](https://github.com/Embedded-Computing-Systems/modtools/pull/53981))
 
 ### Core
 
@@ -116,7 +116,7 @@ describe("loadSource", () => {
     const ctx = { waitUntil: (promise: Promise<unknown>) => void waits.push(promise) }
     expect(await loadSource(ctx, cache)).toBe(changelog)
     expect(await loadSource(ctx, cache)).toBe(changelog)
-    expect(calls).toEqual(["https://raw.githubusercontent.com/anomalyco/opencode/dev/CHANGELOG.md"])
+    expect(calls).toEqual(["https://raw.githubusercontent.com/anomalyco/mod/dev/CHANGELOG.md"])
     expect(waits).toHaveLength(0)
   })
 
@@ -124,7 +124,7 @@ describe("loadSource", () => {
     const { cache, entries } = memoryCache()
     entries.set(
       "https://opencode.ai/changelog/source.md",
-      new Response("stale", { headers: { "x-opencode-changelog-fetched-at": String(Date.now() - 301_000) } }),
+      new Response("stale", { headers: { "x-mod-changelog-fetched-at": String(Date.now() - 301_000) } }),
     )
     const calls = stub(undefined)
     const waits: Promise<unknown>[] = []

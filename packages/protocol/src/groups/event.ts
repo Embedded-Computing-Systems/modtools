@@ -1,7 +1,7 @@
-import { Event } from "@opencode/schema/event"
-import { EventManifest } from "@opencode/schema/event-manifest"
-import { Location } from "@opencode/schema/location"
-import type { Definition } from "@opencode/schema/event"
+import { Event } from "@modtools-ai/schema/event"
+import { EventManifest } from "@modtools-ai/schema/event-manifest"
+import { Location } from "@modtools-ai/schema/location"
+import type { Definition } from "@modtools-ai/schema/event"
 import { Schema } from "effect"
 import { HttpApiEndpoint, HttpApiGroup, HttpApiSchema, OpenApi } from "effect/http-api"
 

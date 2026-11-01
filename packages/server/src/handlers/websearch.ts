@@ -1,5 +1,5 @@
-import { WebSearch } from "@opencode/core/websearch"
-import { InvalidRequestError, ServiceUnavailableError } from "@opencode/protocol/errors"
+import { WebSearch } from "@modtools-ai/core/websearch"
+import { InvalidRequestError, ServiceUnavailableError } from "@modtools-ai/protocol/errors"
 import { Effect } from "effect"
 import { HttpApiBuilder } from "effect/http-api"
 import { Api } from "../api"

@@ -1,10 +1,10 @@
-import { DialogBody, DialogHeader, DialogTitle, Dialog } from "@opencode/ui/dialog"
-import { Badge } from "@opencode/ui/badge"
-import { Icon } from "@opencode/ui/icon"
+import { DialogBody, DialogHeader, DialogTitle, Dialog } from "@modtools-ai/ui/dialog"
+import { Badge } from "@modtools-ai/ui/badge"
+import { Icon } from "@modtools-ai/ui/icon"
 import { ProviderModelIcon } from "@/providers/models/provider-group"
-import { Tooltip } from "@opencode/ui/tooltip"
-import { useDialog } from "@opencode/ui/context/dialog"
-import { useTheme } from "@opencode/ui/theme"
+import { Tooltip } from "@modtools-ai/ui/tooltip"
+import { useDialog } from "@modtools-ai/ui/context/dialog"
+import { useTheme } from "@modtools-ai/ui/theme"
 import { createMemo, onCleanup, onMount, type Component, For, Show } from "solid-js"
 import { useLocal, type ModelSelection } from "@/providers/models/selection"
 import { isFreeModel } from "@/providers/models/models"
@@ -36,7 +36,7 @@ export const DialogSelectModelUnpaid: Component<{ model?: ModelState }> = (props
   })
 
   const providerName = (provider: { id: string; name: string }) =>
-    provider.id === "opencode" ? language.t("provider.connect.opencode.name") : provider.name
+    provider.id === "opencode" ? language.t("provider.connect.mod.name") : provider.name
 
   const freeModels = createMemo(() => model.list().filter(isFreeModel))
 
@@ -168,8 +168,8 @@ export const DialogSelectModelUnpaid: Component<{ model?: ModelState }> = (props
                           <span class="truncate font-[440] text-v2-text-text-muted">
                             {language.t(
                               provider.id === "opencode"
-                                ? "dialog.provider.opencode.tagline"
-                                : "dialog.provider.opencodeGo.tagline",
+                                ? "dialog.provider.mod.tagline"
+                                : "dialog.provider.modGo.tagline",
                             )}
                           </span>
                         </Show>

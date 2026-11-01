@@ -1,10 +1,10 @@
-import { Menu } from "@opencode/ui/menu"
-import { Icon } from "@opencode/ui/icon"
-import { showToast } from "@opencode/ui/toast"
-import { comparablePath, containsDirectory, getFilename, sameDirectory } from "@opencode/util/path"
+import { Menu } from "@modtools-ai/ui/menu"
+import { Icon } from "@modtools-ai/ui/icon"
+import { showToast } from "@modtools-ai/ui/toast"
+import { comparablePath, containsDirectory, getFilename, sameDirectory } from "@modtools-ai/util/path"
 import { createStore } from "solid-js/store"
 import { For, onCleanup, Show, type ComponentProps, type JSX } from "solid-js"
-import { createKeyed, usePlugin, type Project, type MountedSession } from "@opencode/plugin/gui"
+import { createKeyed, usePlugin, type Project, type MountedSession } from "@modtools-ai/plugin/gui"
 import { workspaceDirectories } from "./paths"
 
 export function SessionWorkspaceMenu(props: {

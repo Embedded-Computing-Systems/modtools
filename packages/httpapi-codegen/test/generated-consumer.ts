@@ -14,7 +14,7 @@ export const program = OpenCode.make().pipe(
       sessionID: "session",
       dryRun: true,
       traceID: "trace",
-      payload: { type: "local", command: ["opencode"] },
+      payload: { type: "local", command: ["mod"] },
     })
     const status = client.status()
     const subscribe = client.event.subscribe()

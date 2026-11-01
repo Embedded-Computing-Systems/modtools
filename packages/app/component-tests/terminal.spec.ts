@@ -123,7 +123,7 @@ story("tells the user a server that predates the input protocol is too old", asy
   const root = await mountTerminal(page, mount, "pty_old")
 
   await expect(
-    root.getByText("This server is too old for terminals; update OpenCode on it", { exact: true }),
+    root.getByText("This server is too old for terminals; update MOD on it", { exact: true }),
   ).toBeVisible()
   await expect(root.locator("[data-failures]")).toHaveAttribute("data-failures", "1")
 })

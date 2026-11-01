@@ -1,5 +1,5 @@
 import { type Accessor, createMemo } from "solid-js"
-import { createSimpleContext } from "@opencode/ui/context"
+import { createSimpleContext } from "@modtools-ai/ui/context"
 import { useProviders } from "@/providers/catalog/providers"
 import { useGlobal } from "@/runtime/server/runtime"
 
@@ -84,7 +84,7 @@ const createModelsController = (directory: Accessor<string | undefined>) => {
 
   const latestSet = createMemo(() => new Set(latest().map((x) => modelKey(x))))
 
-  // OpenCode's free models (Big Pickle) stay on offer long after release, so they are listed regardless of age or a
+  // MOD's free models (Big Pickle) stay on offer long after release, so they are listed regardless of age or a
   // newer free model in the same family.
   const freeSet = createMemo(
     () =>

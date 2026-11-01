@@ -1,4 +1,4 @@
-import { mediaHashFromUri, type OpenCodeClient } from "@opencode/client"
+import { mediaHashFromUri, type OpenCodeClient } from "@modtools-ai/client"
 
 export type MediaCache = ReturnType<typeof createMediaCache>
 

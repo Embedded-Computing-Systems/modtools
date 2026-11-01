@@ -1,20 +1,20 @@
-import { Badge } from "@opencode/ui/badge"
-import { Dialog, DialogBody } from "@opencode/ui/dialog"
-import { useDialog } from "@opencode/ui/context/dialog"
-import { Icon } from "@opencode/ui/icon"
-import { Keybind } from "@opencode/ui/keybind"
-import { MenuScroll } from "@opencode/ui/menu-scroll"
+import { Badge } from "@modtools-ai/ui/badge"
+import { Dialog, DialogBody } from "@modtools-ai/ui/dialog"
+import { useDialog } from "@modtools-ai/ui/context/dialog"
+import { Icon } from "@modtools-ai/ui/icon"
+import { Keybind } from "@modtools-ai/ui/keybind"
+import { MenuScroll } from "@modtools-ai/ui/menu-scroll"
 import {
   displayName,
   getProjectAvatarGenerated,
   getProjectAvatarSource,
   getProjectAvatarVariant,
   ProjectAvatar,
-} from "@opencode/ui/project-avatar"
-import { TextInput } from "@opencode/ui/text-input"
-import { createTypeahead } from "@opencode/ui/typeahead"
+} from "@modtools-ai/ui/project-avatar"
+import { TextInput } from "@modtools-ai/ui/text-input"
+import { createTypeahead } from "@modtools-ai/ui/typeahead"
 import { createEventListener } from "@solid-primitives/event-listener"
-import { getFilename } from "@opencode/util/path"
+import { getFilename } from "@modtools-ai/util/path"
 import { createEffect, createMemo, createResource, For, Match, onCleanup, Show, Switch } from "solid-js"
 import { createStore } from "solid-js/store"
 import type { PromptProject, PromptProjectController, PromptServer } from "@/new-session/project/selector"

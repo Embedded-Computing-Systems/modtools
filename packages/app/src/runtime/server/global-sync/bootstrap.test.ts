@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test"
 import { QueryClient } from "@tanstack/solid-query"
-import { OpenCode } from "@opencode/client/promise"
+import { OpenCode } from "@modtools-ai/client/promise"
 import { createStore } from "solid-js/store"
 import { bootstrapGlobal, inferHomeDirectory, loadPathQuery, loadProjectsQuery } from "./bootstrap"
 import { ServerScope } from "@/runtime/server/scope"
@@ -11,7 +11,7 @@ import { worktreeInventoryKey } from "@/workspaces/inventory"
 
 test("bootstraps projects through the native store setter and preserves subsequent updates", async () => {
   const api = OpenCode.make({
-    baseUrl: "http://opencode.local",
+    baseUrl: "http://mod.local",
     fetch: Object.assign(
       async (input: RequestInfo | URL, init?: RequestInit) => {
         const url = new URL(new Request(input, init).url)
@@ -131,7 +131,7 @@ describe("query keys", () => {
 
     expect(calls).toEqual([{ location: { directory: "/repo/subpath" } }])
     expect(result).toMatchObject({ directory: "/repo/subpath", worktree: "/repo" })
-    expect(inferHomeDirectory("/Users/kamil/Developer/opencode")).toBe("/Users/kamil")
+    expect(inferHomeDirectory("/Users/kamil/Developer/mod")).toBe("/Users/kamil")
     expect(inferHomeDirectory("/home/ubuntu/workspace/repo")).toBe("/home/ubuntu")
     expect(inferHomeDirectory("C:\\Users\\luke\\repo")).toBe("C:\\Users\\luke")
     expect(inferHomeDirectory("/repo/subpath")).toBe("")

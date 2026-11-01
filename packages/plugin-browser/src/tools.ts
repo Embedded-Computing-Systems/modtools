@@ -1,7 +1,7 @@
 export * as BrowserTools from "./tools.js"
 
-import type { Context } from "@opencode/plugin/effect/plugin"
-import { Tool } from "@opencode/schema/tool"
+import type { Context } from "@modtools-ai/plugin/effect/plugin"
+import { Tool } from "@modtools-ai/schema/tool"
 import { Effect, Result, Schema } from "effect"
 import { Base64 } from "effect/encoding"
 import type { BrowserConnection } from "./connection.js"

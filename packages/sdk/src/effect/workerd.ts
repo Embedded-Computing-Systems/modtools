@@ -3,7 +3,7 @@ export * as OpenCodeWorkerd from "./workerd"
 import { Layer } from "effect"
 import type { Config, Scope } from "effect"
 import { WorkerdProfile } from "../internal/workerd"
-import { OpenCode } from "./opencode"
+import { OpenCode } from "./mod"
 
 export type Configuration = WorkerdProfile.Configuration
 

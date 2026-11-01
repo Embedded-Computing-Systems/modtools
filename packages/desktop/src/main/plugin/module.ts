@@ -4,8 +4,8 @@ import {
   inertModule,
   pluginWindowModules,
   type pluginSharedModules,
-} from "@opencode/plugin/gui/host"
-import type { Plugin } from "@opencode/plugin/gui/main"
+} from "@modtools-ai/plugin/gui/host"
+import type { Plugin } from "@modtools-ai/plugin/gui/main"
 
 const native = createRequire(import.meta.url)
 
@@ -13,12 +13,12 @@ const native = createRequire(import.meta.url)
 // checks against. In main, the window SDK's name resolves to the main SDK.
 const shared = {
   effect: () => import("effect"),
-  "@opencode/plugin/gui": () => import("@opencode/plugin/gui/main"),
-  "@opencode/plugin/gui/main": () => import("@opencode/plugin/gui/main"),
-  "@opencode/plugin/rpc": () => import("@opencode/plugin/rpc"),
-  "@opencode/schema/rpc": () => import("@opencode/schema/rpc"),
-  "@opencode/client": () => import("@opencode/client"),
-  "@opencode/client/effect": () => import("@opencode/client/effect"),
+  "@modtools-ai/plugin/gui": () => import("@modtools-ai/plugin/gui/main"),
+  "@modtools-ai/plugin/gui/main": () => import("@modtools-ai/plugin/gui/main"),
+  "@modtools-ai/plugin/rpc": () => import("@modtools-ai/plugin/rpc"),
+  "@modtools-ai/schema/rpc": () => import("@modtools-ai/schema/rpc"),
+  "@modtools-ai/client": () => import("@modtools-ai/client"),
+  "@modtools-ai/client/effect": () => import("@modtools-ai/client/effect"),
 } satisfies Record<(typeof pluginSharedModules)[number], () => Promise<object>>
 
 const windowOnly = new Set<string>(pluginWindowModules)

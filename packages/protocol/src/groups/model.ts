@@ -1,5 +1,5 @@
-import { Model } from "@opencode/schema/model"
-import { Location } from "@opencode/schema/location"
+import { Model } from "@modtools-ai/schema/model"
+import { Location } from "@modtools-ai/schema/location"
 import { Schema } from "effect"
 import { HttpApiEndpoint, HttpApiGroup, OpenApi } from "effect/http-api"
 import { ServiceUnavailableError } from "../errors.js"

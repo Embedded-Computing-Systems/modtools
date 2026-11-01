@@ -1,5 +1,5 @@
-import type { SkillApi } from "@opencode/client/promise/api"
-import type { Skill } from "@opencode/schema/skill"
+import type { SkillApi } from "@modtools-ai/client/promise/api"
+import type { Skill } from "@modtools-ai/schema/skill"
 import type { Types } from "effect"
 import type { Transform } from "./registration.js"
 

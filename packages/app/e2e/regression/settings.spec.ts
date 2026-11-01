@@ -1,5 +1,5 @@
 import { expect, test, type Page } from "@playwright/test"
-import type { ConfigEntry, OpenCodeEvent, SessionMessageInfo, WorktreeDirectory } from "@opencode/client/promise"
+import type { ConfigEntry, OpenCodeEvent, SessionMessageInfo, WorktreeDirectory } from "@modtools-ai/client/promise"
 import { NO_PROVIDER, REMOTE_SERVER, SERVER, holdRoute, project, seed, session } from "../utils/app"
 import { mockMissingLocation, mockOpenCodeServer } from "../utils/mock-server"
 import { mockRemoteServer, mockWorkspace, openSession, openSettings, type WorkspaceInput } from "../utils/workspace"
@@ -15,7 +15,7 @@ const sandboxes = Array.from({ length: 12 }, (_, index) => `${directory}/workspa
 const override =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect width='16' height='16' fill='red'/%3E%3C/svg%3E"
 
-const contributors = "https://api.github.com/repos/anomalyco/opencode/contributors?anon=1&per_page=1"
+const contributors = "https://api.github.com/repos/anomalyco/mod/contributors?anon=1&per_page=1"
 
 test.use({ serviceWorkers: "block" })
 
@@ -27,8 +27,8 @@ function open(page: Page, input: Partial<WorkspaceInput> = {}) {
     project: { icon: { color: "orange", override }, commands: { start: "echo setup" }, sandboxes },
     provider: NO_PROVIDER,
     configEntries: [
-      { type: "document", path: "/home/test/.config/opencode/opencode.jsonc", info: { shell: "/bin/zsh" } },
-      { type: "directory", path: "/home/test/.config/opencode" },
+      { type: "document", path: "/home/test/.config/mod/MOD.jsonc", info: { shell: "/bin/zsh" } },
+      { type: "directory", path: "/home/test/.config/mod" },
     ],
     shells: [
       { path: "/bin/zsh", name: "zsh", acceptable: true },
@@ -298,7 +298,7 @@ for (const locale of ["en", "ar"]) {
           id: "shell_activity_settings",
           status: "running",
           command: "sleep 120",
-          cwd: "C:/OpenCode/Activity settings",
+          cwd: "C:/MOD/Activity settings",
           shell: "bash",
           file: "/tmp/activity.out",
           metadata: { sessionID: id },
@@ -469,7 +469,7 @@ test("several servers share one selected server across per-server pages", async 
 })
 
 test("project list menus rename, edit, add, and stay inside the scrollport", async ({ page }) => {
-  const projects = ["rebase", "dinocms", "opencode", "Playground"].map((name, index) =>
+  const projects = ["rebase", "dinocms", "mod", "Playground"].map((name, index) =>
     project({ id: `project-${index}`, directory: `/projects/${name}`, name }),
   )
 
@@ -952,7 +952,7 @@ test.describe("pages open before slow data", () => {
       await expect(settings.getByRole("link", { name: "935 others", exact: true })).toBeVisible()
       await expect(settings.getByRole("button", { name: "Back to app" })).toBeVisible()
 
-      const website = settings.getByRole("link", { name: "www.opencode.ai", exact: true })
+      const website = settings.getByRole("link", { name: "embedded-computing.systems", exact: true })
       await website.focus()
 
       const settled = fails
@@ -1149,12 +1149,12 @@ test.describe("worktrees prefetch", () => {
 const lsp: ConfigEntry[] = [
   {
     type: "document",
-    path: "/config/opencode.json",
+    path: "/config/MOD.json",
     info: { lsp: { typescript: { command: ["typescript-language-server", "--stdio"], extensions: [".ts", ".tsx"] } } },
   },
   {
     type: "document",
-    path: `${directory}/opencode.jsonc`,
+    path: `${directory}/MOD.jsonc`,
     info: { lsp: { typescript: { disabled: true }, rust: { command: ["rust-analyzer"], extensions: [".rs"] } } },
   },
 ]
@@ -1203,7 +1203,7 @@ for (const row of ["configured", "disabled", "failure"] as const) {
   })
 }
 
-// Zen and the Console account share the id `opencode`: the provider comes from models.dev, the
+// Zen and the Console account share the id `mod`: the provider comes from models.dev, the
 // integration carries the account sign-in.
 for (const row of [
   { name: "a fresh install offers the Console sign-in", paid: false, connections: [], console: true },
@@ -1225,7 +1225,7 @@ for (const row of [
       provider: {
         all: [
           {
-            id: "opencode",
+            id: "mod",
             name: "OpenCode Zen",
             models: {
               "claude-sonnet-4-6": {
@@ -1236,12 +1236,12 @@ for (const row of [
             },
           },
         ],
-        connected: ["opencode"],
+        connected: ["mod"],
         default: {},
       },
       integrations: [
         {
-          id: "opencode",
+          id: "mod",
           name: "OpenCode Console",
           methods: [
             { id: "device", type: "oauth", label: "OpenCode Console account" },
@@ -1269,7 +1269,7 @@ for (const row of [
 
 const consoleIntegrations = [
   {
-    id: "opencode",
+    id: "mod",
     name: "OpenCode Console",
     methods: [
       { id: "device", type: "oauth", label: "OpenCode Console account" },
@@ -1582,26 +1582,26 @@ test("providers: switching to a Zen API key does not wait for a Console workspac
       state.active === "cred_console"
         ? {
             all: [
-              { id: "opencode", integrationID: "opencode", name: "Anomaly / OpenCode", models: {} },
+              { id: "opencode", integrationID: "opencode", name: "Anomaly / MOD", models: {} },
               { id: "console-google", integrationID: "opencode", name: "Anomaly / Google", models: {} },
             ],
-            connected: ["opencode", "console-google"],
+            connected: ["mod", "console-google"],
             default: {},
           }
         : {
             all: [
               {
-                id: "opencode",
+                id: "mod",
                 name: "OpenCode Zen",
                 models: { paid: { id: "paid", name: "Paid", cost: { input: 3 } } },
               },
             ],
-            connected: ["opencode"],
+            connected: ["mod"],
             default: {},
           },
     integrations: () => [
       {
-        id: "opencode",
+        id: "mod",
         name: "OpenCode Console",
         methods: [{ id: "device", type: "oauth", label: "OpenCode Console account" }],
         connections: accounts.toSorted((a, b) => Number(b.id === state.active) - Number(a.id === state.active)),
@@ -1637,10 +1637,10 @@ test("providers: adding a Console account keeps the Console row in place", async
 
   const workspace = {
     all: [
-      { id: "opencode", integrationID: "opencode", name: "Anomaly / OpenCode", models: {} },
+      { id: "opencode", integrationID: "opencode", name: "Anomaly / MOD", models: {} },
       { id: "console-google", integrationID: "opencode", name: "Anomaly / Google", models: {} },
     ],
-    connected: ["opencode", "console-google"],
+    connected: ["mod", "console-google"],
     default: {},
   }
 
@@ -1648,7 +1648,7 @@ test("providers: adding a Console account keeps the Console row in place", async
     if (state.pendingReads > 0) {
       state.pendingReads--
 
-      return { all: [{ id: "opencode", name: "OpenCode", models: {} }], connected: ["opencode"], default: {} }
+      return { all: [{ id: "opencode", name: "MOD", models: {} }], connected: ["mod"], default: {} }
     }
 
     return workspace
@@ -1658,7 +1658,7 @@ test("providers: adding a Console account keeps the Console row in place", async
     provider: catalog,
     integrations: () => [
       {
-        id: "opencode",
+        id: "mod",
         name: "OpenCode Console",
         methods: [{ id: "device", type: "oauth", label: "OpenCode Console account" }],
         connections: [
@@ -1690,7 +1690,7 @@ test("providers: adding a Console account keeps the Console row in place", async
 
   await settings.getByRole("button", { name: "Show more providers", exact: true }).click()
   const dialog = page.getByRole("dialog")
-  await dialog.locator('[data-provider-id="opencode"]').click()
+  await dialog.locator('[data-provider-id="mod"]').click()
   const popup = page.waitForEvent("popup")
   await dialog.getByRole("button", { name: "Add account", exact: true }).click()
   await popup
@@ -1715,18 +1715,18 @@ test("providers: switching Console accounts keeps the list until the new workspa
       state.pendingReads--
 
       return {
-        all: [{ id: "opencode", name: "OpenCode", models: { free: { id: "free", name: "Free", cost: { input: 0 } } } }],
-        connected: ["opencode"],
+        all: [{ id: "opencode", name: "MOD", models: { free: { id: "free", name: "Free", cost: { input: 0 } } } }],
+        connected: ["mod"],
         default: {},
       }
     }
 
     return {
       all: [
-        { id: "opencode", integrationID: "opencode", name: `${workspace()} / OpenCode`, models: {} },
+        { id: "opencode", integrationID: "opencode", name: `${workspace()} / MOD`, models: {} },
         { id: "console-google", integrationID: "opencode", name: `${workspace()} / Google`, models: {} },
       ],
-      connected: ["opencode", "console-google"],
+      connected: ["mod", "console-google"],
       default: {},
     }
   }
@@ -1735,7 +1735,7 @@ test("providers: switching Console accounts keeps the list until the new workspa
     provider: catalog,
     integrations: () => [
       {
-        id: "opencode",
+        id: "mod",
         name: "OpenCode Console",
         methods: [{ id: "device", type: "oauth", label: "OpenCode Console account" }],
         connections: accounts.toSorted((a, b) => Number(b.id === state.active) - Number(a.id === state.active)),
@@ -1818,7 +1818,7 @@ test("the add server dialog pairs from a one-time link and explains a spent one"
 
   const spent = await addServer()
   await expect(spent.getByRole("alert")).toHaveText(
-    "This pairing link expired or was already used. Run opencode pair to get a new one.",
+    "This pairing link expired or was already used. Run mod pair to get a new one.",
   )
 })
 
@@ -1879,7 +1879,7 @@ for (const viewport of [
   { name: "mobile", width: 390, height: 844, bottom: true },
 ]) {
   test(`settings layout (${viewport.name}): every page scrolls inside its panel with room below`, async ({ page }) => {
-    await page.route("https://api.github.com/repos/anomalyco/opencode/contributors?*", (route) =>
+    await page.route("https://api.github.com/repos/anomalyco/mod/contributors?*", (route) =>
       route.fulfill({ json: [] }),
     )
     const { settings } = await open(page)

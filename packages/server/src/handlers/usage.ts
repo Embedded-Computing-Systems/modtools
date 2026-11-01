@@ -1,5 +1,5 @@
-import { UsageLimits } from "@opencode/core/usage-limits"
-import { ServiceUnavailableError } from "@opencode/protocol/errors"
+import { UsageLimits } from "@modtools-ai/core/usage-limits"
+import { ServiceUnavailableError } from "@modtools-ai/protocol/errors"
 import { Effect } from "effect"
 import { HttpApiBuilder } from "effect/http-api"
 import { Api } from "../api"
@@ -16,7 +16,7 @@ export const UsageHandler = HttpApiBuilder.group(Api, "server.usage", (handlers)
         return yield* response(
           limits.get().pipe(
             Effect.map((info) => info ?? null),
-            Effect.mapError((error) => new ServiceUnavailableError({ message: error.message, service: "opencode" })),
+            Effect.mapError((error) => new ServiceUnavailableError({ message: error.message, service: "mod" })),
           ),
         )
       }),

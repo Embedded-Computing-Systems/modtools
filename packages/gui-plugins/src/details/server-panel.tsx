@@ -1,12 +1,12 @@
-import type { PluginInfo } from "@opencode/client"
-import { Button } from "@opencode/ui/button"
-import { Dialog, DialogBody, DialogHeader, DialogTitleGroup } from "@opencode/ui/dialog"
-import { ErrorDetails } from "@opencode/ui/error-details"
-import { Icon } from "@opencode/ui/icon"
-import { Switch } from "@opencode/ui/switch"
-import { showToast } from "@opencode/ui/toast"
-import { Tooltip } from "@opencode/ui/tooltip"
-import { TruncatedText } from "@opencode/ui/truncated-text"
+import type { PluginInfo } from "@modtools-ai/client"
+import { Button } from "@modtools-ai/ui/button"
+import { Dialog, DialogBody, DialogHeader, DialogTitleGroup } from "@modtools-ai/ui/dialog"
+import { ErrorDetails } from "@modtools-ai/ui/error-details"
+import { Icon } from "@modtools-ai/ui/icon"
+import { Switch } from "@modtools-ai/ui/switch"
+import { showToast } from "@modtools-ai/ui/toast"
+import { Tooltip } from "@modtools-ai/ui/tooltip"
+import { TruncatedText } from "@modtools-ai/ui/truncated-text"
 import { useMutation } from "@tanstack/solid-query"
 import {
   children,
@@ -23,10 +23,10 @@ import {
   type JSX,
 } from "solid-js"
 import { createStore } from "solid-js/store"
-import { createKeyed, useDrawer, usePlugin, type MountedSession } from "@opencode/plugin/gui"
+import { createKeyed, useDrawer, usePlugin, type MountedSession } from "@modtools-ai/plugin/gui"
 import { globalConfigDirectory, serviceConfigFile } from "./config-file"
 import { configuredLsps } from "./configured-lsp"
-import { builtinContext } from "@opencode/plugin/gui/builtin"
+import { builtinContext } from "@modtools-ai/plugin/gui/builtin"
 import { createFlyoutMotion } from "./flyout-motion"
 
 const services = [
@@ -992,7 +992,7 @@ function ServiceConfigLink(props: { owner: ServiceProps; service: Service }) {
   )
 }
 
-// Starts a draft session in the global configuration's directory that asks OpenCode to set the service up.
+// Starts a draft session in the global configuration's directory that asks MOD to set the service up.
 function ServiceSetup(props: { owner: ServiceProps; service: Service }) {
   const ctx = usePlugin()
   const [store, setStore] = createStore({ opening: false })

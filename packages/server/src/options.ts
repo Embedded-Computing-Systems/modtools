@@ -1,6 +1,6 @@
-import { Database } from "@opencode/core/database/database"
-import { ModelsDev } from "@opencode/core/models-dev"
-import { PersistentPty } from "@opencode/core/persistent-pty"
+import { Database } from "@modtools-ai/core/database/database"
+import { ModelsDev } from "@modtools-ai/core/models-dev"
+import { PersistentPty } from "@modtools-ai/core/persistent-pty"
 import { Schema } from "effect"
 
 export const ServerOptions = Schema.Struct({

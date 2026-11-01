@@ -1,5 +1,5 @@
-import type { BuiltinMainStorage, MainStoreFrom } from "@opencode/plugin/gui/builtin"
-import type { Mutable } from "@opencode/plugin/gui/main"
+import type { BuiltinMainStorage, MainStoreFrom } from "@modtools-ai/plugin/gui/builtin"
+import type { Mutable } from "@modtools-ai/plugin/gui/main"
 import { Option, Schema } from "effect"
 import type { StateStore } from "../storage/state"
 import type { SettingsStore } from "../storage/store"

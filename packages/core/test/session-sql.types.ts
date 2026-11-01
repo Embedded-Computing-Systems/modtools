@@ -1,4 +1,4 @@
-import { SessionMessageTable } from "@opencode/core/session/sql"
+import { SessionMessageTable } from "@modtools-ai/core/session/sql"
 
 type MessageData = (typeof SessionMessageTable.$inferInsert)["data"]
 

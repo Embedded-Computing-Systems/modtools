@@ -3,8 +3,8 @@ import type {
   SessionMessageInfo,
   SessionMessageUser,
   SessionStatus,
-} from "@opencode/client/promise"
-import { useI18n } from "@opencode/ui/context/i18n"
+} from "@modtools-ai/client/promise"
+import { useI18n } from "@modtools-ai/ui/context/i18n"
 import { Option, Predicate, Schema } from "effect"
 import {
   For,
@@ -18,10 +18,10 @@ import {
   type Accessor,
   type JSX,
 } from "solid-js"
-import { DiffChanges } from "@opencode/ui/diff-changes"
-import { Icon } from "@opencode/ui/icon"
-import { Spring, frameLoop, prefersReducedMotion } from "@opencode/ui/motion"
-import { springStyle } from "@opencode/ui/motion/solid"
+import { DiffChanges } from "@modtools-ai/ui/diff-changes"
+import { Icon } from "@modtools-ai/ui/icon"
+import { Spring, frameLoop, prefersReducedMotion } from "@modtools-ai/ui/motion"
+import { springStyle } from "@modtools-ai/ui/motion/solid"
 import { Dynamic } from "solid-js/web"
 import type { SessionUserActions, SessionUserAttachmentReference, SessionUserComment } from "../actions"
 import { useData } from "../context"

@@ -3,11 +3,11 @@ import { createStore } from "solid-js/store"
 import { Portal } from "solid-js/web"
 import { makeEventListener } from "@solid-primitives/event-listener"
 import { createResizeObserver } from "@solid-primitives/resize-observer"
-import { Button } from "@opencode/ui/button"
-import { Keybind } from "@opencode/ui/keybind"
-import { Tooltip } from "@opencode/ui/tooltip"
+import { Button } from "@modtools-ai/ui/button"
+import { Keybind } from "@modtools-ai/ui/keybind"
+import { Tooltip } from "@modtools-ai/ui/tooltip"
 import type { Terminal as Term } from "ghostty-web"
-import { usePlugin, type ComposerQuoteAnchor } from "@opencode/plugin/gui"
+import { usePlugin, type ComposerQuoteAnchor } from "@modtools-ai/plugin/gui"
 
 const SETTLE_MS = 150
 

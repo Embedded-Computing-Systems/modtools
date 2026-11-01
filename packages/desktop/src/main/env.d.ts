@@ -1,6 +1,6 @@
 interface ImportMetaEnv {
-  readonly OPENCODE_CHANNEL: string
-  readonly OPENCODE_VERSION?: string
+  readonly MODTOOLS_CHANNEL: string
+  readonly MODTOOLS_VERSION?: string
 }
 
 interface ImportMeta {
