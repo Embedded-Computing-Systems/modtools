@@ -148,7 +148,7 @@ const sessionAccess = (provider: string, credential: Credential.Value) => {
   return {
     apiKey: Redacted.make(credential.type === "oauth" ? credential.access : credential.key),
     baseURL: openCodeLive.baseURL,
-    ...(typeof orgID === "string" ? { headers: { "x-mod-org-id": orgID } } : {}),
+    ...(typeof orgID === "string" ? { headers: { "x-opencode-org-id": orgID } } : {}),
   }
 }
 

@@ -164,7 +164,7 @@ function readGo(
       HttpClientRequest.get(`${new URL(server).origin}/zen/go/v1/usage`).pipe(
         HttpClientRequest.acceptJson,
         HttpClientRequest.bearerToken(credential.type === "oauth" ? credential.access : credential.key),
-        HttpClientRequest.setHeader("x-mod-org-id", workspaceID),
+        HttpClientRequest.setHeader("x-opencode-org-id", workspaceID),
       ),
     )
     .pipe(

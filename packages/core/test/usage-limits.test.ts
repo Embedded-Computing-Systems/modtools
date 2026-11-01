@@ -148,7 +148,7 @@ it.effect("reads the member's Go allowance and budgets from the Console they sig
         },
       ],
     })
-    // Console reads the workspace from x-org-id; inference, which serves Go, from x-mod-org-id.
+    // Console reads the workspace from x-org-id; inference, which serves Go, from x-opencode-org-id.
     expect(
       requests
         .map((request) => ({
@@ -166,7 +166,7 @@ it.effect("reads the member's Go allowance and budgets from the Console they sig
       {
         url: "https://dev.opencode.ai/zen/go/v1/usage",
         authorization: "Bearer console-access",
-        workspace: [["x-mod-org-id", "wrk_anomaly"]],
+        workspace: [["x-opencode-org-id", "wrk_anomaly"]],
       },
     ])
   }),
