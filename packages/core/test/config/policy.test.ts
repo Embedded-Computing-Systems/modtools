@@ -45,9 +45,9 @@ const orgID = "org_01M3CAP8H43Z49CER6NT0Y3ZF1"
 const lockdown = () =>
   document(
     integration("integration.connect", "deny", "*"),
-    integration("integration.connect", "allow", "mod"),
+    integration("integration.connect", "allow", "opencode"),
     integration("integration.use", "deny", "*"),
-    integration("integration.use", "allow", `mod#${orgID}`),
+    integration("integration.use", "allow", `opencode#${orgID}`),
   )
 
 const consoleCredential = (org: string) =>
@@ -240,16 +240,16 @@ describe("ConfigPolicyPlugin.Plugin", () => {
       const bus = yield* Bus.Service
       const test = yield* Config.Test
       const host = yield* PluginHost.make(yield* Plugin.Service)
-      const mod = Integration.ID.make("opencode")
+      const opencode = Integration.ID.make("opencode")
       yield* catalog.transform((catalog) => catalog.update(Provider.ID.openai, () => {}))
       yield* ConfigPolicyPlugin.Plugin.effect(host)
       expect(yield* catalog.get(Provider.ID.openai)).toBeDefined()
 
-      yield* test.integration?.(mod, organizationPolicy([provider("deny", "openai")])) ?? Effect.void
+      yield* test.integration?.(opencode, organizationPolicy([provider("deny", "openai")])) ?? Effect.void
       yield* bus.publish(Event.Updated, {})
       yield* waitUntil(catalog.get(Provider.ID.openai).pipe(Effect.map((provider) => provider === undefined)))
 
-      yield* test.integration?.(mod, undefined) ?? Effect.void
+      yield* test.integration?.(opencode, undefined) ?? Effect.void
       yield* bus.publish(Event.Updated, {})
       yield* waitUntil(catalog.get(Provider.ID.openai).pipe(Effect.map((provider) => provider !== undefined)))
     }).pipe(Effect.provide(Config.testLayer())),
@@ -269,7 +269,7 @@ describe("integration policy", () => {
         execute: () => Effect.succeed([]),
       })
       yield* catalog.transform((catalog) => {
-        // The signed-out free tier enables MOD without any connection.
+        // The signed-out free tier enables OpenCode without any connection.
         catalog.update(Provider.ID.opencode, (provider) => {
           provider.activation = "enabled"
         })
@@ -277,7 +277,7 @@ describe("integration policy", () => {
         catalog.update(Provider.ID.anthropic, (provider) => {
           provider.activation = "enabled"
         })
-        // A provider authored in MOD.json.
+        // A provider authored in opencode.json.
         catalog.update(Provider.ID.make("my-llm"), (provider) => {
           provider.activation = "enabled"
         })
@@ -287,7 +287,7 @@ describe("integration policy", () => {
         })
       })
       yield* websearch.transform((editor) => {
-        editor.add(search("mod"))
+        editor.add(search("opencode"))
         editor.add(search("exa"))
       })
       yield* ConfigPolicyPlugin.Plugin.effect(host)
@@ -310,8 +310,8 @@ describe("integration policy", () => {
       // Only the required organization's connection works, and with it everything that organization supplies.
       yield* credentials.create({ integrationID: Integration.ID.make("opencode"), value: consoleCredential(orgID) })
       yield* eventually(available().pipe(Effect.map((ids) => ids.length > 0)))
-      expect(yield* available()).toEqual(["acme-gateway", "mod"])
-      expect(yield* searches()).toEqual(["mod"])
+      expect(yield* available()).toEqual(["acme-gateway", "opencode"])
+      expect(yield* searches()).toEqual(["opencode"])
 
       // Switching back to the personal account revokes it again.
       yield* credentials.activate(personal.id)
@@ -336,11 +336,11 @@ describe("integration policy", () => {
         document(
           integration("integration.use", "deny", "*"),
           integration("integration.use", "allow", "anthropic"),
-          integration("integration.use", "allow", "mod"),
+          integration("integration.use", "allow", "opencode"),
         ),
       ])
       expect(yield* catalog.get(Provider.ID.anthropic)).toBeDefined()
-      // `mod` names only account-less use; a connected account needs `mod#*` or its own ID.
+      // `opencode` names only account-less use; a connected account needs `opencode#*` or its own ID.
       expect(yield* catalog.get(Provider.ID.opencode)).toBeUndefined()
     }),
   )

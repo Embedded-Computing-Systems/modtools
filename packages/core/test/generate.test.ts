@@ -452,7 +452,7 @@ describe("image and decision generation", () => {
     Effect.gen(function* () {
       requests.length = 0
       const generate = yield* Generate.Service
-      yield* generate.image({ model: ref("mod", "gpt-image-2.5-sunburst"), prompt: "A black circle" })
+      yield* generate.image({ model: ref("opencode", "gpt-image-2.5-sunburst"), prompt: "A black circle" })
       expect(requests[0]).toMatchObject({
         url: "https://api.openai.com/v1/images/generations",
         headers: { authorization: "Bearer console-token" },
@@ -614,7 +614,7 @@ function decisionCatalog() {
     api: {
       systemone: {
         base_url: "https://api.typesafe.ai/v1",
-        sdk: { modai: "@modtools-ai/ai/providers/typesafe-ai/decisions" },
+        sdk: { opencodeai: "@modtools-ai/ai/providers/typesafe-ai/decisions" },
         ...(compatibility ? { compatibility } : {}),
       },
     },
