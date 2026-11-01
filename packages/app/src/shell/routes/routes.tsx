@@ -113,15 +113,13 @@ function AppLayout(props: ParentProps) {
     const connection = servers.list[0]
     if (!connection) return
     const ctx = global.ensureServerCtx(connection)
-    for (const directory of collectOpenProjectDeepLinks(urls)) {
-      ctx.projects.open(directory)
-      ctx.projects.touch(directory)
-    }
+    // Adding a directory registers its project on the server and marks it as last used.
+    for (const directory of collectOpenProjectDeepLinks(urls)) void ctx.projects.add(directory)
     for (const link of collectNewSessionDeepLinks(urls)) {
-      ctx.projects.open(link.directory)
-      ctx.projects.touch(link.directory)
-      void tabs.newDraft({ server: ServerConnection.key(connection), directory: link.directory }, link.prompt)
-      if (link.submit && link.prompt) submitPromptWhenReady(link.prompt)
+      void ctx.projects.add(link.directory).then(() => {
+        void tabs.newDraft({ server: ServerConnection.key(connection), directory: link.directory }, link.prompt)
+        if (link.submit && link.prompt) submitPromptWhenReady(link.prompt)
+      })
     }
   }
 
