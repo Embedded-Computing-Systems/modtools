@@ -231,7 +231,7 @@ const decisions: ReadonlyArray<Case<DecisionModel>> = [
     url: "https://opencode.ai/inference/systemone/v1/systemone",
     auth: ["authorization", "Bearer zen-key"],
     headers: { "typesafe-danger-zone-images": "true" },
-    provider: "mod",
+    provider: "opencode",
   },
   {
     name: "openrouter",
