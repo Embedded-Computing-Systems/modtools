@@ -2,7 +2,9 @@ import { Service, type Endpoint } from "@modtools-ai/client/effect/service"
 import { OpenCode, type SessionMessageAssistantTool } from "@modtools-ai/client/promise"
 import { FSUtil } from "@modtools-ai/util/fs-util"
 import { noTimeoutFetch } from "@modtools-ai/util/no-timeout-fetch"
+import { execFileSync } from "node:child_process"
 import { open } from "node:fs/promises"
+import { EOL } from "node:os"
 import path from "node:path"
 import { readStdin } from "../util/io"
 import { ServerConnection } from "../services/server-connection"
@@ -134,6 +136,7 @@ async function execute(input: RunCommandInput, prepared: Prepared, endpoint: End
     })
   }
 
+  if (input.format !== "json") printSessionMarker(target.session.id)
   await runNonInteractivePrompt({
     client,
     sessionID: target.session.id,
@@ -151,6 +154,24 @@ async function execute(input: RunCommandInput, prepared: Prepared, endpoint: End
     renderTool: (part) => renderTool(part, target.location.directory),
     renderToolError: (part) => renderToolError(part, target.location.directory),
   }).catch((error) => reportRunError(input, errorMessage(error), target.session.id))
+  if (input.format !== "json") printSessionMarker(target.session.id)
+}
+
+// Server plugins cannot write to this terminal, so the run prints the session marker the v1
+// session-tag plugin added to its output: once before the reply and once after it. The same
+// MOD_SESSION_TAG and MOD_SESSION_TAG_FORMAT settings apply (%s session id, %d `date`).
+function printSessionMarker(sessionID: string) {
+  if (process.env.MOD_SESSION_TAG === "0") return
+  const format = process.env.MOD_SESSION_TAG_FORMAT ?? "[%d] [session: %s]"
+  process.stdout.write(format.replaceAll("%s", sessionID).replaceAll("%d", timestamp()) + EOL)
+}
+
+function timestamp() {
+  try {
+    return execFileSync("date", { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim()
+  } catch {
+    return new Date().toString()
+  }
 }
 
 export function mergeInput(message: string | undefined, piped: string | undefined) {
