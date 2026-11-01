@@ -618,7 +618,7 @@ describe("Config", () => {
               JSON.stringify({
                 policies: [
                   { action: "integration.use", resource: "*", effect: "deny" },
-                  { action: "integration.use", resource: `mod#${allowed}`, effect: "allow" },
+                  { action: "integration.use", resource: `opencode#${allowed}`, effect: "allow" },
                 ],
               }),
             ),
