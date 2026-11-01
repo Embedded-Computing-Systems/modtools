@@ -65,7 +65,7 @@ export function base(input: {
     skills: [],
     tools: [],
     permissionMode: "dontAsk",
-    allowedTools: ["mcp__mod__*"],
+    allowedTools: ["mcp__opencode__*"],
     verbatimPrompts: true,
   }
 }
@@ -99,7 +99,7 @@ export async function session(input: {
   if (input.maxOutputTokens !== undefined) {
     options.env = { ...options.env, CLAUDE_CODE_MAX_OUTPUT_TOKENS: String(input.maxOutputTokens) }
   }
-  if (input.tools.length > 0) options.mcpServers = { mod: await ToolServer.make(input.tools, input.pending) }
+  if (input.tools.length > 0) options.mcpServers = { opencode: await ToolServer.make(input.tools, input.pending) }
   if (input.resume !== undefined) {
     options.resume = input.resume
     return options

@@ -237,7 +237,7 @@ export function registry() {
       const emit = (message: SDKMessage) => {
         if (message.type === "system" && message.subtype === "init" && request.tools.length > 0) {
           const connected = message.mcp_servers.some(
-            (server) => server.name === "mod" && server.status === "connected",
+            (server) => server.name === "opencode" && server.status === "connected",
           )
           if (!connected) throw new Error("The MOD tool server did not connect to Claude Code")
         }

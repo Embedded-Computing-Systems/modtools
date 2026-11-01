@@ -12,7 +12,7 @@ export async function make(
 ): Promise<McpSdkServerConfigWithInstance> {
   // Loaded on first use, so mod starts without loading the MCP SDK.
   const { Server } = await import("@modelcontextprotocol/server")
-  const server = new Server({ name: "mod", version: "1.0.0" }, { capabilities: { tools: {} } })
+  const server = new Server({ name: "opencode", version: "1.0.0" }, { capabilities: { tools: {} } })
   const definitions = tools.map(
     (tool): Tool => ({
       name: ToolNames.short(tool.name),
@@ -30,5 +30,5 @@ export async function make(
     return pending.call(name)
   })
   // Claude Agent SDK bundles its own MCP SDK types; its public instance type also names the higher-level McpServer.
-  return { type: "sdk", name: "mod", instance: server as unknown as McpSdkServerConfigWithInstance["instance"] }
+  return { type: "sdk", name: "opencode", instance: server as unknown as McpSdkServerConfigWithInstance["instance"] }
 }
