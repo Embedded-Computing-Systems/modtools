@@ -70,7 +70,7 @@ type SourceCost = typeof SourceCost.Type
 const SourceApi = Schema.Struct({
   base_url: Schema.optional(Schema.String),
   sdk: Schema.optional(
-    Schema.Struct({ aisdk: Schema.optional(Schema.String), modai: Schema.optional(Schema.String) }),
+    Schema.Struct({ aisdk: Schema.optional(Schema.String), opencodeai: Schema.optional(Schema.String) }),
   ),
   compatibility: Schema.optional(
     Schema.Struct({
@@ -244,16 +244,16 @@ function route(providerID: Provider.ID, model: SourceModel, unknown: Set<string>
   // mod entrypoint for their type (`providers/<P>/images`) that this build can load, and are skipped
   // without one: a chat entrypoint loads a chat model, which can't generate images or decisions.
   const apis = entries(model.api, decodeApi).map(
-    ([protocol, entry]) => [protocol, entry, loadable(entry.sdk?.modai, unknown)] as const,
+    ([protocol, entry]) => [protocol, entry, loadable(entry.sdk?.opencodeai, unknown)] as const,
   )
-  const [protocol, api, modai] =
+  const [protocol, api, opencodeai] =
     (model.type === "chat"
-      ? apis.find(([, entry, modai]) => modai || entry.sdk?.aisdk)
-      : apis.find(([, , modai]) => modai?.endsWith(`/${model.type}s`))) ?? []
+      ? apis.find(([, entry, opencodeai]) => opencodeai || entry.sdk?.aisdk)
+      : apis.find(([, , opencodeai]) => opencodeai?.endsWith(`/${model.type}s`))) ?? []
   if (!protocol || !api) return undefined
   const aisdk = api.sdk?.aisdk
   const packageName =
-    modai ??
+    opencodeai ??
     (aisdk &&
       (AISDKNative.native(aisdk, {
         providerID,
@@ -278,9 +278,9 @@ function route(providerID: Provider.ID, model: SourceModel, unknown: Set<string>
 }
 
 // Newer catalogs may name @modtools-ai/ai entrypoints that older builds don't ship, so those count as no package.
-function loadable(modai: string | undefined, unknown: Set<string>) {
-  const name = Provider.packageName(modai)
-  if (!name?.startsWith("@modtools-ai/ai/") || Provider.builtinPackages.has(name)) return modai
+function loadable(opencodeai: string | undefined, unknown: Set<string>) {
+  const name = Provider.packageName(opencodeai)
+  if (!name?.startsWith("@modtools-ai/ai/") || Provider.builtinPackages.has(name)) return opencodeai
   unknown.add(name)
   return undefined
 }

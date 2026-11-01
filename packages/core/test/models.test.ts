@@ -38,7 +38,7 @@ const sourceModel = (id: string, input: Record<string, unknown> = {}) => ({
   api: {
     "chat-completions": {
       base_url: "https://api.example.test/v1",
-      sdk: { aisdk: "@ai-sdk/openai-compatible", modai: "@modtools-ai/ai/providers/openai-compatible" },
+      sdk: { aisdk: "@ai-sdk/openai-compatible", opencodeai: "@modtools-ai/ai/providers/openai-compatible" },
     },
   },
   ...input,
@@ -55,7 +55,7 @@ const fixture = {
         api: {
           "chat-completions": {
             base_url: "https://api.acme.test/v1",
-            sdk: { aisdk: "@ai-sdk/openai-compatible", modai: "@modtools-ai/ai/providers/openai-compatible" },
+            sdk: { aisdk: "@ai-sdk/openai-compatible", opencodeai: "@modtools-ai/ai/providers/openai-compatible" },
             compatibility: { reasoning_field: "vendor_reasoning" },
           },
         },
@@ -262,10 +262,10 @@ describe("ModelsDev Service", () => {
   it.live("takes each model's package from its first API and skips URLs packages build themselves", () =>
     Effect.gen(function* () {
       const cache = makeCache()
-      const azureAPI = (protocol: string, modai: string) => ({
+      const azureAPI = (protocol: string, opencodeai: string) => ({
         [protocol]: {
           base_url: "https://${AZURE_RESOURCE_NAME}.openai.azure.com/openai/v1",
-          sdk: { aisdk: "@ai-sdk/azure", modai },
+          sdk: { aisdk: "@ai-sdk/azure", opencodeai },
         },
       })
       writeCache(cache, {
@@ -277,7 +277,7 @@ describe("ModelsDev Service", () => {
               api: {
                 responses: {
                   base_url: "https://api.acme.test/v1",
-                  sdk: { aisdk: "@ai-sdk/openai", modai: "@modtools-ai/ai/providers/openai/responses" },
+                  sdk: { aisdk: "@ai-sdk/openai", opencodeai: "@modtools-ai/ai/providers/openai/responses" },
                 },
                 "chat-completions": { base_url: "https://other.acme.test/v1", sdk: { aisdk: "@ai-sdk/openai" } },
               },
@@ -300,7 +300,7 @@ describe("ModelsDev Service", () => {
               api: {
                 messages: {
                   base_url: "https://${AZURE_RESOURCE_NAME}.services.ai.azure.com/anthropic/v1",
-                  sdk: { aisdk: "@ai-sdk/anthropic", modai: "@modtools-ai/ai/providers/anthropic-compatible" },
+                  sdk: { aisdk: "@ai-sdk/anthropic", opencodeai: "@modtools-ai/ai/providers/anthropic-compatible" },
                 },
               },
             }),
@@ -354,7 +354,7 @@ describe("ModelsDev Service", () => {
                   base_url: "https://api.example.test/v1",
                   sdk: {
                     aisdk: "@acme/ai-sdk-provider",
-                    modai: "@modtools-ai/ai/providers/openai-compatible/images",
+                    opencodeai: "@modtools-ai/ai/providers/openai-compatible/images",
                   },
                 },
               },
@@ -443,7 +443,7 @@ describe("ModelsDev Service", () => {
     Effect.gen(function* () {
       const unknown = (path: string) => ({
         base_url: "https://new.acme.test/v1",
-        sdk: { modai: `@modtools-ai/ai/providers/acme/${path}` },
+        sdk: { opencodeai: `@modtools-ai/ai/providers/acme/${path}` },
       })
       const image = (id: string, api: Record<string, unknown>) =>
         sourceModel(id, { type: "image", modalities: { input: ["text"], output: ["image/png"] }, api })
@@ -459,7 +459,7 @@ describe("ModelsDev Service", () => {
                 api: {
                   "new-api": {
                     base_url: "https://claude.acme.test/v1",
-                    sdk: { aisdk: "@ai-sdk/anthropic", modai: "@modtools-ai/ai/providers/acme/new-api" },
+                    sdk: { aisdk: "@ai-sdk/anthropic", opencodeai: "@modtools-ai/ai/providers/acme/new-api" },
                   },
                 },
               }),
@@ -469,7 +469,7 @@ describe("ModelsDev Service", () => {
                 images: unknown("images"),
                 "openai-images": {
                   base_url: "https://api.acme.test/v1",
-                  sdk: { modai: "@modtools-ai/ai/providers/openai-compatible/images" },
+                  sdk: { opencodeai: "@modtools-ai/ai/providers/openai-compatible/images" },
                 },
               }),
             },
@@ -498,8 +498,8 @@ describe("ModelsDev Service", () => {
 
   it.effect("skips non-chat models whose only mod package serves another type", () =>
     Effect.gen(function* () {
-      const api = (modai: string) => ({
-        "chat-completions": { base_url: "https://api.acme.test/v1", sdk: { modai } },
+      const api = (opencodeai: string) => ({
+        "chat-completions": { base_url: "https://api.acme.test/v1", sdk: { opencodeai } },
       })
       const chatPackage = "@modtools-ai/ai/providers/openai-compatible"
       const [acme] = yield* ModelsDev.decodeSnapshot(
@@ -541,7 +541,7 @@ describe("ModelsDev Service", () => {
     Effect.gen(function* () {
       const cache = makeCache()
       const api = {
-        images: { base_url: "https://api.acme.test/v1", sdk: { modai: "@modtools-ai/ai/providers/openai/images" } },
+        images: { base_url: "https://api.acme.test/v1", sdk: { opencodeai: "@modtools-ai/ai/providers/openai/images" } },
       }
       const model = (id: string, type: string) => ({
         id,
@@ -590,7 +590,7 @@ describe("ModelsDev Service", () => {
                 future: { url: 42 },
                 "chat-completions": {
                   base_url: "https://api.acme.test/v1",
-                  sdk: { modai: "@modtools-ai/ai/providers/openai-compatible" },
+                  sdk: { opencodeai: "@modtools-ai/ai/providers/openai-compatible" },
                 },
               },
               experimental: {
