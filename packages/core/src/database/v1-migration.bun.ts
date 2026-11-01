@@ -524,10 +524,23 @@ export const layer = Layer.effectDiscard(
             runtimeState = { status: "idle" }
           }),
       }),
+      // v1 binaries left open keep writing mod.db, so their sessions are carried over on a
+      // timer rather than only when the service starts. A pass with nothing new is one
+      // indexed read of the v1 session table; a failed pass waits for the next one.
+      Effect.andThen(
+        Effect.sleep(LEGACY_SYNC_INTERVAL).pipe(
+          Effect.andThen(
+            run().pipe(Effect.catchCause((cause) => Effect.logWarning("V1 session sync failed", { cause }))),
+          ),
+          Effect.forever,
+        ),
+      ),
       Effect.forkScoped({ startImmediately: true }),
     )
   }),
 )
+
+const LEGACY_SYNC_INTERVAL = "1 minute"
 
 function errorText(input: unknown): string {
   if (!(input instanceof Error)) return String(input)
