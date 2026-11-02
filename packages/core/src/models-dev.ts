@@ -280,7 +280,7 @@ function route(providerID: Provider.ID, model: SourceModel, unknown: Set<string>
 // Newer catalogs may name @modtools-ai/ai entrypoints that older builds don't ship, so those count as no package.
 function loadable(opencodeai: string | undefined, unknown: Set<string>) {
   const name = Provider.packageName(opencodeai)
-  if (!name?.startsWith("@modtools-ai/ai/") || Provider.builtinPackages.has(name)) return opencodeai
+  if (!name?.startsWith("@modtools-ai/ai/") || Provider.builtinPackages.has(name)) return name
   unknown.add(name)
   return undefined
 }

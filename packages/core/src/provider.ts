@@ -30,6 +30,8 @@ export function packageName(value: string | undefined): string | undefined
 export function packageName(value: string | undefined) {
   // Native provider entrypoints can persist in user configuration across the npm scope migration.
   if (value?.startsWith("@opencode-ai/ai/")) return value.replace("@opencode-ai/", "@modtools-ai/")
+  // The models.dev catalogue names the native entrypoints under upstream's scope; MOD ships them as @modtools-ai.
+  if (value?.startsWith("@opencode/ai/")) return value.replace("@opencode/", "@modtools-ai/")
   if (value === undefined || !isAISDK(value)) return value
   return value.slice(AISDK_PREFIX.length)
 }
