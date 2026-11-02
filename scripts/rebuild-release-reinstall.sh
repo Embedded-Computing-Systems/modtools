@@ -86,28 +86,26 @@ if [ "$INSTALL_GUI" = true ]; then
   echo -e "${YELLOW}Step 3: Desktop${NC}"
   (
     cd packages/desktop
-    export MODTOOLS_CHANNEL=prod MODTOOLS_CLI_DIST="$DIST_CLI"
-    bun run prebuild
+    export MODTOOLS_CHANNEL=prod
+    # v2.2: build prepares resources (icons, metainfo, the CLI from packages/modtools/dist)
+    # and the app; pack writes the unsigned bundle to dist/ (the .app on macOS, signed ad
+    # hoc below) and copies it to dist/desktop at the repository root.
     bun run build
-    # Notarization needs Apple credentials; the installed bundle is signed ad hoc below.
-    case $PLATFORM in
-      darwin) bun run package:mac -c.mac.notarize=false -c.mac.identity=null ;;
-      linux) bun run package:linux ;;
-      *) bun run package:win ;;
-    esac
+    bun run pack
   )
 fi
 APP_SRC="$PROJECT_ROOT/packages/desktop/dist/mac-${ARCH}/MOD.app"
 
 echo -e "${YELLOW}Step 4: Isolation check${NC}"
 # Nothing shipped may name OpenCode's app ids, its service file, its install directory, or
-# read OPENCODE_* variables (the only match allowed is a third-party plugin's export name).
+# read OPENCODE_* variables (allowed: a third-party plugin's export name, and the override the
+# bundled opencode-pty daemon reads; MOD always passes that daemon its own --runtime-dir).
 check() {
   local file=$1 bad=0
   for pattern in 'ai\.opencode\.desktop' 'ai\.opencode\.managed' 'opencode/service\.json' '\.opencode/bin'; do
     if LC_ALL=C grep -aqE "$pattern" "$file"; then echo -e "  ${RED}$pattern in $file${NC}"; bad=1; fi
   done
-  if LC_ALL=C grep -aoE 'OPENCODE_[A-Z_]+' "$file" | grep -qv '^OPENCODE_GITLAB_AUTH_CLIENT_ID$'; then
+  if LC_ALL=C grep -aoE 'OPENCODE_[A-Z_]+' "$file" | grep -qvE '^(OPENCODE_GITLAB_AUTH_CLIENT_ID|(OPENCODE_PTY_SOCKET_DIR)+)$'; then
     echo -e "  ${RED}OPENCODE_* read in $file${NC}"; bad=1
   fi
   return $bad

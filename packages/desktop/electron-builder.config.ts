@@ -259,7 +259,8 @@ export function getConfig() {
         protocols: { name: "MOD", schemes: ["mod"] },
         // An Icon Composer package compiles to Assets.car, which macOS 26 and later draw the app icon from
         // (Dock, Finder, system dialogs and the system icon styles). Older macOS keeps using the ICNS.
-        mac: { ...base.mac, icon: "resources/icons/icon.icon" },
+        // MOD builds without Xcode 26, whose actool compiles an Icon Composer package, so macOS takes the ICNS.
+        mac: { ...base.mac, icon: "resources/icons/icon.icns" },
         // The DMG volume icon would otherwise use the same actool-generated ICNS.
         dmg: { icon: "resources/icons/icon.icns" },
         publish: null && {
