@@ -14,7 +14,7 @@ describe("getProjectAvatarSource", () => {
   test("recognizes the MOD repository by its remote-derived project ID", () => {
     const id = createHash("sha1").update("git-remote:github.com/Embedded-Computing-Systems/modtools").digest("hex")
 
-    expect(getProjectAvatarSource(id)).toBe("https://opencode.ai/favicon.svg")
+    expect(getProjectAvatarSource(id)).toBe("/favicon-v3.svg")
     expect(getProjectAvatarSource(id, { override: "data:custom" })).toBe("data:custom")
     expect(getProjectAvatarSource(id, { color: "blue" })).toBeUndefined()
   })

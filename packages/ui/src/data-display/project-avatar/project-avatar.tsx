@@ -70,6 +70,8 @@ export type ProjectAvatarStyle = ProjectAvatarVariant | "outline"
 
 // Project IDs hash the normalized origin remote (`git-remote:github.com/Embedded-Computing-Systems/modtools`); V1 used the root commit.
 const MODTOOLS_PROJECT_IDS = new Set([
+  // MOD's own repository (github.com/Embedded-Computing-Systems/modtools); the IDs below are upstream's.
+  "c0ba9fc69b19cd625b9f4e730c7b43f179c08a26",
   "012780c4098d08caa4ea8c479ed0a4690489f38d",
   "476fbfe6befa9e63ddd7f9ae71655999a0104256",
   "4b0ea68d7af9a6031a7ffda7ad66e0cb83315750",
@@ -80,7 +82,7 @@ export function getProjectAvatarSource(id?: string, icon?: { color?: string; url
 
   if (icon?.color) return undefined
 
-  if (id && MODTOOLS_PROJECT_IDS.has(id)) return "https://opencode.ai/favicon.svg"
+  if (id && MODTOOLS_PROJECT_IDS.has(id)) return "/favicon-v3.svg"
 
   return icon?.url
 }
